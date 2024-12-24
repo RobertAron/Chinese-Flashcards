@@ -1,4 +1,25 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
+
+const gridStackPlugin = plugin(({ addUtilities }) => {
+  addUtilities({
+    ".grid-stack": {
+      display: "grid",
+      gridTemplateColumns: "1fr",
+      gridTemplateRows: "1fr",
+    },
+    ".grid-stack-item": {
+      gridColumn: "1 / 2",
+      gridRow: "1 / 2",
+    },
+    ".decoration-skip-ink-none": {
+      textDecorationSkipInk: "none",
+    },
+    ".text-pretty": {
+      textWrap: "pretty",
+    },
+  });
+});
 
 export default {
   content: [
@@ -14,5 +35,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [gridStackPlugin],
 } satisfies Config;
