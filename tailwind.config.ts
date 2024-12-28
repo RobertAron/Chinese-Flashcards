@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
-const gridStackPlugin = plugin(({ addUtilities }) => {
+const gridStackPlugin = plugin(({ addUtilities, addVariant }) => {
   addUtilities({
     ".grid-stack": {
       display: "grid",
@@ -19,6 +19,7 @@ const gridStackPlugin = plugin(({ addUtilities }) => {
       textWrap: "pretty",
     },
   });
+  addVariant("hocus", ["&:hover", "&:focus"]);
 });
 
 export default {
