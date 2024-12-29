@@ -16,7 +16,6 @@
     "strictNullChecks": true,
     "alwaysStrict": true,
     "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
     "plugins": [
       {
         "name": "next"

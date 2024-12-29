@@ -16,3 +16,4 @@ export const challenges = Object.fromEntries(
     group,
   ]),
 );
+export type ChallengeItems = typeof challenges[string]

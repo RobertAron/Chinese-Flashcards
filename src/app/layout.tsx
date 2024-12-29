@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <nav className="flex gap-2 border-b border-black">
-          <Link href="/" className="hocus:bg-slate-300 flex gap-2 p-1">
+          <Link href="/" className="flex gap-2 p-1 hocus:bg-slate-300">
             <HomeIcon />
             <span>Home</span>
           </Link>

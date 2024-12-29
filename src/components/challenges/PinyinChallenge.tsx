@@ -11,6 +11,7 @@ type PinyinChallengeProps = {
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
+  display?: boolean;
   ref?: Ref<HTMLDivElement>;
 };
 
@@ -23,6 +24,7 @@ export function PinyinChallenge({
   id,
   ref,
   definition,
+  display,
 }: PinyinChallengeProps) {
   const normalized = pinyin.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const [progress, setProgress] = useState(0);
@@ -75,7 +77,7 @@ export function PinyinChallenge({
           ))}
         {pinyin
           .split("")
-          .map((ele) => (practice ? ele : "·"))
+          .map((ele) => (practice || display ? ele : "·"))
           .slice(progress)
           .map((ele, index) => (
             <motion.span
@@ -83,7 +85,7 @@ export function PinyinChallenge({
                 "decoration-skip-ink-none underline decoration-black": practice,
               })}
               initial={{ color: "#94a3b800" }}
-              animate={active ? "active" : "initial"}
+              animate={active ? "active" : display ? "display" : "initial"}
               transition={{
                 duration: practice ? 1 : 0,
                 delay: practice ? 2 : 0,
@@ -91,6 +93,7 @@ export function PinyinChallenge({
               variants={{
                 initial: { color: "#94a3b800" },
                 active: { color: "#94a3b8FF" },
+                display: { color: "#000" },
               }}
               key={index}
             >

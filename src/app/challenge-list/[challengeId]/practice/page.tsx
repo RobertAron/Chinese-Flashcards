@@ -1,17 +1,16 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
 import { PinyinChallenge } from "@/components/challenges/PinyinChallenge";
-import { useChallenge } from "@/utils/useChallenge";
-import { useChallengeStream } from "@/utils/useChallengeStream";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { AnimatePresence } from "motion/react";
+import { useChallengeStream } from "../useChallangeStream";
+import { useChallengeContext } from "@/components/ChallengeContext";
 
 export default AppPage(({}) => {
-  const challenge = useChallenge();
-  if (challenge === null) throw new Error("Not found challenge");
-  const { problem, nextProblem } = useChallengeStream(challenge.content);
+  const { challengeId } = useChallengeContext();
+  const { problem, nextProblem } = useChallengeStream();
   const [practiceCount, setPracticeCount] = useLocalStorage(
-    `${challenge.challengeId}-practice-count`,
+    `${challengeId}-practice-count`,
     0,
   );
   return (

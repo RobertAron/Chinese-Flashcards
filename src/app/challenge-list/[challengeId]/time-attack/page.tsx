@@ -1,18 +1,17 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
+import { useChallengeContext } from "@/components/ChallengeContext";
 import { PinyinChallenge } from "@/components/challenges/PinyinChallenge";
-import { useChallenge } from "@/utils/useChallenge";
-import { useChallengeStream } from "@/utils/useChallengeStream";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { AnimatePresence, useMotionValueEvent, useTime } from "motion/react";
 import { useRef, useState } from "react";
+import { useChallengeStream } from "../useChallangeStream";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
-  const challenge = useChallenge();
-  if (challenge === null) throw new Error("Not found challenge");
+  const { challengeId } = useChallengeContext();
   const [previousBest, setNewBest] = useLocalStorage<number | null>(
-    `${challenge.challengeId}-best-time-attack-time`,
+    `${challengeId}-best-time-attack-time`,
     null,
   );
   return timeAttackRunning ? (
@@ -40,10 +39,8 @@ function TimeAttackRunning({
 }: {
   onTimeAttackComplete: (completedTime: number) => void;
 }) {
-  const challenge = useChallenge();
   const [remainingItems, setRemainingItems] = useState(20);
-  if (challenge === null) throw new Error("Not found challenge");
-  const { problem, nextProblem } = useChallengeStream(challenge.content);
+  const { problem, nextProblem } = useChallengeStream();
   const time = useTime();
   const timerRef = useRef<HTMLDivElement>(null!);
   useMotionValueEvent(time, "change", (val) => {
