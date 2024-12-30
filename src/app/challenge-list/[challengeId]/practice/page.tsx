@@ -1,10 +1,10 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
 import { PinyinChallenge } from "@/components/challenges/PinyinChallenge";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { AnimatePresence } from "motion/react";
-import { useChallengeStream } from "../useChallangeStream";
+import { useChallengeStream } from "../useChallengeStream";
 import { useChallengeContext } from "@/components/ChallengeContext";
+import { useLocalStorage } from "@/utils/hooks";
 
 export default AppPage(({}) => {
   const { challengeId } = useChallengeContext();
