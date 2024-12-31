@@ -17,3 +17,7 @@ export function semiShuffle<T>(array: T[]): T[] {
   }
   return result;
 }
+
+export function formatMs(ms: number) {
+  return (ms / 1000).toFixed(2);
+}

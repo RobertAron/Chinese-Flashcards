@@ -1,0 +1,16 @@
+{
+  "name": "asset-gen",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "gen": "node --experimental-strip-types ./scripts/generateAudio.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "openai": "^4.77.0",
+    "dotenv": "^16.4.7"
+  }
+}

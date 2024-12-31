@@ -10,16 +10,13 @@ import {
 } from "motion/react";
 import { useRef, useState } from "react";
 import { useChallengeStream } from "../useChallengeStream";
-import { useLocalStorage } from "@/utils/hooks";
+import { useTimeAttackPB } from "../../playerStats";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
   const { challengeId } = useChallengeContext();
   const [recentFinish, setRecentFinish] = useState<number | null>(null);
-  const [previousBest, setNewBest] = useLocalStorage<number | null>(
-    `${challengeId}-best-time-attack-time`,
-    null,
-  );
+  const [previousBest, setNewBest] = useTimeAttackPB(challengeId);
   return timeAttackRunning ? (
     <TimeAttackRunning
       onTimeAttackComplete={(completedTime) => {
@@ -64,12 +61,16 @@ function TimeAttackRunning({
   onTimeAttackComplete: (completedTime: number) => void;
 }) {
   const [completedItems, setCompletedItems] = useState(0);
-  const { problem, nextProblem } = useChallengeStream();
+  const { problem, nextProblem, init } = useChallengeStream();
   const time = useTime();
   const timerRef = useRef<HTMLDivElement>(null!);
   useMotionValueEvent(time, "change", (val) => {
     timerRef.current.textContent = (val / 1000).toFixed(2);
   });
+  if (problem === undefined) {
+    init();
+    return null;
+  }
 
   return (
     <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
