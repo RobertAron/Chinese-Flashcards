@@ -1,4 +1,4 @@
-import { data } from "@/data/top100";
+import { data } from "@/data/top1000";
 
 function groupByFive<T>(arr: T[]): T[][] {
   const grouped: T[][] = [];

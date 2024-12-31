@@ -1,3 +1,6 @@
 {
-  "typescript.tsdk": "www/node_modules/typescript/lib"
+  "typescript.tsdk": "www/node_modules/typescript/lib",
+  "files.associations": {
+    "stdio.h": "c"
+  }
 }
