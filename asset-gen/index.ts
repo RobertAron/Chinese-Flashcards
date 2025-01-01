@@ -71,12 +71,13 @@ async function main() {
   await client.initialize();
   const result = await Promise.allSettled(
     data.map(async (item) => {
-      const speechFile = path.resolve(`./output/${item.pinyin}.mp3`);
+      const speechFile = path.resolve(`./output/${item.pinyin}.wav`);
       const [response] = await client.synthesizeSpeech({
         audioConfig: {
           audioEncoding: "LINEAR16",
           pitch: 0,
           speakingRate: 0.75,
+          sampleRateHertz:48000
         },
         input: {
           text: item.character,
