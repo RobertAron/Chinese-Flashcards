@@ -6,8 +6,8 @@ export const Link = ({ className, ...restProps }: Props) => {
     <NextLink
       {...restProps}
       className={clsx(
-        "hocus:bg-black hocus:text-white border border-black p-1 transition-colors duration-100",
-        restProps,
+        "border border-black p-1 transition-colors duration-100 hocus:bg-black hocus:text-white",
+        className,
       )}
     />
   );

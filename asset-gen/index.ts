@@ -17,10 +17,6 @@ const client = new tts.TextToSpeechClient({
   },
 });
 
-// const openai = new OpenAI({
-//   apiKey,
-// });
-
 const data = [
   {
     character: "一",
@@ -49,35 +45,17 @@ const data = [
   },
 ];
 
-// async function main() {
-//   await Promise.all([
-//     data.map(async (item) => {
-//       const speechFile = path.resolve(`./output/${item.pinyin}.mp3`);
-//       console.log(item.character);
-//       const mp3 = await openai.audio.speech.create({
-//         model: "tts-1-hd",
-//         voice: "alloy",
-//         input: `这是“${item.character}”`,
-//         speed: 0.8,
-//       });
-//       const buffer = Buffer.from(await mp3.arrayBuffer());
-//       await fs.promises.writeFile(speechFile, buffer);
-//     }),
-//   ]);
-// }
-// main();
-
 async function main() {
   await client.initialize();
   const result = await Promise.allSettled(
     data.map(async (item) => {
-      const speechFile = path.resolve(`./output/${item.pinyin}.wav`);
+      const speechFile = path.resolve(`./output/${item.pinyin}.mp3`);
       const [response] = await client.synthesizeSpeech({
         audioConfig: {
-          audioEncoding: "LINEAR16",
+          audioEncoding: "MP3",
           pitch: 0,
           speakingRate: 0.75,
-          sampleRateHertz:48000
+          sampleRateHertz: 48000,
         },
         input: {
           text: item.character,
