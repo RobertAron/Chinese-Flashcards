@@ -133,7 +133,7 @@ export type Props = {
 // // Create a MediaElementAudioSourceNode
 // const sourceNode = audioContext.createMediaElementSource(audioElement);
 
-const LiveAudioVisualizer = ({
+export const LiveAudioVisualizer = ({
   mediaSource: mediaSource,
   width = "100%",
   height = "100%",
@@ -141,7 +141,7 @@ const LiveAudioVisualizer = ({
   gap = 1,
   backgroundColor = "transparent",
   barColor = "rgb(160, 198, 255)",
-  fftSize = 1024,
+  fftSize = 4096,
   maxDecibels = -10,
   minDecibels = -90,
   smoothingTimeConstant = 0.4,
@@ -208,28 +208,3 @@ const LiveAudioVisualizer = ({
     />
   );
 };
-
-const url = encodeURI("/assets/wǒ.wav");
-export function AudioTest() {
-  const audioRef = useRef<HTMLMediaElement>(null!);
-  const [audioSourceNode, setAudioSourceNode] =
-    useState<MediaElementAudioSourceNode | null>(null);
-  useEffect(() => {
-    const audioContext = getAudioContext();
-    const sourceNode = audioContext.createMediaElementSource(audioRef.current);
-    sourceNode.connect(audioContext.destination);
-    setAudioSourceNode(sourceNode);
-  }, []);
-  return (
-    <div>
-      <audio ref={audioRef} controls src={url} autoPlay />
-      {audioSourceNode !== null && (
-        <LiveAudioVisualizer
-          mediaSource={audioSourceNode}
-          width={500}
-          fftSize={4096}
-        />
-      )}
-    </div>
-  );
-}
