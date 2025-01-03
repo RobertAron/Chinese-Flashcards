@@ -1,6 +1,4 @@
 "use client";
-import clsx from "clsx";
-import { motion } from "motion/react";
 import { Ref } from "react";
 import { ChallengeWrapper, useTypeMatchProgress, WordProgress } from "./utils";
 

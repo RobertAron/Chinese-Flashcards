@@ -3,24 +3,38 @@
 import { getAudioContext } from "@/utils/audioContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+function average(nums: number[]) {
+  if (nums.length === 0) return 0;
+  let sum = 0;
+  for (let i = 0; i < nums.length; ++i) {
+    sum += nums[i]!;
+  }
+  return sum / nums.length;
+}
+
 export const calculateBarData = (
   frequencyData: Uint8Array,
   desiredBars = 100,
 ): number[] => {
+  const startingPoint = Math.floor(frequencyData.length * 0)
+  const endpointPoint = Math.floor(frequencyData.length * .5)
   const usefulDataPoints = frequencyData.slice(
-    Math.floor(20 * 0.02),
-    Math.floor(frequencyData.length * 0.6),
+    startingPoint,
+    endpointPoint,
   );
-  const results = new Array(desiredBars).fill(0);
+  const results = new Array(desiredBars).fill(null).map((): number[] => []);
   const highestBase2 = Math.log2(usefulDataPoints.length);
   const scaling = desiredBars / highestBase2;
   for (let i = 0; i < usefulDataPoints.length; ++i) {
-    const targetBar = Math.floor(Math.log2(i) * scaling);
-    results[targetBar] += usefulDataPoints[i]! / (i + 1);
+    const item = usefulDataPoints[i]!;
+    const targetBar = i === 0 ? 0 : Math.floor(Math.log2(i) * scaling);
+    results[targetBar]!.push(item);
   }
-  return results;
+  return results.map((ele) => average(ele));
 };
 
+const width = 236;
+const height = 128;
 export const draw = (
   data: number[],
   canvas: HTMLCanvasElement,
@@ -29,32 +43,23 @@ export const draw = (
   backgroundColor: string,
   barColor: string,
 ): void => {
-  const yCenter = canvas.height / 2;
-
+  const itemWidth = width / data.length;
   const ctx = canvas.getContext("2d")!;
-
+  // clear
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // set bg
   ctx.fillStyle = backgroundColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // start drawing
 
   data.forEach((dp, i) => {
+    const dataPointAmp = dp * .5;
     ctx.fillStyle = barColor;
-    let dataPointAmp = dp * 6;
-
-    const x = i * (barWidth + gap);
-    const y = yCenter - dataPointAmp / 2;
-    const w = barWidth;
+    const x = (i / data.length) * width;
+    const y = height - dataPointAmp;
+    const w = itemWidth;
     const h = dataPointAmp;
-
-    ctx.beginPath();
-    if (ctx.roundRect) {
-      // making sure roundRect is supported by the browser
-      ctx.roundRect(x, y, w, h, 50);
-      ctx.fill();
-    } else {
-      // fallback for browsers that do not support roundRect
-      ctx.fillRect(x, y, w, h);
-    }
+    ctx.fillRect(x, y, w, h);
   });
 };
 
@@ -135,16 +140,14 @@ export type Props = {
 
 export const LiveAudioVisualizer = ({
   mediaSource: mediaSource,
-  width = "100%",
-  height = "100%",
   barWidth = 2,
   gap = 1,
   backgroundColor = "transparent",
   barColor = "rgb(160, 198, 255)",
-  fftSize = 4096,
-  maxDecibels = -10,
+  fftSize = 16384,
+  maxDecibels = -25,
   minDecibels = -90,
-  smoothingTimeConstant = 0.4,
+  smoothingTimeConstant = 0.1,
 }: Props) => {
   const [analyserResources, setAnalyserResources] = useState<{
     analyser: AnalyserNode;
@@ -154,8 +157,8 @@ export const LiveAudioVisualizer = ({
   useEffect(() => {
     const analyser = getAudioContext().createAnalyser();
     analyser.fftSize = fftSize;
-    analyser.minDecibels = minDecibels;
     analyser.maxDecibels = maxDecibels;
+    analyser.minDecibels = minDecibels;
     analyser.smoothingTimeConstant = smoothingTimeConstant;
     const data = new Uint8Array(analyser.frequencyBinCount);
     setAnalyserResources({
@@ -198,13 +201,8 @@ export const LiveAudioVisualizer = ({
   }, [analyserResources, processFrequencyData]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={width}
-      height={height}
-      style={{
-        aspectRatio: "unset",
-      }}
-    />
+    <div className="aspect-[unset] h-full w-full rounded-md border border-black">
+      <canvas ref={canvasRef} width={width} height={height} />
+    </div>
   );
 };

@@ -36,13 +36,20 @@ export function AudioChallenge({
     sourceNode.connect(audioContext.destination);
     setAudioSourceNode(sourceNode);
   }, []);
+  useEffect(() => {
+    audioRef.current.playbackRate = practice ? 0.7 : 1;
+  }, [practice]);
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
-      {audioSourceNode !== null && (
-        <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />
+      <audio ref={audioRef} src={url} autoPlay />
+      {!display && (
+        <div className="h-32 w-full">
+          {audioSourceNode !== null && (
+            <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />
+          )}
+        </div>
       )}
       <div className="text-pretty text-center text-sm">{definition}</div>
-      <audio ref={audioRef} src={url} autoPlay  />
       <WordProgress
         progress={progress}
         pinyin={pinyin}

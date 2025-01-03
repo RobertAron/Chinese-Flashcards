@@ -11,6 +11,8 @@ import {
 import { useRef, useState } from "react";
 import { useChallengeStream } from "../useChallengeStream";
 import { useTimeAttackPB } from "../../playerStats";
+import { match } from "ts-pattern";
+import { AudioChallenge } from "@/components/challenges/AudioChallenge";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
@@ -72,6 +74,15 @@ function TimeAttackRunning({
     return null;
   }
 
+  const onProblemComplete = () => {
+    if (completedItems === itemsToComplete - 1)
+      onTimeAttackComplete(time.get());
+    else {
+      setCompletedItems(completedItems + 1);
+      nextProblem();
+    }
+  };
+
   return (
     <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
       <div ref={timerRef} className="font-mono">
@@ -84,20 +95,26 @@ function TimeAttackRunning({
       </div>
       <div>{completedItems}</div>
       <AnimatePresence mode="popLayout">
-        <PinyinChallenge
-          {...problem}
-          onComplete={() => {
-            if (completedItems === itemsToComplete - 1)
-              onTimeAttackComplete(time.get());
-            else {
-              setCompletedItems(completedItems + 1);
-              nextProblem();
-            }
-          }}
-          key={problem.id}
-          id={`${problem.id}`}
-          active
-        />
+        {match(problem)
+          .with({ type: "pinyin-challenge" }, (problem) => (
+            <PinyinChallenge
+              {...problem}
+              onComplete={onProblemComplete}
+              key={problem.id}
+              id={problem.id}
+              active
+            />
+          ))
+          .with({ type: "audio-challenge" }, (problem) => (
+            <AudioChallenge
+              {...problem}
+              onComplete={onProblemComplete}
+              key={problem.id}
+              id={problem.id}
+              active
+            />
+          ))
+          .exhaustive()}
       </AnimatePresence>
     </div>
   );

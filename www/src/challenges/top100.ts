@@ -8,12 +8,40 @@ function groupByFive<T>(arr: T[]): T[][] {
   return grouped;
 }
 
-const groups = groupByFive(data.map((ele, index) => ({ ...ele, id: index })));
+const groups = groupByFive(
+  data.map((ele, index) => ({ ...ele, id: `${index}` })),
+);
+
+type PinyinChallenge = {
+  type: "pinyin-challenge";
+  id: string;
+  character: string;
+  pinyin: string;
+  definition: string;
+};
+
+type AudioChallenge = {
+  type: "audio-challenge";
+  id: string;
+  pinyin: string;
+  definition: string;
+};
+
+type AllChallenges = PinyinChallenge | AudioChallenge;
 
 export const challenges = Object.fromEntries(
-  groups.map((group, index): [string, typeof group] => [
+  groups.map((group, index): [string, AllChallenges[]] => [
     `challenge-${index + 1}`,
-    group,
+    group.flatMap(({ character, definition, id, pinyin }): AllChallenges[] => [
+      {
+        type: "pinyin-challenge",
+        definition,
+        id: `${id}-pinyin`,
+        pinyin,
+        character,
+      },
+      { type: "audio-challenge", definition, id: `${id}-audio`, pinyin },
+    ]),
   ]),
 );
-export type ChallengeItems = typeof challenges[string]
+export type ChallengeItems = (typeof challenges)[string];
