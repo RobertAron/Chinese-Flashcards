@@ -32,13 +32,14 @@ export const data = [
   {
     character: "这",
     pinyin: "zhè",
-    definition: "now, this, det.: this, it* ",
+    definition: "this, now, det.: this, it* ",
   },
   {
+    // Maybe "character" should be an array?
     character: "他",
     pinyin: "tā",
     definition:
-      "he, she, it, they (referring to inanimate things in object position) ",
+      "he, him, it, they (referring to inanimate things in object position) ",
   },
   {
     character: "也",
@@ -156,7 +157,7 @@ export const data = [
   {
     character: "她",
     pinyin: "tā",
-    definition: "she, her, she (neologism for {1ta1}[2]), )",
+    definition: "she, her, she",
   },
   {
     character: "那",

@@ -1,7 +1,6 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
-import { useChallengeContext } from "@/components/ChallengeContext";
-import { PinyinChallenge } from "@/components/challenges/PinyinChallenge";
+import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import {
   AnimatePresence,
   motion,
@@ -11,8 +10,8 @@ import {
 import { useRef, useState } from "react";
 import { useChallengeStream } from "../useChallengeStream";
 import { useTimeAttackPB } from "../../playerStats";
-import { match } from "ts-pattern";
-import { AudioChallenge } from "@/components/challenges/AudioChallenge";
+import { Challenge } from "@/components/challenges/Challenge";
+import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
@@ -29,30 +28,39 @@ export default AppPage(() => {
       }}
     />
   ) : (
-    <div className="flex h-full flex-col items-center justify-center gap-3">
-      <div className="grid grid-cols-2 rounded-sm border-2 border-black bg-white p-2 text-lg">
-        <div>Previous Best</div>
-        <div className="text-end">
-          {previousBest === null ? "N/A" : (previousBest / 1000).toFixed(2)}
+    <ChallengeTitle
+      onStart={() => setTimeAttackRunning(true)}
+      improve={previousBest !== null}
+    >
+      <div className="flex gap-2">
+        <div className="flex grow basis-0 flex-col text-3xl font-bold">
+          <div>🥇 20s</div>
+          <div>🥈 30s</div>
+          <div>🥉 40s</div>
         </div>
-        {recentFinish !== null && (
-          <>
-            <div>Recent Finish</div>
-            <div className="text-end">
-              {recentFinish === previousBest && "🎉"}
-              {(recentFinish / 1000).toFixed(2)}
-            </div>
-          </>
-        )}
+        <div className="flex grow basis-0 flex-col text-lg">
+          <div className="flex gap-1">
+            <span>Previous Best:</span>
+            <span>
+              {previousBest === null
+                ? "N/A"
+                : `${(previousBest / 1000).toFixed(2)}s`}
+            </span>
+          </div>
+          <div>
+            {recentFinish !== null && (
+              <>
+                <div>Recent Finish</div>
+                <div className="text-end">
+                  {recentFinish === previousBest && "🎉"}
+                  {(recentFinish / 1000).toFixed(2)}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
-      <button
-        className="rounded-lg border-2 border-black bg-white p-2 text-xl hocus:border-slate-300 hocus:bg-black hocus:text-white"
-        onClick={() => setTimeAttackRunning(true)}
-        autoFocus
-      >
-        START
-      </button>
-    </div>
+    </ChallengeTitle>
   );
 });
 
@@ -95,26 +103,11 @@ function TimeAttackRunning({
       </div>
       <div>{completedItems}</div>
       <AnimatePresence mode="popLayout">
-        {match(problem)
-          .with({ type: "pinyin-challenge" }, (problem) => (
-            <PinyinChallenge
-              {...problem}
-              onComplete={onProblemComplete}
-              key={problem.id}
-              id={problem.id}
-              active
-            />
-          ))
-          .with({ type: "audio-challenge" }, (problem) => (
-            <AudioChallenge
-              {...problem}
-              onComplete={onProblemComplete}
-              key={problem.id}
-              id={problem.id}
-              active
-            />
-          ))
-          .exhaustive()}
+        <Challenge
+          challenge={problem}
+          onProblemComplete={onProblemComplete}
+          active
+        />
       </AnimatePresence>
     </div>
   );

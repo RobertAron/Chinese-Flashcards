@@ -12,36 +12,23 @@ const groups = groupByFive(
   data.map((ele, index) => ({ ...ele, id: `${index}` })),
 );
 
-type PinyinChallenge = {
-  type: "pinyin-challenge";
+export type WordDefinition = {
   id: string;
   character: string;
   pinyin: string;
   definition: string;
 };
 
-type AudioChallenge = {
-  type: "audio-challenge";
-  id: string;
-  pinyin: string;
-  definition: string;
-};
-
-type AllChallenges = PinyinChallenge | AudioChallenge;
-
-export const challenges = Object.fromEntries(
-  groups.map((group, index): [string, AllChallenges[]] => [
+export const wordDefinitions = Object.fromEntries(
+  groups.map((group, index): [string, WordDefinition[]] => [
     `challenge-${index + 1}`,
-    group.flatMap(({ character, definition, id, pinyin }): AllChallenges[] => [
+    group.flatMap(({ character, definition, id, pinyin }): WordDefinition[] => [
       {
-        type: "pinyin-challenge",
         definition,
-        id: `${id}-pinyin`,
+        id: `${id}`,
         pinyin,
         character,
       },
-      { type: "audio-challenge", definition, id: `${id}-audio`, pinyin },
     ]),
   ]),
 );
-export type ChallengeItems = (typeof challenges)[string];

@@ -1,7 +1,13 @@
 "use client";
 // https://github.com/samhirtarif/react-audio-visualize
 import { getAudioContext } from "@/utils/audioContext";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 function average(nums: number[]) {
   if (nums.length === 0) return 0;
@@ -16,12 +22,9 @@ export const calculateBarData = (
   frequencyData: Uint8Array,
   desiredBars = 100,
 ): number[] => {
-  const startingPoint = Math.floor(frequencyData.length * 0)
-  const endpointPoint = Math.floor(frequencyData.length * .5)
-  const usefulDataPoints = frequencyData.slice(
-    startingPoint,
-    endpointPoint,
-  );
+  const startingPoint = Math.floor(frequencyData.length * 0);
+  const endpointPoint = Math.floor(frequencyData.length * 0.5);
+  const usefulDataPoints = frequencyData.slice(startingPoint, endpointPoint);
   const results = new Array(desiredBars).fill(null).map((): number[] => []);
   const highestBase2 = Math.log2(usefulDataPoints.length);
   const scaling = desiredBars / highestBase2;
@@ -33,16 +36,14 @@ export const calculateBarData = (
   return results.map((ele) => average(ele));
 };
 
-const width = 236;
-const height = 128;
 export const draw = (
   data: number[],
   canvas: HTMLCanvasElement,
-  barWidth: number,
-  gap: number,
   backgroundColor: string,
   barColor: string,
 ): void => {
+  const width = canvas.width;
+  const height = canvas.height;
   const itemWidth = width / data.length;
   const ctx = canvas.getContext("2d")!;
   // clear
@@ -53,7 +54,7 @@ export const draw = (
   // start drawing
 
   data.forEach((dp, i) => {
-    const dataPointAmp = dp * .5;
+    const dataPointAmp = dp * 0.5;
     ctx.fillStyle = barColor;
     const x = (i / data.length) * width;
     const y = height - dataPointAmp;
@@ -76,14 +77,6 @@ export type Props = {
    * Height of the visualization. Default" "100%"
    */
   height?: number | string;
-  /**
-   * Width of each individual bar in the visualization. Default: `2`
-   */
-  barWidth?: number;
-  /**
-   * Gap between each bar in the visualization. Default `1`
-   */
-  gap?: number;
   /**
    * BackgroundColor for the visualization: Default `transparent`
    */
@@ -140,15 +133,15 @@ export type Props = {
 
 export const LiveAudioVisualizer = ({
   mediaSource: mediaSource,
-  barWidth = 2,
-  gap = 1,
   backgroundColor = "transparent",
   barColor = "rgb(160, 198, 255)",
-  fftSize = 16384,
+  fftSize = 8192,
   maxDecibels = -25,
   minDecibels = -90,
-  smoothingTimeConstant = 0.1,
+  smoothingTimeConstant = 0.0,
 }: Props) => {
+  const [[width, height], setCanvasSize] = useState<[number, number]>([0, 0]);
+  const containerRef = useRef<HTMLDivElement>(null!);
   const [analyserResources, setAnalyserResources] = useState<{
     analyser: AnalyserNode;
     dataTarget: Uint8Array;
@@ -173,16 +166,9 @@ export const LiveAudioVisualizer = ({
     (data: Uint8Array): void => {
       if (!canvasRef.current) return;
       const dataPoints = calculateBarData(data);
-      draw(
-        dataPoints,
-        canvasRef.current,
-        barWidth,
-        gap,
-        backgroundColor,
-        barColor,
-      );
+      draw(dataPoints, canvasRef.current, backgroundColor, barColor);
     },
-    [backgroundColor, barColor, barWidth, gap],
+    [backgroundColor, barColor],
   );
 
   useEffect(() => {
@@ -200,9 +186,33 @@ export const LiveAudioVisualizer = ({
     };
   }, [analyserResources, processFrequencyData]);
 
+  useLayoutEffect(() => {
+    const { width, height } = containerRef.current.getBoundingClientRect();
+    console.log("use effect sizing", [width, height]);
+    setCanvasSize([width, height]);
+  }, []);
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((cb) => {
+      for (const { contentRect: rect } of cb) {
+        console.log("resize sizing", [rect.width, rect.height]);
+        setCanvasSize([rect.width, rect.height]);
+      }
+    });
+    resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
+
   return (
-    <div className="aspect-[unset] h-full w-full rounded-md border border-black">
-      <canvas ref={canvasRef} width={width} height={height} />
+    <div
+      className="relative h-full w-full rounded-md border border-black"
+      ref={containerRef}
+    >
+      <canvas
+        className="absolute inset-0"
+        ref={canvasRef}
+        width={width}
+        height={height}
+      />
     </div>
   );
 };

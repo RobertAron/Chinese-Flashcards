@@ -27,15 +27,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full bg-slate-200">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-y-scroll`}
       >
-        <nav className="flex gap-2 border-b border-black">
-          <Link href="/" className="flex gap-2 p-1 hocus:bg-slate-300">
-            <HomeIcon />
-            <span>Home</span>
-          </Link>
+        <nav className="flex border-b border-black">
+          <div className="container mx-auto flex gap-2">
+            <Link href="/" className="flex gap-2 p-1 hocus:bg-slate-300">
+              <HomeIcon />
+              <span>Home</span>
+            </Link>
+          </div>
         </nav>
-        {children}
+        <div className="container mx-auto">{children}</div>
       </body>
     </html>
   );

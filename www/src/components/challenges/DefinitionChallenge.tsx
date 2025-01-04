@@ -2,9 +2,9 @@
 import { Ref } from "react";
 import { ChallengeWrapper, useTypeMatchProgress, WordProgress } from "./utils";
 
-type PinyinChallengeProps = {
-  character: string;
+type DefinitionChallengeProps = {
   pinyin: string;
+  definition: string;
   id: string;
   onComplete?: () => void;
   active?: boolean;
@@ -13,8 +13,7 @@ type PinyinChallengeProps = {
   ref?: Ref<HTMLDivElement>;
 };
 
-export function PinyinChallenge({
-  character,
+export function DefinitionChallenge({
   pinyin,
   onComplete,
   active,
@@ -22,12 +21,13 @@ export function PinyinChallenge({
   id,
   ref,
   display,
-}: PinyinChallengeProps) {
+  definition,
+}: DefinitionChallengeProps) {
   const progress = useTypeMatchProgress(pinyin, active, onComplete);
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
-      <div className="flex h-36 flex-col items-center justify-center">
-        <div className="text-center text-6xl">{character}</div>
+      <div className="flex h-36 items-center justify-center">
+        <div className="text-center text-2xl">{definition}</div>
       </div>
       <WordProgress
         progress={progress}

@@ -68,7 +68,7 @@ export function WordProgress({
             initial={{ color: "#94a3b800" }}
             animate={active ? "active" : display ? "display" : "initial"}
             transition={{
-              duration: practice ? 1 : 0,
+              duration: practice ? 2 : 0,
               delay: practice ? 2 : 0,
             }}
             variants={{

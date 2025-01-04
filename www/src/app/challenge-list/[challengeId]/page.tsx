@@ -1,14 +1,15 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
-import { useChallengeContext } from "@/components/ChallengeContext";
-import { PinyinChallenge } from "@/components/challenges/PinyinChallenge";
+import { useChallengeContext } from "@/components/challenges/ChallengeContext";
+import { WordOutline } from "@/components/challenges/WordOutline";
 import { Link } from "@/components/Link";
-import { usePracticeCount, useTimeAttackPB } from "../playerStats";
 import { formatMs } from "@/utils/structureUtils";
 import { match } from "ts-pattern";
+import { usePracticeCount, useTimeAttackPB } from "../playerStats";
+import { ListChecks, Timer } from "lucide-react";
 
 export default AppPage(() => {
-  const { challengeId, challengeItems } = useChallengeContext();
+  const { challengeId, wordDefinitions } = useChallengeContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
@@ -20,12 +21,18 @@ export default AppPage(() => {
           href={`/challenge-list/${challengeId}/practice`}
           className="flex gap-2"
         >
+          <span>
+            <ListChecks />
+          </span>
           Practice ({practiceCount})
         </Link>
         <Link
           href={`/challenge-list/${challengeId}/time-attack`}
           className="flex gap-2"
         >
+          <span>
+            <Timer />
+          </span>
           <span>Time Attack</span>
           {match(timeAttackPb)
             .with(null, () => "Not Completed")
@@ -37,10 +44,10 @@ export default AppPage(() => {
             ))}
         </Link>
       </section>
-      <section className="flex flex-col border border-black p-2">
+      <section className="flex flex-col gap-2 border border-black p-2">
         <h2 className="text-xl font-semibold">Words</h2>
-        {challengeItems.map(({ id, ...rest }) => (
-          <PinyinChallenge {...rest} key={id} id={`${id}-display`} display />
+        {wordDefinitions.map((word) => (
+          <WordOutline word={word} key={word.id} />
         ))}
       </section>
     </main>

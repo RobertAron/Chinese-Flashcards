@@ -1,4 +1,4 @@
-import { ChallengeProvider } from "@/components/ChallengeContext";
+import { ChallengeProvider } from "@/components/challenges/ChallengeContext";
 
 export default function ChallengeLayout({
   children,

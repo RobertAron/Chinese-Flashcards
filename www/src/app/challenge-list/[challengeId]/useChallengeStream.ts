@@ -1,13 +1,13 @@
-import { useChallengeContext } from "@/components/ChallengeContext";
+import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { semiShuffle } from "@/utils/structureUtils";
 import { useState } from "react";
 
 export function useChallengeStream() {
-  const { challengeItems: challenge } = useChallengeContext();
+  const { challenges } = useChallengeContext();
   const [problemIndex, setProblemIndex] = useState(0);
-  const [problems, setProblemList] = useState<null | typeof challenge>(null);
+  const [problems, setProblemList] = useState<null | typeof challenges>(null);
   if (problems === null) {
-    return { init: () => setProblemList(semiShuffle(challenge)) };
+    return { init: () => setProblemList(semiShuffle(challenges)) };
   }
   const problem = problems[problemIndex];
   if (problem === undefined) throw new Error("Item Missing");
