@@ -3,9 +3,9 @@ import { AppPage } from "@/components/AppPage";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { Link } from "@/components/Link";
-import { formatMs } from "@/utils/structureUtils";
+import { formatTimeAttackMs } from "@/utils/playerStats";
 import { match } from "ts-pattern";
-import { usePracticeCount, useTimeAttackPB } from "../playerStats";
+import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
 import { ListChecks, Timer } from "lucide-react";
 
 export default AppPage(() => {
@@ -24,7 +24,7 @@ export default AppPage(() => {
           <span>
             <ListChecks />
           </span>
-          Practice ({practiceCount})
+          Practice (x{practiceCount})
         </Link>
         <Link
           href={`/challenge-list/${challengeId}/time-attack`}
@@ -39,7 +39,7 @@ export default AppPage(() => {
             .otherwise((pb) => (
               <span>
                 <span className="font-semibold">PB:</span>
-                <span>{formatMs(pb)}</span>
+                <span>{formatTimeAttackMs(pb)}</span>
               </span>
             ))}
         </Link>

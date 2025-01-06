@@ -14,7 +14,7 @@ export function ChallengeTitle({
 }) {
   const { challengeId } = useChallengeContext();
   return (
-    <div className="mx-auto flex max-w-96 flex-col gap-1">
+    <div className="mx-auto flex w-[32rem] flex-col gap-1">
       <h1 className="rounded-t-md bg-black p-2 text-4xl font-extrabold text-white">
         {challengeId}
       </h1>

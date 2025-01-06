@@ -18,6 +18,7 @@ function average(nums: number[]) {
   return sum / nums.length;
 }
 
+const renderScaling = 2;
 export const calculateBarData = (
   frequencyData: Uint8Array,
   desiredBars = 100,
@@ -36,31 +37,24 @@ export const calculateBarData = (
   return results.map((ele) => average(ele));
 };
 
-export const draw = (
-  data: number[],
-  canvas: HTMLCanvasElement,
-  backgroundColor: string,
-  barColor: string,
-): void => {
+export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
   const width = canvas.width;
   const height = canvas.height;
   const itemWidth = width / data.length;
   const ctx = canvas.getContext("2d")!;
   // clear
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // set bg
-  ctx.fillStyle = backgroundColor;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
   // start drawing
 
   data.forEach((dp, i) => {
-    const dataPointAmp = dp * 0.5;
-    ctx.fillStyle = barColor;
+    // value of 220 should span .9 of the visual
+    const dataPointHeightNormalized = Math.min(dp / 220, 200);
+    const dataPointHeight = dataPointHeightNormalized * height * 0.9;
     const x = (i / data.length) * width;
-    const y = height - dataPointAmp;
-    const w = itemWidth;
-    const h = dataPointAmp;
-    ctx.fillRect(x, y, w, h);
+    const y = height - dataPointHeight;
+    const w = itemWidth + 1;
+    ctx.fillStyle = `rgb(${dataPointHeightNormalized * 255} 0 ${255 - dataPointHeightNormalized * 255})`;
+    ctx.fillRect(x, y, w, dataPointHeight);
   });
 };
 
@@ -162,14 +156,11 @@ export const LiveAudioVisualizer = ({
     return () => analyser.disconnect();
   }, [fftSize, maxDecibels, mediaSource, minDecibels, smoothingTimeConstant]);
 
-  const processFrequencyData = useCallback(
-    (data: Uint8Array): void => {
-      if (!canvasRef.current) return;
-      const dataPoints = calculateBarData(data);
-      draw(dataPoints, canvasRef.current, backgroundColor, barColor);
-    },
-    [backgroundColor, barColor],
-  );
+  const processFrequencyData = useCallback((data: Uint8Array): void => {
+    if (!canvasRef.current) return;
+    const dataPoints = calculateBarData(data);
+    draw(dataPoints, canvasRef.current);
+  }, []);
 
   useEffect(() => {
     let continueRendering = true;
@@ -204,14 +195,14 @@ export const LiveAudioVisualizer = ({
 
   return (
     <div
-      className="relative h-full w-full rounded-md border border-black"
+      className="relative h-full w-full overflow-hidden rounded-md border border-black"
       ref={containerRef}
     >
       <canvas
         className="absolute inset-0"
         ref={canvasRef}
-        width={width}
-        height={height}
+        width={width * 2}
+        height={height * 2}
       />
     </div>
   );

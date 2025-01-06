@@ -1,18 +1,26 @@
 import { wordDefinitions } from "@/challenges/top100";
-import Link from "next/link";
+import { Link } from "@/components/Link";
+import { PracticeCountCell, TimeAttackCell } from "./client";
 
 export default function Home() {
   return (
     <main className="flex flex-col p-2">
-      <h1 className="text-4xl">Root</h1>
-      <div className="flex flex-col items-start gap-2">
+      <h1 className="text-4xl">Challenge List</h1>
+      <div className="grid grid-cols-3">
+        <div className="col-span-3 grid grid-cols-subgrid">
+          <div>Challenge</div>
+          <div className="text-end">Practice</div>
+          <div className="text-end">Speedrun</div>
+        </div>
         {Object.keys(wordDefinitions).map((ele) => (
           <Link
-            className="rounded-sm border border-black p-1 font-mono hocus:bg-slate-100"
+            className="col-span-3 grid grid-cols-subgrid"
             href={`/challenge-list/${ele}`}
             key={ele}
           >
-            {ele}
+            <div>{ele}</div>
+            <PracticeCountCell challengeId={ele} />
+            <TimeAttackCell challengeId={ele} />
           </Link>
         ))}
       </div>

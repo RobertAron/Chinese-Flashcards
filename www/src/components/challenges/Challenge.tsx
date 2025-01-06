@@ -23,7 +23,7 @@ export function Challenge({
         key={problem.id}
         id={problem.id}
         active={active}
-        practice
+        practice={practice}
       />
     ))
     .with({ type: "audio-challenge" }, (problem) => (
@@ -33,7 +33,7 @@ export function Challenge({
         key={problem.id}
         id={problem.id}
         active={active}
-        practice
+        practice={practice}
       />
     ))
     .with({ type: "definition-challenge" }, (problem) => (
@@ -43,7 +43,7 @@ export function Challenge({
         key={problem.id}
         id={problem.id}
         active
-        practice
+        practice={practice}
       />
     ))
     .exhaustive();

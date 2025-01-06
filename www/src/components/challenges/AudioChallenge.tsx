@@ -77,7 +77,7 @@ export function AudioChallenge({
               </div>
             </button>
           </div>
-          <div className="pointer-events-none h-full w-full grid-stack-item">
+          <div className="h-full w-full grid-stack-item">
             {audioSourceNode !== null && (
               <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />
             )}

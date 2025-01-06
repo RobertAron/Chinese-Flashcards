@@ -9,9 +9,10 @@ import {
 } from "motion/react";
 import { useRef, useState } from "react";
 import { useChallengeStream } from "../useChallengeStream";
-import { useTimeAttackPB } from "../../playerStats";
+import { useTimeAttackPB } from "../../../../utils/playerStats";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
+import { formatTimeAttackMs } from "@/utils/playerStats";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
@@ -38,26 +39,22 @@ export default AppPage(() => {
           <div>🥈 30s</div>
           <div>🥉 40s</div>
         </div>
-        <div className="flex grow basis-0 flex-col text-lg">
-          <div className="flex gap-1">
+        <div className="flex grow basis-0 flex-col items-end text-lg">
+          <div className="flex gap-1 truncate">
             <span>Previous Best:</span>
             <span>
-              {previousBest === null
-                ? "N/A"
-                : `${(previousBest / 1000).toFixed(2)}s`}
+              {previousBest === null ? "N/A" : formatTimeAttackMs(previousBest)}
             </span>
           </div>
-          <div>
-            {recentFinish !== null && (
-              <>
-                <div>Recent Finish</div>
-                <div className="text-end">
-                  {recentFinish === previousBest && "🎉"}
-                  {(recentFinish / 1000).toFixed(2)}
-                </div>
-              </>
-            )}
-          </div>
+          {recentFinish !== null && (
+            <div className="flex items-end gap-1">
+              <div>Recent Finish</div>
+              <div className="text-end">
+                {recentFinish === previousBest && "🎉"}
+                {formatTimeAttackMs(recentFinish)}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </ChallengeTitle>

@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useEffect, useState } from "react";
 
 function getLocalStorage<T>(key: string, defaultValue: T) {

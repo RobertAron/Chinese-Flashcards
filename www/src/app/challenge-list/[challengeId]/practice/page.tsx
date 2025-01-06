@@ -3,7 +3,10 @@ import { AppPage } from "@/components/AppPage";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { AnimatePresence } from "motion/react";
 import { useChallengeStream } from "../useChallengeStream";
-import { usePracticeCount } from "../../playerStats";
+import {
+  formatPracticeCount,
+  usePracticeCount,
+} from "../../../../utils/playerStats";
 import { useState } from "react";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
@@ -29,7 +32,9 @@ export default AppPage(({}) => {
             <div>🥈 250</div>
             <div>🥉 100</div>
           </div>
-          <div className="grow basis-0 text-3xl font-extrabold">{practiceCount}</div>
+          <div className="grow basis-0 text-3xl font-extrabold">
+            {formatPracticeCount(practiceCount)}
+          </div>
         </div>
       </ChallengeTitle>
     );
