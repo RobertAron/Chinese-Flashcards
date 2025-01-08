@@ -1,15 +1,13 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
-import { useChallengeContext } from "@/components/challenges/ChallengeContext";
-import { AnimatePresence } from "motion/react";
-import { useChallengeStream } from "../useChallengeStream";
-import {
-  formatPracticeCount,
-  usePracticeCount,
-} from "../../../../utils/playerStats";
-import { useState } from "react";
 import { Challenge } from "@/components/challenges/Challenge";
+import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
+import { formatPracticeCount, usePracticeCount } from "@/utils/playerStats";
+import { AnimatePresence } from "motion/react";
+import { useState } from "react";
+import { ExitButton } from "../ExitButton";
+import { useChallengeStream } from "../useChallengeStream";
 
 export default AppPage(({}) => {
   const { challengeId } = useChallengeContext();
@@ -43,16 +41,21 @@ export default AppPage(({}) => {
     nextProblem();
   };
   return (
-    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div>{practiceCount}</div>
-      <AnimatePresence mode="popLayout">
-        <Challenge
-          onProblemComplete={onProblemComplete}
-          challenge={problem}
-          active
-          practice
-        />
-      </AnimatePresence>
+    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle grid-stack">
+      <div className="justify-start self-start p-2 grid-stack-item">
+        <ExitButton onExit={() => setStarted(false)} />
+      </div>
+      <div className="flex flex-col items-center self-start justify-self-center grid-stack-item">
+        <div>{practiceCount}</div>
+        <AnimatePresence mode="popLayout">
+          <Challenge
+            onProblemComplete={onProblemComplete}
+            challenge={problem}
+            active
+            practice
+          />
+        </AnimatePresence>
+      </div>
     </div>
   );
 });
