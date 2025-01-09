@@ -127,8 +127,6 @@ export type Props = {
 
 export const LiveAudioVisualizer = ({
   mediaSource: mediaSource,
-  backgroundColor = "transparent",
-  barColor = "rgb(160, 198, 255)",
   fftSize = 8192,
   maxDecibels = -25,
   minDecibels = -90,
@@ -179,13 +177,11 @@ export const LiveAudioVisualizer = ({
 
   useLayoutEffect(() => {
     const { width, height } = containerRef.current.getBoundingClientRect();
-    console.log("use effect sizing", [width, height]);
     setCanvasSize([width, height]);
   }, []);
   useEffect(() => {
     const resizeObserver = new ResizeObserver((cb) => {
       for (const { contentRect: rect } of cb) {
-        console.log("resize sizing", [rect.width, rect.height]);
         setCanvasSize([rect.width, rect.height]);
       }
     });

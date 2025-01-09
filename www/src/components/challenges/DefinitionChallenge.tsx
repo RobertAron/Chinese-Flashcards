@@ -1,6 +1,6 @@
 "use client";
 import { Ref } from "react";
-import { ChallengeWrapper, useTypeMatchProgress, WordProgress } from "./utils";
+import { ChallengeWrapper, WordProgress } from "./utils";
 
 type DefinitionChallengeProps = {
   pinyin: string;
@@ -23,18 +23,17 @@ export function DefinitionChallenge({
   display,
   definition,
 }: DefinitionChallengeProps) {
-  const progress = useTypeMatchProgress(pinyin, active, onComplete);
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
       <div className="flex h-36 items-center justify-center">
         <div className="text-center text-2xl">{definition}</div>
       </div>
       <WordProgress
-        progress={progress}
         pinyin={pinyin}
         active={active}
         display={display}
         practice={practice}
+        onComplete={onComplete}
       />
     </ChallengeWrapper>
   );

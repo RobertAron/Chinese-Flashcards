@@ -1,48 +1,74 @@
 import clsx from "clsx";
 import { Ref, useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { Kbd } from "../Kbd";
 
-export function useTypeMatchProgress(
-  word: string,
-  active?: boolean,
-  onComplete?: () => void,
-) {
-  const normalized = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+type WordProgressProps = {
+  pinyin: string;
+  practice?: boolean;
+  display?: boolean;
+  active?: boolean;
+  onComplete?: () => void;
+};
+
+// prettier-ignore
+const toneMap : Record<string, [string,string,string] | undefined> = {
+  'ā': ['ā',"a","1"], 'á': ['á',"a","2"], 'ǎ': ['ǎ',"a","3"], 'à': ['à',"a","4"], // a
+  'ē': ['ē',"e","1"], 'é': ['é',"e","2"], 'ě': ['ě',"e","3"], 'è': ['è',"e","4"], // e
+  'ī': ['ī',"i","1"], 'í': ['í',"i","2"], 'ǐ': ['ǐ',"i","3"], 'ì': ['ì',"i","4"], // i
+  'ō': ['ō',"o","1"], 'ó': ['ó',"o","2"], 'ǒ': ['ǒ',"o","3"], 'ò': ['ò',"o","4"], // o
+  'ū': ['ū',"u","1"], 'ú': ['ú',"u","2"], 'ǔ': ['ǔ',"u","3"], 'ù': ['ù',"u","4"], // u
+  'ǖ': ['ǖ',"u","1"], 'ǘ': ['ǘ',"u","2"], 'ǚ': ['ǚ',"u","3"], 'ǜ': ['ǜ',"u","4"], // ü
+};
+const letterMapping: Record<string, string[]> = {
+  a: ["ā", "á", "ǎ", "à"],
+  e: ["ē", "é", "ě", "è"],
+  i: ["ī", "í", "ǐ", "ì"],
+  o: ["ō", "ó", "ǒ", "ò"],
+  u: ["ū", "ú", "ǔ", "ù"],
+  ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
+};
+
+export function WordProgress({
+  pinyin,
+  practice,
+  active,
+  display,
+  onComplete,
+}: WordProgressProps) {
+  const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
   const [progress, setProgress] = useState(0);
+  const [secondaryProgress, setSecondaryProgress] = useState(0);
+  const currentCharacter = normalized[progress];
+  const isToneCharacter = Array.isArray(currentCharacter);
 
   useEffect(() => {
     if (!active) return;
     const cb = (e: KeyboardEvent) => {
-      const requiredLetter = normalized[progress];
       const onLastLetter = progress === normalized.length - 1;
-      if (e.key === requiredLetter) {
+      const currentCharacter = normalized[progress];
+      const isToneCharacter = Array.isArray(currentCharacter);
+      // characters with tones
+      if (isToneCharacter) {
+        if (secondaryProgress === 0 && e.key === currentCharacter[1])
+          setSecondaryProgress(1);
+        else if (secondaryProgress === 1 && e.key === currentCharacter[2]) {
+          setProgress(progress + 1);
+          setSecondaryProgress(0);
+          if (onLastLetter) onComplete?.();
+        }
+      }
+      // characters without tones
+      else if (e.key === currentCharacter) {
         setProgress(progress + 1);
         if (onLastLetter) onComplete?.();
       }
     };
     window.addEventListener("keydown", cb);
     return () => window.removeEventListener("keydown", cb);
-  }, [active, normalized, progress, onComplete]);
-  return progress;
-}
-
-type WordProgressProps = {
-  pinyin: string;
-  progress: number;
-  practice?: boolean;
-  display?: boolean;
-  active?: boolean;
-};
-
-export function WordProgress({
-  pinyin,
-  progress,
-  practice,
-  active,
-  display,
-}: WordProgressProps) {
+  }, [active, normalized, progress, secondaryProgress, onComplete]);
   return (
-    <div className="flex justify-center gap-[0.05em] text-center font-mono text-xl tracking-tighter">
+    <div className="relative flex justify-center gap-[0.05em] text-center font-mono text-xl tracking-tighter">
       {pinyin
         .split("")
         .slice(0, progress)
@@ -81,7 +107,47 @@ export function WordProgress({
             {ele}
           </motion.span>
         ))}
+      <AnimatePresence>
+        {isToneCharacter && secondaryProgress === 1 && (
+          <ToneHints character={currentCharacter[1]} />
+        )}
+      </AnimatePresence>
     </div>
+  );
+}
+
+const possibleToneChars = new Set(Object.keys(letterMapping));
+function ToneHints({
+  character,
+  ref,
+}: {
+  character: string;
+  ref?: Ref<HTMLDivElement>;
+}) {
+  if (!possibleToneChars.has(character)) return null;
+  return (
+    <motion.div
+      className="absolute left-1/2 top-full flex -translate-x-1/2"
+      ref={ref}
+    >
+      <motion.div
+        className="relative flex gap-2 rounded-md border-2 border-black bg-white p-2"
+        initial={{ top: 30, opacity: 0 }}
+        animate={{ top: 0, opacity: 1 }}
+        exit={{ top: 30, opacity: 0 }}
+        transition={{ duration: 0.075 }}
+      >
+        {letterMapping[character]?.map((ele, index) => (
+          <div
+            className="flex items-center gap-3 rounded-sm border border-slate-700 px-2 py-1"
+            key={index}
+          >
+            <Kbd>{index + 1}</Kbd>
+            <div className="text-lg">{ele}</div>
+          </div>
+        ))}
+      </motion.div>
+    </motion.div>
   );
 }
 

@@ -9,7 +9,7 @@ import {
 } from "react";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { getAudioContext } from "@/utils/audioContext";
-import { ChallengeWrapper, useTypeMatchProgress, WordProgress } from "./utils";
+import { ChallengeWrapper, WordProgress } from "./utils";
 import { RotateCcw } from "lucide-react";
 import { Kbd } from "../Kbd";
 
@@ -32,7 +32,6 @@ export function AudioChallenge({
   ref,
   display,
 }: PinyinChallengeProps) {
-  const progress = useTypeMatchProgress(pinyin, active, onComplete);
   const url = encodeURI(`/assets/single-word-audio/${pinyin}.mp3`);
   const audioRef = useRef<HTMLMediaElement>(null!);
   const [audioSourceNode, setAudioSourceNode] =
@@ -65,9 +64,9 @@ export function AudioChallenge({
       <audio ref={audioRef} src={url} autoPlay />
       {!display && (
         <div className="h-36 w-full grid-stack">
-          <div className="ml-1 mt-1 self-start justify-self-start grid-stack-item z-10">
+          <div className="z-10 ml-1 mt-1 self-start justify-self-start grid-stack-item">
             <button
-              className="group flex items-center gap-4 rounded-lg border-[0.5px] border-black bg-white/30 backdrop-blur-sm p-2 text-sm hocus:border-slate-300 hocus:bg-black hocus:text-white"
+              className="group flex items-center gap-4 rounded-lg border-[0.5px] border-black bg-white/30 p-2 text-sm backdrop-blur-sm hocus:border-slate-300 hocus:bg-black hocus:text-white"
               onClick={playAudio}
             >
               <RotateCcw className="h-4 w-4" />
@@ -85,11 +84,11 @@ export function AudioChallenge({
         </div>
       )}
       <WordProgress
-        progress={progress}
         pinyin={pinyin}
         active={active}
         display={display}
         practice={practice}
+        onComplete={onComplete}
       />
     </ChallengeWrapper>
   );
