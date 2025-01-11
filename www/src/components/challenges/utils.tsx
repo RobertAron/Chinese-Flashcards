@@ -29,6 +29,11 @@ const letterMapping: Record<string, string[]> = {
   ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
 };
 
+const noTypingRequired = /[ ?]/;
+function extractChar(char: string | [string, string, string] | undefined) {
+  const isToneCharacter = Array.isArray(char);
+  return ((isToneCharacter ? char[1] : char) ?? "").toLowerCase();
+}
 export function WordProgress({
   pinyin,
   practice,
@@ -45,22 +50,26 @@ export function WordProgress({
   useEffect(() => {
     if (!active) return;
     const cb = (e: KeyboardEvent) => {
-      const onLastLetter = progress === normalized.length - 1;
       const currentCharacter = normalized[progress];
       const isToneCharacter = Array.isArray(currentCharacter);
+      const rawChar = extractChar(currentCharacter);
+      const nextRawChar = extractChar(normalized[progress + 1]);
+      const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
+      const nextStep = progress + incrementAmount;
+      const onLastLetter = progress + incrementAmount === normalized.length;
       // characters with tones
       if (isToneCharacter) {
-        if (secondaryProgress === 0 && e.key === currentCharacter[1])
+        if (secondaryProgress === 0 && e.key.toLocaleLowerCase() === rawChar)
           setSecondaryProgress(1);
         else if (secondaryProgress === 1 && e.key === currentCharacter[2]) {
-          setProgress(progress + 1);
+          setProgress(nextStep);
           setSecondaryProgress(0);
           if (onLastLetter) onComplete?.();
         }
       }
       // characters without tones
-      else if (e.key === currentCharacter) {
-        setProgress(progress + 1);
+      else if (e.key.toLocaleLowerCase() === rawChar) {
+        setProgress(nextStep);
         if (onLastLetter) onComplete?.();
       }
     };
@@ -75,7 +84,9 @@ export function WordProgress({
         .map((ele, index) => (
           <span
             className={clsx("text-black", {
-              "underline decoration-black decoration-skip-ink-none": practice,
+              "whitespace-pre decoration-black decoration-skip-ink-none":
+                practice,
+                underline: ele !== " ",
             })}
             key={index}
           >
@@ -88,14 +99,16 @@ export function WordProgress({
         .slice(progress)
         .map((ele, index) => (
           <motion.span
-            className={clsx("text-slate-400", {
-              "underline decoration-black decoration-skip-ink-none": practice,
+            className={clsx("whitespace-pre text-slate-400", {
+              "decoration-black decoration-skip-ink-none": practice,
+              underline: ele !== " ",
+              "bg-slate-300/50": index === 0,
             })}
             initial={{ color: "#94a3b800" }}
             animate={active ? "active" : display ? "display" : "initial"}
             transition={{
-              duration: practice ? 2 : 0,
-              delay: practice ? 2 : 0,
+              duration: practice ? 4 : 0,
+              delay: practice ? 4 : 0,
             }}
             variants={{
               initial: { color: "#94a3b800" },
@@ -169,7 +182,7 @@ export function ChallengeWrapper({
       layout="position"
       layoutId={id}
       className={clsx(
-        "flex w-64 flex-col items-center gap-2 rounded-md border-2 bg-white p-2",
+        "flex min-w-64 max-w-sm md:max-w-md lg:max-w-lg flex-col items-center gap-2 rounded-md border-2 bg-white p-2",
         {
           "border-black": active,
           "border-slate-300": !active,

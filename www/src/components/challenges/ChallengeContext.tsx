@@ -1,5 +1,6 @@
 "use client";
-import { WordDefinition, wordDefinitions } from "@/challenges/top100";
+import { allChallenges } from "@/challenges/allChalenges";
+import { WordDefinition } from "@/challenges/types";
 import { generateContext } from "@/utils/createContext";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -17,6 +18,7 @@ type AudioChallenge = {
   type: "audio-challenge";
   id: string;
   pinyin: string;
+  fileName: string;
 };
 type DefinitionChallenge = {
   type: "definition-challenge";
@@ -24,9 +26,13 @@ type DefinitionChallenge = {
   pinyin: string;
   definition: string;
 };
-export type AllChallenges = PinyinChallenge | AudioChallenge | DefinitionChallenge;
+export type AllChallenges =
+  | PinyinChallenge
+  | AudioChallenge
+  | DefinitionChallenge;
 type ProvidedValue = {
   challengeId: string;
+  challengeLabel: string;
   wordDefinitions: WordDefinition[];
   challenges: AllChallenges[];
 };
@@ -37,21 +43,27 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
       function ChallengeProvider({ children }: ProviderProps) {
         const challengeId = useParams()["challengeId"];
         if (typeof challengeId !== "string") return null;
-        const selectedDefinitions = wordDefinitions[challengeId];
-        if (selectedDefinitions === undefined) return null;
-        const calculatedChallenges = selectedDefinitions.flatMap(
-          ({ character, definition, id, pinyin }): AllChallenges[] => [
+        const selectedChallenge = allChallenges[challengeId];
+        if (selectedChallenge === undefined) return null;
+        const calculatedChallenges = selectedChallenge.words.flatMap(
+          ({
+            character,
+            definition,
+            id,
+            pinyin,
+            fileName,
+          }): AllChallenges[] => [
             {
               type: "pinyin-challenge",
               id: `${id}-pinyin`,
               pinyin,
               character,
             },
-            { type: "audio-challenge", id: `${id}-audio`, pinyin },
+            { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
             {
               type: "definition-challenge",
               definition,
-              id: `${id}-audio`,
+              id: `${id}-definition`,
               pinyin,
             },
           ],
@@ -60,7 +72,8 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
           <Provider
             value={{
               challengeId,
-              wordDefinitions: selectedDefinitions,
+              challengeLabel: selectedChallenge.label,
+              wordDefinitions: selectedChallenge.words,
               challenges: calculatedChallenges,
             }}
           >

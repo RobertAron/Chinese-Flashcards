@@ -13,6 +13,7 @@ import { useTimeAttackPB } from "../../../../utils/playerStats";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { formatTimeAttackMs } from "@/utils/playerStats";
+import { ExitButton } from "../ExitButton";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
@@ -23,6 +24,7 @@ export default AppPage(() => {
     <TimeAttackRunning
       onTimeAttackComplete={(completedTime) => {
         setTimeAttackRunning(false);
+        if (completedTime === null) return;
         setRecentFinish(completedTime);
         if (previousBest === null || completedTime < previousBest)
           setNewBest(completedTime);
@@ -65,7 +67,7 @@ const itemsToComplete = 20;
 function TimeAttackRunning({
   onTimeAttackComplete,
 }: {
-  onTimeAttackComplete: (completedTime: number) => void;
+  onTimeAttackComplete: (completedTime: number | null) => void;
 }) {
   const [completedItems, setCompletedItems] = useState(0);
   const { problem, nextProblem, init } = useChallengeStream();
@@ -90,6 +92,7 @@ function TimeAttackRunning({
 
   return (
     <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <ExitButton onExit={() => onTimeAttackComplete(null)} />
       <div ref={timerRef} className="font-mono">
         0.00
       </div>

@@ -9,12 +9,12 @@ import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
 import { ListChecks, Timer } from "lucide-react";
 
 export default AppPage(() => {
-  const { challengeId, wordDefinitions } = useChallengeContext();
+  const { challengeId, wordDefinitions,challengeLabel } = useChallengeContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
     <main className="flex flex-col items-start gap-2 p-1">
-      <h1 className="text-3xl font-bold underline">{challengeId}</h1>
+      <h1 className="text-3xl font-bold underline">{challengeLabel}</h1>
       <section className="flex flex-col gap-2 border border-black p-2">
         <h2 className="text-xl font-semibold">Select Mode</h2>
         <Link

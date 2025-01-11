@@ -1,4 +1,4 @@
-import { wordDefinitions } from "@/challenges/top100";
+import { allChallenges } from "@/challenges/allChalenges";
 import { Link } from "@/components/Link";
 import { PracticeCountCell, TimeAttackCell } from "./client";
 
@@ -12,13 +12,13 @@ export default function Home() {
           <div className="text-end">Practice</div>
           <div className="text-end">Speedrun</div>
         </div>
-        {Object.keys(wordDefinitions).map((ele) => (
+        {Object.entries(allChallenges).map(([ele, data]) => (
           <Link
             className="col-span-3 grid grid-cols-subgrid"
             href={`/challenge-list/${ele}`}
             key={ele}
           >
-            <div>{ele}</div>
+            <div>{data.label}</div>
             <PracticeCountCell challengeId={ele} />
             <TimeAttackCell challengeId={ele} />
           </Link>

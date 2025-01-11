@@ -13,13 +13,14 @@ import { ChallengeWrapper, WordProgress } from "./utils";
 import { RotateCcw } from "lucide-react";
 import { Kbd } from "../Kbd";
 
-type PinyinChallengeProps = {
+type AudioChallengeProps = {
   pinyin: string;
   id: string;
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
   display?: boolean;
+  fileName: string;
   ref?: Ref<HTMLDivElement>;
 };
 
@@ -31,8 +32,9 @@ export function AudioChallenge({
   id,
   ref,
   display,
-}: PinyinChallengeProps) {
-  const url = encodeURI(`/assets/single-word-audio/${pinyin}.mp3`);
+  fileName,
+}: AudioChallengeProps) {
+  const url = encodeURI(`/assets/single-word-audio/${fileName}`);
   const audioRef = useRef<HTMLMediaElement>(null!);
   const [audioSourceNode, setAudioSourceNode] =
     useState<MediaElementAudioSourceNode | null>(null);
