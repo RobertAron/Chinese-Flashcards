@@ -30,6 +30,7 @@ const letterMapping: Record<string, string[]> = {
 };
 
 const noTypingRequired = /[ ?]/;
+const punctuation = /[?]/;
 function extractChar(char: string | [string, string, string] | undefined) {
   const isToneCharacter = Array.isArray(char);
   return ((isToneCharacter ? char[1] : char) ?? "").toLowerCase();
@@ -38,7 +39,6 @@ export function WordProgress({
   pinyin,
   practice,
   active,
-  display,
   onComplete,
 }: WordProgressProps) {
   const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
@@ -83,10 +83,9 @@ export function WordProgress({
         .slice(0, progress)
         .map((ele, index) => (
           <span
-            className={clsx("text-black", {
-              "whitespace-pre decoration-black decoration-skip-ink-none":
-                practice,
-                underline: ele !== " ",
+            className={clsx("whitespace-pre text-black", {
+              "decoration-black decoration-skip-ink-none": practice,
+              underline: !noTypingRequired.test(ele),
             })}
             key={index}
           >
@@ -95,31 +94,35 @@ export function WordProgress({
         ))}
       {pinyin
         .split("")
-        .map((ele) => (practice || display ? ele : "·"))
         .slice(progress)
-        .map((ele, index) => (
-          <motion.span
-            className={clsx("whitespace-pre text-slate-400", {
-              "decoration-black decoration-skip-ink-none": practice,
-              underline: ele !== " ",
-              "bg-slate-300/50": index === 0,
-            })}
-            initial={{ color: "#94a3b800" }}
-            animate={active ? "active" : display ? "display" : "initial"}
-            transition={{
-              duration: practice ? 4 : 0,
-              delay: practice ? 4 : 0,
-            }}
-            variants={{
-              initial: { color: "#94a3b800" },
-              active: { color: "#94a3b8FF" },
-              display: { color: "#000" },
-            }}
-            key={index}
-          >
-            {ele}
-          </motion.span>
-        ))}
+        .map((ele, index) => {
+          const isNoTypingRequired = noTypingRequired.test(ele);
+          const isPunctuation = punctuation.test(ele);
+          const showLetter = practice || isPunctuation || isNoTypingRequired;
+          return (
+            <motion.span
+              className={clsx("whitespace-pre text-slate-400", {
+                "decoration-black decoration-skip-ink-none": practice,
+                underline: !isNoTypingRequired,
+                "bg-slate-300/50": index === 0,
+              })}
+              initial={{ color: "#94a3b800" }}
+              animate={active ? "active" : "initial"}
+              transition={{
+                duration: practice ? 4 : 0,
+                delay: practice ? 4 : 0,
+              }}
+              variants={{
+                initial: { color: "#94a3b800" },
+                active: { color: "#94a3b8FF" },
+                display: { color: "#000" },
+              }}
+              key={index}
+            >
+              {showLetter ? ele : "·"}
+            </motion.span>
+          );
+        })}
       <AnimatePresence>
         {isToneCharacter && secondaryProgress === 1 && (
           <ToneHints character={currentCharacter[1]} />
@@ -182,7 +185,7 @@ export function ChallengeWrapper({
       layout="position"
       layoutId={id}
       className={clsx(
-        "flex min-w-64 max-w-sm md:max-w-md lg:max-w-lg flex-col items-center gap-2 rounded-md border-2 bg-white p-2",
+        "flex min-w-64 max-w-sm flex-col items-center gap-2 rounded-md border-2 bg-white p-2 md:max-w-md lg:max-w-lg",
         {
           "border-black": active,
           "border-slate-300": !active,

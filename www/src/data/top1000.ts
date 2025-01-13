@@ -126,8 +126,7 @@ export const data = [
   {
     character: "很",
     pinyin: "hěn",
-    definition:
-      "pretty, thrice, monstrously, gey, quite, mighty, stinking, sopping, some, assai, full, most, clinking, much, thumping, awfully, fiendishly, thundering, very, real, really, bally, proper, grossly, powerful, so, rattling, well, considerably, greatly, terribly",
+    definition: "very, quite, much",
   },
   {
     character: "种",
