@@ -1,0 +1,12 @@
+{
+  "name": "common-data",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./top1000": "./src/top1000.ts",
+    "./manual": "./src/manual.ts",
+    "./most-common-characters": "./src/most-common-characters/all.ts",
+    "./common-words": "./src/common-words.ts",
+    "./types": "./src/types.ts"
+  }
+}

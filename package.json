@@ -1,0 +1,9 @@
+{
+  "name": "vocab-sprint",
+  "devDependencies": {
+    "turbo": "^2.3.3"
+  },
+  "workspaces": [
+    "apps/*"
+  ]
+}
