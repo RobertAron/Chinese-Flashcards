@@ -1,4 +1,4 @@
-import { WordDefinition } from "@/challenges/types";
+import { WordDefinition } from "common-data/types";
 
 type WordOutlineProps = {
   word: WordDefinition;

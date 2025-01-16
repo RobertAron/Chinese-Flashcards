@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 import { AllChallenges } from "./ChallengeContext";
-import { PinyinChallenge } from "./PinyinChallenge";
+import { CharacterChallenge } from "./PinyinChallenge";
 import { AudioChallenge } from "./AudioChallenge";
 import { DefinitionChallenge } from "./DefinitionChallenge";
 
@@ -16,8 +16,8 @@ export function Challenge({
   practice?: boolean;
 }) {
   return match(challenge)
-    .with({ type: "pinyin-challenge" }, (problem) => (
-      <PinyinChallenge
+    .with({ type: "character-challenge" }, (problem) => (
+      <CharacterChallenge
         {...problem}
         onComplete={onProblemComplete}
         key={problem.id}

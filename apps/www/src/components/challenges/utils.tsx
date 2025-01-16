@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Ref, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Kbd } from "../Kbd";
+import { useUserSettings } from "../useUserSettings";
 
 type WordProgressProps = {
   pinyin: string;
@@ -42,6 +43,7 @@ export function WordProgress({
   onComplete,
 }: WordProgressProps) {
   const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
+  const [{ requireToneInput }] = useUserSettings();
   const [progress, setProgress] = useState(0);
   const [secondaryProgress, setSecondaryProgress] = useState(0);
   const currentCharacter = normalized[progress];
@@ -58,7 +60,7 @@ export function WordProgress({
       const nextStep = progress + incrementAmount;
       const onLastLetter = progress + incrementAmount === normalized.length;
       // characters with tones
-      if (isToneCharacter) {
+      if (isToneCharacter && requireToneInput) {
         if (secondaryProgress === 0 && e.key.toLocaleLowerCase() === rawChar)
           setSecondaryProgress(1);
         else if (secondaryProgress === 1 && e.key === currentCharacter[2]) {
@@ -75,7 +77,14 @@ export function WordProgress({
     };
     window.addEventListener("keydown", cb);
     return () => window.removeEventListener("keydown", cb);
-  }, [active, normalized, progress, secondaryProgress, onComplete]);
+  }, [
+    active,
+    normalized,
+    progress,
+    secondaryProgress,
+    onComplete,
+    requireToneInput,
+  ]);
   return (
     <div className="relative flex justify-center gap-[0.05em] text-center font-mono text-xl tracking-tighter">
       {pinyin

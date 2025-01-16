@@ -91,24 +91,28 @@ function TimeAttackRunning({
   };
 
   return (
-    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <ExitButton onExit={() => onTimeAttackComplete(null)} />
-      <div ref={timerRef} className="font-mono">
-        0.00
+    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle grid-stack">
+      <div className="justify-start self-start p-2 grid-stack-item">
+        <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
-      <div className="grid grid-cols-5 gap-1">
-        {new Array(20).fill(null).map((_, index) => (
-          <ProgressItem complete={index < completedItems} key={index} />
-        ))}
+      <div className="flex flex-col items-center self-start justify-self-center grid-stack-item">
+        <div ref={timerRef} className="font-mono">
+          0.00
+        </div>
+        <div className="grid grid-cols-5 gap-1">
+          {new Array(20).fill(null).map((_, index) => (
+            <ProgressItem complete={index < completedItems} key={index} />
+          ))}
+        </div>
+        <div>{completedItems}</div>
+        <AnimatePresence mode="popLayout">
+          <Challenge
+            challenge={problem}
+            onProblemComplete={onProblemComplete}
+            active
+          />
+        </AnimatePresence>
       </div>
-      <div>{completedItems}</div>
-      <AnimatePresence mode="popLayout">
-        <Challenge
-          challenge={problem}
-          onProblemComplete={onProblemComplete}
-          active
-        />
-      </AnimatePresence>
     </div>
   );
 }

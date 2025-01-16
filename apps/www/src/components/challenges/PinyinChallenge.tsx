@@ -2,7 +2,7 @@
 import { Ref } from "react";
 import { ChallengeWrapper, WordProgress } from "./utils";
 
-type PinyinChallengeProps = {
+type CharacterChallengeProps = {
   character: string;
   pinyin: string;
   id: string;
@@ -13,7 +13,7 @@ type PinyinChallengeProps = {
   ref?: Ref<HTMLDivElement>;
 };
 
-export function PinyinChallenge({
+export function CharacterChallenge({
   character,
   pinyin,
   onComplete,
@@ -22,7 +22,7 @@ export function PinyinChallenge({
   id,
   ref,
   display,
-}: PinyinChallengeProps) {
+}: CharacterChallengeProps) {
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
       <div className="flex h-36 flex-col items-center justify-center">

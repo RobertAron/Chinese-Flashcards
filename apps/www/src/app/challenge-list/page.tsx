@@ -1,4 +1,4 @@
-import { allChallenges } from "@/challenges/allChalenges";
+import { allChallenges } from "@/challenges/allChallenges";
 import { Link } from "@/components/Link";
 import { PracticeCountCell, TimeAttackCell } from "./client";
 

@@ -11,13 +11,14 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "common-data": "*",
     "lucide-react": "^0.469.0",
     "motion": "^11.15.0",
     "next": "15.1.3",
     "react": "^19.0.0",
+    "react-aria-components": "^1.5.0",
     "react-dom": "^19.0.0",
-    "ts-pattern": "^5.6.0",
-    "common-data": "*"
+    "ts-pattern": "^5.6.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

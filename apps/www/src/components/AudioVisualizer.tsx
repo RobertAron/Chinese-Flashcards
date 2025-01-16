@@ -18,7 +18,6 @@ function average(nums: number[]) {
   return sum / nums.length;
 }
 
-const renderScaling = 2;
 export const calculateBarData = (
   frequencyData: Uint8Array,
   desiredBars = 100,

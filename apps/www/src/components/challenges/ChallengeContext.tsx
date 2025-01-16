@@ -1,15 +1,16 @@
 "use client";
-import { allChallenges } from "@/challenges/allChalenges";
-import { WordDefinition } from "@/challenges/types";
+import { allChallenges } from "@/challenges/allChallenges";
 import { generateContext } from "@/utils/createContext";
+import { WordDefinition } from "common-data/types";
 import { useParams } from "next/navigation";
 import React from "react";
+import { useUserSettings } from "../useUserSettings";
 
 type ProviderProps = {
   children?: React.ReactNode;
 };
-type PinyinChallenge = {
-  type: "pinyin-challenge";
+type CharacterChallenge = {
+  type: "character-challenge";
   id: string;
   character: string;
   pinyin: string;
@@ -27,7 +28,7 @@ type DefinitionChallenge = {
   definition: string;
 };
 export type AllChallenges =
-  | PinyinChallenge
+  | CharacterChallenge
   | AudioChallenge
   | DefinitionChallenge;
 type ProvidedValue = {
@@ -42,6 +43,7 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
     (Provider) =>
       function ChallengeProvider({ children }: ProviderProps) {
         const challengeId = useParams()["challengeId"];
+        const [userSettings] = useUserSettings();
         if (typeof challengeId !== "string") return null;
         const selectedChallenge = allChallenges[challengeId];
         if (selectedChallenge === undefined) return null;
@@ -52,21 +54,31 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
             id,
             pinyin,
             fileName,
-          }): AllChallenges[] => [
-            {
-              type: "pinyin-challenge",
-              id: `${id}-pinyin`,
-              pinyin,
-              character,
-            },
-            { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
-            {
-              type: "definition-challenge",
-              definition,
-              id: `${id}-definition`,
-              pinyin,
-            },
-          ],
+          }): AllChallenges[] => {
+            const result: AllChallenges[] = [
+              {
+                type: "character-challenge",
+                id: `${id}-character`,
+                pinyin,
+                character,
+              },
+              { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
+              {
+                type: "definition-challenge",
+                definition,
+                id: `${id}-definition`,
+                pinyin,
+              },
+            ];
+            if (userSettings.enableCharacterChallenges)
+              result.push({
+                type: "character-challenge",
+                id: `${id}-pinyin`,
+                pinyin,
+                character,
+              });
+            return result;
+          },
         );
         return (
           <Provider
