@@ -11,13 +11,10 @@ import { useChallengeStream } from "../useChallengeStream";
 
 export default AppPage(({}) => {
   const { challengeId } = useChallengeContext();
-  const { problem, nextProblem, init } = useChallengeStream();
+  const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
   const [started, setStarted] = useState(false);
-  if (problem === undefined) {
-    init();
-    return null;
-  }
+  if (initializing) return null;
   if (!started)
     return (
       <ChallengeTitle

@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import useSWR from "swr";
 
 function getLocalStorage<T = unknown>(
   key: string,
@@ -15,20 +15,17 @@ function getLocalStorage<T = unknown>(
   }
 }
 
+const localStorageKey = Symbol("local-storage-hook");
 export function useLocalStorage<T>(key: string, defaultValue: T) {
-  const stringifiedDefaultValue = JSON.stringify(defaultValue);
-  // State to store the value
-  const [storedValue, setStoredValue] = useState<T>(defaultValue);
-  useEffect(() => {
-    setStoredValue(getLocalStorage<T>(key, stringifiedDefaultValue));
-  }, [key, stringifiedDefaultValue]);
-  const _setStoredValue = useCallback(
-    (value: T) => {
-      window.localStorage.setItem(key, JSON.stringify(value));
-      setStoredValue(value);
+  const { data = defaultValue, mutate } = useSWR(
+    [localStorageKey, key],
+    ([, key]) => {
+      return getLocalStorage<T>(key, JSON.stringify(defaultValue));
     },
-    [key],
   );
-
-  return [storedValue, _setStoredValue] as const;
+  function setValue(newValue: T) {
+    window.localStorage.setItem(key, JSON.stringify(newValue));
+    mutate();
+  }
+  return [data, setValue] as const;
 }

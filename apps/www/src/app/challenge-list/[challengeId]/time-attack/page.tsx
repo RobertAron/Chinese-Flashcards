@@ -70,16 +70,13 @@ function TimeAttackRunning({
   onTimeAttackComplete: (completedTime: number | null) => void;
 }) {
   const [completedItems, setCompletedItems] = useState(0);
-  const { problem, nextProblem, init } = useChallengeStream();
+  const { problem, nextProblem, initializing } = useChallengeStream();
   const time = useTime();
   const timerRef = useRef<HTMLDivElement>(null!);
   useMotionValueEvent(time, "change", (val) => {
     timerRef.current.textContent = (val / 1000).toFixed(2);
   });
-  if (problem === undefined) {
-    init();
-    return null;
-  }
+  if (initializing) return null;
 
   const onProblemComplete = () => {
     if (completedItems === itemsToComplete - 1)
