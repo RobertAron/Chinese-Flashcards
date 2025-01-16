@@ -56,12 +56,6 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
             fileName,
           }): AllChallenges[] => {
             const result: AllChallenges[] = [
-              {
-                type: "character-challenge",
-                id: `${id}-character`,
-                pinyin,
-                character,
-              },
               { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
               {
                 type: "definition-challenge",
