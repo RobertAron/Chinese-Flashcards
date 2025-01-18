@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased relative`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased relative min-h-full`}
       >
         <div>
           <nav className="relative z-10 flex border-b border-black bg-white">

@@ -1,6 +1,7 @@
 "use client";
-import { useEffect } from "react";
+import { Ref, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import useSWR from "swr";
+import { getAudioContext } from "./audioContext";
 
 function getLocalStorage<T = unknown>(
   key: string,
@@ -38,5 +39,28 @@ export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [cb,key]);
+  }, [cb, key]);
+}
+
+export function useAudioSourceNode(mediaElementRef: {
+  current: HTMLMediaElement;
+}) {
+  const [audioSourceNode, setAudioSourceNode] =
+    useState<MediaElementAudioSourceNode | null>(null);
+  useLayoutEffect(() => {
+    const audioContext = getAudioContext();
+    const sourceNode = audioContext.createMediaElementSource(
+      mediaElementRef.current,
+    );
+    sourceNode.connect(audioContext.destination);
+    setAudioSourceNode(sourceNode);
+  }, [mediaElementRef]);
+  const playAudio = useCallback(() => {
+    mediaElementRef.current.currentTime = 0; // Reset playback
+    mediaElementRef.current.play(); // Replay audio
+  }, [mediaElementRef]);
+  return {
+    audioSourceNode,
+    playAudio,
+  };
 }

@@ -51,12 +51,13 @@ export function ChallengeTitle({
       </div>
       <div className="flex gap-1 border-black">
         <ExitLink
-          className="flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white py-2 px-4"
+          className="flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white px-4 py-2"
           href={`/challenge-list/${challengeId}`}
         />
         <Button
-          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white py-2 px-4"
+          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2"
           onClick={onStart}
+          autoFocus
         >
           <span>{again ? "Improve" : "Start"}</span>
           <ChevronRight />

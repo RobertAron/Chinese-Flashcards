@@ -7,7 +7,6 @@ import { useUserSettings } from "../useUserSettings";
 type WordProgressProps = {
   pinyin: string;
   practice?: boolean;
-  display?: boolean;
   active?: boolean;
   onComplete?: () => void;
 };
@@ -124,7 +123,6 @@ export function WordProgress({
               variants={{
                 initial: { color: "#94a3b800" },
                 active: { color: "#94a3b8FF" },
-                display: { color: "#000" },
               }}
               key={index}
             >

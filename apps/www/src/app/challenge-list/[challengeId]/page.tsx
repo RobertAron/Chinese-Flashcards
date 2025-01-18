@@ -28,7 +28,7 @@ function ModeOption({
       whileFocus={whileHocus}
       transition={{ duration: 0.1 }}
       href={href}
-      className="group flex basis-0 flex-shrink-0 flex-grow origin-center items-center gap-8 rounded-lg border-2 border-black bg-white p-4 hocus:bg-black hocus:text-white"
+      className="group flex flex-shrink-0 flex-grow basis-0 origin-center items-center gap-8 rounded-lg border-2 border-black bg-white p-4 hocus:bg-black hocus:text-white"
     >
       {children}
     </MotionLink>
@@ -46,7 +46,7 @@ export default AppPage(() => {
       <ExitLink href="/challenge-list" />
       <section className="flex w-full flex-col gap-2">
         <h2 className="text-4xl font-bold text-blue-700">Select Mode</h2>
-        <div className="flex gap-4 flex-wrap">
+        <div className="flex flex-wrap gap-4">
           <ModeOption href={`/challenge-list/${challengeId}/practice`}>
             <div className="h-32 w-32 flex-shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
               <ListChecks className="h-full w-full" />
@@ -61,8 +61,8 @@ export default AppPage(() => {
               <Timer className="h-full w-full" />
             </div>
             <div>
-              <div className="text-4xl whitespace-nowrap">Time Attack</div>
-              <div className="text-4xl whitespace-nowrap">
+              <div className="whitespace-nowrap text-4xl">Time Attack</div>
+              <div className="whitespace-nowrap text-4xl">
                 {match(timeAttackPb)
                   .with(null, () => "Not Completed")
                   .otherwise((pb) => (
@@ -76,9 +76,9 @@ export default AppPage(() => {
           </ModeOption>
         </div>
       </section>
-      <section className="flex flex-col gap-2">
+      <section className="flex w-full flex-col gap-2">
         <h2 className="text-2xl font-semibold">WORDS</h2>
-        <div className="flex flex-wrap gap-2 [&>*]:flex-grow">
+        <div className="grid w-full grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
           {wordDefinitions.map((word) => (
             <WordOutline word={word} key={word.id} />
           ))}

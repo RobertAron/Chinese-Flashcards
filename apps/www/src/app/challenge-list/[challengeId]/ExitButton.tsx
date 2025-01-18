@@ -40,8 +40,6 @@ export function ExitLink({
     "group flex gap-2 rounded-lg border border-black bg-white p-2 hocus:bg-black hocus:text-white",
     className,
   );
-  console.log("merged?");
-  console.log(combinedClassName);
   return (
     <MotionLink href={href} className={combinedClassName}>
       <Undo2 className="flex-shrink-0"/>
