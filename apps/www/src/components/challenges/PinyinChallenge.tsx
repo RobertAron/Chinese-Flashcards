@@ -9,7 +9,6 @@ type CharacterChallengeProps = {
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
-  display?: boolean;
   ref?: Ref<HTMLDivElement>;
 };
 
@@ -21,7 +20,6 @@ export function CharacterChallenge({
   practice,
   id,
   ref,
-  display,
 }: CharacterChallengeProps) {
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
@@ -31,7 +29,6 @@ export function CharacterChallenge({
       <WordProgress
         pinyin={pinyin}
         active={active}
-        display={display}
         practice={practice}
         onComplete={onComplete}
       />

@@ -9,7 +9,6 @@ type DefinitionChallengeProps = {
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
-  display?: boolean;
   ref?: Ref<HTMLDivElement>;
 };
 
@@ -20,7 +19,6 @@ export function DefinitionChallenge({
   practice,
   id,
   ref,
-  display,
   definition,
 }: DefinitionChallengeProps) {
   return (
@@ -31,7 +29,6 @@ export function DefinitionChallenge({
       <WordProgress
         pinyin={pinyin}
         active={active}
-        display={display}
         practice={practice}
         onComplete={onComplete}
       />
