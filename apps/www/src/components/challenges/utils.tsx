@@ -30,8 +30,8 @@ const letterMapping: Record<string, string[]> = {
   ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
 };
 
-const noTypingRequired = /[ ?]/;
-const punctuation = /[?]/;
+const noTypingRequired = /[ ?’]/;
+const punctuation = /[?’]/;
 function extractChar(char: string | [string, string, string] | undefined) {
   const isToneCharacter = Array.isArray(char);
   return ((isToneCharacter ? char[1] : char) ?? "").toLowerCase();

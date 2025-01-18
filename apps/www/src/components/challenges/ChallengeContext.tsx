@@ -54,6 +54,7 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
             id,
             pinyin,
             fileName,
+            emoji,
           }): AllChallenges[] => {
             const result: AllChallenges[] = [
               { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
@@ -64,6 +65,13 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } =
                 pinyin,
               },
             ];
+            if (emoji !== undefined)
+              result.push({
+                type: "character-challenge",
+                id: `${id}-emoji`,
+                pinyin,
+                character: emoji,
+              });
             if (userSettings.enableCharacterChallenges)
               result.push({
                 type: "character-challenge",

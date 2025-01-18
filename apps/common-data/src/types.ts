@@ -9,4 +9,5 @@ export type WordDefinition = {
   pinyin: string;
   definition: string;
   fileName: string;
+  emoji?: string;
 };
