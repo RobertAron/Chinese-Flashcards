@@ -1,9 +1,10 @@
+"use client"
 import clsx from "clsx";
-import NextLink from "next/link";
-type Props = Parameters<typeof NextLink>[0];
+import { MotionLink } from "./MotionLink";
+type Props = React.ComponentProps<typeof MotionLink>;
 export const Link = ({ className, ...restProps }: Props) => {
   return (
-    <NextLink
+    <MotionLink
       {...restProps}
       className={clsx(
         "border border-black p-1 transition-colors duration-100 hocus:bg-black hocus:text-white",

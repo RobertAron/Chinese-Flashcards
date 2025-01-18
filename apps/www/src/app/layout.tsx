@@ -1,4 +1,4 @@
-import { HomeIcon } from "lucide-react";
+import { LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
@@ -25,19 +25,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full bg-slate-200">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} h-full overflow-y-scroll antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased relative`}
       >
-        <nav className="flex border-b border-black">
-          <div className="container mx-auto flex gap-2">
-            <Link href="/" className="flex gap-2 p-1 hocus:bg-slate-300">
-              <HomeIcon />
-              <span>Home</span>
-            </Link>
+        <div>
+          <nav className="relative z-10 flex border-b border-black bg-white">
+            <div className="container mx-auto flex gap-2">
+              <Link
+                href="/"
+                className="flex items-center gap-2 p-1 py-1 hocus:bg-black hocus:text-white"
+              >
+                <LanguagesIcon className="shrink-0" />
+                <span className="text-xl font-bold">HOME</span>
+              </Link>
+            </div>
+          </nav>
+          <div className="container relative z-10 mx-auto h-full">
+            {children}
           </div>
-        </nav>
-        <div className="container mx-auto h-full">{children}</div>
+        </div>
+        <div className="texture"/>
       </body>
     </html>
   );

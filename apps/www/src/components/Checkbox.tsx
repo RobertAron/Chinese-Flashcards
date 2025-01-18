@@ -30,7 +30,7 @@ export function Checkbox({ children, ...restProps }: CheckboxProps) {
                 strokeWidth="3"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: isSelected ? 1 : 0 }}
-                transition={{ duration: 0.08 }}
+                transition={{ duration: 0.075 }}
               />
             </motion.svg>
           </div>

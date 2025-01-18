@@ -4,6 +4,7 @@ import { Link } from "../Link";
 import { useChallengeContext } from "./ChallengeContext";
 import { useUserSettings } from "../useUserSettings";
 import { Checkbox } from "../Checkbox";
+import { ExitLink } from "@/app/challenge-list/[challengeId]/ExitButton";
 
 export function ChallengeTitle({
   children,
@@ -49,18 +50,15 @@ export function ChallengeTitle({
         </Checkbox>
       </div>
       <div className="flex gap-1 border-black">
-        <Link
-          className="flex grow basis-0 items-center justify-center gap-2 rounded-bl-md bg-white"
+        <ExitLink
+          className="flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white py-2 px-4"
           href={`/challenge-list/${challengeId}`}
-        >
-          <ChevronLeft />
-          <span>Back to types</span>
-        </Link>
+        />
         <Button
-          className="flex grow basis-0 justify-center gap-1 rounded-br-md bg-white"
+          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white py-2 px-4"
           onClick={onStart}
         >
-          <span>{again ? "Start" : "Improve"}</span>
+          <span>{again ? "Improve" : "Start"}</span>
           <ChevronRight />
         </Button>
       </div>

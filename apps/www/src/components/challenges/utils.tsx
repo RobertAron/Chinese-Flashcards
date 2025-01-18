@@ -128,7 +128,7 @@ export function WordProgress({
               }}
               key={index}
             >
-              {showLetter ? ele : "·"}
+              {showLetter ? ele : " "}
             </motion.span>
           );
         })}

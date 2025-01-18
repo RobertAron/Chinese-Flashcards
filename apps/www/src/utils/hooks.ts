@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import useSWR from "swr";
 
 function getLocalStorage<T = unknown>(
@@ -28,4 +29,14 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
     mutate();
   }
   return [data, setValue] as const;
+}
+
+export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === key) cb(event);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [cb,key]);
 }
