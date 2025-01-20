@@ -1,6 +1,10 @@
 import { allChallenges } from "@/challenges/allChallenges";
-import { Link } from "@/components/Link";
 import { PracticeCountCell, TimeAttackCell } from "./client";
+import Link from "next/link";
+import {
+  buttonBehaviorClasses,
+  popOutBehaviorClasses,
+} from "@/components/coreClasses";
 
 export default function Home() {
   return (
@@ -14,10 +18,7 @@ export default function Home() {
         </div>
         {Object.entries(allChallenges).map(([ele, data]) => (
           <Link
-            whileHover={{ scale: 1.05 }}
-            whileFocus={{ scale: 1.05 }}
-            transition={{ duration: 0.1 }}
-            className="col-span-3 grid grid-cols-subgrid bg-white"
+            className={`${buttonBehaviorClasses} ${popOutBehaviorClasses} col-span-3 grid grid-cols-subgrid`}
             href={`/challenge-list/${ele}`}
             key={ele}
           >

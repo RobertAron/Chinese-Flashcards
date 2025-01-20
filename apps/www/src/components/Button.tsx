@@ -1,15 +1,8 @@
 import clsx from "clsx";
+import { buttonBehaviorClasses } from "./coreClasses";
 export const Button = ({
   className,
   ...restProps
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <button
-      {...restProps}
-      className={clsx(
-        "border border-black p-1 hocus:bg-black hocus:text-white",
-        className,
-      )}
-    />
-  );
-};
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button {...restProps} className={clsx(buttonBehaviorClasses, className)} />
+);

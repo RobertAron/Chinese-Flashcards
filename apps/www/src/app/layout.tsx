@@ -27,14 +27,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased relative min-h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} relative min-h-full overflow-y-scroll antialiased`}
       >
         <div>
           <nav className="relative z-10 flex border-b border-black bg-white">
             <div className="container mx-auto flex gap-2">
               <Link
                 href="/"
-                className="flex items-center gap-2 p-1 py-1 hocus:bg-black hocus:text-white"
+                className="flex items-center gap-2 p-1 hocus:bg-black hocus:text-white"
               >
                 <LanguagesIcon className="shrink-0" />
                 <span className="text-xl font-bold">HOME</span>
@@ -45,7 +45,7 @@ export default function RootLayout({
             {children}
           </div>
         </div>
-        <div className="texture"/>
+        <div className="texture" />
       </body>
     </html>
   );

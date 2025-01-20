@@ -2,18 +2,13 @@
 import { AppPage } from "@/components/AppPage";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
-import { formatTimeAttackMs } from "@/utils/playerStats";
+import { formatPracticeCount, formatTimeAttackMs } from "@/utils/playerStats";
 import { match } from "ts-pattern";
 import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
 import { ListChecks, Timer } from "lucide-react";
-import { MotionLink } from "@/components/MotionLink";
-import { TargetAndTransition } from "motion/react";
 import { ExitLink } from "./ExitButton";
-
-const whileHocus: TargetAndTransition = {
-  scale: 1.1,
-  rotate: 1,
-};
+import { twistBehaviorClasses } from "@/components/coreClasses";
+import Link from "next/link";
 
 function ModeOption({
   href,
@@ -23,15 +18,12 @@ function ModeOption({
   children?: React.ReactNode;
 }) {
   return (
-    <MotionLink
-      whileHover={whileHocus}
-      whileFocus={whileHocus}
-      transition={{ duration: 0.1 }}
+    <Link
       href={href}
-      className="group flex flex-shrink-0 flex-grow basis-0 origin-center items-center gap-8 rounded-lg border-2 border-black bg-white p-4 hocus:bg-black hocus:text-white"
+      className={`group flex flex-shrink-0 flex-grow basis-0 origin-center items-center gap-4 rounded-lg border-2 border-black bg-white p-3 hocus:bg-black hocus:text-white ${twistBehaviorClasses}`}
     >
       {children}
-    </MotionLink>
+    </Link>
   );
 }
 
@@ -41,7 +33,7 @@ export default AppPage(() => {
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
-    <main className="flex flex-col items-start gap-8 p-1">
+    <main className="flex flex-col items-start gap-4 p-1">
       <h1 className="text-3xl font-bold underline">{challengeLabel}</h1>
       <ExitLink href="/challenge-list" />
       <section className="flex w-full flex-col gap-2">
@@ -52,8 +44,10 @@ export default AppPage(() => {
               <ListChecks className="h-full w-full" />
             </div>
             <div>
-              <div className="text-4xl">Practice</div>
-              <div className="text-4xl">(x{practiceCount})</div>
+              <div className="text-6xl">Practice</div>
+              <div className="text-4xl">
+                {formatPracticeCount(practiceCount)}
+              </div>
             </div>
           </ModeOption>
           <ModeOption href={`/challenge-list/${challengeId}/time-attack`}>
@@ -61,7 +55,7 @@ export default AppPage(() => {
               <Timer className="h-full w-full" />
             </div>
             <div>
-              <div className="whitespace-nowrap text-4xl">Time Attack</div>
+              <div className="whitespace-nowrap text-6xl">Time Attack</div>
               <div className="whitespace-nowrap text-4xl">
                 {match(timeAttackPb)
                   .with(null, () => "Not Completed")
@@ -78,7 +72,7 @@ export default AppPage(() => {
       </section>
       <section className="flex w-full flex-col gap-2">
         <h2 className="text-2xl font-semibold">WORDS</h2>
-        <div className="grid w-full grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
           {wordDefinitions.map((word) => (
             <WordOutline word={word} key={word.id} />
           ))}

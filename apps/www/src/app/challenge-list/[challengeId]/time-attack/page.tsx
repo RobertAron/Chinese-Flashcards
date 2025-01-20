@@ -74,6 +74,7 @@ function TimeAttackRunning({
   const time = useTime();
   const timerRef = useRef<HTMLDivElement>(null!);
   useMotionValueEvent(time, "change", (val) => {
+    if (timerRef.current === null) return;
     timerRef.current.textContent = (val / 1000).toFixed(2);
   });
   if (initializing) return null;
@@ -96,12 +97,7 @@ function TimeAttackRunning({
         <div ref={timerRef} className="font-mono">
           0.00
         </div>
-        <div className="grid grid-cols-5 gap-1">
-          {new Array(20).fill(null).map((_, index) => (
-            <ProgressItem complete={index < completedItems} key={index} />
-          ))}
-        </div>
-        <div>{completedItems}</div>
+        <ProgressRing current={completedItems} total={itemsToComplete} />
         <AnimatePresence mode="popLayout">
           <Challenge
             challenge={problem}
@@ -111,6 +107,60 @@ function TimeAttackRunning({
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+const strokeWidth = 10;
+const radius = 50 - strokeWidth / 2;
+const circleCoreProps: Partial<React.ComponentProps<typeof motion.circle>> = {
+  cx: "50",
+  cy: "50",
+  pathLength: "1",
+  r: radius,
+  style: {
+    stroke: "currentColor",
+    strokeWidth: strokeWidth,
+    fill: "none",
+  },
+};
+function ProgressRing({ current, total }: { current: number; total: number }) {
+  return (
+    <figure className="grid h-[100px] w-[100px]">
+      <svg
+        className="col-span-3 row-span-3 h-full w-full text-blue-600 text-3xl"
+        viewBox="0 0 100 100"
+      >
+        <text textAnchor="end" x="50" y="50" dominantBaseline="text-top">
+          {current}
+        </text>
+        <text textAnchor="start" x="50" y="50" dominantBaseline="hanging">
+          {total}
+        </text>
+
+        <motion.circle
+          {...circleCoreProps}
+          initial={{ pathLength: 1 }}
+          className="text-blue-950"
+        />
+        <path
+          d="M70 30 30 70"
+          stroke="currentColor"
+          className="text-blue-950"
+          strokeWidth="4"
+        />
+        <motion.circle
+          {...circleCoreProps}
+          animate={{
+            pathLength: current / total,
+          }}
+          transition={{
+            duration: 0.1,
+          }}
+          className="text-blue-500"
+        />
+        <circle />
+      </svg>
+    </figure>
   );
 }
 
