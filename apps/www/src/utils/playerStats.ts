@@ -20,12 +20,16 @@ export function formatTimeAttackMs(ms: number) {
   return `${medal}${(ms / 1000).toFixed(2)}s`;
 }
 
+export const bronzePracticeCount = 100;
+export const silverPracticeCount = 250;
+export const goldPracticeCount = 500;
+
 export function formatPracticeCount(count: number) {
   // prettier-ignore
   const medal = match(count)
-    .when((count) => count > 500, () => "🥇")
-    .when((count) => count > 250, () => "🥈")
-    .when((count) => count > 100, () => "🥉")
+    .when((count) => count > goldPracticeCount, () => "🥇")
+    .when((count) => count > silverPracticeCount, () => "🥈")
+    .when((count) => count > bronzePracticeCount, () => "🥉")
     .otherwise(() => "");
   return `${medal} x${count}`;
 }
