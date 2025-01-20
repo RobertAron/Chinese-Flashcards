@@ -8,6 +8,8 @@ import {
   formatPracticeCount,
   goldPracticeCount,
   silverPracticeCount,
+  totalTillBronze,
+  totalTillSilver,
   usePracticeCount,
 } from "@/utils/playerStats";
 import { AnimatePresence } from "motion/react";
@@ -22,97 +24,95 @@ export default AppPage(({}) => {
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
   const [started, setStarted] = useState(false);
   if (initializing) return null;
-  if (!started)
-    return (
-      <ChallengeTitle
-        onStart={() => setStarted(true)}
-        improve={practiceCount !== 0}
-      >
-        <div className="flex gap-2">
-          <div className="flex grow basis-0 flex-col text-3xl font-bold">
-            <div>🥇 500</div>
-            <div>🥈 250</div>
-            <div>🥉 100</div>
-          </div>
-          <div className="grow basis-0 text-3xl font-extrabold">
-            {formatPracticeCount(practiceCount)}
-          </div>
-        </div>
-      </ChallengeTitle>
-    );
   const onProblemComplete = () => {
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };
   return (
-    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle grid-stack">
-      <div className="justify-start self-start p-2 grid-stack-item">
-        <ExitButton onExit={() => setStarted(false)} />
-      </div>
-      <div>{practiceCount}</div>
-      <ProgressBar count={practiceCount} />
-      <div className="flex flex-col items-center self-start justify-self-center grid-stack-item">
-        <AnimatePresence mode="popLayout">
-          <Challenge
-            onProblemComplete={onProblemComplete}
-            challenge={problem}
-            active
-            practice
-          />
-        </AnimatePresence>
-      </div>
-    </div>
+    <main className="p-1">
+      {!started ? (
+        <ChallengeTitle
+          onStart={() => setStarted(true)}
+          improve={practiceCount !== 0}
+        >
+          <div className="flex gap-2">
+            <div className="flex grow basis-0 flex-col text-3xl font-bold">
+              <div>🥇 500</div>
+              <div>🥈 250</div>
+              <div>🥉 100</div>
+            </div>
+            <div className="grow basis-0 text-3xl font-extrabold">
+              {formatPracticeCount(practiceCount)}
+            </div>
+          </div>
+        </ChallengeTitle>
+      ) : (
+        <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle grid-stack">
+          <div className="justify-start self-start p-2 grid-stack-item">
+            <ExitButton onExit={() => setStarted(false)} />
+          </div>
+          <div>{practiceCount}</div>
+          <ProgressBars count={practiceCount} />
+          <div className="flex flex-col items-center self-start justify-self-center grid-stack-item">
+            <AnimatePresence mode="popLayout">
+              <Challenge
+                onProblemComplete={onProblemComplete}
+                challenge={problem}
+                active
+                practice
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+      )}
+    </main>
   );
 });
 
-function SubProgress({
-  subPercent,
-  basis,
-  className,
+function CoreProgressBar({
+  current,
+  total,
+  color,
 }: {
-  subPercent: number;
-  basis: number;
-  className?: string;
+  current: number;
+  total: number;
+  color: string;
 }) {
   return (
-    <div className={`h-full grow ${className}`} style={{ flexBasis: basis }}>
+    <div className="h-1 w-full skew-x-12 bg-black grid-stack">
       <div
-        className={`h-full bg-green-500 transition-all`}
-        style={{ width: `${subPercent}%` }}
+        className="h-full w-full grid-stack-item"
+        style={{ background: color }}
+      />
+      <div
+        className="h-full bg-green-500 transition-all grid-stack-item"
+        style={{ width: `${(current / total) * 100}%` }}
       />
     </div>
   );
 }
 
-function ProgressBar({ count }: { count: number }) {
-  // prettier-ignore
-  const bronzePercent = clamp(count / bronzePracticeCount,0,1)*100;
-  // prettier-ignore
-  const silverPercent = clamp((count-bronzePracticeCount) / (silverPracticeCount-bronzePracticeCount),0,1)*100;
-  // prettier-ignore
-  const goldPercent = clamp((count-silverPracticeCount) / (goldPracticeCount-silverPracticeCount),0,1)*100;
+function ProgressBars({ count }: { count: number }) {
+  const bronzeProgress = clamp(count, 0, bronzePracticeCount);
+  const silverProgress = clamp(count - totalTillBronze, 0, silverPracticeCount);
+  const goldProgress = clamp(count - totalTillSilver, 0, goldPracticeCount);
   return (
     <div className="flex w-full flex-col gap-[.5px]">
-      <div className="flex w-full items-center gap-2">
-        <div className="flex h-2 flex-grow gap-0.5 border-2 border-black bg-black">
-          <SubProgress
-            className="bg-white"
-            basis={bronzePracticeCount}
-            subPercent={bronzePercent}
-          />
-          <SubProgress
-            className="bg-amber-600"
-            basis={silverPracticeCount}
-            subPercent={silverPercent}
-          />
-          <SubProgress
-            className="bg-slate-400"
-            basis={goldPracticeCount}
-            subPercent={goldPercent}
-          />
-        </div>
-        <div className="h-10 w-10 rounded-full border-2 border-black bg-yellow-300" />
-      </div>
+      <CoreProgressBar
+        color={"#CD7F32"}
+        current={bronzeProgress}
+        total={bronzePracticeCount}
+      />
+      <CoreProgressBar
+        color={"#C0C0C0"}
+        current={silverProgress}
+        total={silverPracticeCount}
+      />
+      <CoreProgressBar
+        color={"#FFD700"}
+        current={goldProgress}
+        total={goldPracticeCount}
+      />
     </div>
   );
 }
