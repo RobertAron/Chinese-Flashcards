@@ -12,9 +12,5 @@ export function PracticeCountCell({ challengeId }: { challengeId: string }) {
 }
 export function TimeAttackCell({ challengeId }: { challengeId: string }) {
   const [timeAttackPB] = useTimeAttackPB(challengeId);
-  return (
-    <div className="text-end">
-      {timeAttackPB === null ? "N/A" : formatTimeAttackMs(timeAttackPB)}
-    </div>
-  );
+  return <div className="text-end">{formatTimeAttackMs(timeAttackPB)}</div>;
 }

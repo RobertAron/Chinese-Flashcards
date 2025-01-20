@@ -10,14 +10,15 @@ export function useTimeAttackPB(challengeId: string) {
     null,
   );
 }
-export function formatTimeAttackMs(ms: number) {
+export function formatTimeAttackMs(ms: number | null) {
+  if (ms === null) return "NOT COMPLETED";
   // prettier-ignore
   const medal = match(ms)
     .when((ms) => ms < 25 * 1000, () => "🥇")
     .when((ms) => ms < 50 * 1000, () => "🥈")
     .when((ms) => ms < 75 * 1000, () => "🥉")
     .otherwise(() => "");
-  return `${medal}${(ms / 1000).toFixed(2)}s`;
+  return `PB ${medal}${(ms / 1000).toFixed(2)}s`;
 }
 
 export const bronzePracticeCount = 100;

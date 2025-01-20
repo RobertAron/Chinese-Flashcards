@@ -3,12 +3,12 @@ import { AppPage } from "@/components/AppPage";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { formatPracticeCount, formatTimeAttackMs } from "@/utils/playerStats";
-import { match } from "ts-pattern";
 import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
 import { ListChecks, Timer } from "lucide-react";
 import { ExitLink } from "./ExitButton";
 import { twistBehaviorClasses } from "@/components/coreClasses";
 import Link from "next/link";
+import * as motion from "motion/react-client";
 
 function ModeOption({
   href,
@@ -57,14 +57,7 @@ export default AppPage(() => {
             <div>
               <div className="whitespace-nowrap text-6xl">Time Attack</div>
               <div className="whitespace-nowrap text-4xl">
-                {match(timeAttackPb)
-                  .with(null, () => "Not Completed")
-                  .otherwise((pb) => (
-                    <span>
-                      <span className="font-semibold">PB:</span>
-                      <span>{formatTimeAttackMs(pb)}</span>
-                    </span>
-                  ))}
+                {formatTimeAttackMs(timeAttackPb)}
               </div>
             </div>
           </ModeOption>
@@ -72,11 +65,26 @@ export default AppPage(() => {
       </section>
       <section className="flex w-full flex-col gap-2">
         <h2 className="text-2xl font-semibold">WORDS</h2>
-        <div className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3 2xl:grid-cols-4">
-          {wordDefinitions.map((word) => (
-            <WordOutline word={word} key={word.id} />
+        <ul className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3">
+          {wordDefinitions.map((word, index) => (
+            <motion.li
+              key={word.id}
+              initial={{
+                y: 50,
+                opacity: 0,
+              }}
+              animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  delay: 0.02 * index,
+                },
+              }}
+            >
+              <WordOutline word={word} />
+            </motion.li>
           ))}
-        </div>
+        </ul>
       </section>
     </main>
   );
