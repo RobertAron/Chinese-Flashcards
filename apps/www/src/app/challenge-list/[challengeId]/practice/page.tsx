@@ -17,6 +17,7 @@ import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 import { clamp } from "@/challenges/util";
+import { awardColors } from "@/components/CompletionAward";
 
 export default AppPage(({}) => {
   const { challengeId } = useChallengeContext();
@@ -99,17 +100,17 @@ function ProgressBars({ count }: { count: number }) {
   return (
     <div className="flex w-full flex-col gap-[.5px]">
       <CoreProgressBar
-        color={"#CD7F32"}
+        color={awardColors.bronze}
         current={bronzeProgress}
         total={bronzePracticeCount}
       />
       <CoreProgressBar
-        color={"#C0C0C0"}
+        color={awardColors.silver}
         current={silverProgress}
         total={silverPracticeCount}
       />
       <CoreProgressBar
-        color={"#FFD700"}
+        color={awardColors.gold}
         current={goldProgress}
         total={goldPracticeCount}
       />

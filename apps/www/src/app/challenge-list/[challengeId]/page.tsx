@@ -33,9 +33,9 @@ export default AppPage(() => {
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
-    <main className="flex flex-col items-start gap-4 p-1">
-      <h1 className="text-3xl font-bold underline">{challengeLabel}</h1>
+    <motion.main className="flex flex-col items-start gap-4 p-1">
       <ExitLink href="/challenge-list" />
+      <h1 className="text-3xl font-bold underline">{challengeLabel}</h1>
       <section className="flex w-full flex-col gap-2">
         <h2 className="text-4xl font-bold text-blue-700">Select Mode</h2>
         <div className="flex flex-wrap gap-4">
@@ -86,6 +86,6 @@ export default AppPage(() => {
           ))}
         </ul>
       </section>
-    </main>
+    </motion.main>
   );
 });
