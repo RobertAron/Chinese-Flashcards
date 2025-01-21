@@ -11,14 +11,20 @@ type WordProgressProps = {
   onComplete?: () => void;
 };
 
+type ToneMapConfig = {
+  actual: string;
+  stripped: string;
+  toneKey: string;
+  letterKey: string;
+};
 // prettier-ignore
-const toneMap : Record<string, [string,string,string] | undefined> = {
-  'ā': ['ā',"a","1"], 'á': ['á',"a","2"], 'ǎ': ['ǎ',"a","3"], 'à': ['à',"a","4"], // a
-  'ē': ['ē',"e","1"], 'é': ['é',"e","2"], 'ě': ['ě',"e","3"], 'è': ['è',"e","4"], // e
-  'ī': ['ī',"i","1"], 'í': ['í',"i","2"], 'ǐ': ['ǐ',"i","3"], 'ì': ['ì',"i","4"], // i
-  'ō': ['ō',"o","1"], 'ó': ['ó',"o","2"], 'ǒ': ['ǒ',"o","3"], 'ò': ['ò',"o","4"], // o
-  'ū': ['ū',"u","1"], 'ú': ['ú',"u","2"], 'ǔ': ['ǔ',"u","3"], 'ù': ['ù',"u","4"], // u
-  'ǖ': ['ǖ',"u","1"], 'ǘ': ['ǘ',"u","2"], 'ǚ': ['ǚ',"u","3"], 'ǜ': ['ǜ',"u","4"], // ü
+const toneMap : Record<string, ToneMapConfig | undefined> = {
+  'ā': {actual:'ā',stripped:"a",toneKey:"1",letterKey:"a"}, 'á': {actual:'á',stripped:"a",toneKey:"2",letterKey:"a"}, 'ǎ': {actual:'ǎ',stripped:"a",toneKey:"3",letterKey:"a"}, 'à': {actual:'à',stripped:"a",toneKey:"4",letterKey:"a"}, // a
+  'ē': {actual:'ē',stripped:"e",toneKey:"1",letterKey:"e"}, 'é': {actual:'é',stripped:"e",toneKey:"2",letterKey:"e"}, 'ě': {actual:'ě',stripped:"e",toneKey:"3",letterKey:"e"}, 'è': {actual:'è',stripped:"e",toneKey:"4",letterKey:"e"}, // e
+  'ī': {actual:'ī',stripped:"i",toneKey:"1",letterKey:"i"}, 'í': {actual:'í',stripped:"i",toneKey:"2",letterKey:"i"}, 'ǐ': {actual:'ǐ',stripped:"i",toneKey:"3",letterKey:"i"}, 'ì': {actual:'ì',stripped:"i",toneKey:"4",letterKey:"i"}, // i
+  'ō': {actual:'ō',stripped:"o",toneKey:"1",letterKey:"o"}, 'ó': {actual:'ó',stripped:"o",toneKey:"2",letterKey:"o"}, 'ǒ': {actual:'ǒ',stripped:"o",toneKey:"3",letterKey:"o"}, 'ò': {actual:'ò',stripped:"o",toneKey:"4",letterKey:"o"}, // o
+  'ū': {actual:'ū',stripped:"u",toneKey:"1",letterKey:"u"}, 'ú': {actual:'ú',stripped:"u",toneKey:"2",letterKey:"u"}, 'ǔ': {actual:'ǔ',stripped:"u",toneKey:"3",letterKey:"u"}, 'ù': {actual:'ù',stripped:"u",toneKey:"4",letterKey:"u"}, // u
+  'ǖ': {actual:'ǖ',stripped:"ü",toneKey:"1",letterKey:"u"}, 'ǘ': {actual:'ǘ',stripped:"ü",toneKey:"2",letterKey:"u"}, 'ǚ': {actual:'ǚ',stripped:"ü",toneKey:"3",letterKey:"u"}, 'ǜ': {actual:'ǜ',stripped:"ü",toneKey:"4",letterKey:"u"}, // ü
 };
 const letterMapping: Record<string, string[]> = {
   a: ["ā", "á", "ǎ", "à"],
@@ -31,9 +37,9 @@ const letterMapping: Record<string, string[]> = {
 
 const noTypingRequired = /[ ?’]/;
 const punctuation = /[?’]/;
-function extractChar(char: string | [string, string, string] | undefined) {
-  const isToneCharacter = Array.isArray(char);
-  return ((isToneCharacter ? char[1] : char) ?? "").toLowerCase();
+function extractListenChar(char: string | ToneMapConfig | undefined) {
+  const isToneCharacter = typeof char === "object";
+  return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();
 }
 export function WordProgress({
   pinyin,
@@ -41,28 +47,29 @@ export function WordProgress({
   active,
   onComplete,
 }: WordProgressProps) {
-  const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
   const [{ requireToneInput }] = useUserSettings();
+  const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
   const [progress, setProgress] = useState(0);
   const [secondaryProgress, setSecondaryProgress] = useState(0);
   const currentCharacter = normalized[progress];
-  const isToneCharacter = Array.isArray(currentCharacter);
+  const isToneCharacter = typeof currentCharacter === "object";
 
   useEffect(() => {
     if (!active) return;
     const cb = (e: KeyboardEvent) => {
       const currentCharacter = normalized[progress];
-      const isToneCharacter = Array.isArray(currentCharacter);
-      const rawChar = extractChar(currentCharacter);
-      const nextRawChar = extractChar(normalized[progress + 1]);
+      const isToneCharacter = typeof currentCharacter === "object";
+      const rawChar = extractListenChar(currentCharacter);
+      const nextRawChar = extractListenChar(normalized[progress + 1]);
       const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
       const nextStep = progress + incrementAmount;
       const onLastLetter = progress + incrementAmount === normalized.length;
+      const onToneStep = secondaryProgress === 1;
       // characters with tones
       if (isToneCharacter && requireToneInput) {
-        if (secondaryProgress === 0 && e.key.toLocaleLowerCase() === rawChar)
+        if (!onToneStep && e.key.toLocaleLowerCase() === rawChar)
           setSecondaryProgress(1);
-        else if (secondaryProgress === 1 && e.key === currentCharacter[2]) {
+        else if (onToneStep && e.key === currentCharacter.toneKey) {
           setProgress(nextStep);
           setSecondaryProgress(0);
           if (onLastLetter) onComplete?.();
@@ -132,7 +139,7 @@ export function WordProgress({
         })}
       <AnimatePresence>
         {isToneCharacter && secondaryProgress === 1 && (
-          <ToneHints character={currentCharacter[1]} />
+          <ToneHints toneMapConfig={currentCharacter} />
         )}
       </AnimatePresence>
     </div>
@@ -141,13 +148,13 @@ export function WordProgress({
 
 const possibleToneChars = new Set(Object.keys(letterMapping));
 function ToneHints({
-  character,
+  toneMapConfig: character,
   ref,
 }: {
-  character: string;
+  toneMapConfig: ToneMapConfig;
   ref?: Ref<HTMLDivElement>;
 }) {
-  if (!possibleToneChars.has(character)) return null;
+  if (!possibleToneChars.has(character.stripped)) return null;
   return (
     <motion.div
       className="absolute left-1/2 top-full flex -translate-x-1/2"
@@ -160,7 +167,7 @@ function ToneHints({
         exit={{ top: 30, opacity: 0 }}
         transition={{ duration: 0.075 }}
       >
-        {letterMapping[character]?.map((ele, index) => (
+        {letterMapping[character.stripped]?.map((ele, index) => (
           <div
             className="flex items-center gap-3 rounded-sm border border-slate-700 px-2 py-1"
             key={index}
