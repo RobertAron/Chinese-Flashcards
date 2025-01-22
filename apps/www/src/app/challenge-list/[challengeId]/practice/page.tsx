@@ -7,6 +7,7 @@ import {
   bronzePracticeCount,
   formatPracticeCount,
   goldPracticeCount,
+  practiceCountToAward,
   silverPracticeCount,
   totalTillBronze,
   totalTillSilver,
@@ -17,7 +18,7 @@ import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 import { clamp } from "@/challenges/util";
-import { awardColors } from "@/components/CompletionAward";
+import { awardColors, PlayerAwardIcon } from "@/components/CompletionAward";
 
 export default AppPage(({}) => {
   const { challengeId } = useChallengeContext();
@@ -38,11 +39,20 @@ export default AppPage(({}) => {
         >
           <div className="flex gap-2">
             <div className="flex grow basis-0 flex-col text-3xl font-bold">
-              <div>🥇 500</div>
-              <div>🥈 250</div>
-              <div>🥉 100</div>
+              <div>
+                <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
+              </div>
+              <div>
+                <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
+              </div>
+              <div>
+                <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
+              </div>
             </div>
             <div className="grow basis-0 text-3xl font-extrabold">
+              <PlayerAwardIcon
+                awardType={practiceCountToAward(practiceCount)}
+              />
               {formatPracticeCount(practiceCount)}
             </div>
           </div>
@@ -52,7 +62,10 @@ export default AppPage(({}) => {
           <div className="justify-start self-start p-2 grid-stack-item">
             <ExitButton onExit={() => setStarted(false)} />
           </div>
-          <div>{practiceCount}</div>
+          <div>
+            <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
+            {formatPracticeCount(practiceCount)}
+          </div>
           <ProgressBars count={practiceCount} />
           <div className="flex flex-col items-center self-start justify-self-center grid-stack-item">
             <AnimatePresence mode="popLayout">

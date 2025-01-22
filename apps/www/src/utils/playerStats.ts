@@ -12,11 +12,14 @@ export function useTimeAttackPB(challengeId: string) {
 
 export type AwardTypes = "bronze" | "silver" | "gold" | null;
 
+export const timeForGold = 25 * 1000;
+export const timeForSilver = 50 * 1000;
+export const timeForBronze = 75 * 1000;
 export function timeAttackToAward(ms: number | null): AwardTypes {
   if (ms === null) return null;
-  if (ms < 25 * 1000) return "gold";
-  if (ms < 50 * 1000) return "silver";
-  if (ms < 75 * 1000) return "bronze";
+  if (ms < timeForGold) return "gold";
+  if (ms < timeForSilver) return "silver";
+  if (ms < timeForBronze) return "bronze";
   return null;
 }
 export function formatTimeAttackMs(ms: number | null) {

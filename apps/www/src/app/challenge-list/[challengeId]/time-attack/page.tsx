@@ -1,6 +1,10 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
+import { Challenge } from "@/components/challenges/Challenge";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
+import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
+import { PlayerAwardIcon } from "@/components/CompletionAward";
+import { formatTimeAttackMs } from "@/utils/playerStats";
 import {
   AnimatePresence,
   motion,
@@ -8,12 +12,15 @@ import {
   useTime,
 } from "motion/react";
 import { useRef, useState } from "react";
-import { useChallengeStream } from "../useChallengeStream";
-import { useTimeAttackPB } from "../../../../utils/playerStats";
-import { Challenge } from "@/components/challenges/Challenge";
-import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
-import { formatTimeAttackMs } from "@/utils/playerStats";
+import {
+  timeAttackToAward,
+  timeForBronze,
+  timeForGold,
+  timeForSilver,
+  useTimeAttackPB,
+} from "../../../../utils/playerStats";
 import { ExitButton } from "../ExitButton";
+import { useChallengeStream } from "../useChallengeStream";
 
 export default AppPage(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
@@ -29,9 +36,18 @@ export default AppPage(() => {
         >
           <div className="flex gap-2">
             <div className="flex grow basis-0 flex-col text-3xl font-bold">
-              <div>🥇 20s</div>
-              <div>🥈 30s</div>
-              <div>🥉 40s</div>
+              <div className="flex items-center gap-1">
+                <PlayerAwardIcon awardType="gold" />{" "}
+                {formatTimeAttackMs(timeForGold)}
+              </div>
+              <div className="flex items-center gap-1">
+                <PlayerAwardIcon awardType="silver" />{" "}
+                {formatTimeAttackMs(timeForSilver)}
+              </div>
+              <div className="flex items-center gap-1">
+                <PlayerAwardIcon awardType="bronze" />{" "}
+                {formatTimeAttackMs(timeForBronze)}
+              </div>
             </div>
             <div className="flex grow basis-0 flex-col items-end text-lg">
               <div className="flex gap-1 truncate">
@@ -41,8 +57,11 @@ export default AppPage(() => {
               {recentFinish !== null && (
                 <div className="flex items-end gap-1">
                   <div>Recent Finish</div>
-                  <div className="text-end">
+                  <div className="flex items-end gap-1">
                     {recentFinish === previousBest && "🎉"}
+                    <PlayerAwardIcon
+                      awardType={timeAttackToAward(recentFinish)}
+                    />
                     {formatTimeAttackMs(recentFinish)}
                   </div>
                 </div>
