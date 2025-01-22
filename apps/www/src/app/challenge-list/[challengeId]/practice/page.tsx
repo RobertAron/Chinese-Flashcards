@@ -39,21 +39,23 @@ export default AppPage(({}) => {
         >
           <div className="flex gap-2">
             <div className="flex grow basis-0 flex-col text-3xl font-bold">
-              <div>
+              <div className="flex items-center gap-1">
                 <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
               </div>
-              <div>
+              <div className="flex items-center gap-1">
                 <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
               </div>
-              <div>
+              <div className="flex items-center gap-1">
                 <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
               </div>
             </div>
             <div className="grow basis-0 text-3xl font-extrabold">
-              <PlayerAwardIcon
-                awardType={practiceCountToAward(practiceCount)}
-              />
-              {formatPracticeCount(practiceCount)}
+              <div className="flex items-center">
+                <PlayerAwardIcon
+                  awardType={practiceCountToAward(practiceCount)}
+                />
+                {formatPracticeCount(practiceCount)}
+              </div>
             </div>
           </div>
         </ChallengeTitle>
