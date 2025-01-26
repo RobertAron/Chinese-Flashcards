@@ -52,7 +52,12 @@ export default AppPage(() => {
             <div className="flex grow basis-0 flex-col items-end text-lg">
               <div className="flex gap-1 truncate">
                 <span>Previous Best:</span>
-                <span>{formatTimeAttackMs(previousBest)}</span>
+                <span className="flex items-center gap-1">
+                  <PlayerAwardIcon
+                    awardType={timeAttackToAward(previousBest)}
+                  />
+                  {formatTimeAttackMs(previousBest)}
+                </span>
               </div>
               {recentFinish !== null && (
                 <div className="flex items-end gap-1">

@@ -6,9 +6,9 @@ import { formatPracticeCount, formatTimeAttackMs } from "@/utils/playerStats";
 import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
 import { ListChecks, Timer } from "lucide-react";
 import { ExitLink } from "./ExitButton";
-import { twistBehaviorClasses } from "@/components/coreClasses";
-import Link from "next/link";
+import { buttonBehaviorClasses } from "@/components/coreClasses";
 import * as motion from "motion/react-client";
+import { MotionLink } from "@/components/MotionLink";
 
 function ModeOption({
   href,
@@ -18,12 +18,19 @@ function ModeOption({
   children?: React.ReactNode;
 }) {
   return (
-    <Link
+    <MotionLink
+      initial={{ opacity: 0, scale: 1.05 }}
+      animate={{ opacity: 1, scale: 1 }}
+      whileHover={{ rotate: 1, scale: 1.1 }}
+      whileFocus={{ rotate: 1, scale: 1.1 }}
+      transition={{
+        duration: 0.1,
+      }}
       href={href}
-      className={`group flex flex-shrink-0 flex-grow basis-0 origin-center items-center gap-4 rounded-lg border-2 border-black bg-white p-3 hocus:bg-black hocus:text-white ${twistBehaviorClasses}`}
+      className={`group flex flex-grow basis-0 items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
     >
       {children}
-    </Link>
+    </MotionLink>
   );
 }
 

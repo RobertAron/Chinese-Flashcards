@@ -5,6 +5,7 @@ import {
 } from "@/components/coreClasses";
 import Link from "next/link";
 import { PracticeCountCell, TimeAttackCell } from "./client";
+import { MotionLink } from "@/components/MotionLink";
 
 export default function Home() {
   return (
@@ -16,16 +17,20 @@ export default function Home() {
           <div className="text-end">Practice</div>
           <div className="text-end">Speedrun</div>
         </div>
-        {Object.entries(allChallenges).map(([ele, data]) => (
-          <Link
-            className={`${buttonBehaviorClasses} ${popOutBehaviorClasses} col-span-3 grid grid-cols-subgrid`}
+        {Object.entries(allChallenges).map(([ele, data], index) => (
+          <MotionLink
+            initial={{ opacity: 0, scaleY: 1.05 }}
+            animate={{ opacity: 1, scaleY: 1 }}
+            whileHover={{ scale: 1.1 }}
+            whileFocus={{ scale: 1.1 }}
+            className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
             href={`/challenge-list/${ele}`}
             key={ele}
           >
             <div>{data.label}</div>
             <PracticeCountCell challengeId={ele} />
             <TimeAttackCell challengeId={ele} />
-          </Link>
+          </MotionLink>
         ))}
       </div>
     </main>

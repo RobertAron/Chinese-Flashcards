@@ -108,9 +108,9 @@ export const commonWords = (
     ["20", "苹果", "píngguǒ", "n.", "apple", "🍎🍏"],
 
     ["1", "谁", "shéi", "q.pron.", "who", "❓👤"],
-    ["2", "想", "xiǎng", "v.", "to want to", "🤔💭"],
-    ["3", "要", "yào", "m.v.", "to want to have; to intent to have", "🛍️📦"],
-    ["4", "明天见", "míngtiān jiàn", "", "see (you) tomorrow", "📅👋"],
+    ["2", "想", "xiǎng", "v.", "desire/want", "🤤🤩"],
+    ["3", "要", "yào", "m.v.", "need/want", "--*"],
+    ["4", "明天见", "míngtiān jiàn", "", "(lit. tomorrow meet) see you tomorrow", "📅👋"],
     ["5", "饿", "è", "adj.", "hungry", "🤤🍴"],
     ["6", "超市", "chāoshì", "n.", "supermarket", "🏬🛒"],
     ["7", "汉字", "Hànzì", "n.", "Chinese character", "🀄🔤"],
