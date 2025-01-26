@@ -15,6 +15,8 @@ export function Checkbox({ children, ...restProps }: CheckboxProps) {
             }
           >
             <motion.svg
+              role="img"
+              aria-label="checkbox"
               width="24"
               height="24"
               viewBox="0 0 24 24"

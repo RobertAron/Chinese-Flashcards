@@ -132,7 +132,12 @@ const circleCoreProps: Partial<React.ComponentProps<typeof motion.circle>> = {
 function ProgressRing({ current, total }: { current: number; total: number }) {
   return (
     <figure className="grid h-[100px] w-[100px]">
-      <svg className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-600" viewBox="0 0 100 100">
+      <svg
+        className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-600"
+        viewBox="0 0 100 100"
+        role="img"
+        aria-label="progress par"
+      >
         <text textAnchor="end" x="50" y="50" dominantBaseline="text-top">
           {current}
         </text>

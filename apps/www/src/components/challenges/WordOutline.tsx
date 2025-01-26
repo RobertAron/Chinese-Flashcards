@@ -40,9 +40,7 @@ function AudioSection({ fileName }: { fileName: string }) {
         </button>
       </div>
       <div className="h-full w-full grid-stack-item">
-        {audioSourceNode !== null && (
-          <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />
-        )}
+        {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
       </div>
     </div>
   );

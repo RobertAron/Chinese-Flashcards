@@ -41,7 +41,7 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } = 
 >(
   (Provider) =>
     function ChallengeProvider({ children }: ProviderProps) {
-      const challengeId = useParams()["challengeId"];
+      const challengeId = useParams().challengeId;
       const [userSettings] = useUserSettings();
       if (typeof challengeId !== "string") return null;
       const selectedChallenge = allChallenges[challengeId];

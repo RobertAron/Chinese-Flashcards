@@ -38,6 +38,7 @@ export function AudioChallenge({
       <div className="h-36 w-full grid-stack">
         <div className="z-10 ml-1 mt-1 self-start justify-self-start grid-stack-item">
           <button
+            type="button"
             className="group flex items-center gap-4 rounded-lg border-[0.5px] border-black bg-white/30 p-2 text-sm backdrop-blur-sm hocus:border-slate-300 hocus:bg-black hocus:text-white"
             onClick={playAudio}
           >

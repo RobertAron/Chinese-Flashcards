@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import { decoders } from "audio-decode";
 import { createCanvas } from "canvas";
 import webfft from "webfft";

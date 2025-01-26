@@ -20,7 +20,7 @@ import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
-export default AppPage(({}) => {
+export default AppPage(() => {
   const { challengeId } = useChallengeContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);

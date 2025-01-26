@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import tts from "@google-cloud/text-to-speech";
 import { commonWords as data } from "common-data/common-words";
 import dotenv from "dotenv";
