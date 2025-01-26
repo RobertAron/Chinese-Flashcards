@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import clsx from "clsx";
 import { MotionLink } from "./MotionLink";
 type Props = React.ComponentProps<typeof MotionLink>;

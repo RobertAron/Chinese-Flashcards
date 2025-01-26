@@ -897,8 +897,7 @@ export const data = [
   {
     character: "潘",
     pinyin: "pān",
-    definition:
-      "surname; water in which rice has been rinsed; a river that flows into the Han",
+    definition: "surname; water in which rice has been rinsed; a river that flows into the Han",
   },
   {
     character: "埔",
@@ -1158,8 +1157,7 @@ export const data = [
   {
     character: "佛",
     pinyin: "fó",
-    definition:
-      "Buddha; of Buddhism; merciful percon; Buddhist image; the dead (Jap.)",
+    definition: "Buddha; of Buddhism; merciful percon; Buddhist image; the dead (Jap.)",
   },
   {
     character: "桂",
@@ -1379,8 +1377,7 @@ export const data = [
   {
     character: "雕",
     pinyin: "diāo",
-    definition:
-      "engrave, inlay, carve; exhaust; used for U+9D70 鵰 an eagle, vulture",
+    definition: "engrave, inlay, carve; exhaust; used for U+9D70 鵰 an eagle, vulture",
   },
   {
     character: "澳",
@@ -1655,8 +1652,7 @@ export const data = [
   {
     character: "兆",
     pinyin: "zhào",
-    definition:
-      "omen; million; mega; also trillion. China = million; Japan and Taiwan = trillion",
+    definition: "omen; million; mega; also trillion. China = million; Japan and Taiwan = trillion",
   },
   {
     character: "僧",
@@ -1847,8 +1843,7 @@ export const data = [
   {
     character: "肆",
     pinyin: "sì",
-    definition:
-      "indulge; excess; numeral four; particle meaning now, therefore; shop",
+    definition: "indulge; excess; numeral four; particle meaning now, therefore; shop",
   },
   {
     character: "抖",
@@ -1978,14 +1973,12 @@ export const data = [
   {
     character: "挣",
     pinyin: "zhēng",
-    definition:
-      "to strive, endeavor, struggle; to earn; to pierce; to wedge in",
+    definition: "to strive, endeavor, struggle; to earn; to pierce; to wedge in",
   },
   {
     character: "斤",
     pinyin: "jīn",
-    definition:
-      "a catty (approximately 500 g); an axe; keen, shrewd; KangXi radical number 69",
+    definition: "a catty (approximately 500 g); an axe; keen, shrewd; KangXi radical number 69",
   },
   {
     character: "帆",
@@ -2005,8 +1998,7 @@ export const data = [
   {
     character: "瑟",
     pinyin: "sè",
-    definition:
-      "large stringed musical instrument; dignified, massive; sound of wind",
+    definition: "large stringed musical instrument; dignified, massive; sound of wind",
   },
   {
     character: "艇",
@@ -2506,8 +2498,7 @@ export const data = [
   {
     character: "佩",
     pinyin: "pèi",
-    definition:
-      "belt ornament, pendant; wear at waist, tie to the belt; respect",
+    definition: "belt ornament, pendant; wear at waist, tie to the belt; respect",
   },
   {
     character: "摧",
@@ -2872,8 +2863,7 @@ export const data = [
   {
     character: "挨",
     pinyin: "āi",
-    definition:
-      "near, close by, next to, towards, against; to wait; to lean on",
+    definition: "near, close by, next to, towards, against; to wait; to lean on",
   },
   {
     character: "蕾",
@@ -3363,8 +3353,7 @@ export const data = [
   {
     character: "雕",
     pinyin: "diāo",
-    definition:
-      "engrave, inlay, carve; exhaust; used for U+9D70 鵰 an eagle, vulture",
+    definition: "engrave, inlay, carve; exhaust; used for U+9D70 鵰 an eagle, vulture",
   },
   {
     character: "黯",
@@ -3544,8 +3533,7 @@ export const data = [
   {
     character: "顷",
     pinyin: "qǐng",
-    definition:
-      "a moment; a measure of area equal to 100 mu or 6.7 hectares; to lean",
+    definition: "a moment; a measure of area equal to 100 mu or 6.7 hectares; to lean",
   },
   {
     character: "窄",
@@ -4790,8 +4778,7 @@ export const data = [
   {
     character: "瑄",
     pinyin: "xuān",
-    definition:
-      "a ornamental piece of jade several inches across with a hole in the center",
+    definition: "a ornamental piece of jade several inches across with a hole in the center",
   },
   {
     character: "翟",
@@ -4906,8 +4893,7 @@ export const data = [
   {
     character: "菸",
     pinyin: "yān",
-    definition:
-      "to fade; withered or dried leaves; tobacco (used for U+70DF and U+7159)",
+    definition: "to fade; withered or dried leaves; tobacco (used for U+70DF and U+7159)",
   },
   {
     character: "凹",
@@ -4922,8 +4908,7 @@ export const data = [
   {
     character: "蒐",
     pinyin: "sōu",
-    definition:
-      "collect, gather, assemble; seek; spring hunt; assemble for war",
+    definition: "collect, gather, assemble; seek; spring hunt; assemble for war",
   },
   {
     character: "呱",

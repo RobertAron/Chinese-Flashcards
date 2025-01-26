@@ -1,8 +1,8 @@
 import { match } from "ts-pattern";
-import { AllChallenges } from "./ChallengeContext";
-import { CharacterChallenge } from "./PinyinChallenge";
 import { AudioChallenge } from "./AudioChallenge";
+import type { AllChallenges } from "./ChallengeContext";
 import { DefinitionChallenge } from "./DefinitionChallenge";
+import { CharacterChallenge } from "./PinyinChallenge";
 
 export function Challenge({
   challenge,

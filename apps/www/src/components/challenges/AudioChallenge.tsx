@@ -1,10 +1,10 @@
 "use client";
-import { Ref, useEffect, useRef } from "react";
-import { LiveAudioVisualizer } from "../AudioVisualizer";
-import { ChallengeWrapper, WordProgress } from "./utils";
-import { RotateCcw } from "lucide-react";
-import { Kbd } from "../Kbd";
 import { useAudioSourceNode, useKeyTrigger } from "@/utils/hooks";
+import { RotateCcw } from "lucide-react";
+import { type Ref, useEffect, useRef } from "react";
+import { LiveAudioVisualizer } from "../AudioVisualizer";
+import { Kbd } from "../Kbd";
+import { ChallengeWrapper, WordProgress } from "./utils";
 
 type AudioChallengeProps = {
   pinyin: string;
@@ -49,17 +49,10 @@ export function AudioChallenge({
           </button>
         </div>
         <div className="h-full w-full grid-stack-item">
-          {audioSourceNode !== null && (
-            <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />
-          )}
+          {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
         </div>
       </div>
-      <WordProgress
-        pinyin={pinyin}
-        active={active}
-        practice={practice}
-        onComplete={onComplete}
-      />
+      <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>
   );
 }

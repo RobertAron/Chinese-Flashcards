@@ -1,8 +1,8 @@
 import fs from "fs";
-import dotenv from "dotenv";
-import tts from "@google-cloud/text-to-speech";
 import path from "path";
+import tts from "@google-cloud/text-to-speech";
 import { commonWords as data } from "common-data/common-words";
+import dotenv from "dotenv";
 
 const env = dotenv.config({ path: ".env" });
 const auth = env.parsed?.GOOGLE_APPLICATION_CREDENTIALS;
@@ -40,7 +40,7 @@ async function main() {
       });
       if (response.audioContent == null) throw new Error("Failed");
       await fs.promises.writeFile(speechFile, response.audioContent, "binary");
-    })
+    }),
   );
   const rejectedQueries = result
     .map((ele, index) => (ele.status === "rejected" ? data[index] : null))

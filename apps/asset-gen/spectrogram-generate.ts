@@ -1,7 +1,7 @@
 import fs from "fs";
 import { decoders } from "audio-decode";
-import webfft from "webfft";
 import { createCanvas } from "canvas";
+import webfft from "webfft";
 const size = 2 ** 10;
 const fft = new webfft(size);
 fft.setSubLibrary("kissfftmodifiedWasm");
@@ -14,7 +14,7 @@ function fftOutputToLowHighBuckets(buffer: Float32Array<ArrayBufferLike>) {
   return finalResults;
 }
 
-const aspect = 1000
+const aspect = 1000;
 async function main() {
   // "./output/yǒu.mp3"
   // "./temp/test-audio.wav"
@@ -31,7 +31,7 @@ async function main() {
   for (let chunkIndex = 0; chunkIndex < audioChunks; chunkIndex++) {
     const subitems = chanel0.slice(
       chunkLength * (chunkIndex / subChunk),
-      chunkLength * (chunkIndex / subChunk + 1)
+      chunkLength * (chunkIndex / subChunk + 1),
     );
     if (subitems.length < chunkLength) {
       continue;
@@ -50,7 +50,7 @@ async function main() {
     for (let freqBucket = 0; freqBucket < lowHighBuckets.length; freqBucket++) {
       const normalized = lowHighBuckets[freqBucket] * normalizeFactor;
 
-      const strength = normalized>50?0:255;
+      const strength = normalized > 50 ? 0 : 255;
       if (highestSoFar < normalized) highestSoFar = normalized;
       ctx.fillStyle = `rgba(${strength}, ${strength}, ${strength}, 1)`;
       const y = aspect - freqBucket * ySliceHeight;

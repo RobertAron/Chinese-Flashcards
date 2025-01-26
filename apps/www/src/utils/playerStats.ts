@@ -4,10 +4,7 @@ export function usePracticeCount(challengeId: string) {
   return useLocalStorage(`${challengeId}-practice-count`, 0);
 }
 export function useTimeAttackPB(challengeId: string) {
-  return useLocalStorage<number | null>(
-    `${challengeId}-best-time-attack-time`,
-    null,
-  );
+  return useLocalStorage<number | null>(`${challengeId}-best-time-attack-time`, null);
 }
 
 export type AwardTypes = "bronze" | "silver" | "gold" | null;
@@ -32,8 +29,7 @@ export const silverPracticeCount = 150;
 export const goldPracticeCount = 250;
 export const totalTillBronze = bronzePracticeCount;
 export const totalTillSilver = bronzePracticeCount + silverPracticeCount;
-export const totalTillGold =
-  bronzePracticeCount + silverPracticeCount + goldPracticeCount;
+export const totalTillGold = bronzePracticeCount + silverPracticeCount + goldPracticeCount;
 
 export function practiceCountToAward(count: number | null): AwardTypes {
   if (count === null) return null;

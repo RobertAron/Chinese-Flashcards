@@ -32,18 +32,13 @@ export default function RootLayout({
         <div>
           <nav className="relative z-10 flex border-b border-black bg-white">
             <div className="container mx-auto flex gap-2">
-              <Link
-                href="/"
-                className="flex items-center gap-2 p-1 hocus:bg-black hocus:text-white"
-              >
+              <Link href="/" className="flex items-center gap-2 p-1 hocus:bg-black hocus:text-white">
                 <LanguagesIcon className="shrink-0" />
                 <span className="text-xl font-bold">HOME</span>
               </Link>
             </div>
           </nav>
-          <div className="container relative z-10 mx-auto h-full">
-            {children}
-          </div>
+          <div className="container relative z-10 mx-auto h-full">{children}</div>
         </div>
         <div className="texture" />
       </body>

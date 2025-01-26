@@ -1,10 +1,10 @@
+import { ExitLink } from "@/app/challenge-list/[challengeId]/ExitButton";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../Button";
-import { Link } from "../Link";
-import { useChallengeContext } from "./ChallengeContext";
-import { useUserSettings } from "../useUserSettings";
 import { Checkbox } from "../Checkbox";
-import { ExitLink } from "@/app/challenge-list/[challengeId]/ExitButton";
+import { Link } from "../Link";
+import { useUserSettings } from "../useUserSettings";
+import { useChallengeContext } from "./ChallengeContext";
 
 export function ChallengeTitle({
   children,
@@ -19,9 +19,7 @@ export function ChallengeTitle({
   const { challengeId, challengeLabel } = useChallengeContext();
   return (
     <div className="mx-auto flex w-[32rem] flex-col gap-1">
-      <h1 className="rounded-t-md bg-black p-2 text-4xl font-extrabold text-white">
-        {challengeLabel}
-      </h1>
+      <h1 className="rounded-t-md bg-black p-2 text-4xl font-extrabold text-white">{challengeLabel}</h1>
       <div className="border border-black bg-white p-1">
         <div>{children}</div>
       </div>

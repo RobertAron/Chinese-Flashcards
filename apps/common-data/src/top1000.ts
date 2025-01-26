@@ -38,8 +38,7 @@ export const data = [
     // Maybe "character" should be an array?
     character: "他",
     pinyin: "tā",
-    definition:
-      "he, him, it, they (referring to inanimate things in object position) ",
+    definition: "he, him, it, they (referring to inanimate things in object position) ",
   },
   {
     character: "也",
@@ -49,8 +48,7 @@ export const data = [
   {
     character: "就",
     pinyin: "jiù",
-    definition:
-      "then, at once, right away, an indicator strengthening speaker's evaluation",
+    definition: "then, at once, right away, an indicator strengthening speaker's evaluation",
   },
   {
     character: "人",
@@ -75,8 +73,7 @@ export const data = [
   {
     character: "们",
     pinyin: "men",
-    definition:
-      "plural marker for personal pronouns or for nouns referring to people",
+    definition: "plural marker for personal pronouns or for nouns referring to people",
   },
   {
     character: "你",
@@ -321,8 +318,7 @@ export const data = [
   {
     character: "把",
     pinyin: "bǎ",
-    definition:
-      "indicating pre-verbal object as thing dealt with by the action ",
+    definition: "indicating pre-verbal object as thing dealt with by the action ",
   },
   {
     character: "三",
@@ -363,8 +359,7 @@ export const data = [
   {
     character: "再",
     pinyin: "zài",
-    definition:
-      "again, once more, further(more), in a higher degree, and then, not (do sth.) before ",
+    definition: "again, once more, further(more), in a higher degree, and then, not (do sth.) before ",
   },
   {
     character: "所以",
@@ -399,14 +394,12 @@ export const data = [
   {
     character: "位",
     pinyin: "wèi",
-    definition:
-      "location, digit, m.[general], , status, figure, throne, position, place, condition ",
+    definition: "location, digit, m.[general], , status, figure, throne, position, place, condition ",
   },
   {
     character: "想",
     pinyin: "xiǎng",
-    definition:
-      "think, suppose, reckon, consider, want to, would like to, feel like (doing sth.) ",
+    definition: "think, suppose, reckon, consider, want to, would like to, feel like (doing sth.) ",
   },
   {
     character: "去",
@@ -416,8 +409,7 @@ export const data = [
   {
     character: "呢",
     pinyin: "ne",
-    definition:
-      "particle: marking quesitons about subject already mentioned; indicating strong affirmation",
+    definition: "particle: marking quesitons about subject already mentioned; indicating strong affirmation",
   },
   {
     character: "学生",
@@ -460,8 +452,7 @@ export const data = [
   {
     character: "看",
     pinyin: "kàn",
-    definition:
-      "see, look at, watch, read, look upon, regard, look after, call on, visit ",
+    definition: "see, look at, watch, read, look upon, regard, look after, call on, visit ",
   },
   {
     character: "小",
@@ -798,8 +789,7 @@ export const data = [
   {
     character: "如",
     pinyin: "rú",
-    definition:
-      "according to, in accordance with, such as, as if, like, for example",
+    definition: "according to, in accordance with, such as, as if, like, for example",
   },
   {
     character: "开始",
@@ -824,8 +814,7 @@ export const data = [
   {
     character: "网路",
     pinyin: "wǎnglù",
-    definition:
-      "WWW, net, network, Internet, meshwork, web, world wide web, mesh, reticulation",
+    definition: "WWW, net, network, Internet, meshwork, web, world wide web, mesh, reticulation",
   },
   {
     character: "日本",
@@ -876,8 +865,7 @@ export const data = [
   {
     character: "关系",
     pinyin: "guānxì",
-    definition:
-      'relation, bearing, impact, membership credentials, "backdoor connections"',
+    definition: 'relation, bearing, impact, membership credentials, "backdoor connections"',
   },
   {
     character: "市场",
@@ -904,8 +892,7 @@ export const data = [
   {
     character: "学校",
     pinyin: "xuéxiào",
-    definition:
-      "seminary, schoolhouse, educational institution, school, institution",
+    definition: "seminary, schoolhouse, educational institution, school, institution",
   },
   {
     character: "应该",
@@ -986,8 +973,7 @@ export const data = [
   {
     character: "然后",
     pinyin: "ránhòu",
-    definition:
-      "therewith, and so, and_then, and then, thereupon, after that, so, then, with that",
+    definition: "therewith, and so, and_then, and then, thereupon, after that, so, then, with that",
   },
   {
     character: "未",
@@ -1002,8 +988,7 @@ export const data = [
   {
     character: "电脑",
     pinyin: "diànnǎo",
-    definition:
-      "electronic computer, computery, data processor, information processing system, computer",
+    definition: "electronic computer, computery, data processor, information processing system, computer",
   },
   {
     character: "一样",
@@ -1096,8 +1081,7 @@ export const data = [
   {
     character: "国内",
     pinyin: "guónèi",
-    definition:
-      "interior (of country), interior, home, intestine, internal, domestic",
+    definition: "interior (of country), interior, home, intestine, internal, domestic",
   },
   {
     character: "们",
@@ -1163,8 +1147,7 @@ export const data = [
   {
     character: "资料",
     pinyin: "zīliào",
-    definition:
-      "food, source, info, means, data, information, material, datum, data point, matter",
+    definition: "food, source, info, means, data, information, material, datum, data point, matter",
   },
   {
     character: "比较",
@@ -1180,8 +1163,7 @@ export const data = [
   {
     character: "地",
     pinyin: "dì",
-    definition:
-      "the earth, land, soil, fields, ground, place, position, background, distance ",
+    definition: "the earth, land, soil, fields, ground, place, position, background, distance ",
   },
   {
     character: "除了",
@@ -1216,14 +1198,12 @@ export const data = [
   {
     character: "岁",
     pinyin: "suì",
-    definition:
-      "year (for crops), m.[standard], , year of age, year (of age), year, annum, year for crops ",
+    definition: "year (for crops), m.[standard], , year of age, year (of age), year, annum, year for crops ",
   },
   {
     character: "请",
     pinyin: "qǐng",
-    definition:
-      "request, ask (a favor), engage, hire (teacher/etc.), Please...",
+    definition: "request, ask (a favor), engage, hire (teacher/etc.), Please...",
   },
   {
     character: "月",
@@ -1310,8 +1290,7 @@ export const data = [
   {
     character: "其中",
     pinyin: "qízhōng",
-    definition:
-      "among, of them, in it, among them, which, them, det.: it, in, in which",
+    definition: "among, of them, in it, among them, which, them, det.: it, in, in which",
   },
   {
     character: "问",
@@ -1321,8 +1300,7 @@ export const data = [
   {
     character: "台北",
     pinyin: "táiběi",
-    definition:
-      "capital of Nationalist China, capital of Republic of China on Taiwan, Taipei",
+    definition: "capital of Nationalist China, capital of Republic of China on Taiwan, Taipei",
   },
   {
     character: "包括",
@@ -1471,8 +1449,7 @@ export const data = [
   {
     character: "听",
     pinyin: "tīng",
-    definition:
-      "hear, list, hearken, obey, obedience, listen, heed, administer, let, allow, hark",
+    definition: "hear, list, hearken, obey, obedience, listen, heed, administer, let, allow, hark",
   },
   {
     character: "所有",
@@ -1582,8 +1559,7 @@ export const data = [
   {
     character: "妈妈",
     pinyin: "māmā",
-    definition:
-      "mummy, mammy, ma, mother, mamma, mum, mommy, female parent, mom, Mama, mater, mama, momma",
+    definition: "mummy, mammy, ma, mother, mamma, mum, mommy, female parent, mom, Mama, mater, mama, momma",
   },
   {
     character: "增加",
@@ -1723,8 +1699,7 @@ export const data = [
   {
     character: "件",
     pinyin: "jiàn",
-    definition:
-      "correspondence, paper, document, bit, m.[general], , single item, letter, piece ",
+    definition: "correspondence, paper, document, bit, m.[general], , single item, letter, piece ",
   },
   {
     character: "能力",
@@ -2096,8 +2071,7 @@ export const data = [
   {
     character: "啦",
     pinyin: "lā",
-    definition:
-      "particle: used when informing sb. of st.; indicating excitement/doubt/comfort/etc.",
+    definition: "particle: used when informing sb. of st.; indicating excitement/doubt/comfort/etc.",
   },
   {
     character: "妳",
@@ -2128,8 +2102,7 @@ export const data = [
   {
     character: "品质",
     pinyin: "pǐnzhí",
-    definition:
-      "calibre, appraisal, caliber, character, self, intrinsic, brew, quality, timber, sort",
+    definition: "calibre, appraisal, caliber, character, self, intrinsic, brew, quality, timber, sort",
   },
   {
     character: "经过",
@@ -2165,8 +2138,7 @@ export const data = [
   {
     character: "过",
     pinyin: "guò",
-    definition:
-      "pass, cross, transfer (e.g., ownership), undergo a process, go through, celebrate, observe ",
+    definition: "pass, cross, transfer (e.g., ownership), undergo a process, go through, celebrate, observe ",
   },
   {
     character: "好像",
@@ -2232,8 +2204,7 @@ export const data = [
   {
     character: "具有",
     pinyin: "jùyǒu",
-    definition:
-      "be provided with, have, have got, possess, hold, possession, carry, inhere, bear",
+    definition: "be provided with, have, have got, possess, hold, possession, carry, inhere, bear",
   },
   {
     character: "共同",
@@ -2396,8 +2367,7 @@ export const data = [
   {
     character: "快",
     pinyin: "kuài",
-    definition:
-      "fast, quick, quick-witted, ingenious, sharp (of knives), straightforward ",
+    definition: "fast, quick, quick-witted, ingenious, sharp (of knives), straightforward ",
   },
   {
     character: "国小",
@@ -2413,8 +2383,7 @@ export const data = [
   {
     character: "工程",
     pinyin: "gōngchéng",
-    definition:
-      "process, construction, engineering, engineering project, project",
+    definition: "process, construction, engineering, engineering project, project",
   },
   {
     character: "女人",
@@ -2467,8 +2436,7 @@ export const data = [
   {
     character: "面对",
     pinyin: "miànduì",
-    definition:
-      "face up, stand up, face, look_out_on, confront, front, affront, envisage, accost, breast",
+    definition: "face up, stand up, face, look_out_on, confront, front, affront, envisage, accost, breast",
   },
   {
     character: "注意",
@@ -2586,8 +2554,7 @@ export const data = [
   {
     character: "需求",
     pinyin: "xūqiú",
-    definition:
-      "need, requisition, demand, want, desiderative, requirement, call",
+    definition: "need, requisition, demand, want, desiderative, requirement, call",
   },
   {
     character: "人生",
@@ -2613,8 +2580,7 @@ export const data = [
   {
     character: "产业",
     pinyin: "chǎnyè",
-    definition:
-      "estate, manufacture, industry, domain, manufacturing, property",
+    definition: "estate, manufacture, industry, domain, manufacturing, property",
   },
   {
     character: "负责",
@@ -2625,8 +2591,7 @@ export const data = [
   {
     character: "民间",
     pinyin: "mínjiān",
-    definition:
-      "grass roots, people-to-people, nongovernmental, among the people, folk, popular",
+    definition: "grass roots, people-to-people, nongovernmental, among the people, folk, popular",
   },
   {
     character: "虽",
@@ -2773,8 +2738,7 @@ export const data = [
   {
     character: "老",
     pinyin: "lǎo",
-    definition:
-      "old, aged;of long standing, outdated, tough, overgrown, dark (of colors) ",
+    definition: "old, aged;of long standing, outdated, tough, overgrown, dark (of colors) ",
   },
   {
     character: "那么",
@@ -2907,8 +2871,7 @@ export const data = [
   {
     character: "一起",
     pinyin: "yīqǐ",
-    definition:
-      "in_chorus, together, in all, in the same place, holus-bolus, altogether, in company",
+    definition: "in_chorus, together, in all, in the same place, holus-bolus, altogether, in company",
   },
   {
     character: "张",
@@ -2981,8 +2944,7 @@ export const data = [
   {
     character: "研究所",
     pinyin: "yánjiùsuǒ",
-    definition:
-      "graduate_school, research institute, school, laboratory, graduate school, institute",
+    definition: "graduate_school, research institute, school, laboratory, graduate school, institute",
   },
   {
     character: "语言",
@@ -3072,8 +3034,7 @@ export const data = [
   {
     character: "住",
     pinyin: "zhù",
-    definition:
-      "inhabit, cease, stay, visit, shack, dwell, stop, people, live, reside, populate, dig ",
+    definition: "inhabit, cease, stay, visit, shack, dwell, stop, people, live, reside, populate, dig ",
   },
   {
     character: "皆",
@@ -3124,8 +3085,7 @@ export const data = [
   {
     character: "值得",
     pinyin: "zhíde",
-    definition:
-      "be worth, merit, pay, rate, behove, worthwhile, worth, worthy, deserve, call_for, command",
+    definition: "be worth, merit, pay, rate, behove, worthwhile, worth, worthy, deserve, call_for, command",
   },
   {
     character: "学者",
@@ -3147,8 +3107,7 @@ export const data = [
   {
     character: "阶段",
     pinyin: "jiēduàn",
-    definition:
-      "staged, period, phase angle, stage, gradation, level, peg, grade, remove, phase, leg, step",
+    definition: "staged, period, phase angle, stage, gradation, level, peg, grade, remove, phase, leg, step",
   },
   {
     character: "就是",
@@ -3189,14 +3148,12 @@ export const data = [
   {
     character: "母亲",
     pinyin: "mǔqīn",
-    definition:
-      "venter, materfamilias, mother, mither, sultana, maternal, female parent, mater",
+    definition: "venter, materfamilias, mother, mither, sultana, maternal, female parent, mater",
   },
   {
     character: "嘛",
     pinyin: "má",
-    definition:
-      "particle: used to persuade someone to do something; used to emphasize the obvious ",
+    definition: "particle: used to persuade someone to do something; used to emphasize the obvious ",
   },
   {
     character: "香港",
@@ -3246,8 +3203,7 @@ export const data = [
   {
     character: "人们",
     pinyin: "rénmen",
-    definition:
-      "workforce, hands, work force, folk, people, they, the people, men, manpower, common people",
+    definition: "workforce, hands, work force, folk, people, they, the people, men, manpower, common people",
   },
   {
     character: "谈",
@@ -3401,8 +3357,7 @@ export const data = [
   {
     character: "父亲",
     pinyin: "fùqīn",
-    definition:
-      "parent, father, pere, Pa, begetter, governor, abba, male parent, pater, guv",
+    definition: "parent, father, pere, Pa, begetter, governor, abba, male parent, pater, guv",
   },
   {
     character: "专业",
@@ -3418,8 +3373,7 @@ export const data = [
   {
     character: "曾经",
     pinyin: "céngjīng",
-    definition:
-      "in one case, , one time, formerly, syne, at one time, of all time, once, ever",
+    definition: "in one case, , one time, formerly, syne, at one time, of all time, once, ever",
   },
   {
     character: "工作",
@@ -3449,8 +3403,7 @@ export const data = [
   {
     character: "欢迎",
     pinyin: "huānyíng",
-    definition:
-      "invite, greet, take in, receive, welcome, gratulate, embrace, salute",
+    definition: "invite, greet, take in, receive, welcome, gratulate, embrace, salute",
   },
   {
     character: "小孩",
@@ -3564,14 +3517,12 @@ export const data = [
   {
     character: "回来",
     pinyin: "huílái",
-    definition:
-      "come back, get_back, recur, revisit, come, return, be back, come_back",
+    definition: "come back, get_back, recur, revisit, come, return, be back, come_back",
   },
   {
     character: "主任",
     pinyin: "zhǔrèn",
-    definition:
-      "head, principal, captain, chair, director, head teacher, chief, chairman, school principal",
+    definition: "head, principal, captain, chair, director, head teacher, chief, chairman, school principal",
   },
   {
     character: "里面",
@@ -3664,8 +3615,7 @@ export const data = [
   {
     character: "因素",
     pinyin: "yīnsù",
-    definition:
-      "consideration, ingredient, constituent, factor, strand, component, element",
+    definition: "consideration, ingredient, constituent, factor, strand, component, element",
   },
   {
     character: "推出",
@@ -3754,8 +3704,7 @@ export const data = [
   {
     character: "简单",
     pinyin: "jiǎndān",
-    definition:
-      "terse, casual, commonplace, simple, oversimplified, ordinary, uncomplicated",
+    definition: "terse, casual, commonplace, simple, oversimplified, ordinary, uncomplicated",
   },
   {
     character: "运用",
@@ -3770,8 +3719,7 @@ export const data = [
   {
     character: "往往",
     pinyin: "wǎngwǎng",
-    definition:
-      "oftentimes, ofttimes, always, more often than not, frequently, oft, often",
+    definition: "oftentimes, ofttimes, always, more often than not, frequently, oft, often",
   },
   {
     character: "规划",
@@ -3828,8 +3776,7 @@ export const data = [
   {
     character: "女",
     pinyin: "nǔ",
-    definition:
-      "girl, female, woman, neodymium, hen, daughter, beaver, creature",
+    definition: "girl, female, woman, neodymium, hen, daughter, beaver, creature",
   },
   {
     character: "要",
@@ -3845,14 +3792,12 @@ export const data = [
   {
     character: "发挥",
     pinyin: "fāhuī",
-    definition:
-      "bring into play, give free rein to, develop (idea/etc.), elaborate",
+    definition: "bring into play, give free rein to, develop (idea/etc.), elaborate",
   },
   {
     character: "人才",
     pinyin: "réncái",
-    definition:
-      "talent, capable person, a talented person, qualified personnel, a person of ability",
+    definition: "talent, capable person, a talented person, qualified personnel, a person of ability",
   },
   {
     character: "反而",
@@ -3915,8 +3860,7 @@ export const data = [
   {
     character: "教育部",
     pinyin: "jiàoyūbù",
-    definition:
-      "Education, Ministry of Education, Department of Education, Education Department",
+    definition: "Education, Ministry of Education, Department of Education, Education Department",
   },
   {
     character: "愈",
@@ -3982,8 +3926,7 @@ export const data = [
   {
     character: "有时",
     pinyin: "yǒushí",
-    definition:
-      "now and then, at times, betweentimes, from time to time, sometimes",
+    definition: "now and then, at times, betweentimes, from time to time, sometimes",
   },
   {
     character: "教师",
@@ -4068,14 +4011,12 @@ export const data = [
   {
     character: "达",
     pinyin: "dá",
-    definition:
-      "lead, attain, extend, amount to, ryke, express, attainment, inform, reach",
+    definition: "lead, attain, extend, amount to, ryke, express, attainment, inform, reach",
   },
   {
     character: "节目",
     pinyin: "jiémù",
-    definition:
-      "item, item (on program), programme, act, telecast, number, program",
+    definition: "item, item (on program), programme, act, telecast, number, program",
   },
   {
     character: "智慧",
@@ -4145,8 +4086,7 @@ export const data = [
   {
     character: "刚",
     pinyin: "gāng",
-    definition:
-      "exactly, only a short while ago, just now, barely, only just, just ",
+    definition: "exactly, only a short while ago, just now, barely, only just, just ",
   },
   {
     character: "特殊",
@@ -4182,8 +4122,7 @@ export const data = [
   {
     character: "前往",
     pinyin: "qiánwǎng",
-    definition:
-      "depart, cruise, go_to, go, leave, go to, proceed to, pay, seek, leave for",
+    definition: "depart, cruise, go_to, go, leave, go to, proceed to, pay, seek, leave for",
   },
   {
     character: "投资",
@@ -4298,8 +4237,7 @@ export const data = [
   {
     character: "北京",
     pinyin: "běijīng",
-    definition:
-      "capital of Red China, Beijing, Peking, Beijing (Peking), Peiping",
+    definition: "capital of Red China, Beijing, Peking, Beijing (Peking), Peiping",
   },
   {
     character: "年轻",
@@ -4432,8 +4370,7 @@ export const data = [
   {
     character: "加以",
     pinyin: "jiāyǐ",
-    definition:
-      "handle; treat (used before polysyllabic verbs or verbal nouns)",
+    definition: "handle; treat (used before polysyllabic verbs or verbal nouns)",
   },
   {
     character: "充满",
@@ -4475,8 +4412,7 @@ export const data = [
   {
     character: "总",
     pinyin: "zǒng",
-    definition:
-      "always, invariably, anyway, after all, inevitably, sooner or later ",
+    definition: "always, invariably, anyway, after all, inevitably, sooner or later ",
   },
   {
     character: "分析",
@@ -4576,8 +4512,7 @@ export const data = [
   {
     character: "对方",
     pinyin: "duìfāng",
-    definition:
-      "other party, the other party, fellow, party, other side, adversary, other side/party",
+    definition: "other party, the other party, fellow, party, other side, adversary, other side/party",
   },
   {
     character: "官员",
@@ -4669,8 +4604,7 @@ export const data = [
   {
     character: "树",
     pinyin: "shù",
-    definition:
-      "wood, Ruptiliocarpon caracolito, tree, arbor, Surname, caracolito ",
+    definition: "wood, Ruptiliocarpon caracolito, tree, arbor, Surname, caracolito ",
   },
   {
     character: "适合",

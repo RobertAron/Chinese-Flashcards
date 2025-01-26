@@ -1,9 +1,8 @@
 {
   "name": "vocab-sprint",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "turbo": "^2.3.3"
   },
-  "workspaces": [
-    "apps/*"
-  ]
+  "workspaces": ["apps/*"]
 }

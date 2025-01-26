@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { Kbd } from "@/components/Kbd";
 import { MotionLink } from "@/components/MotionLink";
+import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { useKeyTrigger } from "@/utils/hooks";
 import { useMergeClasses } from "@/utils/styleResolvers";
 import { Undo2 } from "lucide-react";
@@ -10,10 +10,7 @@ import { useCallback } from "react";
 export function ExitButton({ onExit }: { onExit: () => void }) {
   useKeyTrigger("Escape", onExit);
   return (
-    <Button
-      onClick={onExit}
-      className="group flex gap-2 rounded-lg bg-white p-2"
-    >
+    <Button onClick={onExit} className="group flex gap-2 rounded-lg bg-white p-2">
       <Undo2 />
       <div>Exit</div>
       <div className="flex gap-1">
@@ -36,11 +33,7 @@ export function ExitLink({
   }, [href, router]);
   useKeyTrigger("Escape", navigate);
   const coreExitButtonClasses = "flex gap-2 p-2";
-  const combinedClassName = useMergeClasses(
-    buttonBehaviorClasses,
-    coreExitButtonClasses,
-    className ?? "",
-  );
+  const combinedClassName = useMergeClasses(buttonBehaviorClasses, coreExitButtonClasses, className ?? "");
   return (
     <MotionLink href={href} className={combinedClassName}>
       <Undo2 className="flex-shrink-0" />

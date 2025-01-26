@@ -1,8 +1,5 @@
-import {
-  Checkbox as AriaCheckbox,
-  CheckboxProps as AriaCheckboxProps,
-} from "react-aria-components";
 import { motion } from "motion/react";
+import { Checkbox as AriaCheckbox, type CheckboxProps as AriaCheckboxProps } from "react-aria-components";
 
 type CheckboxProps = Omit<AriaCheckboxProps, "children"> & {
   children?: React.ReactNode;

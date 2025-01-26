@@ -1,11 +1,8 @@
 import { allChallenges } from "@/challenges/allChallenges";
-import {
-  buttonBehaviorClasses,
-  popOutBehaviorClasses,
-} from "@/components/coreClasses";
+import { MotionLink } from "@/components/MotionLink";
+import { buttonBehaviorClasses, popOutBehaviorClasses } from "@/components/coreClasses";
 import Link from "next/link";
 import { PracticeCountCell, TimeAttackCell } from "./client";
-import { MotionLink } from "@/components/MotionLink";
 
 export default function Home() {
   return (

@@ -1,16 +1,11 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
+import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
-import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { formatTimeAttackMs } from "@/utils/playerStats";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useTime,
-} from "motion/react";
+import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
 import { useRef, useState } from "react";
 import {
   timeAttackToAward,
@@ -30,32 +25,24 @@ export default AppPage(() => {
   return (
     <main>
       {!timeAttackRunning ? (
-        <ChallengeTitle
-          onStart={() => setTimeAttackRunning(true)}
-          improve={previousBest !== null}
-        >
+        <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
           <div className="flex gap-2">
             <div className="flex grow basis-0 flex-col text-3xl font-bold">
               <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="gold" />{" "}
-                {formatTimeAttackMs(timeForGold)}
+                <PlayerAwardIcon awardType="gold" /> {formatTimeAttackMs(timeForGold)}
               </div>
               <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="silver" />{" "}
-                {formatTimeAttackMs(timeForSilver)}
+                <PlayerAwardIcon awardType="silver" /> {formatTimeAttackMs(timeForSilver)}
               </div>
               <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="bronze" />{" "}
-                {formatTimeAttackMs(timeForBronze)}
+                <PlayerAwardIcon awardType="bronze" /> {formatTimeAttackMs(timeForBronze)}
               </div>
             </div>
             <div className="flex grow basis-0 flex-col items-end text-lg">
               <div className="flex gap-1 truncate">
                 <span>Previous Best:</span>
                 <span className="flex items-center gap-1">
-                  <PlayerAwardIcon
-                    awardType={timeAttackToAward(previousBest)}
-                  />
+                  <PlayerAwardIcon awardType={timeAttackToAward(previousBest)} />
                   {formatTimeAttackMs(previousBest)}
                 </span>
               </div>
@@ -64,9 +51,7 @@ export default AppPage(() => {
                   <div>Recent Finish</div>
                   <div className="flex items-end gap-1">
                     {recentFinish === previousBest && "🎉"}
-                    <PlayerAwardIcon
-                      awardType={timeAttackToAward(recentFinish)}
-                    />
+                    <PlayerAwardIcon awardType={timeAttackToAward(recentFinish)} />
                     {formatTimeAttackMs(recentFinish)}
                   </div>
                 </div>
@@ -80,8 +65,7 @@ export default AppPage(() => {
             setTimeAttackRunning(false);
             if (completedTime === null) return;
             setRecentFinish(completedTime);
-            if (previousBest === null || completedTime < previousBest)
-              setNewBest(completedTime);
+            if (previousBest === null || completedTime < previousBest) setNewBest(completedTime);
           }}
         />
       )}
@@ -106,8 +90,7 @@ function TimeAttackRunning({
   if (initializing) return null;
 
   const onProblemComplete = () => {
-    if (completedItems === itemsToComplete - 1)
-      onTimeAttackComplete(time.get());
+    if (completedItems === itemsToComplete - 1) onTimeAttackComplete(time.get());
     else {
       setCompletedItems(completedItems + 1);
       nextProblem();
@@ -125,11 +108,7 @@ function TimeAttackRunning({
         </div>
         <ProgressRing current={completedItems} total={itemsToComplete} />
         <AnimatePresence mode="popLayout">
-          <Challenge
-            challenge={problem}
-            onProblemComplete={onProblemComplete}
-            active
-          />
+          <Challenge challenge={problem} onProblemComplete={onProblemComplete} active />
         </AnimatePresence>
       </div>
     </div>
@@ -153,10 +132,7 @@ const circleCoreProps: Partial<React.ComponentProps<typeof motion.circle>> = {
 function ProgressRing({ current, total }: { current: number; total: number }) {
   return (
     <figure className="grid h-[100px] w-[100px]">
-      <svg
-        className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-600"
-        viewBox="0 0 100 100"
-      >
+      <svg className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-600" viewBox="0 0 100 100">
         <text textAnchor="end" x="50" y="50" dominantBaseline="text-top">
           {current}
         </text>
@@ -164,17 +140,8 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
           {total}
         </text>
 
-        <motion.circle
-          {...circleCoreProps}
-          initial={{ pathLength: 1 }}
-          className="text-blue-950"
-        />
-        <path
-          d="M70 30 30 70"
-          stroke="currentColor"
-          className="text-blue-950"
-          strokeWidth="4"
-        />
+        <motion.circle {...circleCoreProps} initial={{ pathLength: 1 }} className="text-blue-950" />
+        <path d="M70 30 30 70" stroke="currentColor" className="text-blue-950" strokeWidth="4" />
         <motion.circle
           {...circleCoreProps}
           initial={{

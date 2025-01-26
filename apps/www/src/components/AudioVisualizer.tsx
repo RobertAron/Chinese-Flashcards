@@ -1,13 +1,7 @@
 "use client";
 // https://github.com/samhirtarif/react-audio-visualize
 import { getAudioContext } from "@/utils/audioContext";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 function average(nums: number[]) {
   if (nums.length === 0) return 0;
@@ -18,10 +12,7 @@ function average(nums: number[]) {
   return sum / nums.length;
 }
 
-export const calculateBarData = (
-  frequencyData: Uint8Array,
-  desiredBars = 100,
-): number[] => {
+export const calculateBarData = (frequencyData: Uint8Array, desiredBars = 100): number[] => {
   const startingPoint = Math.floor(frequencyData.length * 0);
   const endpointPoint = Math.floor(frequencyData.length * 0.5);
   const usefulDataPoints = frequencyData.slice(startingPoint, endpointPoint);
@@ -84,18 +75,7 @@ export type Props = {
    * For more details {@link https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/fftSize MDN AnalyserNode: fftSize property}
    * Default: `1024`
    */
-  fftSize?:
-    | 32
-    | 64
-    | 128
-    | 256
-    | 512
-    | 1024
-    | 2048
-    | 4096
-    | 8192
-    | 16384
-    | 32768;
+  fftSize?: 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096 | 8192 | 16384 | 32768;
   /**
    * A double, representing the maximum decibel value for scaling the FFT analysis data
    * For more details {@link https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/maxDecibels MDN AnalyserNode: maxDecibels property}
@@ -125,7 +105,7 @@ export type Props = {
 // const sourceNode = audioContext.createMediaElementSource(audioElement);
 
 export const LiveAudioVisualizer = ({
-  mediaSource: mediaSource,
+  mediaSource,
   fftSize = 8192,
   maxDecibels = -25,
   minDecibels = -90,
@@ -189,16 +169,8 @@ export const LiveAudioVisualizer = ({
   }, []);
 
   return (
-    <div
-      className="relative h-full w-full overflow-hidden rounded-md border border-black"
-      ref={containerRef}
-    >
-      <canvas
-        className="absolute inset-0"
-        ref={canvasRef}
-        width={width * 2}
-        height={height * 2}
-      />
+    <div className="relative h-full w-full overflow-hidden rounded-md border border-black" ref={containerRef}>
+      <canvas className="absolute inset-0" ref={canvasRef} width={width * 2} height={height * 2} />
     </div>
   );
 };

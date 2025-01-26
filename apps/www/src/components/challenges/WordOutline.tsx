@@ -1,8 +1,8 @@
-import { WordDefinition } from "common-data/types";
-import { LiveAudioVisualizer } from "../AudioVisualizer";
-import { useRef } from "react";
 import { useAudioSourceNode } from "@/utils/hooks";
+import type { WordDefinition } from "common-data/types";
 import { PlayIcon } from "lucide-react";
+import { useRef } from "react";
+import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { buttonBehaviorClasses } from "../coreClasses";
 
 type WordOutlineProps = {
@@ -32,6 +32,7 @@ function AudioSection({ fileName }: { fileName: string }) {
       <audio ref={audioRef} src={url} className="hidden" />
       <div className="z-10 ml-1 mt-1 self-start justify-self-start grid-stack-item">
         <button
+          type="button"
           className={`${buttonBehaviorClasses} flex items-center gap-4 rounded-lg bg-white/30 p-2 backdrop-blur-sm`}
           onClick={playAudio}
         >

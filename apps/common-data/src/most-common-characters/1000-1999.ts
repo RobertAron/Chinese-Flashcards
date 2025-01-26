@@ -173,8 +173,7 @@ export const data = [
   {
     character: "伯",
     pinyin: "bó",
-    definition:
-      "older brother; father's elder brother; senior male 'sire'; feudal rank 'count'",
+    definition: "older brother; father's elder brother; senior male 'sire'; feudal rank 'count'",
   },
   {
     character: "偏",
@@ -214,8 +213,7 @@ export const data = [
   {
     character: "申",
     pinyin: "shēn",
-    definition:
-      "to state to a superior, report; extend; 9th terrestrial branch",
+    definition: "to state to a superior, report; extend; 9th terrestrial branch",
   },
   {
     character: "冠",
@@ -405,8 +403,7 @@ export const data = [
   {
     character: "秀",
     pinyin: "xiù",
-    definition:
-      "ear of grain; flowering, luxuriant; refined, elegant, graceful",
+    definition: "ear of grain; flowering, luxuriant; refined, elegant, graceful",
   },
   {
     character: "馀",
@@ -851,8 +848,7 @@ export const data = [
   {
     character: "苏",
     pinyin: "sū",
-    definition:
-      "revive, resurrect; a species of thyme; transliteration of 'Soviet'",
+    definition: "revive, resurrect; a species of thyme; transliteration of 'Soviet'",
   },
   {
     character: "缩",
@@ -942,8 +938,7 @@ export const data = [
   {
     character: "欧",
     pinyin: "ōu",
-    definition:
-      "used in transliterating non-Chinese words such as Europe, ohm; surname",
+    definition: "used in transliterating non-Chinese words such as Europe, ohm; surname",
   },
   {
     character: "届",
@@ -1328,8 +1323,7 @@ export const data = [
   {
     character: "索",
     pinyin: "suǒ",
-    definition:
-      "large rope, cable; rules, laws; to demand, to exact; to search, inquire; isolated",
+    definition: "large rope, cable; rules, laws; to demand, to exact; to search, inquire; isolated",
   },
   {
     character: "惠",
@@ -2024,8 +2018,7 @@ export const data = [
   {
     character: "佩",
     pinyin: "pèi",
-    definition:
-      "belt ornament, pendant; wear at waist, tie to the belt; respect",
+    definition: "belt ornament, pendant; wear at waist, tie to the belt; respect",
   },
   {
     character: "牠",
@@ -2360,8 +2353,7 @@ export const data = [
   {
     character: "洽",
     pinyin: "qià",
-    definition:
-      "to blend with, be in harmony; to penetrate; to cover; a river in Shenxi",
+    definition: "to blend with, be in harmony; to penetrate; to cover; a river in Shenxi",
   },
   {
     character: "寞",
@@ -3466,8 +3458,7 @@ export const data = [
   {
     character: "丹",
     pinyin: "dān",
-    definition:
-      "cinnabar (native HgS); vermilion (artificial HgS used as pigment)",
+    definition: "cinnabar (native HgS); vermilion (artificial HgS used as pigment)",
   },
   {
     character: "鑑",
@@ -4757,8 +4748,7 @@ export const data = [
   {
     character: "秦",
     pinyin: "qín",
-    definition:
-      "feudal state of Qin; the Qin dynasty (from which the name 'China' comes)",
+    definition: "feudal state of Qin; the Qin dynasty (from which the name 'China' comes)",
   },
   {
     character: "辱",
@@ -4848,8 +4838,7 @@ export const data = [
   {
     character: "禅",
     pinyin: "chán",
-    definition:
-      "meditation, contemplation (dhyana); to level ground for altar; abdicate",
+    definition: "meditation, contemplation (dhyana); to level ground for altar; abdicate",
   },
   {
     character: "迁",

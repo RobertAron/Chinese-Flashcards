@@ -1,37 +1,16 @@
-import { WordDefinition } from "./types.js";
+import type { WordDefinition } from "./types.js";
 
 export const commonWords = (
   [
     ["1", "你好", "nǐhǎo", "interj.", "hello; hi", "👋🙂"],
     ["2", "再见", "zàijiàn", "interj.", "bye; goodbye", "👋🙋‍♀️"],
-    [
-      "3",
-      "请问",
-      "qǐngwèn",
-      "v.",
-      "please (allow me to) ask; excuse me",
-      "🙏❓",
-    ],
+    ["3", "请问", "qǐngwèn", "v.", "please (allow me to) ask; excuse me", "🙏❓"],
     ["4", "知道", "zhīdào", "v.", "to know; to be aware of", "💡🧠"],
     ["5", "好", "hǎo", "adj.", "good", "👍✨"],
     ["6", "谢谢", "xièxie", "v.", "thanks", "🙏😄"],
-    [
-      "7",
-      "不客气",
-      "búkèqi",
-      "",
-      "(lit. don't be polite) you’re welcome",
-      "🤗🙌",
-    ],
+    ["7", "不客气", "búkèqi", "", "(lit. don't be polite) you’re welcome", "🤗🙌"],
     ["8", "对不起", "duìbuqǐ", "v.", "sorry", "😔🙇‍♀️"],
-    [
-      "9",
-      "没关系",
-      "méiguānxi",
-      "",
-      "it doesn’t matter; that’s all right",
-      "👌🤷",
-    ],
+    ["9", "没关系", "méiguānxi", "", "it doesn’t matter; that’s all right", "👌🤷"],
     ["10", "说", "shuō", "v.", "to say; to speak", "🗣️💬"],
     ["11", "有", "yǒu", "v.", "to have; to own", "🙌👜"],
     ["12", "朋友", "péngyou", "n.", "friend", "👬🤝"],
@@ -45,25 +24,11 @@ export const commonWords = (
     ["20", "名字", "míngzi", "n.", "name", "🏷️❓"],
 
     ["1", "什么", "shénme", "q.pron.", "what", "❓🤔"],
-    [
-      "2",
-      "早上好",
-      "zǎoshang hǎo",
-      "",
-      "(lit. morning good) good morning",
-      "☀️🌅",
-    ],
+    ["2", "早上好", "zǎoshang hǎo", "", "(lit. morning good) good morning", "☀️🌅"],
     ["3", "晚安", "wǎn’ān", "", "(lit. evening peace) good night", "🌙😴"],
     ["4", "吃", "chī", "v.", "to eat", "🍽️😋"],
     ["5", "喝", "hē", "v.", "to drink", "🥤😋"],
-    [
-      "6",
-      "不用谢",
-      "búyòng xiè",
-      "",
-      "(lit. no use thank) you’re welcome",
-      "NP!",
-    ],
+    ["6", "不用谢", "búyòng xiè", "", "(lit. no use thank) you’re welcome", "NP!"],
     ["7", "哎呀", "āiyā", "interj.", "ah; oh, my; dear me", "😮🤦‍♂️"],
     ["8", "是", "shì", "v.", "to be", "=️⃣"],
     ["9", "对", "duì", "adj.", "correct; right", "🙂‍↕️🙆‍♂️😁"],
@@ -85,14 +50,7 @@ export const commonWords = (
     ["4", "男朋友", "nánpéngyou", "n.", "boyfriend", "👨❤️"],
     ["5", "女朋友", "nǚpéngyou", "n.", "girlfriend", "👩❤️"],
     ["6", "现在", "xiànzài", "n.", "now", "⏰⬇️"],
-    [
-      "7",
-      "吗",
-      "ma",
-      "p.",
-      "particle for yes-or-no question",
-      "~❓",
-    ],
+    ["7", "吗", "ma", "p.", "particle for yes-or-no question", "~❓"],
     ["8", "没有", "méi yǒu", "v. phr.", "to not have; to not own", "∅🫙"],
     ["9", "可以", "kěyǐ", "m.v.", "can (possibly); to be able to", "✅🧑‍🔧"],
     ["10", "多", "duō", "adj.", "much; many", "🔢#"],
@@ -114,44 +72,28 @@ export const commonWords = (
     ["5", "饿", "è", "adj.", "hungry", "🤤🍴"],
     ["6", "超市", "chāoshì", "n.", "supermarket", "🏬🛒"],
     ["7", "汉字", "Hànzì", "n.", "Chinese character", "🀄🔤"],
-    [
-      "8",
-      "呢",
-      "ne",
-      "p.",
-      "used at the end of the sentence to ask a contextual question",
-      "❔🧐",
-    ],
+    ["8", "呢", "ne", "p.", "used at the end of the sentence to ask a contextual question", "❔🧐"],
     ["9", "狗", "gǒu", "n.", "dog", "🐶🐕"],
     ["10", "猫", "māo", "n.", "cat", "🐱🐈"],
     ["11", "不", "bù", "adv.", "not", "🚫🙅"],
     ["12", "听", "tīng", "v.", "to listen; to listen to", "👂🔊"],
     ["13", "走", "zǒu", "v.", "to leave", "🏃‍♂️🏃‍♀️"],
     ["14", "手机", "shǒujī", "n.", "cellphone; mobile phone", "📱🤳"],
-    [
-      "15",
-      "上课",
-      "shàngkè",
-      "v.",
-      "(for students) to attend class; (for teachers) to give class",
-      "🏫👩‍🏫",
-    ],
+    ["15", "上课", "shàngkè", "v.", "(for students) to attend class; (for teachers) to give class", "🏫👩‍🏫"],
     ["16", "大", "dà", "adj.", "big; giant; huge", "🐘💪"],
     ["17", "小", "xiǎo", "adj.", "small; little", "🐭👶"],
     ["18", "电话", "diànhuà", "n.", "phone; phone call", "☎️📞"],
     ["19", "同事", "tóngshì", "n.", "coworker; colleague", "👥💼"],
     ["20", "同学", "tóngxué", "n.", "classmate; schoolmate", "👩‍🎓👨‍🎓"],
   ] as const
-).map(
-  ([_, characters, pinyin, __, definition, emoji], index): WordDefinition => {
-    const id = `common-words-${index}`;
-    return {
-      character: characters,
-      definition,
-      fileName: `${id}.mp3`,
-      id,
-      pinyin,
-      emoji,
-    };
-  }
-);
+).map(([_, characters, pinyin, __, definition, emoji], index): WordDefinition => {
+  const id = `common-words-${index}`;
+  return {
+    character: characters,
+    definition,
+    fileName: `${id}.mp3`,
+    id,
+    pinyin,
+    emoji,
+  };
+});

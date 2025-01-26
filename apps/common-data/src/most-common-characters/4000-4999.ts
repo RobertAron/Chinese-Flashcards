@@ -950,8 +950,7 @@ export const data = [
     definition: "mèi",
   },
   {
-    character:
-      "dusk; Mei river; Zhou dynasty place-name; (Cant.) to go underwater, to dive",
+    character: "dusk; Mei river; Zhou dynasty place-name; (Cant.) to go underwater, to dive",
     pinyin: "驭",
     definition: "yù",
   },
@@ -1744,8 +1743,7 @@ export const data = [
   },
   {
     character: "jiè",
-    pinyin:
-      "large jade tablet used by officials at court to indicate their ranks",
+    pinyin: "large jade tablet used by officials at court to indicate their ranks",
     definition: "鹬",
   },
   {
@@ -2111,8 +2109,7 @@ export const data = [
   {
     character: "沅",
     pinyin: "yuán",
-    definition:
-      "name of a river in western Hunan that flows into Dongting lake",
+    definition: "name of a river in western Hunan that flows into Dongting lake",
   },
   {
     character: "疡",
@@ -4051,8 +4048,7 @@ export const data = [
   },
   {
     character: "gāng",
-    pinyin:
-      "the name of a certain stars; the god who is supposed to live in them",
+    pinyin: "the name of a certain stars; the god who is supposed to live in them",
     definition: "颢",
   },
   {
@@ -4173,8 +4169,7 @@ export const data = [
   },
   {
     character: "diāo",
-    pinyin:
-      "engrave, inlay, carve; exhaust; used for U+9D70 鵰 an eagle, vulture",
+    pinyin: "engrave, inlay, carve; exhaust; used for U+9D70 鵰 an eagle, vulture",
     definition: "掴",
   },
   {
@@ -4264,8 +4259,7 @@ export const data = [
   },
   {
     character: "ào",
-    pinyin:
-      "a hollow in the ground, a cavity, depression; undulating, depressed",
+    pinyin: "a hollow in the ground, a cavity, depression; undulating, depressed",
     definition: "滮",
   },
   {
@@ -4356,8 +4350,7 @@ export const data = [
   {
     character: "嗲",
     pinyin: "dia3",
-    definition:
-      "(Cant.) saliva; intensifying particle; inviting, coquettish; 嗲哋. 'daddy'",
+    definition: "(Cant.) saliva; intensifying particle; inviting, coquettish; 嗲哋. 'daddy'",
   },
   {
     character: "柰",
@@ -4387,8 +4380,7 @@ export const data = [
   {
     character: "忒",
     pinyin: "tè",
-    definition:
-      "excessive; too; very-usually of objectionable things; to err; to mistake; changeable",
+    definition: "excessive; too; very-usually of objectionable things; to err; to mistake; changeable",
   },
   {
     character: "揄",
@@ -4733,8 +4725,7 @@ export const data = [
   {
     character: "揾",
     pinyin: "wèn",
-    definition:
-      "wipe off; press down with knuckle; to immerse; (Cant.) to search, look for",
+    definition: "wipe off; press down with knuckle; to immerse; (Cant.) to search, look for",
   },
   {
     character: "倨",

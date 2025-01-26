@@ -1,4 +1,4 @@
-import { ChallengeDefinition } from "./types.js";
+import type { ChallengeDefinition } from "./types.js";
 
 export const manualChallenges: Record<string, ChallengeDefinition> = {
   "where-is-he": {

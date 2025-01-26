@@ -52,8 +52,7 @@ export const data = [
   {
     character: "中",
     pinyin: "zhōng",
-    definition:
-      "central; center, middle; in the midst of; hit (target); attain",
+    definition: "central; center, middle; in the midst of; hit (target); attain",
   },
   {
     character: "到",
@@ -138,8 +137,7 @@ export const data = [
   {
     character: "也",
     pinyin: "yě",
-    definition:
-      "also; classical final particle of strong affirmation or identity",
+    definition: "also; classical final particle of strong affirmation or identity",
   },
   {
     character: "用",
@@ -264,8 +262,7 @@ export const data = [
   {
     character: "之",
     pinyin: "zhī",
-    definition:
-      "'s (marks preceding phrase as modifier of following phrase); it, him her, them; go to",
+    definition: "'s (marks preceding phrase as modifier of following phrase); it, him her, them; go to",
   },
   {
     character: "还",
@@ -1275,8 +1272,7 @@ export const data = [
   {
     character: "社",
     pinyin: "shè",
-    definition:
-      "god of the soil and altars to him; group of families; company, society",
+    definition: "god of the soil and altars to him; group of families; company, society",
   },
   {
     character: "告",
@@ -1366,8 +1362,7 @@ export const data = [
   {
     character: "代",
     pinyin: "dài",
-    definition:
-      "replace, replacement (of person or generation >); era, generation",
+    definition: "replace, replacement (of person or generation >); era, generation",
   },
   {
     character: "统",
@@ -1747,8 +1742,7 @@ export const data = [
   {
     character: "色",
     pinyin: "sè",
-    definition:
-      "color, tint, hue, shade; form, body; beauty, desire for beauty",
+    definition: "color, tint, hue, shade; form, body; beauty, desire for beauty",
   },
   {
     character: "容",
@@ -3028,8 +3022,7 @@ export const data = [
   {
     character: "介",
     pinyin: "jiè",
-    definition:
-      "forerunner, herald, harbinger; to lie between; sea shell; to wear armor",
+    definition: "forerunner, herald, harbinger; to lie between; sea shell; to wear armor",
   },
   {
     character: "首",
@@ -3269,8 +3262,7 @@ export const data = [
   {
     character: "佛",
     pinyin: "fó",
-    definition:
-      "Buddha; of Buddhism; merciful percon; Buddhist image; the dead (Jap.)",
+    definition: "Buddha; of Buddhism; merciful percon; Buddhist image; the dead (Jap.)",
   },
   {
     character: "克",
@@ -3365,8 +3357,7 @@ export const data = [
   {
     character: "呀",
     pinyin: "yā",
-    definition:
-      "particle used to express surprise or mild emphasis; (Cant.) slurred form of the number ten",
+    definition: "particle used to express surprise or mild emphasis; (Cant.) slurred form of the number ten",
   },
   {
     character: "楼",
@@ -3936,8 +3927,7 @@ export const data = [
   {
     character: "陆",
     pinyin: "lù",
-    definition:
-      "land, continental; army; an accounting form of U+516D 六 (six)",
+    definition: "land, continental; army; an accounting form of U+516D 六 (six)",
   },
   {
     character: "激",

@@ -1,4 +1,4 @@
-import { AwardTypes } from "@/utils/playerStats";
+import type { AwardTypes } from "@/utils/playerStats";
 import { Award } from "lucide-react";
 
 export const awardColors = {
@@ -13,11 +13,5 @@ export function PlayerAwardIcon({
   awardType: AwardTypes;
 } & Omit<React.ComponentProps<typeof Award>, "color">) {
   if (awardType === null) return null;
-  return (
-    <Award
-      strokeWidth={3}
-      style={{ color: awardColors[awardType] }}
-      {...restProps}
-    />
-  );
+  return <Award strokeWidth={3} style={{ color: awardColors[awardType] }} {...restProps} />;
 }

@@ -1,14 +1,14 @@
 "use client";
 import { AppPage } from "@/components/AppPage";
+import { MotionLink } from "@/components/MotionLink";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
-import { formatPracticeCount, formatTimeAttackMs } from "@/utils/playerStats";
-import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
-import { ListChecks, Timer } from "lucide-react";
-import { ExitLink } from "./ExitButton";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { formatPracticeCount, formatTimeAttackMs } from "@/utils/playerStats";
+import { ListChecks, Timer } from "lucide-react";
 import * as motion from "motion/react-client";
-import { MotionLink } from "@/components/MotionLink";
+import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
+import { ExitLink } from "./ExitButton";
 
 function ModeOption({
   href,
@@ -35,8 +35,7 @@ function ModeOption({
 }
 
 export default AppPage(() => {
-  const { challengeId, wordDefinitions, challengeLabel } =
-    useChallengeContext();
+  const { challengeId, wordDefinitions, challengeLabel } = useChallengeContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
@@ -52,9 +51,7 @@ export default AppPage(() => {
             </div>
             <div>
               <div className="text-6xl">Practice</div>
-              <div className="text-4xl">
-                {formatPracticeCount(practiceCount)}
-              </div>
+              <div className="text-4xl">{formatPracticeCount(practiceCount)}</div>
             </div>
           </ModeOption>
           <ModeOption href={`/challenge-list/${challengeId}/time-attack`}>
@@ -63,9 +60,7 @@ export default AppPage(() => {
             </div>
             <div>
               <div className="whitespace-nowrap text-6xl">Time Attack</div>
-              <div className="whitespace-nowrap text-4xl">
-                {formatTimeAttackMs(timeAttackPb)}
-              </div>
+              <div className="whitespace-nowrap text-4xl">{formatTimeAttackMs(timeAttackPb)}</div>
             </div>
           </ModeOption>
         </div>

@@ -633,8 +633,7 @@ export const data = [
   {
     character: "茍",
     pinyin: "jì",
-    definition:
-      "to be circumspect, cautious in ones behaviour (distinguish DKW 30790 gou3)",
+    definition: "to be circumspect, cautious in ones behaviour (distinguish DKW 30790 gou3)",
   },
   {
     character: "磋",
@@ -1034,8 +1033,7 @@ export const data = [
   },
   {
     character: "bā",
-    pinyin:
-      "break open, split open; an accounting version of the numeral eight",
+    pinyin: "break open, split open; an accounting version of the numeral eight",
     definition: "遁",
   },
   {
@@ -1075,8 +1073,7 @@ export const data = [
   },
   {
     character: "sū",
-    pinyin:
-      "revive, resurrect; a species of thyme; transliteration of 'Soviet'",
+    pinyin: "revive, resurrect; a species of thyme; transliteration of 'Soviet'",
     definition: "邹",
   },
   {
@@ -2297,8 +2294,7 @@ export const data = [
   {
     character: "榨",
     pinyin: "zhà",
-    definition:
-      "to press or extract juices; a press to extract juices; a vegetable",
+    definition: "to press or extract juices; a press to extract juices; a vegetable",
   },
   {
     character: "肘",
@@ -3763,8 +3759,7 @@ export const data = [
   {
     character: "桔",
     pinyin: "jié",
-    definition:
-      "Chinese bellflower; well-swept; the inner fibers of corn-stalks",
+    definition: "Chinese bellflower; well-swept; the inner fibers of corn-stalks",
   },
   {
     character: "讹",
@@ -4788,8 +4783,7 @@ export const data = [
   },
   {
     character: "ǎo",
-    pinyin:
-      "to pull, drag, break off, to pluck (a flower); bent, warped; perverse, obstinate",
+    pinyin: "to pull, drag, break off, to pluck (a flower); bent, warped; perverse, obstinate",
     definition: "朴",
   },
   {

@@ -1,6 +1,6 @@
 import { manualChallenges } from "common-data/manual";
-import { mostCommonWordChallenges } from "./top1000";
 import { commonWordsChallenges } from "./common-words";
+import { mostCommonWordChallenges } from "./top1000";
 export const allChallenges = {
   ...commonWordsChallenges,
   ...manualChallenges,
