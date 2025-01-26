@@ -30,6 +30,9 @@
       },
       "a11y": {
         "useMediaCaption": "off"
+      },
+      "nursery": {
+        "useSortedClasses": "error"
       }
     }
   },

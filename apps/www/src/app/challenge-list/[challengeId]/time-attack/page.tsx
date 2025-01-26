@@ -27,7 +27,7 @@ export default AppPage(() => {
       {!timeAttackRunning ? (
         <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
           <div className="flex gap-2">
-            <div className="flex grow basis-0 flex-col text-3xl font-bold">
+            <div className="flex grow basis-0 flex-col font-bold text-3xl">
               <div className="flex items-center gap-1">
                 <PlayerAwardIcon awardType="gold" /> {formatTimeAttackMs(timeForGold)}
               </div>
@@ -98,12 +98,12 @@ function TimeAttackRunning({
   };
 
   return (
-    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle grid-stack">
-      <div className="justify-start self-start p-2 grid-stack-item">
+    <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <div className="grid-stack-item justify-start self-start p-2">
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
-      <div className="flex flex-col items-center gap-2 self-start justify-self-center grid-stack-item">
-        <div ref={timerRef} className="font-mono text-lg font-bold">
+      <div className="grid-stack-item flex flex-col items-center gap-2 self-start justify-self-center">
+        <div ref={timerRef} className="font-bold font-mono text-lg">
           0.00
         </div>
         <ProgressRing current={completedItems} total={itemsToComplete} />

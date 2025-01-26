@@ -19,7 +19,7 @@ export function ChallengeTitle({
   const { challengeId, challengeLabel } = useChallengeContext();
   return (
     <div className="mx-auto flex w-[32rem] flex-col gap-1">
-      <h1 className="rounded-t-md bg-black p-2 text-4xl font-extrabold text-white">{challengeLabel}</h1>
+      <h1 className="rounded-t-md bg-black p-2 font-extrabold text-4xl text-white">{challengeLabel}</h1>
       <div className="border border-black bg-white p-1">
         <div>{children}</div>
       </div>

@@ -7,7 +7,7 @@ import { PracticeCountCell, TimeAttackCell } from "./client";
 export default function Home() {
   return (
     <main className="flex flex-col p-2">
-      <h1 className="text-6xl font-black text-blue-700">CHALLENGES</h1>
+      <h1 className="font-black text-6xl text-blue-700">CHALLENGES</h1>
       <div className="grid grid-cols-3 gap-1">
         <div className="col-span-3 grid grid-cols-subgrid">
           <div>Challenge</div>

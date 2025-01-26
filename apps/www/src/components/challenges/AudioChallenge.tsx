@@ -35,11 +35,11 @@ export function AudioChallenge({
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
       <audio ref={audioRef} src={url} autoPlay />
-      <div className="h-36 w-full grid-stack">
-        <div className="z-10 ml-1 mt-1 self-start justify-self-start grid-stack-item">
+      <div className="grid-stack h-36 w-full">
+        <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
           <button
             type="button"
-            className="group flex items-center gap-4 rounded-lg border-[0.5px] border-black bg-white/30 p-2 text-sm backdrop-blur-sm hocus:border-slate-300 hocus:bg-black hocus:text-white"
+            className="group flex items-center gap-4 rounded-lg border-[0.5px] border-black hocus:border-slate-300 bg-white/30 hocus:bg-black p-2 hocus:text-white text-sm backdrop-blur-sm"
             onClick={playAudio}
           >
             <RotateCcw className="h-4 w-4" />
@@ -49,7 +49,7 @@ export function AudioChallenge({
             </div>
           </button>
         </div>
-        <div className="h-full w-full grid-stack-item">
+        <div className="grid-stack-item h-full w-full">
           {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
         </div>
       </div>

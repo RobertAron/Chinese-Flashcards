@@ -7,7 +7,7 @@ export const Link = ({ className, ...restProps }: Props) => {
     <MotionLink
       {...restProps}
       className={clsx(
-        "border border-black p-1 transition-colors duration-100 hocus:bg-black hocus:text-white",
+        "border border-black hocus:bg-black p-1 hocus:text-white transition-colors duration-100",
         className,
       )}
     />

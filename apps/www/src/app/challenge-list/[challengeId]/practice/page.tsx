@@ -35,7 +35,7 @@ export default AppPage(() => {
       {!started ? (
         <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
           <div className="flex gap-2">
-            <div className="flex grow basis-0 flex-col text-3xl font-bold">
+            <div className="flex grow basis-0 flex-col font-bold text-3xl">
               <div className="flex items-center gap-1">
                 <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
               </div>
@@ -46,7 +46,7 @@ export default AppPage(() => {
                 <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
               </div>
             </div>
-            <div className="grow basis-0 text-3xl font-extrabold">
+            <div className="grow basis-0 font-extrabold text-3xl">
               <div className="flex items-center">
                 <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
                 {formatPracticeCount(practiceCount)}
@@ -55,8 +55,8 @@ export default AppPage(() => {
           </div>
         </ChallengeTitle>
       ) : (
-        <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle grid-stack">
-          <div className="justify-start self-start p-2 grid-stack-item">
+        <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+          <div className="grid-stack-item justify-start self-start p-2">
             <ExitButton onExit={() => setStarted(false)} />
           </div>
           <div>
@@ -64,7 +64,7 @@ export default AppPage(() => {
             {formatPracticeCount(practiceCount)}
           </div>
           <ProgressBars count={practiceCount} />
-          <div className="flex flex-col items-center self-start justify-self-center grid-stack-item">
+          <div className="grid-stack-item flex flex-col items-center self-start justify-self-center">
             <AnimatePresence mode="popLayout">
               <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
             </AnimatePresence>
@@ -85,10 +85,10 @@ function CoreProgressBar({
   color: string;
 }) {
   return (
-    <div className="h-1 w-full skew-x-12 bg-black grid-stack">
-      <div className="h-full w-full grid-stack-item" style={{ background: color }} />
+    <div className="grid-stack h-1 w-full skew-x-12 bg-black">
+      <div className="grid-stack-item h-full w-full" style={{ background: color }} />
       <div
-        className="h-full bg-green-500 transition-all grid-stack-item"
+        className="grid-stack-item h-full bg-green-500 transition-all"
         style={{ width: `${(current / total) * 100}%` }}
       />
     </div>

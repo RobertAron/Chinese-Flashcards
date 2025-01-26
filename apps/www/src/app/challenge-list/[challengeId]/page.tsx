@@ -41,9 +41,9 @@ export default AppPage(() => {
   return (
     <motion.main className="flex flex-col items-start gap-4 p-1">
       <ExitLink href="/challenge-list" />
-      <h1 className="text-3xl font-bold underline">{challengeLabel}</h1>
+      <h1 className="font-bold text-3xl underline">{challengeLabel}</h1>
       <section className="flex w-full flex-col gap-2">
-        <h2 className="text-4xl font-bold text-blue-700">Select Mode</h2>
+        <h2 className="font-bold text-4xl text-blue-700">Select Mode</h2>
         <div className="flex flex-wrap gap-4">
           <ModeOption href={`/challenge-list/${challengeId}/practice`}>
             <div className="h-32 w-32 flex-shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
@@ -66,7 +66,7 @@ export default AppPage(() => {
         </div>
       </section>
       <section className="flex w-full flex-col gap-2">
-        <h2 className="text-2xl font-semibold">WORDS</h2>
+        <h2 className="font-semibold text-2xl">WORDS</h2>
         <ul className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3">
           {wordDefinitions.map((word, index) => (
             <motion.li
