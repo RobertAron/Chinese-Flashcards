@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import tts from "@google-cloud/text-to-speech";
-import { commonWords as data } from "common-data/common-words";
+import { ishaWords as data } from "common-data/ishas";
 import dotenv from "dotenv";
 
 const env = dotenv.config({ path: ".env" });

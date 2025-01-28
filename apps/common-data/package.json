@@ -7,6 +7,7 @@
     "./manual": "./src/manual.ts",
     "./most-common-characters": "./src/most-common-characters/all.ts",
     "./common-words": "./src/common-words.ts",
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts",
+    "./ishas":"./src/isha-words.ts"
   }
 }
