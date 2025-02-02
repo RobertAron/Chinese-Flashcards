@@ -9,5 +9,8 @@
     "./common-words": "./src/common-words.ts",
     "./types": "./src/types.ts",
     "./ishas":"./src/isha-words.ts"
+  },
+  "dependencies": {
+    "cms-db":"*"
   }
 }

@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../dist"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./local.db"
+  // url      = env("DATABASE_URL")
+}
+
+// Core Words 1
+// Core Words 2
+// Numbers
+// Colors
+model Topic {
+  slug       String      @id
+  title      String
+  challenges Challenge[]
+}
+
+model Challenge {
+  slug        String    @id
+  title       String
+  description String
+  topic       Topic     @relation(fields: [topicSlug], references: [slug])
+  words       Words[]
+  phrases     Phrases[]
+  topicSlug   String
+  order       Int       @default(0)
+}
+
+model Words {
+  id             Int         @id @default(autoincrement())
+  characters     String      @unique
+  pinyin         String
+  meaning        String
+  frequencyRank  Int
+  emojiChallenge String?
+  challenges     Challenge[]
+  phrases        Phrases[]
+}
+
+model Phrases {
+  id             Int         @id @default(autoincrement())
+  characters     String
+  pinyin         String
+  meaning        String
+  emojiChallenge String?
+  challenges     Challenge[]
+  words          Words[]
+}
