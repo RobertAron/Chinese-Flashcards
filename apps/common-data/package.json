@@ -8,9 +8,10 @@
     "./most-common-characters": "./src/most-common-characters/all.ts",
     "./common-words": "./src/common-words.ts",
     "./types": "./src/types.ts",
-    "./ishas":"./src/isha-words.ts"
+    "./ishas": "./src/isha-words.ts"
   },
   "dependencies": {
-    "cms-db":"*"
+    "cms-db": "*",
+    "puppeteer": "^24.1.1"
   }
 }
