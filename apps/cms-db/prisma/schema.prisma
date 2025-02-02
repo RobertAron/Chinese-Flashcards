@@ -12,15 +12,24 @@ datasource db {
   // url      = env("DATABASE_URL")
 }
 
+model TopicCollection {
+  slug       String  @id
+  title      String
+  challenges Topic[]
+  ordering   Int
+}
+
 // Core Words 1
 // Core Words 2
 // Numbers
 // Colors
 model Topic {
-  slug       String      @id
-  title      String
-  challenges Challenge[]
-  ordering   Int
+  slug                String           @id
+  title               String
+  challenges          Challenge[]
+  ordering            Int
+  TopicCollection     TopicCollection? @relation(fields: [topicCollectionSlug], references: [slug])
+  topicCollectionSlug String?
 }
 
 model Challenge {
