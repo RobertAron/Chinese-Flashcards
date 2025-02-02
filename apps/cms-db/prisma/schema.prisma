@@ -20,6 +20,7 @@ model Topic {
   slug       String      @id
   title      String
   challenges Challenge[]
+  ordering   Int
 }
 
 model Challenge {
