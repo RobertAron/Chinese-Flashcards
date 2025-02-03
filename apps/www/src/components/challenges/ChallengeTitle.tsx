@@ -1,10 +1,9 @@
-import { ExitLink } from "@/app/challenge-list/[challengeId]/ExitButton";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
-import { Link } from "../Link";
 import { useUserSettings } from "../useUserSettings";
 import { useChallengeContext } from "./ChallengeContext";
+import { ExitLink } from "@/app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/ExitButton";
 
 export function ChallengeTitle({
   children,

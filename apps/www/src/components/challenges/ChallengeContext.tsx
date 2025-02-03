@@ -1,13 +1,12 @@
 "use client";
-import { allChallenges } from "@/challenges/allChallenges";
 import { generateContext } from "@/utils/createContext";
-import type { WordDefinition } from "common-data/types";
-import { useParams } from "next/navigation";
+import type { ChallengeDefinition, WordDefinition } from "common-data/types";
 import type React from "react";
 import { useUserSettings } from "../useUserSettings";
 
 type ProviderProps = {
   children?: React.ReactNode;
+  challengeDefinition: ChallengeDefinition;
 };
 type CharacterChallenge = {
   type: "character-challenge";
@@ -40,13 +39,9 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } = 
   ProvidedValue
 >(
   (Provider) =>
-    function ChallengeProvider({ children }: ProviderProps) {
-      const challengeId = useParams().challengeId;
+    function ChallengeProvider({ children, challengeDefinition }: ProviderProps) {
       const [userSettings] = useUserSettings();
-      if (typeof challengeId !== "string") return null;
-      const selectedChallenge = allChallenges[challengeId];
-      if (selectedChallenge === undefined) return null;
-      const calculatedChallenges = selectedChallenge.words.flatMap(
+      const calculatedChallenges = challengeDefinition.words.flatMap(
         ({ character, definition, id, pinyin, fileName, emoji }): AllChallenges[] => {
           const result: AllChallenges[] = [
             { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
@@ -77,9 +72,9 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } = 
       return (
         <Provider
           value={{
-            challengeId,
-            challengeLabel: selectedChallenge.label,
-            wordDefinitions: selectedChallenge.words,
+            challengeId: challengeDefinition.id,
+            challengeLabel: challengeDefinition.label,
+            wordDefinitions: challengeDefinition.words,
             challenges: calculatedChallenges,
           }}
         >

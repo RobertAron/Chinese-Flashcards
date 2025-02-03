@@ -1,10 +1,13 @@
-type PageParam = {
+type AppServerEntrypointProps = {
+  children?: React.ReactNode;
   params: Promise<Record<string, unknown>>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-type AppPage = (param: PageParam) => Promise<React.ReactNode> | React.ReactNode;
+type AppServerEntrypointCallback = (
+  param: AppServerEntrypointProps,
+) => Promise<React.ReactNode> | React.ReactNode;
 
-export function AppPage(cb: AppPage) {
+export function AppServerEntrypoint(cb: AppServerEntrypointCallback) {
   return cb;
 }

@@ -1,6 +1,6 @@
 "use client";
 import { clamp } from "@/challenges/util";
-import { AppPage } from "@/components/AppPage";
+import { AppServerEntrypoint } from "@/components/AppPage";
 import { PlayerAwardIcon, awardColors } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
@@ -20,7 +20,7 @@ import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
-export default AppPage(() => {
+export default AppServerEntrypoint(() => {
   const { challengeId } = useChallengeContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);

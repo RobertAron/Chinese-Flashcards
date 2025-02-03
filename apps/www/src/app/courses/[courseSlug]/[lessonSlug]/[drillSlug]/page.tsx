@@ -1,13 +1,17 @@
-"use client";
-import { AppPage } from "@/components/AppPage";
+"use client"
+import { AppServerEntrypoint } from "@/components/AppPage";
 import { MotionLink } from "@/components/MotionLink";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { formatPracticeCount, formatTimeAttackMs } from "@/utils/playerStats";
+import {
+  formatPracticeCount,
+  formatTimeAttackMs,
+  usePracticeCount,
+  useTimeAttackPB,
+} from "@/utils/playerStats";
 import { ListChecks, Timer } from "lucide-react";
 import * as motion from "motion/react-client";
-import { usePracticeCount, useTimeAttackPB } from "../../../utils/playerStats";
 import { ExitLink } from "./ExitButton";
 
 function ModeOption({
@@ -33,8 +37,7 @@ function ModeOption({
     </MotionLink>
   );
 }
-
-export default AppPage(() => {
+export default AppServerEntrypoint(() => {
   const { challengeId, wordDefinitions, challengeLabel } = useChallengeContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);

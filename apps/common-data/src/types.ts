@@ -1,4 +1,5 @@
 export type ChallengeDefinition = {
+  id:string;
   label: string;
   words: WordDefinition[];
 };

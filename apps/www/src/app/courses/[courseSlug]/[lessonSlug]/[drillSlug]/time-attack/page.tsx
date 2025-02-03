@@ -1,23 +1,22 @@
 "use client";
-import { AppPage } from "@/components/AppPage";
+import { AppServerEntrypoint } from "@/components/AppPage";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useChallengeContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
-import { formatTimeAttackMs } from "@/utils/playerStats";
-import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
-import { useRef, useState } from "react";
 import {
+  formatTimeAttackMs,
   timeAttackToAward,
   timeForBronze,
   timeForGold,
   timeForSilver,
   useTimeAttackPB,
-} from "../../../../utils/playerStats";
+} from "@/utils/playerStats";
+import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
+import { useRef, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
-
-export default AppPage(() => {
+export default AppServerEntrypoint(() => {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
   const { challengeId } = useChallengeContext();
   const [recentFinish, setRecentFinish] = useState<number | null>(null);
