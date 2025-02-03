@@ -15,7 +15,7 @@ export function ChallengeTitle({
   improve?: boolean;
 }) {
   const [userSettings, setUserSettings] = useUserSettings();
-  const { challengeId, challengeLabel } = useChallengeContext();
+  const { challengeId, challengeLabel, courseSlug, lessonSlug } = useChallengeContext();
   return (
     <div className="mx-auto flex w-[32rem] flex-col gap-1">
       <h1 className="rounded-t-md bg-black p-2 font-extrabold text-4xl text-white">{challengeLabel}</h1>
@@ -49,7 +49,7 @@ export function ChallengeTitle({
       <div className="flex gap-1 border-black">
         <ExitLink
           className="flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white px-4 py-2"
-          href={`/challenge-list/${challengeId}`}
+          href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}`}
         />
         <Button
           className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2"

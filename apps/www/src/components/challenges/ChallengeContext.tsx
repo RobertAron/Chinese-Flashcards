@@ -7,6 +7,8 @@ import { useUserSettings } from "../useUserSettings";
 type ProviderProps = {
   children?: React.ReactNode;
   challengeDefinition: ChallengeDefinition;
+  lessonSlug: string;
+  courseSlug: string;
 };
 type CharacterChallenge = {
   type: "character-challenge";
@@ -32,6 +34,8 @@ type ProvidedValue = {
   challengeLabel: string;
   wordDefinitions: WordDefinition[];
   challenges: AllChallenges[];
+  lessonSlug: string;
+  courseSlug: string;
 };
 
 export const { Provider: ChallengeProvider, useContext: useChallengeContext } = generateContext<
@@ -39,7 +43,7 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } = 
   ProvidedValue
 >(
   (Provider) =>
-    function ChallengeProvider({ children, challengeDefinition }: ProviderProps) {
+    function ChallengeProvider({ children, challengeDefinition, courseSlug, lessonSlug }: ProviderProps) {
       const [userSettings] = useUserSettings();
       const calculatedChallenges = challengeDefinition.words.flatMap(
         ({ character, definition, id, pinyin, fileName, emoji }): AllChallenges[] => {
@@ -76,6 +80,8 @@ export const { Provider: ChallengeProvider, useContext: useChallengeContext } = 
             challengeLabel: challengeDefinition.label,
             wordDefinitions: challengeDefinition.words,
             challenges: calculatedChallenges,
+            courseSlug,
+            lessonSlug,
           }}
         >
           {children}

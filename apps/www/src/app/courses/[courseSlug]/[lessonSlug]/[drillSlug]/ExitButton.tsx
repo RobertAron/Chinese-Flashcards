@@ -32,7 +32,7 @@ export function ExitLink({
     router.push(href);
   }, [href, router]);
   useKeyTrigger("Escape", navigate);
-  const coreExitButtonClasses = "flex gap-2 p-2";
+  const coreExitButtonClasses = "flex gap-2 p-1";
   const combinedClassName = useMergeClasses(buttonBehaviorClasses, coreExitButtonClasses, className ?? "");
   return (
     <MotionLink href={href} className={combinedClassName}>

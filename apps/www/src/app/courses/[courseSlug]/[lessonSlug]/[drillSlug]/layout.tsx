@@ -3,9 +3,9 @@ import { ChallengeProvider } from "@/components/challenges/ChallengeContext";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { z } from "zod";
 
-const paramsTemplate = z.object({ drillSlug: z.string() });
+export const paramsTemplate = z.object({ drillSlug: z.string(), lessonSlug: z.string(), courseSlug: z.string() });
 export default AppServerEntrypoint(async function ChallengeLayout({ children, params }) {
-  const { drillSlug } = paramsTemplate.parse(await params);
+  const { drillSlug, courseSlug, lessonSlug } = paramsTemplate.parse(await params);
   const challengeData = await getPrismaClient().challenge.findUnique({
     where: { slug: drillSlug },
     include: {
@@ -15,6 +15,8 @@ export default AppServerEntrypoint(async function ChallengeLayout({ children, pa
 
   return (
     <ChallengeProvider
+      courseSlug={courseSlug}
+      lessonSlug={lessonSlug}
       challengeDefinition={{
         id: drillSlug,
         label: challengeData?.title ?? "",
