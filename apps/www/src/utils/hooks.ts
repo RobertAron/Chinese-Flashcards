@@ -1,5 +1,5 @@
 "use client";
-import { Ref, useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import useSWR from "swr";
 import { getAudioContext } from "./audioContext";
 

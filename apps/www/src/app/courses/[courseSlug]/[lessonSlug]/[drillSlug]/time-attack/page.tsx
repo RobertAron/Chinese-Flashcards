@@ -1,5 +1,4 @@
 "use client";
-import { AppServerEntrypoint } from "@/components/AppPage";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useDrillContext } from "@/components/challenges/ChallengeContext";
@@ -16,7 +15,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/re
 import { useRef, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
-export default AppServerEntrypoint(() => {
+export default function TimeAttack() {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);
   const { challengeId } = useDrillContext();
   const [recentFinish, setRecentFinish] = useState<number | null>(null);
@@ -70,7 +69,7 @@ export default AppServerEntrypoint(() => {
       )}
     </main>
   );
-});
+}
 
 const itemsToComplete = 20;
 function TimeAttackRunning({

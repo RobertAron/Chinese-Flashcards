@@ -1,6 +1,5 @@
 "use client";
 import { clamp } from "@/challenges/util";
-import { AppServerEntrypoint } from "@/components/AppPage";
 import { PlayerAwardIcon, awardColors } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useDrillContext } from "@/components/challenges/ChallengeContext";
@@ -20,7 +19,7 @@ import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
-export default AppServerEntrypoint(() => {
+export default function Practice(){
   const { challengeId } = useDrillContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
@@ -73,7 +72,7 @@ export default AppServerEntrypoint(() => {
       )}
     </main>
   );
-});
+};
 
 function CoreProgressBar({
   current,

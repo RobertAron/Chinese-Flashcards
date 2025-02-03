@@ -1,4 +1,4 @@
-import { AppServerEntrypoint } from "@/components/AppPage";
+import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getPrismaClient } from "@/utils/getPrismaClient";
@@ -7,7 +7,7 @@ import { z } from "zod";
 import { PracticeCountCell, TimeAttackCell } from "../client";
 
 const paramsTemplate = z.object({ courseSlug: z.string() });
-export default AppServerEntrypoint(async function TopicCollection({ params }) {
+export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
   const { courseSlug } = paramsTemplate.parse(await params);
   const course = await getPrismaClient().course.findUnique({
     where: { slug: courseSlug },

@@ -1,4 +1,4 @@
-import { AppServerEntrypoint } from "@/components/AppPage";
+import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbWrapper } from "@/components/Breadcrumb";
 import { z } from "zod";
 import { DrillHome } from "./client";
@@ -11,7 +11,7 @@ export const paramsTemplate = z.object({
   courseSlug: z.string(),
 });
 
-export default AppServerEntrypoint(async ({ params }) => {
+export default AppServerPageEntrypoint(async ({ params }) => {
   const { drillSlug, courseSlug, lessonSlug } = paramsTemplate.parse(await params);
   const titles = await getPrismaClient().drill.findUnique({
     where: { slug: drillSlug },

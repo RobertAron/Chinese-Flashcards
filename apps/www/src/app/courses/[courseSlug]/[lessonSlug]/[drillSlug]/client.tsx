@@ -37,7 +37,7 @@ function ModeOption({
 }
 
 export function DrillHome() {
-  const { challengeId, wordDefinitions, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
+  const { challengeId, wordDefinitions, courseSlug, lessonSlug } = useDrillContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
