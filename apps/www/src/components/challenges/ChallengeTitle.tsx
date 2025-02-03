@@ -2,7 +2,7 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { useUserSettings } from "../useUserSettings";
-import { useChallengeContext } from "./ChallengeContext";
+import { useDrillContext } from "./ChallengeContext";
 import { ExitLink } from "@/app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/ExitButton";
 
 export function ChallengeTitle({
@@ -15,7 +15,7 @@ export function ChallengeTitle({
   improve?: boolean;
 }) {
   const [userSettings, setUserSettings] = useUserSettings();
-  const { challengeId, challengeLabel, courseSlug, lessonSlug } = useChallengeContext();
+  const { challengeId, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
   return (
     <div className="mx-auto flex w-[32rem] flex-col gap-1">
       <h1 className="rounded-t-md bg-black p-2 font-extrabold text-4xl text-white">{challengeLabel}</h1>

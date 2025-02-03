@@ -1,16 +1,21 @@
+import { AppServerEntrypoint } from "@/components/AppPage";
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { PracticeCountCell, TimeAttackCell } from "../client";
-import { AppServerEntrypoint } from "@/components/AppPage";
-import { z } from "zod";
 import { getPrismaClient } from "@/utils/getPrismaClient";
+import { notFound } from "next/navigation";
+import { z } from "zod";
+import { PracticeCountCell, TimeAttackCell } from "../client";
 
 const paramsTemplate = z.object({ courseSlug: z.string() });
 export default AppServerEntrypoint(async function TopicCollection({ params }) {
   const { courseSlug } = paramsTemplate.parse(await params);
-  const topics = await getPrismaClient().topic.findMany({
-    where: { topicCollectionSlug: courseSlug },
+  const course = await getPrismaClient().course.findUnique({
+    where: { slug: courseSlug },
+    select: {
+      lessons: true,
+    },
   });
+  if (course === null) notFound();
   return (
     <main className="flex flex-col p-2">
       <h1 className="font-black text-6xl text-blue-700">Lessons</h1>
@@ -20,7 +25,7 @@ export default AppServerEntrypoint(async function TopicCollection({ params }) {
           <div className="text-end">Practice</div>
           <div className="text-end">Speedrun</div>
         </div>
-        {topics.map((ele) => (
+        {course.lessons.map((ele) => (
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.05 }}
             animate={{ opacity: 1, scaleY: 1 }}

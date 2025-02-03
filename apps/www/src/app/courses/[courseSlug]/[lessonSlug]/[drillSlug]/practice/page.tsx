@@ -3,7 +3,7 @@ import { clamp } from "@/challenges/util";
 import { AppServerEntrypoint } from "@/components/AppPage";
 import { PlayerAwardIcon, awardColors } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
-import { useChallengeContext } from "@/components/challenges/ChallengeContext";
+import { useDrillContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import {
   bronzePracticeCount,
@@ -21,7 +21,7 @@ import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
 export default AppServerEntrypoint(() => {
-  const { challengeId } = useChallengeContext();
+  const { challengeId } = useDrillContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
   const [started, setStarted] = useState(false);

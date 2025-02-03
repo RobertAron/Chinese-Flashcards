@@ -1,6 +1,6 @@
 "use client";
 import { MotionLink } from "@/components/MotionLink";
-import { useChallengeContext } from "@/components/challenges/ChallengeContext";
+import { useDrillContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import {
@@ -37,7 +37,7 @@ function ModeOption({
 }
 
 export function DrillHome() {
-  const { challengeId, wordDefinitions, challengeLabel, courseSlug, lessonSlug } = useChallengeContext();
+  const { challengeId, wordDefinitions, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (

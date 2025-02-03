@@ -38,12 +38,12 @@ type ProvidedValue = {
   courseSlug: string;
 };
 
-export const { Provider: ChallengeProvider, useContext: useChallengeContext } = generateContext<
+export const { Provider: DrillProvider, useContext: useDrillContext } = generateContext<
   ProviderProps,
   ProvidedValue
 >(
   (Provider) =>
-    function ChallengeProvider({ children, challengeDefinition, courseSlug, lessonSlug }: ProviderProps) {
+    function DrillProvider({ children, challengeDefinition, courseSlug, lessonSlug }: ProviderProps) {
       const [userSettings] = useUserSettings();
       const calculatedChallenges = challengeDefinition.words.flatMap(
         ({ character, definition, id, pinyin, fileName, emoji }): AllChallenges[] => {

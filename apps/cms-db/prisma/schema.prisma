@@ -11,54 +11,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TopicCollection {
-  slug       String  @id
-  title      String
-  challenges Topic[]
-  ordering   Int
+model Course {
+  slug     String   @id
+  title    String
+  lessons  Lesson[]
+  ordering Int
 }
 
 // Core Words 1
 // Core Words 2
 // Numbers
 // Colors
-model Topic {
-  slug                String           @id
-  title               String
-  challenges          Challenge[]
-  ordering            Int
-  TopicCollection     TopicCollection? @relation(fields: [topicCollectionSlug], references: [slug])
-  topicCollectionSlug String?
+model Lesson {
+  slug       String  @id
+  title      String
+  drills     Drill[]
+  ordering   Int
+  course     Course  @relation(fields: [courseSlug], references: [slug])
+  courseSlug String
 }
 
-model Challenge {
+model Drill {
   slug        String    @id
   title       String
   description String
-  topic       Topic     @relation(fields: [topicSlug], references: [slug])
+  lesson      Lesson    @relation(fields: [lessonSlug], references: [slug])
   words       Words[]
   phrases     Phrases[]
-  topicSlug   String
+  lessonSlug   String
   order       Int       @default(0)
 }
 
 model Words {
-  id             Int         @id @default(autoincrement())
-  characters     String      @unique
+  id             Int       @id @default(autoincrement())
+  characters     String    @unique
   pinyin         String
   meaning        String
   frequencyRank  Int
   emojiChallenge String?
-  challenges     Challenge[]
+  drills         Drill[]
   phrases        Phrases[]
 }
 
 model Phrases {
-  id             Int         @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   characters     String
   pinyin         String
   meaning        String
   emojiChallenge String?
-  challenges     Challenge[]
+  drills         Drill[]
   words          Words[]
 }

@@ -1,12 +1,16 @@
 import { AppServerEntrypoint } from "@/components/AppPage";
-import { ChallengeProvider } from "@/components/challenges/ChallengeContext";
+import { DrillProvider } from "@/components/challenges/ChallengeContext";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { z } from "zod";
 
-export const paramsTemplate = z.object({ drillSlug: z.string(), lessonSlug: z.string(), courseSlug: z.string() });
+export const paramsTemplate = z.object({
+  drillSlug: z.string(),
+  lessonSlug: z.string(),
+  courseSlug: z.string(),
+});
 export default AppServerEntrypoint(async function ChallengeLayout({ children, params }) {
   const { drillSlug, courseSlug, lessonSlug } = paramsTemplate.parse(await params);
-  const challengeData = await getPrismaClient().challenge.findUnique({
+  const challengeData = await getPrismaClient().drill.findUnique({
     where: { slug: drillSlug },
     include: {
       words: true,
@@ -14,7 +18,7 @@ export default AppServerEntrypoint(async function ChallengeLayout({ children, pa
   });
 
   return (
-    <ChallengeProvider
+    <DrillProvider
       courseSlug={courseSlug}
       lessonSlug={lessonSlug}
       challengeDefinition={{
@@ -31,6 +35,6 @@ export default AppServerEntrypoint(async function ChallengeLayout({ children, pa
       }}
     >
       {children}
-    </ChallengeProvider>
+    </DrillProvider>
   );
 });

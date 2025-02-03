@@ -1,15 +1,15 @@
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { PracticeCountCell, TimeAttackCell } from "./client";
 import { getPrismaClient } from "@/utils/getPrismaClient";
+import { PracticeCountCell, TimeAttackCell } from "./client";
 
 export default async function Home() {
   const prisma = getPrismaClient();
-  const topics = await prisma.topicCollection.findMany({
+  const courses = await prisma.course.findMany({
     select: {
       slug: true,
       title: true,
-      challenges: {
+      lessons: {
         select: {
           slug: true,
         },
@@ -25,7 +25,7 @@ export default async function Home() {
           <div className="text-end">Practice</div>
           <div className="text-end">Speedrun</div>
         </div>
-        {topics.map((topic) => (
+        {courses.map((topic) => (
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.05 }}
             animate={{ opacity: 1, scaleY: 1 }}
@@ -37,12 +37,12 @@ export default async function Home() {
           >
             <div className="font-bold text-4xl">{topic.title}</div>
             <div className="flex flex-col items-end">
-              {topic.challenges.map(({ slug }) => (
+              {topic.lessons.map(({ slug }) => (
                 <PracticeCountCell challengeId={slug} key={slug} />
               ))}
             </div>
             <div className="flex flex-col items-end">
-              {topic.challenges.map(({ slug }) => (
+              {topic.lessons.map(({ slug }) => (
                 <TimeAttackCell challengeId={slug} key={slug} />
               ))}
             </div>

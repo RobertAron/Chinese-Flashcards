@@ -13,14 +13,14 @@ export const paramsTemplate = z.object({
 
 export default AppServerEntrypoint(async ({ params }) => {
   const { drillSlug, courseSlug, lessonSlug } = paramsTemplate.parse(await params);
-  const titles = await getPrismaClient().challenge.findUnique({
+  const titles = await getPrismaClient().drill.findUnique({
     where: { slug: drillSlug },
     select: {
       title: true,
-      topic: {
+      lesson: {
         select: {
           title: true,
-          TopicCollection: {
+          course: {
             select: {
               title: true,
             },
@@ -34,8 +34,8 @@ export default AppServerEntrypoint(async ({ params }) => {
     <main className="flex flex-col items-start gap-4 p-1">
       <BreadcrumbWrapper>
         <Breadcrumb href="/courses">Courses</Breadcrumb>
-        <Breadcrumb href={`/courses/${courseSlug}`}>{titles.topic.TopicCollection?.title}</Breadcrumb>
-        <Breadcrumb href={`/courses/${courseSlug}/${lessonSlug}`}>{titles.topic.title}</Breadcrumb>
+        <Breadcrumb href={`/courses/${courseSlug}`}>{titles.lesson.course.title}</Breadcrumb>
+        <Breadcrumb href={`/courses/${courseSlug}/${lessonSlug}`}>{titles.lesson.title}</Breadcrumb>
       </BreadcrumbWrapper>
       <h1 className="font-bold text-3xl underline">{titles.title}</h1>
       <DrillHome />
