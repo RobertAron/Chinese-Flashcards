@@ -1,10 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import tts from "@google-cloud/text-to-speech";
-import { ishaWords as data } from "common-data/ishas";
 import dotenv from "dotenv";
+import { PrismaClient } from "cms-db";
+const prismaClient = new PrismaClient();
 
-const env = dotenv.config({ path: ".env" });
+const delay = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms));
+
+const env = dotenv.config({ path: ".env.local" });
 const auth = env.parsed?.GOOGLE_APPLICATION_CREDENTIALS;
 if (typeof auth !== "string") {
   console.log("missing api key");
@@ -19,38 +23,31 @@ const client = new tts.TextToSpeechClient({
 });
 
 async function main() {
+  const data = await prismaClient.words.findMany({ take: 5 });
   await client.initialize();
-  const result = await Promise.allSettled(
-    data.map(async (item) => {
-      const speechFile = path.resolve(`./output/${item.fileName}`);
-      const [response] = await client.synthesizeSpeech({
-        audioConfig: {
-          audioEncoding: "MP3",
-          pitch: 0,
-          speakingRate: 0.75,
-          sampleRateHertz: 48000,
-        },
-        input: {
-          text: item.character,
-        },
-        voice: {
-          languageCode: "cmn-CN",
-          name: "cmn-CN-Wavenet-B",
-        },
-      });
-      if (response.audioContent == null) throw new Error("Failed");
-      await fs.promises.writeFile(speechFile, response.audioContent, "binary");
-    }),
-  );
-  const rejectedQueries = result
-    .map((ele, index) => (ele.status === "rejected" ? data[index] : null))
-    .filter((ele) => ele !== null);
-  if (rejectedQueries.length !== 0) {
-    console.log("some failed queries");
-    console.log(JSON.stringify(rejectedQueries, null, 2));
-    process.exit(1);
-  } else {
-    console.log("Total success!");
+  for (const item of data) {
+    const speechFile = path.resolve(`./output/words/${item.id}.mp3`);
+    const res = await client.synthesizeSpeech({
+      audioConfig: {
+        audioEncoding: "MP3",
+        pitch: 0,
+        speakingRate: 0.75,
+        sampleRateHertz: 48000,
+      },
+      input: {
+        text: item.characters,
+      },
+      voice: {
+        languageCode: "cmn-CN",
+        name: "cmn-CN-Wavenet-B",
+      },
+    });
+    const [response] = res;
+    if (response.audioContent == null) throw new Error(JSON.stringify(res));
+    await fs.promises.writeFile(speechFile, response.audioContent, "binary");
+    await delay(5000)
+    console.log("complete with", speechFile);
   }
+  console.log("Total success!");
 }
 main();

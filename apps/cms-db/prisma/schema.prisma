@@ -38,7 +38,7 @@ model Drill {
   lesson      Lesson    @relation(fields: [lessonSlug], references: [slug])
   words       Words[]
   phrases     Phrases[]
-  lessonSlug   String
+  lessonSlug  String
   order       Int       @default(0)
 }
 
