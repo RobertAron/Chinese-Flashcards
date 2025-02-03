@@ -1,4 +1,6 @@
 import type { WordDefinition } from "./types.js";
+import { PrismaClient } from "cms-db";
+const client = new PrismaClient();
 
 export const ishaWords = (
   [
@@ -125,51 +127,75 @@ export const ishaWords = (
     [121, "地", "de", "p.", "adverbial marker", "🌐"],
     [122, "掉", "diào", "v.", "to drop; fall off", "⬇️"],
   ] as const
-).map(
-  ([index, characters, pinyin, __, definition, emoji]): WordDefinition => {
-    const id = `isha-words-${index}`;
-    return {
-      character: characters,
-      definition,
-      fileName: `${id}.mp3`,
-      id,
-      pinyin,
-      emoji,
-    };
-  }
-);
+).map(([index, characters, pinyin, __, definition, emoji]): WordDefinition => {
+  const id = `isha-words-${index}`;
+  return {
+    character: characters,
+    definition,
+    fileName: `${id}.mp3`,
+    id,
+    pinyin,
+    emoji,
+  };
+});
+const words = [
+  '孩子',
+  
+]
 
 const lyrics = `
-孩子別 怕荊棘 赤著腳
-就 能尋到 珍貴
-你看這個 天黑 焰火有多美
-無需太多 的傷悲
-人本都在 茂盛枯萎
-但頑石和塊壘 也開花蕊
-撥開山嶺 讓她看看我
-告訴繁星 快些照亮我
-吹散烏云 用一抹藍色
-那就算 世界滿是荒蕪我們 抬頭就能 看見月亮
-在我們還是 孩子的模樣
-做雖千萬人 也要盛開 的孤芳
-別再憂傷煩惱
-別忘
-就算流淚 也要一直 奔跑
-跑到連時 間都 找不到
-做天邊的飛鳥
-撥開山嶺 讓她看看我
-告訴繁星 快些照亮我
-吹散烏云 用一抹藍色
-那就算 世界滿是荒蕪我們 抬頭就能 看見月亮
-在我們還是 孩子的模樣
-做雖千萬人 也要盛開 的孤芳
-別再憂傷煩惱
-別忘
-就算流淚 也要一直 奔跑
-跑到連時 間都 找不到
-做天邊的飛鳥
-別再尋找
-給我一個擁抱
-就安靜地忘掉
-我這樣就很好
+孩子别怕荆棘赤着脚
+就能寻到珍贵
+你看这个天黑焰火有多美
+无需太多的伤悲
+人本都在茂盛枯萎
+但顽石和块垒也开花蕊
+拨开山岭让她看看我
+告诉繁星快些照亮我
+吹散乌云用一抹蓝色
+那就算世界满是荒芜我们抬头就能看见月亮
+在我们还是孩子的模样
+做虽千万人也要盛开的孤芳
+别再忧伤烦恼
+别忘
+就算流泪也要一直奔跑
+跑到连时间都找不到
+做天边的飞鸟
+拨开山岭让她看看我
+告诉繁星快些照亮我
+吹散乌云用一抹蓝色
+那就算世界满是荒芜我们抬头就能看见月亮
+在我们还是孩子的模样
+做虽千万人也要盛开的孤芳
+别再忧伤烦恼
+别忘
+就算流泪也要一直奔跑
+跑到连时间都找不到
+做天边的飞鸟
+别再寻找
+给我一个拥抱
+就安静地忘掉
+我这样就很
 `;
+
+async function main() {
+  const lines = lyrics.split("\n").map((ele)=>ele.split('').filter(ele=>ele!==' ').join(''));
+  for (const line of lines) {
+    let startingIndex = 0;
+    let endingIndex = line.length;
+    while (startingIndex !== endingIndex) {
+      const word = await client.words.findUnique({
+        where: { characters: line.slice(startingIndex, endingIndex) },
+      });
+      if (word) {
+        console.log(word.characters);
+        startingIndex += endingIndex - startingIndex;
+        endingIndex = line.length;
+      } else {
+        endingIndex -= 1;
+        if (startingIndex === endingIndex) console.log("couldn't find match", line.slice(startingIndex));
+      }
+    }
+  }
+}
+main();
