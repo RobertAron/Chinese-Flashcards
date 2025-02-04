@@ -23,7 +23,7 @@ const client = new tts.TextToSpeechClient({
 });
 
 async function main() {
-  const data = await prismaClient.words.findMany({ take: 5 });
+  const data = await prismaClient.words.findMany();
   await client.initialize();
   for (const item of data) {
     const speechFile = path.resolve(`./output/words/${item.id}.mp3`);
@@ -45,7 +45,7 @@ async function main() {
     const [response] = res;
     if (response.audioContent == null) throw new Error(JSON.stringify(res));
     await fs.promises.writeFile(speechFile, response.audioContent, "binary");
-    await delay(5000)
+    await delay(100)
     console.log("complete with", speechFile);
   }
   console.log("Total success!");

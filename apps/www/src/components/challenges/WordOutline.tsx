@@ -18,18 +18,17 @@ export function WordOutline({ word }: WordOutlineProps) {
         <div className="text-pretty text-sm">{definition}</div>
         <div className="text-pretty text-sm">{emoji}</div>
       </div>
-      <AudioSection fileName={fileName} />
+      <AudioSection src={fileName} />
     </div>
   );
 }
 
-function AudioSection({ fileName }: { fileName: string }) {
-  const url = encodeURI(`/assets/single-word-audio/${fileName}`);
+function AudioSection({ src }: { src: string }) {
   const audioRef = useRef<HTMLMediaElement>(null!);
   const { audioSourceNode, playAudio } = useAudioSourceNode(audioRef);
   return (
     <div className="grid-stack h-full w-full flex-shrink-0 flex-grow basis-0">
-      <audio ref={audioRef} src={url} className="hidden" />
+      <audio ref={audioRef} src={src} crossOrigin="anonymous" className="hidden" />
       <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
         <button
           type="button"

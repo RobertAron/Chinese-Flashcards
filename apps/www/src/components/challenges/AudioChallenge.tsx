@@ -12,20 +12,11 @@ type AudioChallengeProps = {
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
-  fileName: string;
+  src: string;
   ref?: Ref<HTMLDivElement>;
 };
 
-export function AudioChallenge({
-  pinyin,
-  onComplete,
-  active,
-  practice,
-  id,
-  ref,
-  fileName,
-}: AudioChallengeProps) {
-  const url = encodeURI(`/assets/single-word-audio/${fileName}`);
+export function AudioChallenge({ pinyin, onComplete, active, practice, id, ref, src }: AudioChallengeProps) {
   const audioRef = useRef<HTMLMediaElement>(null!);
   const { audioSourceNode, playAudio } = useAudioSourceNode(audioRef);
   useEffect(() => {
@@ -34,7 +25,7 @@ export function AudioChallenge({
   useKeyTrigger("Enter", playAudio);
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
-      <audio ref={audioRef} src={url} autoPlay />
+      <audio ref={audioRef} src={src} autoPlay crossOrigin="anonymous" />
       <div className="grid-stack h-36 w-full">
         <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
           <button
