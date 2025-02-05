@@ -9,7 +9,7 @@ type WordOutlineProps = {
   word: WordDefinition;
 };
 export function WordOutline({ word }: WordOutlineProps) {
-  const { character, definition, pinyin, emoji, fileName } = word;
+  const { character, definition, pinyin, emoji, audioSrc } = word;
   return (
     <div className="flex h-full items-stretch justify-stretch gap-2 rounded-md border-2 border-black bg-white p-2">
       <div className="flex flex-grow basis-0 flex-col items-start gap-2">
@@ -18,7 +18,7 @@ export function WordOutline({ word }: WordOutlineProps) {
         <div className="text-pretty text-sm">{definition}</div>
         <div className="text-pretty text-sm">{emoji}</div>
       </div>
-      <AudioSection src={fileName} />
+      <AudioSection src={audioSrc} />
     </div>
   );
 }

@@ -17,7 +17,7 @@ function generatePrismaClient() {
   return new PrismaClient().$extends({
     result: {
       words: {
-        url: {
+        audioSrc: {
           needs: { id: true },
           compute(word) {
             if (!warningLogged) {
@@ -29,7 +29,7 @@ function generatePrismaClient() {
         },
       },
       phrases: {
-        url: {
+        audioSrc: {
           needs: { id: true },
           compute(word) {
             if (!warningLogged) {

@@ -20,7 +20,7 @@ type AudioChallenge = {
   type: "audio-challenge";
   id: string;
   pinyin: string;
-  fileName: string;
+  src: string;
 };
 type DefinitionChallenge = {
   type: "definition-challenge";
@@ -46,9 +46,9 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
     function DrillProvider({ children, challengeDefinition, courseSlug, lessonSlug }: ProviderProps) {
       const [userSettings] = useUserSettings();
       const calculatedChallenges = challengeDefinition.words.flatMap(
-        ({ character, definition, id, pinyin, fileName, emoji }): AllChallenges[] => {
+        ({ character, definition, id, pinyin, audioSrc, emoji }): AllChallenges[] => {
           const result: AllChallenges[] = [
-            { type: "audio-challenge", id: `${id}-audio`, pinyin, fileName },
+            { type: "audio-challenge", id: `${id}-audio`, pinyin, src: audioSrc },
             {
               type: "definition-challenge",
               definition,

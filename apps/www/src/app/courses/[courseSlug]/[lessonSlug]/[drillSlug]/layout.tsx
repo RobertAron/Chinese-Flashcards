@@ -23,9 +23,10 @@ export default AppServerLayoutEntrypoint(async function ChallengeLayout({ childr
           challengeData?.words.map((ele) => ({
             character: ele.characters,
             definition: ele.meaning,
-            fileName: ele.url,
+            audioSrc: ele.audioSrc,
             id: `word-${ele.id}`,
             pinyin: ele.pinyin,
+            emoji: ele.emojiChallenge ?? undefined,
           })) ?? [],
       }}
     >

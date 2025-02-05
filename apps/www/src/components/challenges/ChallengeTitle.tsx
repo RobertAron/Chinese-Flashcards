@@ -4,6 +4,7 @@ import { Checkbox } from "../Checkbox";
 import { useUserSettings } from "../useUserSettings";
 import { useDrillContext } from "./ChallengeContext";
 import { ExitLink } from "@/app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/ExitButton";
+import { buttonBehaviorClasses } from "../coreClasses";
 
 export function ChallengeTitle({
   children,
@@ -48,9 +49,11 @@ export function ChallengeTitle({
       </div>
       <div className="flex gap-1 border-black">
         <ExitLink
-          className="flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white px-4 py-2"
+          className={`${buttonBehaviorClasses} flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white px-4 py-2`}
           href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}`}
-        />
+        >
+          Exit
+        </ExitLink>
         <Button
           className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2"
           onClick={onStart}

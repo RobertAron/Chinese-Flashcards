@@ -1,4 +1,5 @@
 import type { WordDefinition } from "./types.js";
+import { PrismaClient } from "cms-db";
 
 export const commonWords = (
   [
@@ -97,3 +98,22 @@ export const commonWords = (
     emoji,
   };
 });
+
+const client = new PrismaClient()
+
+async function main(){
+  for(const word of commonWords){
+    console.log(word.character)
+    await client.words.update({
+      where:{
+        characters:word.character
+      },
+      data:{
+        emojiChallenge:word.emoji,
+        meaning:word.definition,
+      }
+    })
+  }
+}
+
+main()

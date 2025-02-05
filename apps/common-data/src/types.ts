@@ -9,6 +9,6 @@ export type WordDefinition = {
   character: string;
   pinyin: string;
   definition: string;
-  fileName: string;
+  audioSrc: string;
   emoji?: string;
 };
