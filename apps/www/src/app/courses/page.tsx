@@ -1,7 +1,6 @@
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getPrismaClient } from "@/utils/getPrismaClient";
-import { PracticeCountCell, TimeAttackCell } from "./client";
 
 export default async function Home() {
   const prisma = getPrismaClient();
@@ -17,13 +16,11 @@ export default async function Home() {
     },
   });
   return (
-    <main className="flex flex-col p-2">
+    <main className="flex flex-col">
       <h1 className="font-black text-6xl text-blue-700">Courses</h1>
       <div className="grid grid-cols-3 gap-1">
         <div className="col-span-3 grid grid-cols-subgrid">
-          <div>course</div>
-          <div className="text-end">Practice</div>
-          <div className="text-end">Speedrun</div>
+          <div>Course</div>
         </div>
         {courses.map((topic) => (
           <MotionLink
@@ -36,16 +33,6 @@ export default async function Home() {
             key={topic.slug}
           >
             <div className="font-bold text-4xl">{topic.title}</div>
-            <div className="flex flex-col items-end">
-              {topic.lessons.map(({ slug }) => (
-                <PracticeCountCell challengeId={slug} key={slug} />
-              ))}
-            </div>
-            <div className="flex flex-col items-end">
-              {topic.lessons.map(({ slug }) => (
-                <TimeAttackCell challengeId={slug} key={slug} />
-              ))}
-            </div>
           </MotionLink>
         ))}
       </div>

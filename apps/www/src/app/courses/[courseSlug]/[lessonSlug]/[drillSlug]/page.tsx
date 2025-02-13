@@ -39,7 +39,7 @@ export default AppServerPageEntrypoint(async ({ params }) => {
           {titles.lesson.title}
         </BreadcrumbEscape>
       </BreadcrumbContainer>
-      <main className="flex flex-col items-start gap-4 p-1">
+      <main className="flex flex-col items-start gap-4">
         <h1 className="font-bold text-3xl underline">{titles.title}</h1>
         <DrillHome />
       </main>

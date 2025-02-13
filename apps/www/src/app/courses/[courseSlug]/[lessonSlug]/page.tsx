@@ -13,6 +13,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
   const lesson = await getPrismaClient().lesson.findUnique({
     where: { slug: lessonSlug },
     select: {
+      title: true,
       drills: true,
       course: {
         select: {
@@ -28,8 +29,8 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
         <Breadcrumb href="/courses">Courses</Breadcrumb>
         <BreadcrumbEscape href={`/courses/${courseSlug}`}>{lesson.course.title}</BreadcrumbEscape>
       </BreadcrumbContainer>
-      <main className="flex flex-col p-2">
-        <h1 className="font-black text-6xl text-blue-700">Drills</h1>
+      <main className="flex flex-col">
+        <h1 className="font-black text-6xl text-blue-700">{lesson.title}</h1>
         <div className="grid grid-cols-3 gap-1">
           <div className="col-span-3 grid grid-cols-subgrid">
             <div>Drill</div>

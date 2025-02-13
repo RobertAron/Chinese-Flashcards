@@ -4,8 +4,7 @@ import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import { PracticeCountCell, TimeAttackCell } from "../client";
-import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
+import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 
 const paramsTemplate = z.object({ courseSlug: z.string() });
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
@@ -28,8 +27,6 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
         <div className="grid grid-cols-3 gap-1">
           <div className="col-span-3 grid grid-cols-subgrid">
             <div>Lesson</div>
-            <div className="text-end">Practice</div>
-            <div className="text-end">Speedrun</div>
           </div>
           {course.lessons.map((ele) => (
             <MotionLink
@@ -42,8 +39,6 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
               key={ele.slug}
             >
               <div>{ele.title}</div>
-              <PracticeCountCell challengeId={ele.slug} />
-              <TimeAttackCell challengeId={ele.slug} />
             </MotionLink>
           ))}
         </div>

@@ -169,7 +169,7 @@ export const LiveAudioVisualizer = ({
   }, []);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-md border border-black" ref={containerRef}>
+    <div className="relative h-full w-full overflow-hidden rounded-md border-[1.5px] border-black" ref={containerRef}>
       <canvas className="absolute inset-0" ref={canvasRef} width={width * 2} height={height * 2} />
     </div>
   );

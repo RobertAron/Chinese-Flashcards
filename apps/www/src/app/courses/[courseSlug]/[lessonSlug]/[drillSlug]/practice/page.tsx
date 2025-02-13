@@ -30,7 +30,7 @@ export default function Practice(){
     nextProblem();
   };
   return (
-    <main className="p-1">
+    <main>
       {!started ? (
         <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
           <div className="flex gap-2">
