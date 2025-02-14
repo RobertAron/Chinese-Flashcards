@@ -1,11 +1,11 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { MotionLink } from "@/components/MotionLink";
+import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 import { PracticeCountCell, TimeAttackCell } from "../../client";
-import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 
 const paramsTemplate = z.object({ courseSlug: z.string(), lessonSlug: z.string() });
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {

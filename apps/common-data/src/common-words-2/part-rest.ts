@@ -1500,8 +1500,7 @@ export const data: { character: string; pinyin: string; meaning: string }[] = [
       {
         character: "了",
         pinyin: "le",
-        meaning:
-          "modal particle marking completion of an action",
+        meaning: "modal particle marking completion of an action",
       },
       {
         character: "白色",

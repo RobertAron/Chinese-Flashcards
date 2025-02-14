@@ -1,14 +1,13 @@
 export type ChallengeDefinition = {
-  id:string;
   label: string;
   words: WordDefinition[];
 };
 
 export type WordDefinition = {
-  id: string;
-  character: string;
+  id: number;
+  characters: string;
   pinyin: string;
-  definition: string;
+  meaning: string;
   audioSrc: string;
-  emoji?: string;
+  emojiChallenge: string | null;
 };

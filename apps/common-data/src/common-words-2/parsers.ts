@@ -23,7 +23,7 @@
 //     const lesson = i.toString().padStart(2, "0");
 //     const url = `https://chinesefor.us/lessons/1000-most-common-chinese-words-for-beginners-lesson-${lesson}/`;
 //     await page.goto(url, { waitUntil: "networkidle0" });
-    
+
 //     const data = await page.evaluate(() => {
 //       const listItems = [...document.querySelectorAll(".fl-rich-text li")];
 //       return listItems.map((ele) => {

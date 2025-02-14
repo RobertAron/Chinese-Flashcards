@@ -1,12 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import tts from "@google-cloud/text-to-speech";
-import dotenv from "dotenv";
 import { PrismaClient } from "cms-db";
+import dotenv from "dotenv";
 const prismaClient = new PrismaClient();
 
-const delay = (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
 const env = dotenv.config({ path: ".env.local" });
 const auth = env.parsed?.GOOGLE_APPLICATION_CREDENTIALS;
@@ -45,7 +44,7 @@ async function main() {
     const [response] = res;
     if (response.audioContent == null) throw new Error(JSON.stringify(res));
     await fs.promises.writeFile(speechFile, response.audioContent, "binary");
-    await delay(100)
+    await delay(100);
     console.log("complete with", speechFile);
   }
   console.log("Total success!");

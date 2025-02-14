@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/Button";
 import { Kbd } from "@/components/Kbd";
 import { useKeyTrigger } from "@/utils/hooks";
@@ -35,7 +35,7 @@ export function ExitLink({
     router.push(href);
   }, [href, router]);
   useKeyTrigger("Escape", navigate);
-  
+
   const combinedClassName = useMergeClasses(coreExitButtonClasses, className ?? "");
   return (
     <Link href={href} className={combinedClassName}>

@@ -1,23 +1,4 @@
-// https://en.wiktionary.org/wiki/Appendix:Mandarin_Frequency_lists/1-1000
-// copy(JSON.stringify((function getData() {
-//   const rows = [...document.querySelectorAll(".wikitable > tbody > tr")].slice(1);
-//   const data = rows.map((ele) => {
-//     const data = [...ele.children];
-//     return {
-//       character: data[1].textContent,
-//       pinyin: data[2].textContent,
-//       meaning: Array.from(data[3].childNodes)
-//         .filter((node) => node.nodeType === Node.TEXT_NODE)
-//         .map((node) => node.textContent?.trim())
-//         .join(" "),
-//     };
-//   });
-//   return data;
-// })(),null,2));
-
-import type { WordDefinition } from "@/types.js";
-
-export const data:{character:string;pinyin:string;meaning:string;}[] = [
+export const data: { character: string; pinyin: string; meaning: string }[] = [
   {
     character: "一",
     pinyin: "yī",
@@ -4760,4 +4741,3 @@ export const data:{character:string;pinyin:string;meaning:string;}[] = [
       "lot, aggregate, all, gross, entirety, allness, shebang, caboodle, complete, bunch, sum, total, gamut, entire, det.: all, totality, whole, everything",
   },
 ];
-

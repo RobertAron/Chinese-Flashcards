@@ -1,5 +1,5 @@
-import type { WordDefinition } from "./types.js";
 import { PrismaClient } from "cms-db";
+import type { WordDefinition } from "./types.js";
 
 export const commonWords = (
   [
@@ -90,30 +90,30 @@ export const commonWords = (
 ).map(([_, characters, pinyin, __, definition, emoji], index): WordDefinition => {
   const id = `common-words-${index}`;
   return {
-    character: characters,
-    definition,
+    characters: characters,
+    meaning: definition,
     fileName: `${id}.mp3`,
     id,
     pinyin,
-    emoji,
+    emojiChallenge: emoji,
   };
 });
 
-const client = new PrismaClient()
+const client = new PrismaClient();
 
-async function main(){
-  for(const word of commonWords){
-    console.log(word.character)
+async function main() {
+  for (const word of commonWords) {
+    console.log(word.characters);
     await client.words.update({
-      where:{
-        characters:word.character
+      where: {
+        characters: word.characters,
       },
-      data:{
-        emojiChallenge:word.emoji,
-        meaning:word.definition,
-      }
-    })
+      data: {
+        emojiChallenge: word.emojiChallenge,
+        meaning: word.meaning,
+      },
+    });
   }
 }
 
-main()
+main();

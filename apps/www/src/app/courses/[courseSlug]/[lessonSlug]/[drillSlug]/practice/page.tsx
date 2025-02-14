@@ -19,7 +19,7 @@ import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
-export default function Practice(){
+export default function Practice() {
   const { challengeId } = useDrillContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
@@ -72,7 +72,7 @@ export default function Practice(){
       )}
     </main>
   );
-};
+}
 
 function CoreProgressBar({
   current,

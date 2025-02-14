@@ -1,3 +1,4 @@
+"use client"
 import type React from "react";
 import { createContext, use } from "react";
 export function generateContext<ProviderProps, ProvidedValue>(

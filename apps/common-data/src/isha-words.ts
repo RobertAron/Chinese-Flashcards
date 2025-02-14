@@ -1,5 +1,5 @@
-import type { WordDefinition } from "./types.js";
 import { PrismaClient } from "cms-db";
+import type { WordDefinition } from "./types.js";
 const client = new PrismaClient();
 
 export const ishaWords = (
@@ -130,18 +130,15 @@ export const ishaWords = (
 ).map(([index, characters, pinyin, __, definition, emoji]): WordDefinition => {
   const id = `isha-words-${index}`;
   return {
-    character: characters,
-    definition,
+    characters: characters,
+    meaning: definition,
     fileName: `${id}.mp3`,
     id,
     pinyin,
-    emoji,
+    emojiChallenge: emoji,
   };
 });
-const words = [
-  '孩子',
-  
-]
+const words = ["孩子"];
 
 const lyrics = `
 孩子别怕荆棘赤着脚
@@ -179,7 +176,12 @@ const lyrics = `
 `;
 
 async function main() {
-  const lines = lyrics.split("\n").map((ele)=>ele.split('').filter(ele=>ele!==' ').join(''));
+  const lines = lyrics.split("\n").map((ele) =>
+    ele
+      .split("")
+      .filter((ele) => ele !== " ")
+      .join(""),
+  );
   for (const line of lines) {
     let startingIndex = 0;
     let endingIndex = line.length;

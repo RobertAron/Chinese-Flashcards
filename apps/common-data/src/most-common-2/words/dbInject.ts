@@ -38,7 +38,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
 
 async function main() {
   const chunked = chunkArray(fullData, 100);
-  await client.words.deleteMany()
+  await client.words.deleteMany();
   for (const chunk of chunked) {
     await client.words.createMany({
       data: chunk.map((ele) => ({

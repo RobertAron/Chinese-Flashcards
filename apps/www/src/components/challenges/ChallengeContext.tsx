@@ -1,15 +1,16 @@
 "use client";
+import { useUserSettings } from "@/components/useUserSettings";
 import { generateContext } from "@/utils/createContext";
-import type { ChallengeDefinition, WordDefinition } from "common-data/types";
+import type { WordDefinition } from "common-data/types";
 import type React from "react";
-import { useUserSettings } from "../useUserSettings";
+import type { getDrillInfo } from "../../app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/getDrillInfo";
 
 type ProviderProps = {
   children?: React.ReactNode;
-  challengeDefinition: ChallengeDefinition;
-  lessonSlug: string;
   courseSlug: string;
-};
+  lessonSlug: string;
+  drillSlug: string;
+} & Awaited<ReturnType<typeof getDrillInfo>>;
 type CharacterChallenge = {
   type: "character-challenge";
   id: string;
@@ -43,32 +44,39 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
   ProvidedValue
 >(
   (Provider) =>
-    function DrillProvider({ children, challengeDefinition, courseSlug, lessonSlug }: ProviderProps) {
+    function DrillProvider({
+      children,
+      drillTitle,
+      words,
+      courseSlug,
+      lessonSlug,
+      drillSlug,
+    }: ProviderProps) {
       const [userSettings] = useUserSettings();
-      const calculatedChallenges = challengeDefinition.words.flatMap(
-        ({ character, definition, id, pinyin, audioSrc, emoji }): AllChallenges[] => {
+      const calculatedChallenges = words.flatMap(
+        ({ characters, meaning, id, pinyin, audioSrc, emojiChallenge }): AllChallenges[] => {
           const result: AllChallenges[] = [
             { type: "audio-challenge", id: `${id}-audio`, pinyin, src: audioSrc },
             {
               type: "definition-challenge",
-              definition,
+              definition: meaning,
               id: `${id}-definition`,
               pinyin,
             },
           ];
-          if (emoji !== undefined)
+          if (emojiChallenge != null)
             result.push({
               type: "character-challenge",
               id: `${id}-emoji`,
               pinyin,
-              character: emoji,
+              character: emojiChallenge,
             });
           if (userSettings.enableCharacterChallenges)
             result.push({
               type: "character-challenge",
               id: `${id}-pinyin`,
               pinyin,
-              character,
+              character: characters,
             });
           return result;
         },
@@ -76,9 +84,9 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
       return (
         <Provider
           value={{
-            challengeId: challengeDefinition.id,
-            challengeLabel: challengeDefinition.label,
-            wordDefinitions: challengeDefinition.words,
+            challengeId: drillSlug,
+            challengeLabel: drillTitle,
+            wordDefinitions: words,
             challenges: calculatedChallenges,
             courseSlug,
             lessonSlug,

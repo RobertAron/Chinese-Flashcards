@@ -1,5 +1,5 @@
-import { data } from "../words/part-1.js";
 import { PrismaClient } from "cms-db";
+import { data } from "../words/part-1.js";
 const client = new PrismaClient();
 
 export const mostCommonWords = [
@@ -116,9 +116,7 @@ async function main() {
       slug: "most-common-words-unit-1",
       challenges: {
         createMany: {
-          data:{
-            
-          }
+          data: {},
         },
       },
     },

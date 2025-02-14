@@ -15,6 +15,7 @@ export function Challenge({
   active?: boolean;
   practice?: boolean;
 }) {
+
   return match(challenge)
     .with({ type: "character-challenge" }, (problem) => (
       <CharacterChallenge

@@ -1,9 +1,9 @@
 "use client";
+import { useKeyTrigger } from "@/utils/hooks";
 import { useMergeClasses } from "@/utils/styleResolvers";
 import Link from "next/link";
-import React, { useCallback } from "react";
-import { useKeyTrigger } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
+import React, { useCallback } from "react";
 import { Kbd } from "./Kbd";
 
 const baseClasses = "underline hocus:text-gray-600";
