@@ -18,8 +18,6 @@ import { AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
-import { generateStaticParams } from "../generateStaticParams";
-export { generateStaticParams };
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
@@ -31,48 +29,44 @@ export default function Practice() {
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };
-  return (
-    <main>
-      {!started ? (
-        <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
-          <div className="flex gap-2">
-            <div className="flex grow basis-0 flex-col font-bold text-3xl">
-              <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
-              </div>
-              <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
-              </div>
-              <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
-              </div>
-            </div>
-            <div className="grow basis-0 font-extrabold text-3xl">
-              <div className="flex items-center">
-                <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
-                {formatPracticeCount(practiceCount)}
-              </div>
-            </div>
+  return !started ? (
+    <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
+      <div className="flex gap-2">
+        <div className="flex grow basis-0 flex-col font-bold text-3xl">
+          <div className="flex items-center gap-1">
+            <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
           </div>
-        </ChallengeTitle>
-      ) : (
-        <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-          <div className="grid-stack-item justify-start self-start p-2">
-            <ExitButton onExit={() => setStarted(false)} />
+          <div className="flex items-center gap-1">
+            <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
           </div>
-          <div>
+          <div className="flex items-center gap-1">
+            <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
+          </div>
+        </div>
+        <div className="grow basis-0 font-extrabold text-3xl">
+          <div className="flex items-center">
             <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
             {formatPracticeCount(practiceCount)}
           </div>
-          <ProgressBars count={practiceCount} />
-          <div className="grid-stack-item flex flex-col items-center self-start justify-self-center">
-            <AnimatePresence mode="popLayout">
-              <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
-            </AnimatePresence>
-          </div>
         </div>
-      )}
-    </main>
+      </div>
+    </ChallengeTitle>
+  ) : (
+    <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <div className="grid-stack-item justify-start self-start p-2">
+        <ExitButton onExit={() => setStarted(false)} />
+      </div>
+      <div>
+        <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
+        {formatPracticeCount(practiceCount)}
+      </div>
+      <ProgressBars count={practiceCount} />
+      <div className="grid-stack-item flex flex-col items-center self-start justify-self-center">
+        <AnimatePresence mode="popLayout">
+          <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }
 

@@ -25,6 +25,14 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
   return [data, setValue] as const;
 }
 
+const localStorageMultiple = Symbol("local-storage-multiple");
+export function useReadLocalStorages<T>(keys: string[], defaultValue: T) {
+  const { data = [] } = useSWR([localStorageMultiple, ...keys], ([_, ...keys]) => {
+    return keys.map((key) => getLocalStorage<T>(key, JSON.stringify(defaultValue)));
+  });
+  return data;
+}
+
 export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

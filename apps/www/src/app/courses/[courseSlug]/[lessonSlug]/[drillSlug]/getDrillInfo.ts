@@ -17,8 +17,8 @@ function deDupe<T, U>(arr: T[], cb: (ele: T) => U) {
   });
 }
 
-export const getDrillInfo = React.cache(async function getDrillInfo(params: ParamsShape) {
-  if (params.drillSlug === "final-mastery") {
+export const getDrillInfo = React.cache(async function c(params: ParamsShape) {
+  if (params.drillSlug.startsWith("final-mastery")) {
     const parentLesson = await getPrismaClient().lesson.findUnique({
       where: {
         slug: params.lessonSlug,

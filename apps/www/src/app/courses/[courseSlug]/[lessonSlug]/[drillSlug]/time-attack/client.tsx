@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useDrillContext } from "@/components/challenges/ChallengeContext";
@@ -21,54 +21,50 @@ export function TimeAttack() {
   const { challengeId } = useDrillContext();
   const [recentFinish, setRecentFinish] = useState<number | null>(null);
   const [previousBest, setNewBest] = useTimeAttackPB(challengeId);
-  return (
-    <main>
-      {!timeAttackRunning ? (
-        <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
-          <div className="flex gap-2">
-            <div className="flex grow basis-0 flex-col font-bold text-3xl">
-              <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="gold" /> {formatTimeAttackMs(timeForGold)}
-              </div>
-              <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="silver" /> {formatTimeAttackMs(timeForSilver)}
-              </div>
-              <div className="flex items-center gap-1">
-                <PlayerAwardIcon awardType="bronze" /> {formatTimeAttackMs(timeForBronze)}
-              </div>
-            </div>
-            <div className="flex grow basis-0 flex-col items-end text-lg">
-              <div className="flex gap-1 truncate">
-                <span>Previous Best:</span>
-                <span className="flex items-center gap-1">
-                  <PlayerAwardIcon awardType={timeAttackToAward(previousBest)} />
-                  {formatTimeAttackMs(previousBest)}
-                </span>
-              </div>
-              {recentFinish !== null && (
-                <div className="flex items-end gap-1">
-                  <div>Recent Finish</div>
-                  <div className="flex items-end gap-1">
-                    {recentFinish === previousBest && "🎉"}
-                    <PlayerAwardIcon awardType={timeAttackToAward(recentFinish)} />
-                    {formatTimeAttackMs(recentFinish)}
-                  </div>
-                </div>
-              )}
-            </div>
+  return !timeAttackRunning ? (
+    <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
+      <div className="flex gap-2">
+        <div className="flex grow basis-0 flex-col font-bold text-3xl">
+          <div className="flex items-center gap-1">
+            <PlayerAwardIcon awardType="gold" /> {formatTimeAttackMs(timeForGold)}
           </div>
-        </ChallengeTitle>
-      ) : (
-        <TimeAttackRunning
-          onTimeAttackComplete={(completedTime) => {
-            setTimeAttackRunning(false);
-            if (completedTime === null) return;
-            setRecentFinish(completedTime);
-            if (previousBest === null || completedTime < previousBest) setNewBest(completedTime);
-          }}
-        />
-      )}
-    </main>
+          <div className="flex items-center gap-1">
+            <PlayerAwardIcon awardType="silver" /> {formatTimeAttackMs(timeForSilver)}
+          </div>
+          <div className="flex items-center gap-1">
+            <PlayerAwardIcon awardType="bronze" /> {formatTimeAttackMs(timeForBronze)}
+          </div>
+        </div>
+        <div className="flex grow basis-0 flex-col items-end text-lg">
+          <div className="flex gap-1 truncate">
+            <span>Previous Best:</span>
+            <span className="flex items-center gap-1">
+              <PlayerAwardIcon awardType={timeAttackToAward(previousBest)} />
+              {formatTimeAttackMs(previousBest)}
+            </span>
+          </div>
+          {recentFinish !== null && (
+            <div className="flex items-end gap-1">
+              <div>Recent Finish</div>
+              <div className="flex items-end gap-1">
+                {recentFinish === previousBest && "🎉"}
+                <PlayerAwardIcon awardType={timeAttackToAward(recentFinish)} />
+                {formatTimeAttackMs(recentFinish)}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </ChallengeTitle>
+  ) : (
+    <TimeAttackRunning
+      onTimeAttackComplete={(completedTime) => {
+        setTimeAttackRunning(false);
+        if (completedTime === null) return;
+        setRecentFinish(completedTime);
+        if (previousBest === null || completedTime < previousBest) setNewBest(completedTime);
+      }}
+    />
   );
 }
 
@@ -98,7 +94,7 @@ function TimeAttackRunning({
 
   return (
     <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div className="grid-stack-item justify-start self-start p-2">
+      <div className="grid-stack-item justify-start self-start">
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
       <div className="grid-stack-item flex flex-col items-center gap-2 self-start justify-self-center">
@@ -130,7 +126,7 @@ const circleCoreProps: Partial<React.ComponentProps<typeof motion.circle>> = {
 
 function ProgressRing({ current, total }: { current: number; total: number }) {
   return (
-    <figure className="grid h-[100px] w-[100px]">
+    <figure className="grid h-[100px] w-[100px] font-mono">
       <svg
         className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-600"
         viewBox="0 0 100 100"
@@ -138,7 +134,7 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
         aria-label="progress par"
       >
         <text textAnchor="end" x="50" y="50" dominantBaseline="text-top">
-          {current}
+          {current.toString().padStart(2,'0')}
         </text>
         <text textAnchor="start" x="50" y="50" dominantBaseline="hanging">
           {total}

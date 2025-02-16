@@ -19,11 +19,9 @@ export function ChallengeTitle({
   const { challengeId, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
   return (
     <div className="mx-auto flex w-[32rem] flex-col gap-1">
-      <h1 className="rounded-t-md bg-black p-2 font-extrabold text-4xl text-white">{challengeLabel}</h1>
-      <div className="border border-black bg-white p-1">
-        <div>{children}</div>
-      </div>
-      <div className="flex flex-col items-start gap-2 border border-black bg-white p-1">
+      <h1 className="rounded-t-md bg-black p-3 font-extrabold text-4xl text-white">{challengeLabel}</h1>
+      <div className="border-2 border-black bg-white p-2">{children}</div>
+      <div className="flex flex-col items-start gap-2 border-2 border-black bg-white p-2">
         <Checkbox
           isSelected={userSettings.enableCharacterChallenges}
           onChange={(selected) => {
@@ -55,11 +53,11 @@ export function ChallengeTitle({
           Exit
         </ExitLink>
         <Button
-          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2"
+          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2 font-bold text-xl"
           onClick={onStart}
           autoFocus
         >
-          <span>{again ? "Improve" : "Start"}</span>
+          <span>{again ? "IMPROVE" : "START"}</span>
           <ChevronRight />
         </Button>
       </div>

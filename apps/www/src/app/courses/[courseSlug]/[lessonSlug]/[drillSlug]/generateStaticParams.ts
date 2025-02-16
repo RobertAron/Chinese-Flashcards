@@ -17,7 +17,7 @@ export async function generateStaticParams(): Promise<ParamsShape[]> {
     {
       courseSlug: lesson.courseSlug,
       lessonSlug: lesson.slug,
-      drillSlug: "final-mastery",
+      drillSlug: `final-mastery-${lesson.slug}`,
     },
     ...lesson.drills.map(
       (drill): ParamsShape => ({

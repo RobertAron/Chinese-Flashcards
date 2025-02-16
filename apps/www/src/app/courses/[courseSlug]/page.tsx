@@ -6,6 +6,7 @@ import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
 import { paramsTemplate } from "./paramsTemplate";
 import { generateStaticParams } from "./generateStaticParams";
+import { LessonProgress } from "./client";
 
 export { generateStaticParams };
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
@@ -13,7 +14,17 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
   const course = await getPrismaClient().course.findUnique({
     where: { slug: courseSlug },
     select: {
-      lessons: true,
+      lessons: {
+        select: {
+          slug: true,
+          title: true,
+          drills: {
+            select: {
+              slug: true,
+            },
+          },
+        },
+      },
       title: true,
     },
   });
@@ -39,7 +50,8 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
               href={`/courses/${courseSlug}/${ele.slug}`}
               key={ele.slug}
             >
-              <div>{ele.title}</div>
+              <div className="col-span-2">{ele.title}</div>
+              <LessonProgress drillSlugs={[...ele.drills.map((ele) => ele.slug),`final-mastery-${ele.slug}`]} />
             </MotionLink>
           ))}
         </div>
