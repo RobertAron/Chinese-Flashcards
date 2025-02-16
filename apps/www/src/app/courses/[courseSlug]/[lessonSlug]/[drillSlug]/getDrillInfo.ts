@@ -1,7 +1,7 @@
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
 import React from "react";
-import type { ParamsShape } from "./page";
+import type { ParamsShape } from "./paramsTemplate";
 
 function pojoIfy<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));

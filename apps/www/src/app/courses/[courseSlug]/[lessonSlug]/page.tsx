@@ -4,10 +4,11 @@ import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
-import { z } from "zod";
 import { PracticeCountCell, TimeAttackCell } from "../../client";
+import { generateStaticParams } from "./generateStaticParams";
+import { paramsTemplate } from "./paramsTemplate";
 
-const paramsTemplate = z.object({ courseSlug: z.string(), lessonSlug: z.string() });
+export { generateStaticParams };
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
   const { lessonSlug, courseSlug } = paramsTemplate.parse(await params);
   const lesson = await getPrismaClient().lesson.findUnique({

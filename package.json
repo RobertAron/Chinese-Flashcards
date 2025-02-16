@@ -1,8 +1,16 @@
 {
   "name": "vocab-sprint",
+  "packageManager": "npm@10.9.0",
   "devDependencies": {
+    "prisma": "^6.3.1",
     "@biomejs/biome": "1.9.4",
     "turbo": "^2.3.3"
   },
-  "workspaces": ["apps/*"]
+  "workspaces": [
+    "apps/*"
+  ],
+  "dependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^6.3.1",
+    "@prisma/client": "^6.3.1"
+  }
 }

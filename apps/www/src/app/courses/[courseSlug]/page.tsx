@@ -4,9 +4,10 @@ import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
-import { z } from "zod";
+import { paramsTemplate } from "./paramsTemplate";
+import { generateStaticParams } from "./generateStaticParams";
 
-const paramsTemplate = z.object({ courseSlug: z.string() });
+export { generateStaticParams };
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
   const { courseSlug } = paramsTemplate.parse(await params);
   const course = await getPrismaClient().course.findUnique({
