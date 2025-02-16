@@ -1,18 +1,15 @@
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { getPrismaClient } from "@/utils/getPrismaClient";
+import { getDrizzleClient } from "@/utils/getDrizzleClient";
 
 export default async function Home() {
-  const prisma = getPrismaClient();
-  const courses = await prisma.course.findMany({
-    select: {
+  const courses = await getDrizzleClient().query.course.findMany({
+    columns: {
       slug: true,
       title: true,
-      lessons: {
-        select: {
-          slug: true,
-        },
-      },
+    },
+    with: {
+      lessons: true,
     },
   });
   return (

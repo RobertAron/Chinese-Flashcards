@@ -2,33 +2,54 @@ import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { getPrismaClient } from "@/utils/getPrismaClient";
 import { notFound } from "next/navigation";
 import { paramsTemplate } from "./paramsTemplate";
 import { generateStaticParams } from "./generateStaticParams";
 import { LessonProgress } from "./client";
+import { getDrizzleClient } from "@/utils/getDrizzleClient";
 
 export { generateStaticParams };
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
   const { courseSlug } = paramsTemplate.parse(await params);
-  const course = await getPrismaClient().course.findUnique({
-    where: { slug: courseSlug },
-    select: {
+  const course = await getDrizzleClient().query.course.findFirst({
+    where: (course, { eq }) => eq(course.slug, courseSlug),
+    columns: {
+      title: true,
+    },
+    with: {
       lessons: {
-        select: {
+        columns: {
           slug: true,
           title: true,
+        },
+        with: {
           drills: {
-            select: {
+            columns: {
               slug: true,
             },
           },
         },
       },
-      title: true,
     },
   });
-  if (course === null) notFound();
+  // const course = await getPrismaClient().course.findUnique({
+  //   where: { slug: courseSlug },
+  //   select: {
+  //     lessons: {
+  //       select: {
+  //         slug: true,
+  //         title: true,
+  //         drills: {
+  //           select: {
+  //             slug: true,
+  //           },
+  //         },
+  //       },
+  //     },
+  //     title: true,
+  //   },
+  // });
+  if (course == null) notFound();
   return (
     <>
       <BreadcrumbContainer>
@@ -51,7 +72,9 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
               key={ele.slug}
             >
               <div className="col-span-2">{ele.title}</div>
-              <LessonProgress drillSlugs={[...ele.drills.map((ele) => ele.slug),`final-mastery-${ele.slug}`]} />
+              <LessonProgress
+                drillSlugs={[...ele.drills.map((ele) => ele.slug), `final-mastery-${ele.slug}`]}
+              />
             </MotionLink>
           ))}
         </div>
