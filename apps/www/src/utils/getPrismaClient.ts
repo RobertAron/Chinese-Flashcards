@@ -14,9 +14,7 @@ function generatePrismaClient() {
     }
     return "https://pub-e683ff6c0a5345b8af9cb2df0fbc7e43.r2.dev";
   }
-  console.log('loading this?')
-  console.log(`file:${process.cwd()}/local.db`)
-  return new PrismaClient({datasourceUrl:`file:${process.cwd()}/local.db`}).$extends({
+  return new PrismaClient({ datasourceUrl: `file:${process.cwd()}/local.db` }).$extends({
     result: {
       words: {
         audioSrc: {

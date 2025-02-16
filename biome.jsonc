@@ -32,7 +32,7 @@
         "useMediaCaption": "off"
       },
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": "warn"
       },
       "correctness": {
         "noUnusedImports": "error",
