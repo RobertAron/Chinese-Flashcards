@@ -15,8 +15,8 @@ import {
   totalTillSilver,
   usePracticeCount,
 } from "@/utils/playerStats";
-import { AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { AnimatePresence, animate, useMotionValue, useTransform, motion, usePresence } from "motion/react";
+import { type Ref, useEffect, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
@@ -30,7 +30,6 @@ export default function Practice() {
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };
-  const tillNext = practiceCountTillNextValues(practiceCount);
   return !started ? (
     <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
       <div className="flex gap-2">
@@ -54,11 +53,25 @@ export default function Practice() {
       </div>
     </ChallengeTitle>
   ) : (
-    <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+    <div className="md:grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
       <div className="grid-stack-item justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
-      <div className="pl-4 font-mono flex items-end">
+      <div className="grid-stack-item flex flex-col items-center self-center justify-self-center">
+        <AnimatePresence mode="popLayout">
+          <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
+        </AnimatePresence>
+      </div>
+      <ProgressArea practiceCount={practiceCount} />
+    </div>
+  );
+}
+
+function ProgressArea({ practiceCount }: { practiceCount: number }) {
+  const tillNext = practiceCountTillNextValues(practiceCount);
+  return (
+    <div className="flex w-full flex-col">
+      <div className="flex items-end pl-4 font-mono">
         <span className="flex items-center text-2xl">
           <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
           <span>{tillNext.current}</span>
@@ -69,24 +82,50 @@ export default function Practice() {
             </>
           )}
         </span>
-        {tillNext.requiredForNext !== null && (
-          <span className="text-gray-600 text-sm/6">
-            (
-            {((tillNext.current * 100) / tillNext.requiredForNext).toLocaleString("en-US", {
-              minimumFractionDigits: 1,
-              maximumFractionDigits: 1,
-            })}
-            %)
-          </span>
-        )}
-      </div>
-      <ProgressBars count={practiceCount} />
-      <div className="grid-stack-item flex flex-col items-center self-start justify-self-center">
-        <AnimatePresence mode="popLayout">
-          <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
+        <AnimatePresence mode="wait">
+          {tillNext.requiredForNext !== null && (
+            <PercentageComplete
+              percent={tillNext.current / tillNext.requiredForNext}
+              key={tillNext.requiredForNext}
+            />
+          )}
         </AnimatePresence>
       </div>
+      <ProgressBars count={practiceCount} />
     </div>
+  );
+}
+
+function PercentageComplete({ percent, ref }: { percent: number; ref?: Ref<HTMLDivElement> }) {
+  const currentlyShownPercent = useMotionValue(percent);
+  const [isPresent, safeToRemove] = usePresence();
+  const formattedPercent = useTransform(() => {
+    const actualNumber = currentlyShownPercent.get();
+    const numberPart = (actualNumber * 100).toLocaleString("en-US", {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
+    if (actualNumber === 1) return "✨ヽ(^ヮ^)ﾉ✨";
+    return `(${numberPart}%)`;
+  });
+  useEffect(() => {
+    if (isPresent) {
+      const controls = animate(currentlyShownPercent, percent, { duration: 0.2 });
+      return () => controls.stop();
+    }
+    const controls = animate(currentlyShownPercent, 1, { duration: 0.2 });
+    setTimeout(() => {
+      console.log("calling safe to remove");
+      safeToRemove();
+    }, 1 * 1000);
+    return () => {
+      controls.stop();
+    };
+  }, [currentlyShownPercent, percent, isPresent, safeToRemove]);
+  return (
+    <motion.span ref={ref} className="text-gray-600 text-sm/6">
+      {formattedPercent}
+    </motion.span>
   );
 }
 
