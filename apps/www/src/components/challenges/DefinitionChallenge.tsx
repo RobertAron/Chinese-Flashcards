@@ -24,7 +24,7 @@ export function DefinitionChallenge({
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
       <div className="flex h-36 items-center justify-center">
-        <div className="text-center text-2xl">{definition}</div>
+        <div className="text-center text-3xl">{definition}</div>
       </div>
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>

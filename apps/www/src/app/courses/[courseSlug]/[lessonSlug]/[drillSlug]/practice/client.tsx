@@ -53,7 +53,7 @@ export default function Practice() {
     </ChallengeTitle>
   ) : (
     <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div className="grid-stack-item justify-start self-start p-2">
+      <div className="grid-stack-item justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
       <div>

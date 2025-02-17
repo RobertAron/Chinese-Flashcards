@@ -30,7 +30,7 @@ export function AudioChallenge({ pinyin, onComplete, active, practice, id, ref, 
         <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
           <button
             type="button"
-            className="group flex items-center gap-4 rounded-lg border-[0.5px] border-black hocus:border-slate-300 bg-white/30 hocus:bg-black p-2 hocus:text-white text-sm backdrop-blur-sm"
+            className="group flex items-center gap-4 rounded-lg border border-black hocus:border-slate-300 bg-white/30 hocus:bg-black p-2 hocus:text-white text-sm backdrop-blur-sm"
             onClick={playAudio}
           >
             <RotateCcw className="h-4 w-4" />

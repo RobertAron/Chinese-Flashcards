@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { words, drillToWords, drill, phrases, drillToPhrases, phrasesToWords, lesson, course } from "../schema";
+import { words, drillToWords, drill, phrases, drillToPhrases, phrasesToWords, lesson, course } from "./schema";
 
 export const drillToWordsRelations = relations(drillToWords, ({one}) => ({
 	word: one(words, {

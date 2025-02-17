@@ -97,7 +97,7 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
     return () => window.removeEventListener("keydown", cb);
   }, [active, normalized, progress, secondaryProgress, onComplete, requireToneInput]);
   return (
-    <div className="relative flex justify-center gap-[0.05em] text-center font-mono text-xl tracking-tighter">
+    <div className="relative flex justify-center gap-[0.05em] text-center font-mono text-2xl tracking-tighter">
       {pinyin
         .split("")
         .slice(0, progress)
@@ -191,7 +191,7 @@ export function ChallengeWrapper({ id, active, ref, children }: PinyinChallengeP
       layout="position"
       layoutId={id}
       className={clsx(
-        "flex min-w-64 max-w-sm flex-col items-center gap-2 rounded-md border-2 bg-white p-2 md:max-w-md lg:max-w-lg",
+        "flex min-w-80 max-w-sm flex-col items-center gap-4 rounded-md border-2 bg-white px-3 py-4 md:max-w-md lg:max-w-lg",
         {
           "border-black": active,
           "border-slate-300": !active,

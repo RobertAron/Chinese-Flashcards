@@ -24,7 +24,7 @@ export function CharacterChallenge({
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
       <div className="flex h-36 flex-col items-center justify-center">
-        <div className="text-center text-6xl">{character}</div>
+        <div className="text-center text-7xl">{character}</div>
       </div>
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>

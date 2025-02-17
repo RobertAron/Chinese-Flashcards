@@ -108,8 +108,8 @@ export const LiveAudioVisualizer = ({
   mediaSource,
   fftSize = 8192,
   maxDecibels = -25,
-  minDecibels = -90,
-  smoothingTimeConstant = 0.0,
+  minDecibels = -85,
+  smoothingTimeConstant = 0.05,
 }: Props) => {
   const [[width, height], setCanvasSize] = useState<[number, number]>([0, 0]);
   const containerRef = useRef<HTMLDivElement>(null!);
