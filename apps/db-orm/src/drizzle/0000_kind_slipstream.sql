@@ -1,6 +1,5 @@
 -- Current sql file was generated after introspecting the database
 -- If you want to run this migration please uncomment this code before executing migrations
-/*
 CREATE TABLE `_prisma_migrations` (
 	`id` text PRIMARY KEY NOT NULL,
 	`checksum` text NOT NULL,
@@ -79,5 +78,7 @@ CREATE TABLE `Lesson` (
 	`courseSlug` text NOT NULL,
 	FOREIGN KEY (`courseSlug`) REFERENCES `Course`(`slug`) ON UPDATE cascade ON DELETE restrict
 );
+--> statement-breakpoint
+CREATE TABLE `__drizzle_migrations` (
 
-*/
+);
