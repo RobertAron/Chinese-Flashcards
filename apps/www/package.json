@@ -11,21 +11,21 @@
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/nextjs-monorepo-workaround-plugin": "^6.3.1",
     "clsx": "^2.1.1",
-    "cms-db": "*",
     "common-data": "*",
+    "db-orm": "*",
+    "drizzle-orm": "^0.39.3",
     "lucide-react": "^0.469.0",
     "motion": "^11.15.0",
     "next": "15.1.5",
+    "pg": "^8.13.3",
     "react": "19.0.0",
     "react-aria-components": "^1.5.0",
     "react-dom": "19.0.0",
     "swr": "^2.3.0",
     "tailwind-merge": "^2.6.0",
     "ts-pattern": "^5.6.0",
-    "zod": "^3.24.1",
-    "db-orm":"*"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
