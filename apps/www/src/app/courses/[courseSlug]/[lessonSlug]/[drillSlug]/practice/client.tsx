@@ -8,6 +8,7 @@ import {
   bronzePracticeCount,
   formatPracticeCount,
   goldPracticeCount,
+  practiceCountTillNextValues,
   practiceCountToAward,
   silverPracticeCount,
   totalTillBronze,
@@ -29,6 +30,7 @@ export default function Practice() {
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };
+  const tillNext = practiceCountTillNextValues(practiceCount);
   return !started ? (
     <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
       <div className="flex gap-2">
@@ -56,9 +58,27 @@ export default function Practice() {
       <div className="grid-stack-item justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
-      <div>
-        <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
-        {formatPracticeCount(practiceCount)}
+      <div className="pl-4 font-mono flex items-end">
+        <span className="flex items-center text-2xl">
+          <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
+          <span>{tillNext.current}</span>
+          {tillNext.requiredForNext !== null && (
+            <>
+              <span>/</span>
+              <span>{tillNext.requiredForNext}</span>
+            </>
+          )}
+        </span>
+        {tillNext.requiredForNext !== null && (
+          <span className="text-gray-600 text-sm/6">
+            (
+            {((tillNext.current * 100) / tillNext.requiredForNext).toLocaleString("en-US", {
+              minimumFractionDigits: 1,
+              maximumFractionDigits: 1,
+            })}
+            %)
+          </span>
+        )}
       </div>
       <ProgressBars count={practiceCount} />
       <div className="grid-stack-item flex flex-col items-center self-start justify-self-center">
@@ -79,12 +99,13 @@ function CoreProgressBar({
   total: number;
   color: string;
 }) {
+  const percentFill = (current / total) * 100;
   return (
-    <div className="grid-stack h-1 w-full skew-x-12 bg-black">
+    <div className="grid-stack h-4 w-full overflow-hidden border border-black border-t-0 first:border-t">
       <div className="grid-stack-item h-full w-full" style={{ background: color }} />
       <div
         className="grid-stack-item h-full bg-green-500 transition-all"
-        style={{ width: `${(current / total) * 100}%` }}
+        style={{ width: `${percentFill}%` }}
       />
     </div>
   );
@@ -95,7 +116,7 @@ function ProgressBars({ count }: { count: number }) {
   const silverProgress = clamp(count - totalTillBronze, 0, silverPracticeCount);
   const goldProgress = clamp(count - totalTillSilver, 0, goldPracticeCount);
   return (
-    <div className="flex w-full flex-col gap-[.5px]">
+    <div className="-skew-x-[30deg] flex w-full flex-col">
       <CoreProgressBar color={awardColors.bronze} current={bronzeProgress} total={bronzePracticeCount} />
       <CoreProgressBar color={awardColors.silver} current={silverProgress} total={silverPracticeCount} />
       <CoreProgressBar color={awardColors.gold} current={goldProgress} total={goldPracticeCount} />

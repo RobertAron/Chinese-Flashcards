@@ -43,3 +43,26 @@ export function formatPracticeCount(count: number | null) {
   if (count === 0) return "NOT STARTED";
   return `x${count}`;
 }
+
+export function practiceCountTillNextValues(count: number | null) {
+  // no medal
+  if (count === null || count < totalTillBronze)
+    return {
+      current: 0,
+      requiredForNext: bronzePracticeCount,
+    };
+  // have bronze...
+  if (count <= totalTillSilver)
+    return {
+      current: count - totalTillBronze,
+      requiredForNext: silverPracticeCount,
+    };
+  // have silver...
+  if (count < totalTillGold) {
+    return { current: count - totalTillSilver, requiredForNext: goldPracticeCount };
+  }
+  return {
+    current: count,
+    requiredForNext: null,
+  };
+}
