@@ -48,7 +48,7 @@ export function practiceCountTillNextValues(count: number | null) {
   // no medal
   if (count === null || count < totalTillBronze)
     return {
-      current: 0,
+      current: count ?? 0,
       requiredForNext: bronzePracticeCount,
     };
   // have bronze...

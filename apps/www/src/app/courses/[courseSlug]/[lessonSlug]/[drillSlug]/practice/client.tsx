@@ -71,25 +71,29 @@ function ProgressArea({ practiceCount }: { practiceCount: number }) {
   const tillNext = practiceCountTillNextValues(practiceCount);
   return (
     <div className="flex w-full flex-col">
-      <div className="flex items-end pl-4 font-mono">
-        <span className="flex items-center text-2xl">
+      <div className="flex items-end justify-between pl-4 font-mono">
+        <span>
           <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
-          <span>{tillNext.current}</span>
-          {tillNext.requiredForNext !== null && (
-            <>
-              <span>/</span>
-              <span>{tillNext.requiredForNext}</span>
-            </>
-          )}
         </span>
-        <AnimatePresence mode="wait">
-          {tillNext.requiredForNext !== null && (
-            <PercentageComplete
-              percent={tillNext.current / tillNext.requiredForNext}
-              key={tillNext.requiredForNext}
-            />
-          )}
-        </AnimatePresence>
+        <div className="flex items-end gap-1">
+          <span className="flex items-center text-2xl">
+            <span>{tillNext.current}</span>
+            {tillNext.requiredForNext !== null && (
+              <>
+                <span>/</span>
+                <span>{tillNext.requiredForNext}</span>
+              </>
+            )}
+          </span>
+          <AnimatePresence mode="wait">
+            {tillNext.requiredForNext !== null && (
+              <PercentageComplete
+                percent={tillNext.current / tillNext.requiredForNext}
+                key={tillNext.requiredForNext}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
       <ProgressBars count={practiceCount} />
     </div>
@@ -110,17 +114,16 @@ function PercentageComplete({ percent, ref }: { percent: number; ref?: Ref<HTMLD
   });
   useEffect(() => {
     if (isPresent) {
+      // when the number changes, animate to the new number
       const controls = animate(currentlyShownPercent, percent, { duration: 0.2 });
       return () => controls.stop();
     }
+    // if we're being removed, it's means we reached 100%. do a lil animation.
     const controls = animate(currentlyShownPercent, 1, { duration: 0.2 });
     setTimeout(() => {
-      console.log("calling safe to remove");
-      safeToRemove();
-    }, 1 * 1000);
-    return () => {
       controls.stop();
-    };
+      safeToRemove();
+    }, 1.5 * 1000);
   }, [currentlyShownPercent, percent, isPresent, safeToRemove]);
   return (
     <motion.span ref={ref} className="text-gray-600 text-sm/6">
