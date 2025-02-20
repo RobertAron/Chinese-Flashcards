@@ -115,11 +115,11 @@ function PercentageComplete({ percent, ref }: { percent: number; ref?: Ref<HTMLD
   useEffect(() => {
     if (isPresent) {
       // when the number changes, animate to the new number
-      const controls = animate(currentlyShownPercent, percent, { duration: 0.2 });
+      const controls = animate(currentlyShownPercent, percent, { duration: 0.5 });
       return () => controls.stop();
     }
     // if we're being removed, it's means we reached 100%. do a lil animation.
-    const controls = animate(currentlyShownPercent, 1, { duration: 0.2 });
+    const controls = animate(currentlyShownPercent, 1, { duration: 0.5 });
     setTimeout(() => {
       controls.stop();
       safeToRemove();

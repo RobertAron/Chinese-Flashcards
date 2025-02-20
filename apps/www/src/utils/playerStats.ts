@@ -52,7 +52,7 @@ export function practiceCountTillNextValues(count: number | null) {
       requiredForNext: bronzePracticeCount,
     };
   // have bronze...
-  if (count <= totalTillSilver)
+  if (count < totalTillSilver)
     return {
       current: count - totalTillBronze,
       requiredForNext: silverPracticeCount,

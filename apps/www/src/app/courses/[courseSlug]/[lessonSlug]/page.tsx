@@ -18,7 +18,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
     },
     with: {
       drills: {
-        orderBy:(t,{asc})=>asc(t.order)
+        orderBy: (t, { asc }) => asc(t.order),
       },
       course: {
         columns: {

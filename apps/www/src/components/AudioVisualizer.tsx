@@ -12,7 +12,7 @@ function average(nums: number[]) {
   return sum / nums.length;
 }
 
-export const calculateBarData = (frequencyData: Uint8Array, desiredBars = 100): number[] => {
+export const calculateBarData = (frequencyData: Uint8Array, desiredBars = 4000): number[] => {
   const startingPoint = Math.floor(frequencyData.length * 0);
   const endpointPoint = Math.floor(frequencyData.length * 0.5);
   const usefulDataPoints = frequencyData.slice(startingPoint, endpointPoint);
