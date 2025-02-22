@@ -1,16 +1,29 @@
 "use client";
 import { useUserSettings } from "@/components/useUserSettings";
 import { generateContext } from "@/utils/createContext";
-import type { WordDefinition } from "common-data/types";
 import type React from "react";
-import type { getDrillInfo } from "../../app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/getDrillInfo";
+import type { DrillInfo } from "./challengeServerUtils";
+
+export type WordDefinition = {
+  id: number;
+  characters: string;
+  pinyin: string;
+  meaning: string;
+  audioSrc: string;
+  emojiChallenge: string | null;
+};
+
+export type ChallengeDefinition = {
+  label: string;
+  words: WordDefinition[];
+};
 
 type ProviderProps = {
   children?: React.ReactNode;
   courseSlug: string;
   lessonSlug: string;
   drillSlug: string;
-} & Awaited<ReturnType<typeof getDrillInfo>>;
+} & DrillInfo;
 type CharacterChallenge = {
   type: "character-challenge";
   id: string;

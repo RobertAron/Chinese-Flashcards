@@ -1,6 +1,6 @@
 import { AppServerLayoutEntrypoint } from "@/components/AppPage";
-import { DrillProvider } from "../../../../../components/challenges/ChallengeContext";
-import { getDrillInfo } from "./getDrillInfo";
+import { DrillProvider } from "@/components/challenges/ChallengeContext";
+import { getDrillInfo } from "@/components/challenges/challengeServerUtils";
 import { paramsTemplate } from "./paramsTemplate";
 
 type CharacterChallenge = {

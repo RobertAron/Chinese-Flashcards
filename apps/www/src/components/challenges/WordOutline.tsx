@@ -1,9 +1,9 @@
 import { useAudioSourceNode } from "@/utils/hooks";
-import type { WordDefinition } from "common-data/types";
 import { PlayIcon } from "lucide-react";
 import { useRef } from "react";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { buttonBehaviorClasses } from "../coreClasses";
+import type { WordDefinition } from "./ChallengeContext";
 
 type WordOutlineProps = {
   word: WordDefinition;

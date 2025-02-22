@@ -1,8 +1,13 @@
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { wordToAudioSource } from "@/utils/idToAudioSource";
 import { notFound } from "next/navigation";
 import React from "react";
-import type { ParamsShape } from "./paramsTemplate";
-import { wordToAudioSource } from "@/utils/idToAudioSource";
+
+type DrillIdentifier = {
+  drillSlug: string;
+  lessonSlug: string;
+  courseSlug: string;
+};
 
 function deDupe<T, U>(arr: T[], cb: (ele: T) => U) {
   const soFar = new Set<U>();
@@ -86,7 +91,8 @@ async function getAllWordsInDrill(drillSlug: string) {
   };
 }
 
-export const getDrillInfo = React.cache(async function c(params: ParamsShape) {
+export type DrillInfo = Awaited<ReturnType<typeof getDrillInfo>>;
+export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)
     : getAllWordsInDrill(params.drillSlug));

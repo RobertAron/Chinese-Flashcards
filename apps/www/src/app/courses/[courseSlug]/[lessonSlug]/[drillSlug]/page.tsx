@@ -1,8 +1,8 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
+import { getDrillInfo } from "@/components/challenges/challengeServerUtils";
 import { notFound } from "next/navigation";
 import { DrillHome } from "./client";
-import { getDrillInfo } from "./getDrillInfo";
 import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
 
