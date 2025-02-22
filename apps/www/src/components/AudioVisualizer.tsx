@@ -36,13 +36,14 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // start drawing
 
-  data.forEach((dp, i) => {
+  data.forEach((dataPoint, i) => {
+    // 230 is the strongest db value I've seen.
     // value of 220 should span .9 of the visual
-    const dataPointHeightNormalized = Math.min(dp / 220, 200);
+    const dataPointHeightNormalized = Math.min(dataPoint / 230, 200);
     const dataPointHeight = dataPointHeightNormalized * height * 0.9;
     const x = (i / data.length) * width;
     const y = height - dataPointHeight;
-    const w = itemWidth + 1;
+    const w = itemWidth + 2;
     ctx.fillStyle = `rgb(${dataPointHeightNormalized * 255} 0 ${255 - dataPointHeightNormalized * 255})`;
     ctx.fillRect(x, y, w, dataPointHeight);
   });

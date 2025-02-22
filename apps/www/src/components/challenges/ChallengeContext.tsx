@@ -16,6 +16,7 @@ export type WordDefinition = {
 export type ChallengeDefinition = {
   label: string;
   words: WordDefinition[];
+  phrases: WordDefinition[];
 };
 
 type ProviderProps = {
@@ -47,10 +48,43 @@ type ProvidedValue = {
   challengeId: string;
   challengeLabel: string;
   wordDefinitions: WordDefinition[];
+  phraseDefinitions: WordDefinition[];
   challenges: AllChallenges[];
   lessonSlug: string;
   courseSlug: string;
 };
+
+function wordDefinitionToChallenges(
+  userSettings: ReturnType<typeof useUserSettings>[0],
+  words: WordDefinition[],
+) {
+  return words.flatMap(({ characters, meaning, id, pinyin, audioSrc, emojiChallenge }): AllChallenges[] => {
+    const result: AllChallenges[] = [
+      { type: "audio-challenge", id: `${id}-audio`, pinyin, src: audioSrc },
+      {
+        type: "definition-challenge",
+        definition: meaning,
+        id: `${id}-definition`,
+        pinyin,
+      },
+    ];
+    if (emojiChallenge != null)
+      result.push({
+        type: "character-challenge",
+        id: `${id}-emoji`,
+        pinyin,
+        character: emojiChallenge,
+      });
+    if (userSettings.enableCharacterChallenges)
+      result.push({
+        type: "character-challenge",
+        id: `${id}-pinyin`,
+        pinyin,
+        character: characters,
+      });
+    return result;
+  });
+}
 
 export const { Provider: DrillProvider, useContext: useDrillContext } = generateContext<
   ProviderProps,
@@ -64,43 +98,19 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
       courseSlug,
       lessonSlug,
       drillSlug,
+      phrases,
     }: ProviderProps) {
       const [userSettings] = useUserSettings();
-      const calculatedChallenges = words.flatMap(
-        ({ characters, meaning, id, pinyin, audioSrc, emojiChallenge }): AllChallenges[] => {
-          const result: AllChallenges[] = [
-            { type: "audio-challenge", id: `${id}-audio`, pinyin, src: audioSrc },
-            {
-              type: "definition-challenge",
-              definition: meaning,
-              id: `${id}-definition`,
-              pinyin,
-            },
-          ];
-          if (emojiChallenge != null)
-            result.push({
-              type: "character-challenge",
-              id: `${id}-emoji`,
-              pinyin,
-              character: emojiChallenge,
-            });
-          if (userSettings.enableCharacterChallenges)
-            result.push({
-              type: "character-challenge",
-              id: `${id}-pinyin`,
-              pinyin,
-              character: characters,
-            });
-          return result;
-        },
-      );
+      const wordChallenges = wordDefinitionToChallenges(userSettings, words);
+      const phraseChallenges = wordDefinitionToChallenges(userSettings, phrases);
       return (
         <Provider
           value={{
             challengeId: drillSlug,
             challengeLabel: drillTitle,
             wordDefinitions: words,
-            challenges: calculatedChallenges,
+            phraseDefinitions: phrases,
+            challenges: [...wordChallenges, ...phraseChallenges],
             courseSlug,
             lessonSlug,
           }}

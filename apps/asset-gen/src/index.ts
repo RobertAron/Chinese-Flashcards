@@ -1,10 +1,12 @@
 import fs from "node:fs";
+import { $ } from "bun";
 import path from "node:path";
 import tts from "@google-cloud/text-to-speech";
-import { PrismaClient } from "cms-db";
+import { getDb } from "db-orm";
 import dotenv from "dotenv";
-const prismaClient = new PrismaClient();
+import { askYesNo } from "./askYesNo";
 
+const dbPath = path.resolve(__dirname, "../../www/local.db");
 const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
 const env = dotenv.config({ path: ".env.local" });
@@ -21,11 +23,72 @@ const client = new tts.TextToSpeechClient({
   },
 });
 
+const drizzleClient = getDb(dbPath);
+
+export function wordToAudioSource(id: number) {
+  return `words/${id}.mp3`;
+}
+export function phraseToAudioSource(id: number) {
+  return `phrases/${id}.mp3`;
+}
+
+async function getCurrentFilesInBucket() {
+  const output = await $`rclone ls r2Language:vocab-sprint`.text();
+  const currentFiles = output.split("\n").map((ele) => ele.trim().split(" ")[1]);
+  return new Set(currentFiles);
+}
+
+async function getAllPhrases() {
+  return await drizzleClient.query.phrases.findMany({
+    columns: {
+      characters: true,
+      id: true,
+    },
+  });
+}
+
+async function getAllWords() {
+  return await drizzleClient.query.words.findMany({
+    columns: {
+      characters: true,
+      id: true,
+    },
+  });
+}
+
 async function main() {
-  const data = await prismaClient.words.findMany();
+  const [filesInBucket, phrases, words] = await Promise.all([
+    getCurrentFilesInBucket(),
+    getAllPhrases(),
+    getAllWords(),
+  ]);
+  const phrasesNotYetUploaded = phrases
+    .map((ele) => ({
+      ...ele,
+      fileName: phraseToAudioSource(ele.id),
+    }))
+    .filter((ele) => !filesInBucket.has(ele.fileName));
+  const wordsNotYetUploaded = words
+    .map((ele) => ({
+      ...ele,
+      fileName: wordToAudioSource(ele.id),
+    }))
+    .filter((ele) => !filesInBucket.has(ele.fileName));
+  if (phrasesNotYetUploaded.length === 0 && wordsNotYetUploaded.length === 0) {
+    console.log("No work to do.");
+    process.exit(0);
+  } else {
+    if (phrasesNotYetUploaded.length !== 0)
+      console.log(`Going to generate ${phrasesNotYetUploaded.length} phrases`);
+    if (wordsNotYetUploaded.length !== 0)
+      console.log(`Going to generate ${wordsNotYetUploaded.length} words`);
+  }
+  const generateAudio = await askYesNo("generate audio?");
+  if (!generateAudio) process.exit(1);
   await client.initialize();
+  const data = [...phrasesNotYetUploaded, ...wordsNotYetUploaded];
   for (const item of data) {
-    const speechFile = path.resolve(`./output/words/${item.id}.mp3`);
+    const speechFile = path.resolve(`./dist/${item.fileName}`);
     const res = await client.synthesizeSpeech({
       audioConfig: {
         audioEncoding: "MP3",
@@ -47,6 +110,9 @@ async function main() {
     await delay(100);
     console.log("complete with", speechFile);
   }
-  console.log("Total success!");
+  console.log("probably run the following:");
+  console.log("");
+  console.log("cd dist");
+  console.log("rclone copy . r2Language:vocab-sprint --dry-run");
 }
 main();

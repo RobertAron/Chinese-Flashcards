@@ -1,5 +1,5 @@
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
-import { wordToAudioSource } from "@/utils/idToAudioSource";
+import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -38,6 +38,11 @@ async function getAllWordsInLesson(lessonSlug: string) {
               word: true,
             },
           },
+          drillToPhrases: {
+            with: {
+              phrase: true,
+            },
+          },
         },
       },
     },
@@ -49,6 +54,10 @@ async function getAllWordsInLesson(lessonSlug: string) {
     drillTitle: "Final Mastery",
     words: deDupe(
       lesson.drills.flatMap((drill) => drill.drillToWords.map((ele) => ele.word)),
+      (ele) => ele.id,
+    ),
+    phrases: deDupe(
+      lesson.drills.flatMap((drill) => drill.drillToPhrases.map((ele) => ele.phrase)),
       (ele) => ele.id,
     ),
   };
@@ -63,6 +72,11 @@ async function getAllWordsInDrill(drillSlug: string) {
       drillToWords: {
         with: {
           word: true,
+        },
+      },
+      drillToPhrases: {
+        with: {
+          phrase: true,
         },
       },
       lesson: {
@@ -88,6 +102,10 @@ async function getAllWordsInDrill(drillSlug: string) {
       drill.drillToWords.flatMap((ele) => ele.word),
       (ele) => ele.id,
     ),
+    phrases: deDupe(
+      drill.drillToPhrases.flatMap((ele) => ele.phrase),
+      (ele) => ele.id,
+    ),
   };
 }
 
@@ -101,6 +119,10 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
     words: data.words.map((ele) => ({
       ...ele,
       audioSrc: wordToAudioSource(ele.id),
+    })),
+    phrases: data.phrases.map((ele) => ({
+      ...ele,
+      audioSrc: phraseToAudioSource(ele.id),
     })),
   };
 });

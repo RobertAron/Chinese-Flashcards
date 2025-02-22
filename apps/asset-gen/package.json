@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "gen": "npx tsx src/index.ts"
+    "gen": "bun src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -11,12 +11,10 @@
   "description": "",
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.7.0",
-    "audio-decode": "^2.2.2",
-    "canvas": "^3.0.1",
     "dotenv": "^16.4.7",
-    "standardized-audio-context": "^25.3.77",
-    "web-audio-api": "^0.2.2",
-    "webfft": "^1.0.3",
-    "cms-db": "*"
+    "db-orm": "*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
   }
 }

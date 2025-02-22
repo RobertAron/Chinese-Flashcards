@@ -37,7 +37,7 @@ function ModeOption({
 }
 
 export function DrillHome() {
-  const { challengeId, wordDefinitions, courseSlug, lessonSlug } = useDrillContext();
+  const { challengeId, wordDefinitions, phraseDefinitions, courseSlug, lessonSlug } = useDrillContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
@@ -84,6 +84,29 @@ export function DrillHome() {
               }}
             >
               <WordOutline word={word} />
+            </motion.li>
+          ))}
+        </ul>
+      </section>
+      <section className="flex w-full flex-col gap-2">
+        <h2 className="font-semibold text-2xl">Phrases</h2>
+        <ul className="grid w-full">
+          {phraseDefinitions.map((phrase, index) => (
+            <motion.li
+              key={phrase.id}
+              initial={{
+                y: 50,
+                opacity: 0,
+              }}
+              animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  delay: 0.02 * index,
+                },
+              }}
+            >
+              <WordOutline word={phrase} />
             </motion.li>
           ))}
         </ul>
