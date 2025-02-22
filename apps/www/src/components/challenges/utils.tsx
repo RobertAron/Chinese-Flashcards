@@ -59,6 +59,69 @@ function extractListenChar(char: string | ToneMapConfig | undefined) {
   const isToneCharacter = typeof char === "object";
   return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();
 }
+type CharacterStatus = {
+  character: string;
+  hasBeenTyped: boolean;
+  isTypingRequired: boolean;
+  showLetter: boolean;
+  underline: boolean;
+  isCurrentCharacter: boolean;
+};
+
+function TypedCharacter({
+  character,
+  isTypingRequired,
+  practice = false,
+}: { practice?: boolean; isTypingRequired: boolean; character: string }) {
+  return (
+    <span
+      className={clsx("whitespace-pre text-black", {
+        "decoration-black decoration-skip-ink-none": practice,
+        underline: isTypingRequired,
+      })}
+    >
+      {character}
+    </span>
+  );
+}
+
+function UntypedCharacter({
+  character,
+  isTypingRequired,
+  isCurrentCharacter,
+  showLetter,
+  active = false,
+  practice = false,
+}: {
+  isTypingRequired: boolean;
+  character: string;
+  isCurrentCharacter: boolean;
+  showLetter: boolean;
+  active?: boolean;
+  practice?: boolean;
+}) {
+  return (
+    <motion.span
+      className={clsx("whitespace-pre text-slate-400 decoration-black decoration-skip-ink-none", {
+        underline: isTypingRequired,
+        "bg-slate-300/50": isCurrentCharacter,
+      })}
+      initial={{ color: "#94a3b800" }}
+      animate={active ? "active" : "initial"}
+      transition={{
+        duration: practice ? 4 : 0,
+        delay: practice ? 4 : 0,
+      }}
+      variants={{
+        initial: { color: "#94a3b800" },
+        active: { color: "#94a3b8FF" },
+      }}
+    >
+      {showLetter ? character : " "}
+    </motion.span>
+  );
+}
+
 export function WordProgress({ pinyin, practice, active, onComplete }: WordProgressProps) {
   const [{ requireToneInput }] = useUserSettings();
   const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
@@ -66,6 +129,31 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
   const [secondaryProgress, setSecondaryProgress] = useState(0);
   const currentCharacter = normalized[progress];
   const isToneCharacter = typeof currentCharacter === "object";
+
+  const characterChunks = pinyin.split("").reduce(
+    (acc: CharacterStatus[][], nextCharacter, index) => {
+      if (nextCharacter === " ") acc.push([]);
+      else {
+        const current = acc.at(-1)!;
+        const hasBeenTyped = index < progress;
+        const isTypingRequired = !noTypingRequired.test(nextCharacter);
+        const isPunctuation = punctuation.test(nextCharacter);
+        const isCurrentCharacter = index === progress;
+        const showLetter = practice || isPunctuation || !isTypingRequired;
+        const data = {
+          character: nextCharacter,
+          hasBeenTyped,
+          isTypingRequired,
+          showLetter,
+          isCurrentCharacter,
+          underline: !noTypingRequired.test(nextCharacter),
+        };
+        current.push(data);
+      }
+      return acc;
+    },
+    [[]],
+  );
 
   useEffect(() => {
     if (!active) return;
@@ -97,51 +185,31 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
     return () => window.removeEventListener("keydown", cb);
   }, [active, normalized, progress, secondaryProgress, onComplete, requireToneInput]);
   return (
-    <div className="relative flex justify-center gap-[0.05em] text-center font-mono text-2xl tracking-tighter">
-      {pinyin
-        .split("")
-        .slice(0, progress)
-        .map((ele, index) => (
-          <span
-            className={clsx("whitespace-pre text-black", {
-              "decoration-black decoration-skip-ink-none": practice,
-              underline: !noTypingRequired.test(ele),
-            })}
-            key={index}
-          >
-            {ele}
-          </span>
-        ))}
-      {pinyin
-        .split("")
-        .slice(progress)
-        .map((ele, index) => {
-          const isNoTypingRequired = noTypingRequired.test(ele);
-          const isPunctuation = punctuation.test(ele);
-          const showLetter = practice || isPunctuation || isNoTypingRequired;
-          return (
-            <motion.span
-              className={clsx("whitespace-pre text-slate-400", {
-                "decoration-black decoration-skip-ink-none": practice,
-                underline: !isNoTypingRequired,
-                "bg-slate-300/50": index === 0,
-              })}
-              initial={{ color: "#94a3b800" }}
-              animate={active ? "active" : "initial"}
-              transition={{
-                duration: practice ? 4 : 0,
-                delay: practice ? 4 : 0,
-              }}
-              variants={{
-                initial: { color: "#94a3b800" },
-                active: { color: "#94a3b8FF" },
-              }}
-              key={index}
-            >
-              {showLetter ? ele : " "}
-            </motion.span>
-          );
-        })}
+    <div className="relative flex flex-wrap justify-center gap-[1ch] text-center font-mono text-2xl tracking-tighter">
+      {characterChunks.map((characters, index) => (
+        <span key={index} className="flex gap-[0.05em]">
+          {characters.map((ele, index) =>
+            ele.hasBeenTyped ? (
+              <TypedCharacter
+                character={ele.character}
+                practice={practice}
+                isTypingRequired={ele.isTypingRequired}
+                key={index}
+              />
+            ) : (
+              <UntypedCharacter
+                active={active}
+                character={ele.character}
+                isCurrentCharacter={ele.isCurrentCharacter}
+                isTypingRequired={ele.isTypingRequired}
+                showLetter={ele.showLetter}
+                key={index}
+                practice={practice}
+              />
+            ),
+          )}
+        </span>
+      ))}
       <AnimatePresence>
         {isToneCharacter && secondaryProgress === 1 && <ToneHints toneMapConfig={currentCharacter} />}
       </AnimatePresence>
@@ -191,7 +259,7 @@ export function ChallengeWrapper({ id, active, ref, children }: PinyinChallengeP
       layout="position"
       layoutId={id}
       className={clsx(
-        "flex min-w-80 max-w-sm flex-col items-center gap-4 rounded-md border-2 bg-white px-3 py-4 md:max-w-md lg:max-w-lg",
+        "flex min-w-80 max-w-sm flex-col items-center gap-4 rounded-md border-2 bg-white px-3 py-2 md:max-w-md lg:max-w-lg",
         {
           "border-black": active,
           "border-slate-300": !active,

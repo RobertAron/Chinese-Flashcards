@@ -23,7 +23,7 @@ export function CharacterChallenge({
 }: CharacterChallengeProps) {
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
-      <div className="flex h-36 flex-col items-center justify-center">
+      <div className="flex min-h-36 flex-col items-center justify-center">
         <div className="text-center text-7xl">{character}</div>
       </div>
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />

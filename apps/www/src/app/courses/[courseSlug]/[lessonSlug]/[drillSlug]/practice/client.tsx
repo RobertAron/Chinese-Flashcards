@@ -57,12 +57,12 @@ export default function Practice() {
       <div className="grid-stack-item justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
+      <ProgressArea practiceCount={practiceCount} />
       <div className="grid-stack-item flex flex-col items-center self-center justify-self-center">
         <AnimatePresence mode="popLayout">
           <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
         </AnimatePresence>
       </div>
-      <ProgressArea practiceCount={practiceCount} />
     </div>
   );
 }

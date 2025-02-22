@@ -4,6 +4,7 @@ import { getDrizzleClient } from "@/utils/getDrizzleClient";
 
 export default async function Home() {
   const courses = await getDrizzleClient().query.course.findMany({
+    orderBy:(t,{asc})=>asc(t.ordering),
     columns: {
       slug: true,
       title: true,
