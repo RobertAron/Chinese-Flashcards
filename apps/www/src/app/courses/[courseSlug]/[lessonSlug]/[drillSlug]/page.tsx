@@ -11,7 +11,7 @@ export default AppServerPageEntrypoint(async ({ params }) => {
   const parsedParams = paramsTemplate.parse(await params);
   const { courseSlug, lessonSlug } = parsedParams;
   const drillInfo = await getDrillInfo(parsedParams);
-  if (drillInfo === null) notFound();
+  if (drillInfo === null || (drillInfo.phrases.length === 0 && drillInfo.words.length === 0)) notFound();
   return (
     <>
       <BreadcrumbContainer>

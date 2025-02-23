@@ -65,52 +65,56 @@ export function DrillHome() {
           </ModeOption>
         </div>
       </section>
-      <section className="flex w-full flex-col gap-2">
-        <h2 className="font-semibold text-2xl">WORDS</h2>
-        <ul className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3">
-          {wordDefinitions.map((word, index) => (
-            <motion.li
-              key={word.id}
-              initial={{
-                y: 50,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                transition: {
-                  delay: 0.02 * index,
-                },
-              }}
-            >
-              <WordOutline word={word} />
-            </motion.li>
-          ))}
-        </ul>
-      </section>
-      <section className="flex w-full flex-col gap-2">
-        <h2 className="font-semibold text-2xl">Phrases</h2>
-        <ul className="grid w-full">
-          {phraseDefinitions.map((phrase, index) => (
-            <motion.li
-              key={phrase.id}
-              initial={{
-                y: 50,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                transition: {
-                  delay: 0.02 * index,
-                },
-              }}
-            >
-              <WordOutline word={phrase} />
-            </motion.li>
-          ))}
-        </ul>
-      </section>
+      {wordDefinitions.length > 0 && (
+        <section className="flex w-full flex-col gap-2">
+          <h2 className="font-semibold text-2xl">WORDS</h2>
+          <ul className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3">
+            {wordDefinitions.map((word, index) => (
+              <motion.li
+                key={word.id}
+                initial={{
+                  y: 50,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    delay: 0.02 * index,
+                  },
+                }}
+              >
+                <WordOutline word={word} />
+              </motion.li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {phraseDefinitions.length > 0 && (
+        <section className="flex w-full flex-col gap-2">
+          <h2 className="font-semibold text-2xl">Phrases</h2>
+          <ul className="grid w-full gap-4">
+            {phraseDefinitions.map((phrase, index) => (
+              <motion.li
+                key={phrase.id}
+                initial={{
+                  y: 50,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    delay: 0.02 * index,
+                  },
+                }}
+              >
+                <WordOutline word={phrase} />
+              </motion.li>
+            ))}
+          </ul>
+        </section>
+      )}
     </>
   );
 }
