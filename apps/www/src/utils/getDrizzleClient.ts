@@ -1,4 +1,4 @@
-import { getDb } from "db-orm";
+import { getDb } from "cms-data";
 
 const globalForDrizzle = global as unknown as {
   drizzle: ReturnType<typeof getDb>;

@@ -12,7 +12,7 @@
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.7.0",
     "dotenv": "^16.4.7",
-    "db-orm": "*"
+    "cms-data": "*"
   },
   "devDependencies": {
     "@types/bun": "latest"

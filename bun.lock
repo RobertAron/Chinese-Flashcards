@@ -14,15 +14,15 @@
       "version": "1.0.0",
       "dependencies": {
         "@google-cloud/text-to-speech": "^5.7.0",
-        "db-orm": "*",
+        "cms-data": "*",
         "dotenv": "^16.4.7",
       },
       "devDependencies": {
         "@types/bun": "latest",
       },
     },
-    "apps/db-orm": {
-      "name": "db-orm",
+    "apps/cms-data": {
+      "name": "cms-data",
       "version": "1.0.0",
       "dependencies": {
         "@libsql/client": "^0.14.0",
@@ -38,7 +38,7 @@
       "version": "0.1.0",
       "dependencies": {
         "clsx": "^2.1.1",
-        "db-orm": "*",
+        "cms-data": "*",
         "drizzle-orm": "^0.39.3",
         "lucide-react": "^0.469.0",
         "motion": "^12.4.5",
@@ -721,7 +721,7 @@
 
     "data-view-byte-offset": ["data-view-byte-offset@1.0.1", "", { "dependencies": { "call-bound": "^1.0.2", "es-errors": "^1.3.0", "is-data-view": "^1.0.1" } }, "sha512-BS8PfmtDGnrgYdOonGZQdLZslWIeCGFP9tpan0hi1Co2Zr2NKADsvGYA8XxuG/4UWgJ6Cjtv+YJnB6MM69QGlQ=="],
 
-    "db-orm": ["db-orm@workspace:apps/db-orm"],
+    "cms-data": ["cms-data@workspace:apps/cms-data"],
 
     "debug": ["debug@4.4.0", "", { "dependencies": { "ms": "^2.1.3" } }, "sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA=="],
 

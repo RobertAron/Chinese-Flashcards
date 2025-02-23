@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { $ } from "bun";
 import path from "node:path";
 import tts from "@google-cloud/text-to-speech";
-import { getDb } from "db-orm";
+import { getDb } from "cms-data";
 import dotenv from "dotenv";
 import { askYesNo } from "./askYesNo";
 
