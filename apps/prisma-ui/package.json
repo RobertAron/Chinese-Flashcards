@@ -1,0 +1,10 @@
+{
+  "name": "prisma-ui",
+  "scripts": {
+    "update": "prisma db pull",
+    "ui": "prisma studio"
+  },
+  "dependencies": {
+    "prisma": "^6.4.1"
+  }
+}

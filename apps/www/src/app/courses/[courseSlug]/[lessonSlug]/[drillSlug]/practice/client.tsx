@@ -53,12 +53,12 @@ export default function Practice() {
       </div>
     </ChallengeTitle>
   ) : (
-    <div className="md:grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div className="grid-stack-item justify-start self-start">
+    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <div className="justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
       <ProgressArea practiceCount={practiceCount} />
-      <div className="grid-stack-item flex flex-col items-center self-center justify-self-center">
+      <div className="flex flex-col items-center self-center justify-self-center">
         <AnimatePresence mode="popLayout">
           <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
         </AnimatePresence>

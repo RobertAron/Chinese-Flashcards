@@ -52,6 +52,7 @@ async function getAllWordsInLesson(lessonSlug: string) {
     courseTitle: lesson.course.title,
     lessonTitle: lesson.title,
     drillTitle: "Final Mastery",
+    description: null,
     words: deDupe(
       lesson.drills.flatMap((drill) => drill.drillToWords.map((ele) => ele.word)),
       (ele) => ele.id,
@@ -67,6 +68,7 @@ async function getAllWordsInDrill(drillSlug: string) {
     where: (t, { eq }) => eq(t.slug, drillSlug),
     columns: {
       title: true,
+      description: true,
     },
     with: {
       drillToWords: {
@@ -98,6 +100,7 @@ async function getAllWordsInDrill(drillSlug: string) {
     courseTitle: drill.lesson.course.title,
     lessonTitle: drill.lesson.title,
     drillTitle: drill.title,
+    description: drill.description === "" ? null : drill.description,
     words: deDupe(
       drill.drillToWords.flatMap((ele) => ele.word),
       (ele) => ele.id,

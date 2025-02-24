@@ -47,6 +47,7 @@ export type AllChallenges = CharacterChallenge | AudioChallenge | DefinitionChal
 type ProvidedValue = {
   challengeId: string;
   challengeLabel: string;
+  description: string | null;
   wordDefinitions: WordDefinition[];
   phraseDefinitions: WordDefinition[];
   challenges: AllChallenges[];
@@ -99,6 +100,7 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
       lessonSlug,
       drillSlug,
       phrases,
+      description,
     }: ProviderProps) {
       const [userSettings] = useUserSettings();
       const wordChallenges = wordDefinitionToChallenges(userSettings, words);
@@ -110,6 +112,7 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
             challengeLabel: drillTitle,
             wordDefinitions: words,
             phraseDefinitions: phrases,
+            description,
             challenges: [...wordChallenges, ...phraseChallenges],
             courseSlug,
             lessonSlug,

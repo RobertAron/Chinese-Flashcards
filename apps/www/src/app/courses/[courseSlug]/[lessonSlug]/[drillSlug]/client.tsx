@@ -37,7 +37,8 @@ function ModeOption({
 }
 
 export function DrillHome() {
-  const { challengeId, wordDefinitions, phraseDefinitions, courseSlug, lessonSlug } = useDrillContext();
+  const { challengeId, wordDefinitions, phraseDefinitions, courseSlug, lessonSlug, description } =
+    useDrillContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   return (
@@ -65,6 +66,14 @@ export function DrillHome() {
           </ModeOption>
         </div>
       </section>
+      {description !== null && (
+        <section className="border-2 border-black bg-white">
+          <div className="border-blue-700 border-l-8 p-2">
+            <h2 className="text-3xl">Description</h2>
+            <p>{description}</p>
+          </div>
+        </section>
+      )}
       {wordDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
           <h2 className="font-semibold text-2xl">WORDS</h2>

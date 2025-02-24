@@ -128,7 +128,7 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
   return (
     <figure className="grid h-[100px] w-[100px] font-mono">
       <svg
-        className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-600"
+        className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-700"
         viewBox="0 0 100 100"
         role="img"
         aria-label="progress par"

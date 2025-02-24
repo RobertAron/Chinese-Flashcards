@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  slug     String   @id
+  title    String
+  ordering Int
+  Lesson   Lesson[]
+}
+
+model Drill {
+  slug        String    @id
+  title       String
+  description String
+  lessonSlug  String
+  order       Int       @default(0)
+  Lesson      Lesson    @relation(fields: [lessonSlug], references: [slug])
+  Phrases     Phrases[]
+  Words       Words[]
+}
+
+model Lesson {
+  slug       String  @id
+  title      String
+  ordering   Int
+  courseSlug String
+  Drill      Drill[]
+  Course     Course  @relation(fields: [courseSlug], references: [slug])
+}
+
+model Phrases {
+  id             Int     @id @default(autoincrement())
+  characters     String
+  pinyin         String
+  meaning        String
+  emojiChallenge String?
+  Drill          Drill[]
+  Words          Words[]
+}
+
+model Words {
+  id             Int       @id @default(autoincrement())
+  characters     String    @unique
+  pinyin         String
+  meaning        String
+  frequencyRank  Int
+  emojiChallenge String?
+  Drill          Drill[]
+  Phrases        Phrases[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model drizzle_migrations {
+  id         Int?     @id
+  hash       String
+  created_at Decimal?
+
+  @@map("drizzle-migrations")
+  @@ignore
+}
