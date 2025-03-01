@@ -21,8 +21,8 @@ model Drill {
   lessonSlug  String
   order       Int       @default(0)
   Lesson      Lesson    @relation(fields: [lessonSlug], references: [slug])
-  Phrases     Phrases[]
-  Words       Words[]
+  Phrases     Phrases[] @relation("DrillToPhrases")
+  Words       Words[]   @relation("DrillToWords")
 }
 
 model Lesson {
@@ -40,19 +40,19 @@ model Phrases {
   pinyin         String
   meaning        String
   emojiChallenge String?
-  Drill          Drill[]
-  Words          Words[]
+  Drill          Drill[] @relation("DrillToPhrases")
+  Words          Words[] @relation("PhrasesToWords")
 }
 
 model Words {
   id             Int       @id @default(autoincrement())
-  characters     String    @unique
+  characters     String
   pinyin         String
   meaning        String
   frequencyRank  Int
   emojiChallenge String?
-  Drill          Drill[]
-  Phrases        Phrases[]
+  Drill          Drill[]   @relation("DrillToWords")
+  Phrases        Phrases[] @relation("PhrasesToWords")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.

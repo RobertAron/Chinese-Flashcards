@@ -1,17 +1,6 @@
 import { sqliteTable, AnySQLiteColumn, text, numeric, integer, uniqueIndex, index, foreignKey } from "drizzle-orm/sqlite-core"
   import { sql } from "drizzle-orm"
 
-export const prismaMigrations = sqliteTable("_prisma_migrations", {
-	id: text().primaryKey().notNull(),
-	checksum: text().notNull(),
-	finishedAt: numeric("finished_at"),
-	migrationName: text("migration_name").notNull(),
-	logs: text(),
-	rolledBackAt: numeric("rolled_back_at"),
-	startedAt: numeric("started_at").default(sql`(current_timestamp)`).notNull(),
-	appliedStepsCount: integer("applied_steps_count").default(0).notNull(),
-});
-
 export const words = sqliteTable("Words", {
 	id: integer().primaryKey({ autoIncrement: true }).notNull(),
 	characters: text().notNull(),
@@ -19,10 +8,7 @@ export const words = sqliteTable("Words", {
 	meaning: text().notNull(),
 	frequencyRank: integer().notNull(),
 	emojiChallenge: text(),
-},
-(table) => [
-	uniqueIndex("Words_characters_key").on(table.characters),
-]);
+});
 
 export const phrases = sqliteTable("Phrases", {
 	id: integer().primaryKey({ autoIncrement: true }).notNull(),
