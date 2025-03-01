@@ -1,6 +1,7 @@
 "use client";
 import type { Ref } from "react";
-import { ChallengeWrapper, WordProgress } from "./utils";
+import { WordProgress } from "./WordProgress";
+import { ChallengeWrapper } from "./ChallengeWrapper";
 
 type DefinitionChallengeProps = {
   pinyin: string;

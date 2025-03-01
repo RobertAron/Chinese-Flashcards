@@ -1,10 +1,11 @@
+import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 
-export default async function Home() {
+export default AppServerPageEntrypoint(async function Home() {
   const courses = await getDrizzleClient().query.course.findMany({
-    orderBy:(t,{asc})=>asc(t.ordering),
+    orderBy: (t, { asc }) => asc(t.ordering),
     columns: {
       slug: true,
       title: true,
@@ -36,4 +37,4 @@ export default async function Home() {
       </div>
     </main>
   );
-}
+});

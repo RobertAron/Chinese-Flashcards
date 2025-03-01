@@ -4,7 +4,8 @@ import { RotateCcw } from "lucide-react";
 import { type Ref, useEffect, useRef } from "react";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { Kbd } from "../Kbd";
-import { ChallengeWrapper, WordProgress } from "./utils";
+import { WordProgress } from "./WordProgress";
+import { ChallengeWrapper } from "./ChallengeWrapper";
 
 type AudioChallengeProps = {
   pinyin: string;
