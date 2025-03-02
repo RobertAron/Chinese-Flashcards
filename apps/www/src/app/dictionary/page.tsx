@@ -1,4 +1,4 @@
-import { AppServerLayoutEntrypoint } from "@/components/AppPage";
+import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import { SearchPage } from "./client";
 
@@ -7,6 +7,6 @@ const getWords = () =>
   getDrizzleClient().query.words.findMany({
     orderBy: (t, { asc }) => asc(t.frequencyRank),
   });
-export default AppServerLayoutEntrypoint(async () => {
+export default AppServerPageEntrypoint(async () => {
   return <SearchPage words={await getWords()} />;
 });
