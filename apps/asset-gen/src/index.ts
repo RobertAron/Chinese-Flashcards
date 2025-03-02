@@ -1,3 +1,4 @@
+// https://cloud.google.com/text-to-speech?hl=en
 import fs from "node:fs";
 import { $ } from "bun";
 import path from "node:path";
@@ -5,6 +6,17 @@ import tts from "@google-cloud/text-to-speech";
 import { getDb } from "cms-data";
 import dotenv from "dotenv";
 import { askYesNo } from "./askYesNo";
+import { mkdirSync, existsSync } from "node:fs";
+import { join } from "node:path";
+
+const basePath = join(import.meta.dir, "../dist"); // Resolves to project root's dist
+const dirs = [join(basePath, "words"), join(basePath, "phrases")];
+for (const dir of dirs) {
+  if (!existsSync(dir)) {
+    mkdirSync(dir, { recursive: true });
+    console.log(`Created: ${dir}`);
+  }
+}
 
 const dbPath = path.resolve(__dirname, "../../www/local.db");
 const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
