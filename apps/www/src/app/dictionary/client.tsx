@@ -20,15 +20,20 @@ export function SearchPage({ words }: { words: Words }) {
           .map((ele) => ele.item);
 
   return (
-    <div className="grid grid-flow-row gap-2 py-4">
-      <label className="flex flex-col gap-1">
-        <span>Search</span>
-        <input
-          className="rounded-sm border-black p-2"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-      </label>
+    <div className="grid grid-flow-row gap-3 py-4">
+      <div>
+        <h1 className="font-bold text-3xl">Dictionary</h1>
+        <label className="flex flex-col gap-1">
+          <span className="sr-only">Search</span>
+          <input
+            className="rounded-sm border-2 border-black p-2"
+            placeholder="Search..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+        </label>
+      </div>
+      <hr className="my-4 border border-gray-400" />
       {matchingWords.slice(0, 10).map((word) => {
         return (
           <WordOutline
