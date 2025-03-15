@@ -60,7 +60,7 @@ function extractListenChar(char: string | ToneMapConfig | undefined) {
   return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();
 }
 type CharacterStatus = {
-  character: string;
+  characters: string;
   hasBeenTyped: boolean;
   isTypingRequired: boolean;
   showLetter: boolean;
@@ -69,10 +69,10 @@ type CharacterStatus = {
 };
 
 function TypedCharacter({
-  character,
+  characters,
   isTypingRequired,
   practice = false,
-}: { practice?: boolean; isTypingRequired: boolean; character: string }) {
+}: { practice?: boolean; isTypingRequired: boolean; characters: string }) {
   return (
     <span
       className={clsx("whitespace-pre text-black", {
@@ -80,13 +80,13 @@ function TypedCharacter({
         underline: isTypingRequired,
       })}
     >
-      {character}
+      {characters}
     </span>
   );
 }
 
 function UntypedCharacter({
-  character,
+  characters,
   isTypingRequired,
   isCurrentCharacter,
   showLetter,
@@ -94,7 +94,7 @@ function UntypedCharacter({
   practice = false,
 }: {
   isTypingRequired: boolean;
-  character: string;
+  characters: string;
   isCurrentCharacter: boolean;
   showLetter: boolean;
   active?: boolean;
@@ -117,7 +117,7 @@ function UntypedCharacter({
         active: { color: "#94a3b8FF" },
       }}
     >
-      {showLetter ? character : " "}
+      {showLetter ? characters : " "}
     </motion.span>
   );
 }
@@ -141,7 +141,7 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
         const isCurrentCharacter = index === progress;
         const showLetter = practice || isPunctuation || !isTypingRequired;
         const data = {
-          character: nextCharacter,
+          characters: nextCharacter,
           hasBeenTyped,
           isTypingRequired,
           showLetter,
@@ -191,7 +191,7 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
           {characters.map((ele, index) =>
             ele.hasBeenTyped ? (
               <TypedCharacter
-                character={ele.character}
+                characters={ele.characters}
                 practice={practice}
                 isTypingRequired={ele.isTypingRequired}
                 key={index}
@@ -199,7 +199,7 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
             ) : (
               <UntypedCharacter
                 active={active}
-                character={ele.character}
+                characters={ele.characters}
                 isCurrentCharacter={ele.isCurrentCharacter}
                 isTypingRequired={ele.isTypingRequired}
                 showLetter={ele.showLetter}

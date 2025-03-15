@@ -6,7 +6,7 @@ import { paramsTemplate } from "./paramsTemplate";
 type CharacterChallenge = {
   type: "character-challenge";
   id: string;
-  character: string;
+  characters: string;
   pinyin: string;
 };
 type AudioChallenge = {

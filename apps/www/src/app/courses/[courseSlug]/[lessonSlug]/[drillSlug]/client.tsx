@@ -2,6 +2,7 @@
 import { MotionLink } from "@/components/MotionLink";
 import { useDrillContext } from "@/components/challenges/ChallengeContext";
 import { WordOutline } from "@/components/challenges/WordOutline";
+import { WordExperience } from "@/components/challenges/WordPoints";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import {
   formatPracticeCount,
@@ -9,8 +10,10 @@ import {
   usePracticeCount,
   useTimeAttackPB,
 } from "@/utils/playerStats";
+import { deDupe } from "@/utils/structureUtils";
 import { ListChecks, Timer } from "lucide-react";
 import * as motion from "motion/react-client";
+import { useMemo } from "react";
 
 function ModeOption({
   href,
@@ -29,7 +32,7 @@ function ModeOption({
         duration: 0.1,
       }}
       href={href}
-      className={`group flex flex-grow basis-0 items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
+      className={`group flex shrink flex-grow basis-0 items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
     >
       {children}
     </MotionLink>
@@ -41,6 +44,15 @@ export function DrillHome() {
     useDrillContext();
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
+  const allWords = useMemo(() => {
+    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters }) => ({
+      id,
+      pinyin,
+      characters,
+    }));
+    const wordsUsed = phraseDefinitions.flatMap(({ words }) => words);
+    return deDupe([...wordsRaw, ...wordsUsed], ({ id }) => id);
+  }, [wordDefinitions, phraseDefinitions]);
   return (
     <>
       <section className="flex w-full flex-col gap-2">
@@ -60,8 +72,8 @@ export function DrillHome() {
               <Timer className="h-full w-full" />
             </div>
             <div>
-              <div className="whitespace-nowrap text-6xl">Time Attack</div>
-              <div className="whitespace-nowrap text-4xl">{formatTimeAttackMs(timeAttackPb)}</div>
+              <div className="truncate whitespace-nowrap text-6xl">Time Attack</div>
+              <div className="truncate whitespace-nowrap text-4xl">{formatTimeAttackMs(timeAttackPb)}</div>
             </div>
           </ModeOption>
         </div>
@@ -76,7 +88,7 @@ export function DrillHome() {
       )}
       {wordDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
-          <h2 className="font-semibold text-2xl">WORDS</h2>
+          <h2 className="font-semibold text-2xl">Practice Words</h2>
           <ul className="grid w-full grid-cols-2 gap-4 xl:grid-cols-3">
             {wordDefinitions.map((word, index) => (
               <motion.li
@@ -101,7 +113,7 @@ export function DrillHome() {
       )}
       {phraseDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
-          <h2 className="font-semibold text-2xl">Phrases</h2>
+          <h2 className="font-semibold text-2xl">Practice Phrases</h2>
           <ul className="grid w-full gap-4">
             {phraseDefinitions.map((phrase, index) => (
               <motion.li
@@ -124,6 +136,16 @@ export function DrillHome() {
           </ul>
         </section>
       )}
+      <section className="flex w-full flex-col gap-2">
+        <h2 className="font-semibold text-2xl">All Words</h2>
+        <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+          {allWords.map((ele) => (
+            <li key={ele.id}>
+              <WordExperience {...ele} />
+            </li>
+          ))}
+        </ul>
+      </section>
     </>
   );
 }

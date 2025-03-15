@@ -17,3 +17,13 @@ export function semiShuffle<T>(array: T[]): T[] {
   }
   return result;
 }
+
+export function deDupe<T, U>(arr: T[], cb: (ele: T) => U) {
+  const soFar = new Set<U>();
+  return arr.filter((ele) => {
+    const key = cb(ele);
+    if (soFar.has(key)) return false;
+    soFar.add(key);
+    return true;
+  });
+}

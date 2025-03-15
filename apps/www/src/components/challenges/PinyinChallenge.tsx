@@ -4,7 +4,7 @@ import { WordProgress } from "./WordProgress";
 import { ChallengeWrapper } from "./ChallengeWrapper";
 
 type CharacterChallengeProps = {
-  character: string;
+  characters: string;
   pinyin: string;
   id: string;
   onComplete?: () => void;
@@ -14,7 +14,7 @@ type CharacterChallengeProps = {
 };
 
 export function CharacterChallenge({
-  character,
+  characters,
   pinyin,
   onComplete,
   active,
@@ -25,7 +25,7 @@ export function CharacterChallenge({
   return (
     <ChallengeWrapper id={id} active={active} ref={ref}>
       <div className="flex min-h-36 flex-col items-center justify-center">
-        <div className="text-center text-7xl">{character}</div>
+        <div className="text-center text-7xl">{characters}</div>
       </div>
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>

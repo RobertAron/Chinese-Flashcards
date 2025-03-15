@@ -22,6 +22,9 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
     window.localStorage.setItem(key, JSON.stringify(newValue));
     mutate();
   }
+  useEffect(() => {
+    window.addEventListener("storage", () => mutate());
+  }, [mutate]);
   return [data, setValue] as const;
 }
 

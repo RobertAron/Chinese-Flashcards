@@ -1,5 +1,6 @@
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
+import { deDupe } from "@/utils/structureUtils";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -8,16 +9,6 @@ type DrillIdentifier = {
   lessonSlug: string;
   courseSlug: string;
 };
-
-function deDupe<T, U>(arr: T[], cb: (ele: T) => U) {
-  const soFar = new Set<U>();
-  return arr.filter((ele) => {
-    const key = cb(ele);
-    if (soFar.has(key)) return false;
-    soFar.add(key);
-    return true;
-  });
-}
 
 async function getAllWordsInLesson(lessonSlug: string) {
   const lesson = await getDrizzleClient().query.lesson.findFirst({
@@ -40,7 +31,21 @@ async function getAllWordsInLesson(lessonSlug: string) {
           },
           drillToPhrases: {
             with: {
-              phrase: true,
+              phrase: {
+                with: {
+                  phrasesToWords: {
+                    with: {
+                      word: {
+                        columns: {
+                          id: true,
+                          characters: true,
+                          pinyin: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -78,7 +83,21 @@ async function getAllWordsInDrill(drillSlug: string) {
       },
       drillToPhrases: {
         with: {
-          phrase: true,
+          phrase: {
+            with: {
+              phrasesToWords: {
+                with: {
+                  word: {
+                    columns: {
+                      id: true,
+                      characters: true,
+                      pinyin: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
       lesson: {
@@ -121,10 +140,17 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
     ...data,
     words: data.words.map((ele) => ({
       ...ele,
+      type: "word" as const,
       audioSrc: wordToAudioSource(ele.id),
     })),
-    phrases: data.phrases.map((ele) => ({
+    phrases: data.phrases.map(({ phrasesToWords, ...ele }) => ({
       ...ele,
+      type: "phrase" as const,
+      words: phrasesToWords.map(({ word }) => ({
+        characters: word.characters,
+        pinyin: word.pinyin,
+        id: word.id,
+      })),
       audioSrc: phraseToAudioSource(ele.id),
     })),
   };

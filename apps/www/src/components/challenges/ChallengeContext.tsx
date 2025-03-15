@@ -4,7 +4,7 @@ import { generateContext } from "@/utils/createContext";
 import type React from "react";
 import type { DrillInfo } from "./challengeServerUtils";
 
-export type WordDefinition = {
+type DefinitionCore = {
   id: number;
   characters: string;
   pinyin: string;
@@ -13,12 +13,16 @@ export type WordDefinition = {
   emojiChallenge: string | null;
 };
 
-export type ChallengeDefinition = {
-  label: string;
-  words: WordDefinition[];
-  phrases: WordDefinition[];
-};
+type WordDefinition = {
+  type: "word";
+} & DefinitionCore;
 
+type PhraseDefinition = {
+  type: "phrase";
+  words: { characters: string; pinyin: string; id: number }[];
+} & DefinitionCore;
+
+export type PhraseOrWordDefinition = WordDefinition | PhraseDefinition;
 type ProviderProps = {
   children?: React.ReactNode;
   courseSlug: string;
@@ -28,7 +32,7 @@ type ProviderProps = {
 type CharacterChallenge = {
   type: "character-challenge";
   id: string;
-  character: string;
+  characters: string;
   pinyin: string;
 };
 type AudioChallenge = {
@@ -49,7 +53,7 @@ type ProvidedValue = {
   challengeLabel: string;
   description: string | null;
   wordDefinitions: WordDefinition[];
-  phraseDefinitions: WordDefinition[];
+  phraseDefinitions: PhraseDefinition[];
   challenges: AllChallenges[];
   lessonSlug: string;
   courseSlug: string;
@@ -57,7 +61,7 @@ type ProvidedValue = {
 
 function wordDefinitionToChallenges(
   userSettings: ReturnType<typeof useUserSettings>[0],
-  words: WordDefinition[],
+  words: PhraseOrWordDefinition[],
 ) {
   return words.flatMap(({ characters, meaning, id, pinyin, audioSrc, emojiChallenge }): AllChallenges[] => {
     const result: AllChallenges[] = [
@@ -74,14 +78,14 @@ function wordDefinitionToChallenges(
         type: "character-challenge",
         id: `${id}-emoji`,
         pinyin,
-        character: emojiChallenge,
+        characters: emojiChallenge,
       });
     if (userSettings.enableCharacterChallenges)
       result.push({
         type: "character-challenge",
         id: `${id}-pinyin`,
         pinyin,
-        character: characters,
+        characters: characters,
       });
     return result;
   });

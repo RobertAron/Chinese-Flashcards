@@ -3,10 +3,10 @@ import { PlayIcon } from "lucide-react";
 import { useRef } from "react";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { buttonBehaviorClasses } from "../coreClasses";
-import type { WordDefinition } from "./ChallengeContext";
+import type { PhraseOrWordDefinition } from "./ChallengeContext";
 
 type WordOutlineProps = {
-  word: WordDefinition;
+  word: PhraseOrWordDefinition;
 };
 export function WordOutline({ word }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
