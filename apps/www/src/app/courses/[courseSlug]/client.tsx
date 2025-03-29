@@ -1,15 +1,16 @@
 "use client";
-import { useReadLocalStorages } from "@/utils/hooks";
-import { practiceCountToAward, timeAttackToAward } from "@/utils/playerStats";
+import { practiceCountToAward, timeAttackToAward, useFullPlayerState } from "@/utils/playerState";
 
 export function LessonProgress({ drillSlugs }: { drillSlugs: string[] }) {
-  const practiceCountChallengeIds = drillSlugs.map((ele) => `${ele}-practice-count`);
-  const timeAttackChallengeIds = drillSlugs.map((ele) => `${ele}-best-time-attack-time`);
-  const practiceCountScores = useReadLocalStorages(practiceCountChallengeIds, 0);
-  const timeAttackScores = useReadLocalStorages(timeAttackChallengeIds, Number.MAX_SAFE_INTEGER);
-
-  const practiceAwards = practiceCountScores.map((ele) => practiceCountToAward(ele));
-  const timeAwards = timeAttackScores.map((ele) => timeAttackToAward(ele));
+  const playerState = useFullPlayerState();
+  const practiceAwards = drillSlugs
+    .map((ele) => playerState.challengePracticeCounts[ele])
+    .filter((ele) => ele !== undefined)
+    .map((ele) => practiceCountToAward(ele));
+  const timeAwards = drillSlugs
+    .map((ele) => playerState.challengeTimeAttackPB[ele])
+    .filter((ele) => ele !== undefined)
+    .map((ele) => timeAttackToAward(ele));
   const allAwards = [...practiceAwards, ...timeAwards].reduce(
     (acc, next) => {
       if (next !== null) acc[next] += 1;

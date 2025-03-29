@@ -1,8 +1,8 @@
 "use client";
-import { useUserSettings } from "@/components/useUserSettings";
 import { generateContext } from "@/utils/createContext";
 import type React from "react";
 import type { DrillInfo } from "./challengeServerUtils";
+import { useUserSettings } from "@/utils/playerState";
 
 type DefinitionCore = {
   id: number;
@@ -34,18 +34,21 @@ type CharacterChallenge = {
   id: string;
   characters: string;
   pinyin: string;
+  wordIds: number[];
 };
 type AudioChallenge = {
   type: "audio-challenge";
   id: string;
   pinyin: string;
   src: string;
+  wordIds: number[];
 };
 type DefinitionChallenge = {
   type: "definition-challenge";
   id: string;
   pinyin: string;
   definition: string;
+  wordIds: number[];
 };
 export type AllChallenges = CharacterChallenge | AudioChallenge | DefinitionChallenge;
 type ProvidedValue = {
@@ -59,18 +62,22 @@ type ProvidedValue = {
   courseSlug: string;
 };
 
-function wordDefinitionToChallenges(
+function wordOrPhraseToChallenges(
   userSettings: ReturnType<typeof useUserSettings>[0],
   words: PhraseOrWordDefinition[],
 ) {
-  return words.flatMap(({ characters, meaning, id, pinyin, audioSrc, emojiChallenge }): AllChallenges[] => {
+  return words.flatMap((wordOrPhrase): AllChallenges[] => {
+    const { characters, meaning, id, pinyin, audioSrc, emojiChallenge } = wordOrPhrase;
+    const wordIds =
+      wordOrPhrase.type === "word" ? [wordOrPhrase.id] : wordOrPhrase.words.map((ele) => ele.id);
     const result: AllChallenges[] = [
-      { type: "audio-challenge", id: `${id}-audio`, pinyin, src: audioSrc },
+      { type: "audio-challenge", id: `${id}-audio`, pinyin, src: audioSrc, wordIds },
       {
         type: "definition-challenge",
         definition: meaning,
         id: `${id}-definition`,
         pinyin,
+        wordIds,
       },
     ];
     if (emojiChallenge != null)
@@ -79,6 +86,7 @@ function wordDefinitionToChallenges(
         id: `${id}-emoji`,
         pinyin,
         characters: emojiChallenge,
+        wordIds,
       });
     if (userSettings.enableCharacterChallenges)
       result.push({
@@ -86,6 +94,7 @@ function wordDefinitionToChallenges(
         id: `${id}-pinyin`,
         pinyin,
         characters: characters,
+        wordIds,
       });
     return result;
   });
@@ -107,8 +116,8 @@ export const { Provider: DrillProvider, useContext: useDrillContext } = generate
       description,
     }: ProviderProps) {
       const [userSettings] = useUserSettings();
-      const wordChallenges = wordDefinitionToChallenges(userSettings, words);
-      const phraseChallenges = wordDefinitionToChallenges(userSettings, phrases);
+      const wordChallenges = wordOrPhraseToChallenges(userSettings, words);
+      const phraseChallenges = wordOrPhraseToChallenges(userSettings, phrases);
       return (
         <Provider
           value={{

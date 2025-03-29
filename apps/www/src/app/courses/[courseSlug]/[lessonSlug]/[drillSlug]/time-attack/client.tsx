@@ -10,7 +10,7 @@ import {
   timeForGold,
   timeForSilver,
   useTimeAttackPB,
-} from "@/utils/playerStats";
+} from "@/utils/playerState";
 import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
 import { useRef, useState } from "react";
 import { ExitButton } from "../ExitButton";

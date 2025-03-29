@@ -14,7 +14,8 @@ import {
   totalTillBronze,
   totalTillSilver,
   usePracticeCount,
-} from "@/utils/playerStats";
+  useWordIncrementor,
+} from "@/utils/playerState";
 import { AnimatePresence, animate, useMotionValue, useTransform, motion, usePresence } from "motion/react";
 import { type Ref, useEffect, useState } from "react";
 import { ExitButton } from "../ExitButton";
@@ -24,9 +25,11 @@ export default function Practice() {
   const { challengeId } = useDrillContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
+  const wordIncrementor = useWordIncrementor()
   const [started, setStarted] = useState(false);
   if (initializing) return null;
   const onProblemComplete = () => {
+    wordIncrementor(problem.wordIds)
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };

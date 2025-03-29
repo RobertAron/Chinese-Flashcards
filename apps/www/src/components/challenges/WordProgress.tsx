@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { type Ref, useEffect, useState } from "react";
 import { Kbd } from "../Kbd";
-import { useUserSettings } from "../useUserSettings";
+import { useUserSettings } from "@/utils/playerState";
 
 type WordProgressProps = {
   pinyin: string;

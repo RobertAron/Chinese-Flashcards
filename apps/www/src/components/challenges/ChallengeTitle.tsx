@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { buttonBehaviorClasses } from "../coreClasses";
-import { useUserSettings } from "../useUserSettings";
+import { useUserSettings } from "@/utils/playerState";
 
 export function ChallengeTitle({
   children,

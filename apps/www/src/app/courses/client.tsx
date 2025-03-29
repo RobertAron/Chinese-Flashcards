@@ -2,12 +2,12 @@
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import {
   formatPracticeCount,
+  formatTimeAttackMs,
   practiceCountToAward,
   timeAttackToAward,
   usePracticeCount,
   useTimeAttackPB,
-} from "@/utils/playerStats";
-import { formatTimeAttackMs } from "@/utils/playerStats";
+} from "@/utils/playerState";
 import { ListChecks, Timer } from "lucide-react";
 
 export function PracticeCountCell({ challengeId }: { challengeId: string }) {

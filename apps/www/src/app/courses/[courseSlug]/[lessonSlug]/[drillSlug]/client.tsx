@@ -9,7 +9,7 @@ import {
   formatTimeAttackMs,
   usePracticeCount,
   useTimeAttackPB,
-} from "@/utils/playerStats";
+} from "@/utils/playerState";
 import { deDupe } from "@/utils/structureUtils";
 import { ListChecks, Timer } from "lucide-react";
 import * as motion from "motion/react-client";

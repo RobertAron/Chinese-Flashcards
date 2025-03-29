@@ -1,4 +1,4 @@
-import type { AwardTypes } from "@/utils/playerStats";
+import type { AwardTypes } from "@/utils/playerState";
 import { Award } from "lucide-react";
 
 export const awardColors = {

@@ -1,40 +1,7 @@
 "use client";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import useSWR from "swr";
 import { getAudioContext } from "./audioContext";
 
-function getLocalStorage<T = unknown>(key: string, stringifiedDefaultValue: string) {
-  try {
-    const item = window.localStorage.getItem(key) ?? stringifiedDefaultValue;
-    return JSON.parse(item) as T;
-  } catch (error) {
-    if (typeof window !== "undefined") console.error("Error reading localStorage key", key, error);
-    return JSON.parse(stringifiedDefaultValue) as T;
-  }
-}
-
-const localStorageKey = Symbol("local-storage-hook");
-export function useLocalStorage<T>(key: string, defaultValue: T) {
-  const { data = defaultValue, mutate } = useSWR([localStorageKey, key], ([, key]) => {
-    return getLocalStorage<T>(key, JSON.stringify(defaultValue));
-  });
-  function setValue(newValue: T) {
-    window.localStorage.setItem(key, JSON.stringify(newValue));
-    mutate();
-  }
-  useEffect(() => {
-    window.addEventListener("storage", () => mutate());
-  }, [mutate]);
-  return [data, setValue] as const;
-}
-
-const localStorageMultiple = Symbol("local-storage-multiple");
-export function useReadLocalStorages<T>(keys: string[], defaultValue: T) {
-  const { data = [] } = useSWR([localStorageMultiple, ...keys], ([_, ...keys]) => {
-    return keys.map((key) => getLocalStorage<T>(key, JSON.stringify(defaultValue)));
-  });
-  return data;
-}
 
 export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
   useEffect(() => {
