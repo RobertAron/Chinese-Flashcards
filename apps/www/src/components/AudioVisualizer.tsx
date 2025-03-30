@@ -16,7 +16,7 @@ export const calculateBarData = (frequencyData: Uint8Array, desiredBars = 4000):
   const startingPoint = Math.floor(frequencyData.length * 0);
   const endpointPoint = Math.floor(frequencyData.length * 0.5);
   const usefulDataPoints = frequencyData.slice(startingPoint, endpointPoint);
-  const results = new Array(desiredBars).fill(null).map((): number[] => []);
+  const results = Array.from({ length: desiredBars }, (): number[] => []);
   const highestBase2 = Math.log2(usefulDataPoints.length);
   const scaling = desiredBars / highestBase2;
   for (let i = 0; i < usefulDataPoints.length; ++i) {
@@ -35,18 +35,17 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
   // clear
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // start drawing
-
-  data.forEach((dataPoint, i) => {
-    // 230 is the strongest db value I've seen.
-    // value of 220 should span .9 of the visual
+  for (let i = 0; i < data.length; ++i) {
+    const dataPoint = data[i]!;
+    if (dataPoint === 0) continue;
     const dataPointHeightNormalized = Math.min(dataPoint / 230, 200);
     const dataPointHeight = dataPointHeightNormalized * height * 0.9;
     const x = (i / data.length) * width;
     const y = height - dataPointHeight;
     const w = itemWidth + 2;
     ctx.fillStyle = `rgb(${dataPointHeightNormalized * 255} 0 ${255 - dataPointHeightNormalized * 255})`;
-    ctx.fillRect(x, y, w, dataPointHeight);
-  });
+    ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), dataPointHeight);
+  }
 };
 
 export type Props = {
@@ -136,8 +135,8 @@ export const LiveAudioVisualizer = ({
 
   const processFrequencyData = useCallback((data: Uint8Array): void => {
     if (!canvasRef.current) return;
-    const dataPoints = calculateBarData(data);
-    draw(dataPoints, canvasRef.current);
+    if(Math.max(...data)===0) draw([], canvasRef.current);
+    else draw(calculateBarData(data), canvasRef.current);
   }, []);
 
   useEffect(() => {

@@ -80,20 +80,23 @@ export function useTimeAttackPB(challengeId: string) {
   const store = usePlayerContextStore();
   const pb = useStore(store, (s) => s.challengeTimeAttackPB[challengeId] ?? null);
   const updater = useStore(store, (s) => s.update);
-  const setPB = useCallback(
+  const trySetPB = useCallback(
     (value: number | null) => {
       if (value === null) return;
-      updater((s) => ({
-        ...s,
-        challengeTimeAttackPB: {
-          ...s.challengePracticeCounts,
-          [challengeId]: value,
-        },
-      }));
+      updater((s) => {
+        const currentPB = s.challengeTimeAttackPB[challengeId];
+        return {
+          ...s,
+          challengeTimeAttackPB: {
+            ...s.challengeTimeAttackPB,
+            [challengeId]: currentPB === undefined ? value : Math.min(value, currentPB),
+          },
+        };
+      });
     },
     [challengeId, updater],
   );
-  return [pb, setPB] as const;
+  return [pb, trySetPB] as const;
 }
 
 export function useUserSettings() {
@@ -123,8 +126,6 @@ export function useWordIncrementor() {
   return useCallback(
     (wordIds: number[]) => {
       updater((current) => {
-        console.log("update?");
-        console.log(current.wordPracticeCounts);
         const newVals = Object.fromEntries(
           wordIds.map((ele) => [ele, (current.wordPracticeCounts[ele] ?? 0) + 1]),
         );

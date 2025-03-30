@@ -10,6 +10,7 @@ import {
   timeForGold,
   timeForSilver,
   useTimeAttackPB,
+  useWordIncrementor,
 } from "@/utils/playerState";
 import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
 import { useRef, useState } from "react";
@@ -62,7 +63,7 @@ export function TimeAttack() {
         setTimeAttackRunning(false);
         if (completedTime === null) return;
         setRecentFinish(completedTime);
-        if (previousBest === null || completedTime < previousBest) setNewBest(completedTime);
+        setNewBest(completedTime);
       }}
     />
   );
@@ -82,12 +83,15 @@ function TimeAttackRunning({
     if (timerRef.current === null) return;
     timerRef.current.textContent = (val / 1000).toFixed(2);
   });
+  const wordIncrementor = useWordIncrementor();
   if (initializing) return null;
-
   const onProblemComplete = () => {
-    if (completedItems === itemsToComplete - 1) onTimeAttackComplete(time.get());
+    wordIncrementor(problem.wordIds);
+    const points = problem.wordIds.length > 1 ? 2 : 1;
+    const nextPoints = completedItems + points;
+    if (nextPoints >= itemsToComplete) onTimeAttackComplete(time.get());
     else {
-      setCompletedItems(completedItems + 1);
+      setCompletedItems(nextPoints);
       nextProblem();
     }
   };
@@ -134,7 +138,7 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
         aria-label="progress par"
       >
         <text textAnchor="end" x="50" y="50" dominantBaseline="text-top">
-          {current.toString().padStart(2,'0')}
+          {current.toString().padStart(2, "0")}
         </text>
         <text textAnchor="start" x="50" y="50" dominantBaseline="hanging">
           {total}
