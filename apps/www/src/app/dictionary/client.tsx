@@ -38,6 +38,7 @@ export function SearchPage({ words }: { words: Words }) {
         return (
           <WordOutline
             word={{
+              type:'word',
               audioSrc: wordToAudioSource(word.id),
               ...word,
             }}

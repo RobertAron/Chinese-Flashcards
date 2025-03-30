@@ -15,16 +15,17 @@ const playerStateTemplate = z.object({
 });
 
 type PlayerState = z.infer<typeof playerStateTemplate>;
-export const { Provider: PlayerProvider, useContext: usePlayerContextStore } =
-  createZustandContext<PlayerState>({
-    challengePracticeCounts: {},
-    challengeTimeAttackPB: {},
-    wordPracticeCounts: {},
-    settings: {
-      requireToneInput: false,
-      enableCharacterChallenges: true,
-    },
-  });
+const { Provider: PlayerProvider, useContext: usePlayerContextStore } = createZustandContext<PlayerState>({
+  challengePracticeCounts: {},
+  challengeTimeAttackPB: {},
+  wordPracticeCounts: {},
+  settings: {
+    requireToneInput: false,
+    enableCharacterChallenges: true,
+  },
+});
+// Webpack bug, cannot rename and export in same line.
+export { PlayerProvider, usePlayerContextStore };
 
 const server = typeof window === "undefined";
 export function SyncPlayerStateToLocalStorage() {
