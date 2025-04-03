@@ -29,6 +29,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
             },
           },
         },
+        orderBy: (t, { asc }) => asc(t.ordering),
       },
     },
   });

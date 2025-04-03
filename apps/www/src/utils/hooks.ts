@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { getAudioContext } from "./audioContext";
 
-
 export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -13,15 +12,28 @@ export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
   }, [cb, key]);
 }
 
+const mediaElementSources = new WeakMap<HTMLMediaElement, MediaElementAudioSourceNode>();
+
+function getOrCreateMediaElementSource(audioContext: AudioContext, el: HTMLMediaElement) {
+  const node = mediaElementSources.get(el);
+  if (node !== undefined) return node;
+  const generatedNode = audioContext.createMediaElementSource(el);
+  mediaElementSources.set(el, generatedNode);
+  return generatedNode;
+}
+
 export function useAudioSourceNode(mediaElementRef: {
   current: HTMLMediaElement;
 }) {
   const [audioSourceNode, setAudioSourceNode] = useState<MediaElementAudioSourceNode | null>(null);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const audioContext = getAudioContext();
-    const sourceNode = audioContext.createMediaElementSource(mediaElementRef.current);
+    const sourceNode = getOrCreateMediaElementSource(audioContext, mediaElementRef.current);
     sourceNode.connect(audioContext.destination);
     setAudioSourceNode(sourceNode);
+    return () => {
+      sourceNode.disconnect();
+    };
   }, [mediaElementRef]);
   const playAudio = useCallback(() => {
     mediaElementRef.current.currentTime = 0; // Reset playback
