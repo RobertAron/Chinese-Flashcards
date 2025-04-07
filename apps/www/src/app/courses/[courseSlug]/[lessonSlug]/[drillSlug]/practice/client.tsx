@@ -1,6 +1,5 @@
 "use client";
-import { clamp } from "@/challenges/util";
-import { PlayerAwardIcon, awardColors } from "@/components/CompletionAward";
+import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { useDrillContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
@@ -11,8 +10,6 @@ import {
   practiceCountTillNextValues,
   practiceCountToAward,
   silverPracticeCount,
-  totalTillBronze,
-  totalTillSilver,
   usePracticeCount,
   useWordIncrementor,
 } from "@/utils/playerState";
@@ -20,16 +17,17 @@ import { AnimatePresence, animate, useMotionValue, useTransform, motion, usePres
 import { type Ref, useEffect, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
+import { Experience } from "@/components/Experience";
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
   const { problem, nextProblem, initializing } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
-  const wordIncrementor = useWordIncrementor()
+  const wordIncrementor = useWordIncrementor();
   const [started, setStarted] = useState(false);
   if (initializing) return null;
   const onProblemComplete = () => {
-    wordIncrementor(problem.wordIds)
+    wordIncrementor(problem.wordIds);
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };
@@ -98,7 +96,7 @@ function ProgressArea({ practiceCount }: { practiceCount: number }) {
           </AnimatePresence>
         </div>
       </div>
-      <ProgressBars count={practiceCount} />
+      <Experience percent={practiceCount} />
     </div>
   );
 }
@@ -132,39 +130,5 @@ function PercentageComplete({ percent, ref }: { percent: number; ref?: Ref<HTMLD
     <motion.span ref={ref} className="text-gray-600 text-sm/6">
       {formattedPercent}
     </motion.span>
-  );
-}
-
-function CoreProgressBar({
-  current,
-  total,
-  color,
-}: {
-  current: number;
-  total: number;
-  color: string;
-}) {
-  const percentFill = (current / total) * 100;
-  return (
-    <div className="grid-stack h-4 w-full overflow-hidden border border-black border-t-0 first:border-t">
-      <div className="grid-stack-item h-full w-full" style={{ background: color }} />
-      <div
-        className="grid-stack-item h-full bg-green-500 transition-all"
-        style={{ width: `${percentFill}%` }}
-      />
-    </div>
-  );
-}
-
-function ProgressBars({ count }: { count: number }) {
-  const bronzeProgress = clamp(count, 0, bronzePracticeCount);
-  const silverProgress = clamp(count - totalTillBronze, 0, silverPracticeCount);
-  const goldProgress = clamp(count - totalTillSilver, 0, goldPracticeCount);
-  return (
-    <div className="-skew-x-[30deg] flex w-full flex-col">
-      <CoreProgressBar color={awardColors.bronze} current={bronzeProgress} total={bronzePracticeCount} />
-      <CoreProgressBar color={awardColors.silver} current={silverProgress} total={silverPracticeCount} />
-      <CoreProgressBar color={awardColors.gold} current={goldProgress} total={goldPracticeCount} />
-    </div>
   );
 }

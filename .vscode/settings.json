@@ -1,9 +1,7 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "tailwindCSS.experimental.classRegex": [
-    ["Classes \\=([^;]*);", "'([^']*)'"],
-    ["Classes \\=([^;]*);", "\"([^\"]*)\""],
-    ["Classes \\=([^;]*);", "\\`([^\\`]*)\\`"]
+  "tailwindCSS.classAttributes": [
+    ".*ClassName",
   ],
   "eslint.workingDirectories": [{ "mode": "auto" }]
 }

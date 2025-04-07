@@ -82,7 +82,7 @@ export function DrillHome() {
         <section className="border-2 border-black bg-white">
           <div className="border-blue-700 border-l-8 p-2">
             <h2 className="text-3xl">Description</h2>
-            <p>{description}</p>
+            <p className="text-xl">{description}</p>
           </div>
         </section>
       )}
