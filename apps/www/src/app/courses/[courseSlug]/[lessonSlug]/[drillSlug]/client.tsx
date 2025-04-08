@@ -26,8 +26,8 @@ function ModeOption({
     <MotionLink
       initial={{ opacity: 0, scale: 1.05 }}
       animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ rotate: 1, scale: 1.1 }}
-      whileFocus={{ rotate: 1, scale: 1.1 }}
+      whileHover={{ rotate: 1, scale: 1.05 }}
+      whileFocus={{ rotate: 1, scale: 1.05 }}
       transition={{
         duration: 0.1,
       }}
@@ -45,10 +45,11 @@ export function DrillHome() {
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   const allWords = useMemo(() => {
-    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters }) => ({
+    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters, meaning }) => ({
       id,
       pinyin,
       characters,
+      meaning,
     }));
     const wordsUsed = phraseDefinitions.flatMap(({ words }) => words);
     return deDupe([...wordsRaw, ...wordsUsed], ({ id }) => id);

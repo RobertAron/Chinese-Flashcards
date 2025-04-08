@@ -19,7 +19,7 @@ type WordDefinition = {
 
 type PhraseDefinition = {
   type: "phrase";
-  words: { characters: string; pinyin: string; id: number }[];
+  words: { characters: string; pinyin: string; id: number; meaning: string }[];
 } & DefinitionCore;
 
 export type PhraseOrWordDefinition = WordDefinition | PhraseDefinition;

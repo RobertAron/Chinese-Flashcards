@@ -4,10 +4,12 @@ export function WordExperience({
   characters,
   pinyin,
   id,
+  meaning,
 }: {
   characters: string;
   pinyin: string;
   id: number;
+  meaning: string;
 }) {
   const practiceCount = useWordPracticeCount(id);
   return (
@@ -15,6 +17,7 @@ export function WordExperience({
       <div className="flex flex-col gap-1">
         <div className="font-bold text-3xl">{characters}</div>
         <div>{pinyin}</div>
+        <div>{meaning}</div>
       </div>
       <div className="text-4xl">x{practiceCount}</div>
     </div>

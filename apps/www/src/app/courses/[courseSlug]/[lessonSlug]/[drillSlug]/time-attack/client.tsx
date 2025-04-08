@@ -69,7 +69,7 @@ export function TimeAttack() {
   );
 }
 
-const itemsToComplete = 20;
+const itemsToComplete = 40;
 function TimeAttackRunning({
   onTimeAttackComplete,
 }: {
@@ -87,7 +87,7 @@ function TimeAttackRunning({
   if (initializing) return null;
   const onProblemComplete = () => {
     wordIncrementor(problem.wordIds);
-    const points = problem.wordIds.length > 1 ? 2 : 1;
+    const points = problem.wordIds.length > 1 ? 3 : 2;
     const nextPoints = completedItems + points;
     if (nextPoints >= itemsToComplete) onTimeAttackComplete(time.get());
     else {

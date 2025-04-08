@@ -46,8 +46,8 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
             <MotionLink
               initial={{ opacity: 0, scaleY: 1.05 }}
               animate={{ opacity: 1, scaleY: 1 }}
-              whileHover={{ scale: 1.1 }}
-              whileFocus={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
+              whileFocus={{ scale: 1.05 }}
               className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
               href={`/courses/${courseSlug}/${lessonSlug}/${ele.slug}`}
               key={ele.slug}
@@ -60,8 +60,8 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.05 }}
             animate={{ opacity: 1, scaleY: 1 }}
-            whileHover={{ scale: 1.1 }}
-            whileFocus={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
+            whileFocus={{ scale: 1.05 }}
             className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
             href={`/courses/${courseSlug}/${lessonSlug}/final-mastery-${lessonSlug}`}
           >
