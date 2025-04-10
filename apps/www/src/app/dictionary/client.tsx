@@ -22,7 +22,7 @@ export function SearchPage({ words }: { words: Words }) {
   return (
     <div className="grid grid-flow-row gap-3 py-4">
       <div>
-        <h1 className="font-bold text-3xl">Dictionary</h1>
+        <h1 className="font-bold text-5xl underline">Dictionary</h1>
         <label className="flex flex-col gap-1">
           <span className="sr-only">Search</span>
           <input

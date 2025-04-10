@@ -16,7 +16,7 @@ export default AppServerPageEntrypoint(async function Home() {
   });
   return (
     <main className="flex flex-col">
-      <h1 className="font-black text-6xl text-blue-700">Courses</h1>
+      <h1 className="font-bold text-5xl underline">Courses</h1>
       <div className="grid grid-cols-3 gap-1">
         <div className="col-span-3 grid grid-cols-subgrid">
           <div>Course</div>

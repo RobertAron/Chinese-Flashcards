@@ -57,7 +57,7 @@ export function DrillHome() {
   return (
     <>
       <section className="flex w-full flex-col gap-2">
-        <h2 className="font-bold text-4xl text-blue-700">Select Mode</h2>
+        <h2 className="font-bold text-2xl">Select Mode</h2>
         <div className="flex flex-wrap gap-4">
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/practice`}>
             <div className="h-32 w-32 flex-shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">

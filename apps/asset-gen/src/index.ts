@@ -88,7 +88,7 @@ async function main() {
     .filter((ele) => !filesInBucket.has(ele.fileName));
   if (phrasesNotYetUploaded.length === 0 && wordsNotYetUploaded.length === 0) {
     console.log("No work to do.");
-    process.exit(0);
+    // process.exit(0);
   } else {
     if (phrasesNotYetUploaded.length !== 0)
       console.log(`Going to generate ${phrasesNotYetUploaded.length} phrases`);
@@ -122,6 +122,10 @@ async function main() {
     await delay(100);
     console.log("complete with", speechFile);
   }
+
+  await $`rclone copy ./dist r2Language:vocab-sprint --dry-run`;
+
+
   console.log("probably run the following:");
   console.log("");
   console.log("cd dist");
