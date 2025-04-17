@@ -124,11 +124,11 @@ async function main() {
   }
 
   await $`rclone copy ./dist r2Language:vocab-sprint --dry-run`;
-
-
-  console.log("probably run the following:");
-  console.log("");
-  console.log("cd dist");
-  console.log("rclone copy . r2Language:vocab-sprint --dry-run");
+  const uploadAudio = await askYesNo("upload audio?");
+  if(uploadAudio){
+    console.log("Running `rclone copy ./dist r2Language:vocab-sprint`")
+    await $`rclone copy ./dist r2Language:vocab-sprint`;
+  }
+  process.exit(0)
 }
 main();

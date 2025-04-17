@@ -15,12 +15,9 @@ export default AppServerPageEntrypoint(async function Home() {
     },
   });
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col gap-4">
       <h1 className="font-bold text-5xl underline">Courses</h1>
       <div className="grid grid-cols-3 gap-1">
-        <div className="col-span-3 grid grid-cols-subgrid">
-          <div>Course</div>
-        </div>
         {courses.map((topic) => (
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.05 }}
