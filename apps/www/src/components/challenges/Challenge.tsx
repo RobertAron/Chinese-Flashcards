@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 import { AudioChallenge } from "./AudioChallenge";
-import type { AllChallenges } from "./ChallengeContext";
+import type { AllTypingChallenges } from "./ChallengeTypes";
 import { DefinitionChallenge } from "./DefinitionChallenge";
 import { CharacterChallenge } from "./PinyinChallenge";
 
@@ -10,13 +10,13 @@ export function Challenge({
   active,
   practice,
 }: {
-  challenge: AllChallenges;
+  challenge: AllTypingChallenges;
   onProblemComplete: () => void;
   active?: boolean;
   practice?: boolean;
 }) {
   return match(challenge)
-    .with({ type: "character-challenge" }, (problem) => (
+    .with({ type: "typing-character-challenge" }, (problem) => (
       <CharacterChallenge
         {...problem}
         onComplete={onProblemComplete}
@@ -26,7 +26,7 @@ export function Challenge({
         practice={practice}
       />
     ))
-    .with({ type: "audio-challenge" }, (problem) => (
+    .with({ type: "typing-audio-challenge" }, (problem) => (
       <AudioChallenge
         {...problem}
         onComplete={onProblemComplete}
@@ -36,7 +36,7 @@ export function Challenge({
         practice={practice}
       />
     ))
-    .with({ type: "definition-challenge" }, (problem) => (
+    .with({ type: "typing-definition-challenge" }, (problem) => (
       <DefinitionChallenge
         {...problem}
         onComplete={onProblemComplete}

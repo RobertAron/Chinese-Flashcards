@@ -3,7 +3,7 @@ import { PlayIcon } from "lucide-react";
 import { useRef } from "react";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { buttonBehaviorClasses } from "../coreClasses";
-import type { PhraseOrWordDefinition } from "./ChallengeContext";
+import type { PhraseOrWordDefinition } from "./TypingChallengeProvider";
 
 type WordOutlineProps = {
   word: PhraseOrWordDefinition;

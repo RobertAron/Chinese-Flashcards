@@ -134,27 +134,49 @@ async function getAllWordsInDrill(drillSlug: string) {
 }
 
 export type DrillInfo = Awaited<ReturnType<typeof getDrillInfo>>;
+
+type DefinitionCore = {
+  id: number;
+  characters: string;
+  pinyin: string;
+  meaning: string;
+  audioSrc: string;
+  emojiChallenge: string | null;
+};
+
+export interface WordDefinition extends DefinitionCore {
+  type: "word";
+}
+
+export interface PhraseDefinition extends DefinitionCore {
+  type: "phrase";
+  words: { characters: string; pinyin: string; id: number; meaning: string }[];
+}
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)
     : getAllWordsInDrill(params.drillSlug));
   return {
     ...data,
-    words: data.words.map((ele) => ({
-      ...ele,
-      type: "word" as const,
-      audioSrc: wordToAudioSource(ele.id),
-    })),
-    phrases: data.phrases.map(({ phrasesToWords, ...ele }) => ({
-      ...ele,
-      type: "phrase" as const,
-      words: phrasesToWords.map(({ word }) => ({
-        characters: word.characters,
-        pinyin: word.pinyin,
-        id: word.id,
-        meaning: word.meaning,
-      })),
-      audioSrc: phraseToAudioSource(ele.id),
-    })),
+    words: data.words.map(
+      (ele): WordDefinition => ({
+        ...ele,
+        type: "word" as const,
+        audioSrc: wordToAudioSource(ele.id),
+      }),
+    ),
+    phrases: data.phrases.map(
+      ({ phrasesToWords, ...ele }): PhraseDefinition => ({
+        ...ele,
+        type: "phrase" as const,
+        words: phrasesToWords.map(({ word }) => ({
+          characters: word.characters,
+          pinyin: word.pinyin,
+          id: word.id,
+          meaning: word.meaning,
+        })),
+        audioSrc: phraseToAudioSource(ele.id),
+      }),
+    ),
   };
 });

@@ -1,4 +1,4 @@
-import { useTypingChallenge } from "@/components/challenges/ChallengeContext";
+import { useTypingChallenge } from "@/components/challenges/TypingChallengeProvider";
 import { semiShuffle } from "@/utils/structureUtils";
 import { useEffect, useState } from "react";
 

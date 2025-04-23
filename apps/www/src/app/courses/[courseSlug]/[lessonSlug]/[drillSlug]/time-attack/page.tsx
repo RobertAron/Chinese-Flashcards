@@ -1,4 +1,4 @@
-import { TypingChallengeProvider } from "@/components/challenges/ChallengeContext";
+import { TypingChallengeProvider } from "@/components/challenges/TypingChallengeProvider";
 import { generateStaticParams } from "../generateStaticParams";
 import { TimeAttack } from "./client";
 export { generateStaticParams };
