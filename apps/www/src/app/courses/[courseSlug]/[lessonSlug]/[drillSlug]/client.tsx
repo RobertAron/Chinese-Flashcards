@@ -1,6 +1,6 @@
 "use client";
 import { MotionLink } from "@/components/MotionLink";
-import { useDrillContext } from "@/components/challenges/ChallengeContext";
+import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { WordExperience } from "@/components/challenges/WordPoints";
 import { buttonBehaviorClasses } from "@/components/coreClasses";

@@ -1,8 +1,8 @@
 "use client";
 import { generateContext } from "@/utils/createContext";
-import type React from "react";
-import type { DrillInfo } from "./challengeServerUtils";
 import { useUserSettings } from "@/utils/playerState";
+import type React from "react";
+import { useDrillContext } from "./DrillProvider";
 
 type DefinitionCore = {
   id: number;
@@ -13,22 +13,19 @@ type DefinitionCore = {
   emojiChallenge: string | null;
 };
 
-type WordDefinition = {
+interface WordDefinition extends DefinitionCore {
   type: "word";
-} & DefinitionCore;
+}
 
-type PhraseDefinition = {
+interface PhraseDefinition extends DefinitionCore {
   type: "phrase";
   words: { characters: string; pinyin: string; id: number; meaning: string }[];
-} & DefinitionCore;
+}
 
 export type PhraseOrWordDefinition = WordDefinition | PhraseDefinition;
 type ProviderProps = {
   children?: React.ReactNode;
-  courseSlug: string;
-  lessonSlug: string;
-  drillSlug: string;
-} & DrillInfo;
+};
 type CharacterChallenge = {
   type: "character-challenge";
   id: string;
@@ -50,16 +47,10 @@ type DefinitionChallenge = {
   definition: string;
   wordIds: number[];
 };
+
 export type AllChallenges = CharacterChallenge | AudioChallenge | DefinitionChallenge;
 type ProvidedValue = {
-  challengeId: string;
-  challengeLabel: string;
-  description: string | null;
-  wordDefinitions: WordDefinition[];
-  phraseDefinitions: PhraseDefinition[];
   challenges: AllChallenges[];
-  lessonSlug: string;
-  courseSlug: string;
 };
 
 function wordOrPhraseToChallenges(
@@ -93,42 +84,27 @@ function wordOrPhraseToChallenges(
         type: "character-challenge",
         id: `${id}-pinyin`,
         pinyin,
-        characters: characters,
+        characters,
         wordIds,
       });
     return result;
   });
 }
 
-export const { Provider: DrillProvider, useContext: useDrillContext } = generateContext<
+export const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = generateContext<
   ProviderProps,
   ProvidedValue
 >(
   (Provider) =>
-    function DrillProvider({
-      children,
-      drillTitle,
-      words,
-      courseSlug,
-      lessonSlug,
-      drillSlug,
-      phrases,
-      description,
-    }: ProviderProps) {
+    function DrillProvider({ children }: ProviderProps) {
       const [userSettings] = useUserSettings();
-      const wordChallenges = wordOrPhraseToChallenges(userSettings, words);
-      const phraseChallenges = wordOrPhraseToChallenges(userSettings, phrases);
+      const { wordDefinitions, phraseDefinitions } = useDrillContext();
+      const wordChallenges = wordOrPhraseToChallenges(userSettings, wordDefinitions);
+      const phraseChallenges = wordOrPhraseToChallenges(userSettings, phraseDefinitions);
       return (
         <Provider
           value={{
-            challengeId: drillSlug,
-            challengeLabel: drillTitle,
-            wordDefinitions: words,
-            phraseDefinitions: phrases,
-            description,
             challenges: [...wordChallenges, ...phraseChallenges],
-            courseSlug,
-            lessonSlug,
           }}
         >
           {children}

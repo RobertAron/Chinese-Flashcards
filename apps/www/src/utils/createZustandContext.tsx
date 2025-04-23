@@ -1,6 +1,6 @@
 import { generateContext } from "@/utils/createContext";
 import { useRef } from "react";
-import { createStore, type Mutate, type StoreApi } from "zustand";
+import { type Mutate, type StoreApi, createStore } from "zustand";
 
 type Primitive = string | number | boolean | null | undefined;
 type Serializable = Primitive | Serializable[] | { [key: string]: Serializable };
@@ -20,7 +20,7 @@ function createZustandStore<State extends StateObject>({
 /**
  * @example
  * ```ts
- * const { Provider: CountProvider, useContext: useCountProviderStore } = 
+ * const { Provider: CountProvider, useContext: useCountProviderStore } =
  *   createZustandContext<{ count: number }>({
  *     initState: {
  *       count: 0,

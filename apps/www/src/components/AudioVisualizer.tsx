@@ -135,7 +135,7 @@ export const LiveAudioVisualizer = ({
 
   const processFrequencyData = useCallback((data: Uint8Array): void => {
     if (!canvasRef.current) return;
-    if(Math.max(...data)===0) draw([], canvasRef.current);
+    if (Math.max(...data) === 0) draw([], canvasRef.current);
     else draw(calculateBarData(data), canvasRef.current);
   }, []);
 

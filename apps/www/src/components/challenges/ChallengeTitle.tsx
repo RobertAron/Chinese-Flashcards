@@ -1,10 +1,10 @@
 import { ExitLink } from "@/app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/ExitButton";
-import { useDrillContext } from "@/components/challenges/ChallengeContext";
+import { useUserSettings } from "@/utils/playerState";
 import { ChevronRight } from "lucide-react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { buttonBehaviorClasses } from "../coreClasses";
-import { useUserSettings } from "@/utils/playerState";
+import { useDrillContext } from "./DrillProvider";
 
 export function ChallengeTitle({
   children,

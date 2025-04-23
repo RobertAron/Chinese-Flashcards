@@ -8,7 +8,7 @@ export function AppServerPageEntrypoint(cb: AppServerPageCallback) {
 }
 type AppServerLayoutCallback = (param: {
   params: Promise<Record<string, unknown>>;
-  children: React.ReactNode
+  children: React.ReactNode;
 }) => Promise<React.ReactNode> | React.ReactNode;
 
 export function AppServerLayoutEntrypoint(cb: AppServerLayoutCallback) {

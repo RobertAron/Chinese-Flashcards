@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAudioContext } from "./audioContext";
 
 export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {

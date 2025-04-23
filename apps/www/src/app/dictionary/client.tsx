@@ -1,9 +1,9 @@
 "use client";
-import { useMemo, useState } from "react";
-import type { Words } from "./page";
-import Fuse from "fuse.js";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { wordToAudioSource } from "@/utils/idToAudioSource";
+import Fuse from "fuse.js";
+import { useMemo, useState } from "react";
+import type { Words } from "./page";
 
 export function SearchPage({ words }: { words: Words }) {
   const fuseWords = useMemo(
@@ -38,7 +38,7 @@ export function SearchPage({ words }: { words: Words }) {
         return (
           <WordOutline
             word={{
-              type:'word',
+              type: "word",
               audioSrc: wordToAudioSource(word.id),
               ...word,
             }}

@@ -1,8 +1,8 @@
 import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import { LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
 import Link from "next/link";
 import "./globals.css";
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <PlayerProvider>
-      <SyncPlayerStateToLocalStorage/>
+      <SyncPlayerStateToLocalStorage />
       <html lang="en" className="h-full">
         <body
           className={`${GeistSans.variable} ${GeistMono.variable} relative min-h-full overflow-y-scroll pb-8 font-sans antialiased`}

@@ -1,8 +1,8 @@
 "use client";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
-import { useDrillContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
+import { useDrillContext } from "@/components/challenges/DrillProvider";
 import {
   formatTimeAttackMs,
   timeAttackToAward,

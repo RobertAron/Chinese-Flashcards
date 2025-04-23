@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": []
+    "ignore": [".storybook"]
   },
   "formatter": {
     "enabled": true,
@@ -26,7 +26,8 @@
         "noNonNullAssertion": "off"
       },
       "suspicious": {
-        "noArrayIndexKey": "off"
+        "noArrayIndexKey": "off",
+        "noUnsafeDeclarationMerging": "error"
       },
       "a11y": {
         "useMediaCaption": "off"

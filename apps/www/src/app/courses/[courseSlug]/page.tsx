@@ -2,11 +2,11 @@ import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { notFound } from "next/navigation";
-import { paramsTemplate } from "./paramsTemplate";
-import { generateStaticParams } from "./generateStaticParams";
-import { LessonProgress } from "./client";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { notFound } from "next/navigation";
+import { LessonProgress } from "./client";
+import { generateStaticParams } from "./generateStaticParams";
+import { paramsTemplate } from "./paramsTemplate";
 
 export { generateStaticParams };
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {

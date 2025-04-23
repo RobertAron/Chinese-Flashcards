@@ -1,9 +1,9 @@
-import { useDrillContext } from "@/components/challenges/ChallengeContext";
+import { useTypingChallenge } from "@/components/challenges/ChallengeContext";
 import { semiShuffle } from "@/utils/structureUtils";
 import { useEffect, useState } from "react";
 
 export function useChallengeStream() {
-  const { challenges } = useDrillContext();
+  const { challenges } = useTypingChallenge();
   const [problemIndex, setProblemIndex] = useState(0);
   const [problems, setProblemList] = useState<null | typeof challenges>(null);
   useEffect(() => {

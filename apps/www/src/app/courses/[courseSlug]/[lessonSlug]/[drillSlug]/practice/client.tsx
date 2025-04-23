@@ -1,8 +1,9 @@
 "use client";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
+import { Experience } from "@/components/Experience";
 import { Challenge } from "@/components/challenges/Challenge";
-import { useDrillContext } from "@/components/challenges/ChallengeContext";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
+import { useDrillContext } from "@/components/challenges/DrillProvider";
 import {
   bronzePracticeCount,
   formatPracticeCount,
@@ -13,11 +14,10 @@ import {
   usePracticeCount,
   useWordIncrementor,
 } from "@/utils/playerState";
-import { AnimatePresence, animate, useMotionValue, useTransform, motion, usePresence } from "motion/react";
+import { AnimatePresence, animate, motion, useMotionValue, usePresence, useTransform } from "motion/react";
 import { type Ref, useEffect, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
-import { Experience } from "@/components/Experience";
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
