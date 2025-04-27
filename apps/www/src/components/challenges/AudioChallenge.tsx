@@ -18,14 +18,23 @@ type AudioChallengeProps = {
 };
 
 export function AudioChallenge({ pinyin, onComplete, active, practice, id, ref, src }: AudioChallengeProps) {
+  return (
+    <ChallengeWrapper id={id} active={active} ref={ref}>
+      <ChallengeAudioPlayer src={src} slow={practice} />
+      <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
+    </ChallengeWrapper>
+  );
+}
+
+export function ChallengeAudioPlayer({ src, slow }: { src: string; slow?: boolean }) {
   const audioRef = useRef<HTMLMediaElement>(null!);
   const { audioSourceNode, playAudio } = useAudioSourceNode(audioRef);
   useEffect(() => {
-    audioRef.current.playbackRate = practice ? 0.7 : 1;
-  }, [practice]);
+    audioRef.current.playbackRate = slow ? 0.7 : 1;
+  }, [slow]);
   useKeyTrigger("Enter", playAudio);
   return (
-    <ChallengeWrapper id={id} active={active} ref={ref}>
+    <>
       <audio ref={audioRef} src={src} autoPlay crossOrigin="anonymous" />
       <div className="grid-stack h-36 w-full">
         <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
@@ -45,7 +54,6 @@ export function AudioChallenge({ pinyin, onComplete, active, practice, id, ref, 
           {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
         </div>
       </div>
-      <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
-    </ChallengeWrapper>
+    </>
   );
 }

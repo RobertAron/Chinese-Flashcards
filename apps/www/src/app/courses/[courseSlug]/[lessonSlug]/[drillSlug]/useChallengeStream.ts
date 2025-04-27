@@ -1,5 +1,5 @@
 import { useTypingChallenge } from "@/components/challenges/TypingChallengeProvider";
-import { semiShuffle } from "@/utils/structureUtils";
+import { semiShuffle, shuffle } from "@/utils/structureUtils";
 import { useEffect, useState } from "react";
 
 export function useChallengeStream() {
@@ -7,7 +7,7 @@ export function useChallengeStream() {
   const [problemIndex, setProblemIndex] = useState(0);
   const [problems, setProblemList] = useState<null | typeof challenges>(null);
   useEffect(() => {
-    setProblemList(semiShuffle(challenges));
+    setProblemList(shuffle(challenges));
   }, [challenges]);
   const problem = problems?.[problemIndex];
   if (problem === undefined) {

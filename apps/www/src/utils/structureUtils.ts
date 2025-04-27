@@ -2,6 +2,17 @@ export function randomIntegerBetween(a: number, b: number) {
   const range = b - a;
   return Math.floor(Math.random() * (range + 1)) + a;
 }
+
+
+export function shuffle<T>(array: T[]): T[] {
+  const sourceItems = array.slice();
+  const result: T[] = [];
+  while (sourceItems.length > 0) {
+    const itemIndex = randomIntegerBetween(0, sourceItems.length - 1);
+    result.push(sourceItems.splice(itemIndex, 1)[0]!);
+  }
+  return result;
+}
 /**
  * Shuffle the given array.
  * Don't let the last element of the array be the first in the resulting array.
