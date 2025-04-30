@@ -10,10 +10,12 @@ export function ChallengeTitle({
   children,
   onStart,
   improve: again,
+  disableStart,
 }: {
   onStart: () => void;
   children?: React.ReactNode;
   improve?: boolean;
+  disableStart?: boolean;
 }) {
   const [userSettings, setUserSettings] = useUserSettings();
   const { challengeId, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
@@ -44,6 +46,28 @@ export function ChallengeTitle({
         >
           Require Tone Inputs
         </Checkbox>
+        <Checkbox
+          isSelected={userSettings.enableTypingChallenges}
+          onChange={(selected) => {
+            setUserSettings({
+              ...userSettings,
+              enableTypingChallenges: selected,
+            });
+          }}
+        >
+          Enable Typing Challenges
+        </Checkbox>
+        <Checkbox
+          isSelected={userSettings.enableMultipleChoiceChallenges}
+          onChange={(selected) => {
+            setUserSettings({
+              ...userSettings,
+              enableMultipleChoiceChallenges: selected,
+            });
+          }}
+        >
+          Enable Multiple Choice Challenges
+        </Checkbox>
       </div>
       <div className="flex gap-1 border-black">
         <ExitLink
@@ -56,6 +80,7 @@ export function ChallengeTitle({
           className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2 font-bold text-xl"
           onClick={onStart}
           autoFocus
+          disabled={disableStart}
         >
           <span>{again ? "IMPROVE" : "START"}</span>
           <ChevronRight />

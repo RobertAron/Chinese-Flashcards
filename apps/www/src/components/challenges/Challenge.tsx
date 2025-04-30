@@ -1,8 +1,9 @@
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import { AudioChallenge } from "./AudioChallenge";
-import type { AllTypingChallenges } from "./ChallengeTypes";
+import type { AllChallengeTypes } from "./ChallengeTypes";
 import { DefinitionChallenge } from "./DefinitionChallenge";
 import { CharacterChallenge } from "./PinyinChallenge";
+import { MultipleChoiceChallenge } from "./MultipleChoiceQuestionChallenge";
 
 export function Challenge({
   challenge,
@@ -10,7 +11,7 @@ export function Challenge({
   active,
   practice,
 }: {
-  challenge: AllTypingChallenges;
+  challenge: AllChallengeTypes;
   onProblemComplete: () => void;
   active?: boolean;
   practice?: boolean;
@@ -46,5 +47,11 @@ export function Challenge({
         practice={practice}
       />
     ))
+    .with(
+      {
+        type: P.union("multiple-choice-question-character-audio", "multiple-choice-question-character-text"),
+      },
+      (problem) => <MultipleChoiceChallenge onComplete={onProblemComplete} thing={problem} />,
+    )
     .exhaustive();
 }

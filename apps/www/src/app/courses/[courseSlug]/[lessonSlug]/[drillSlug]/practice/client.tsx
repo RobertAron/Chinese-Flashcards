@@ -21,39 +21,49 @@ import { useChallengeStream } from "../useChallengeStream";
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
-  const { problem, nextProblem, initializing } = useChallengeStream();
+  const { problem, nextProblem, initializing, noProblems } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
   const wordIncrementor = useWordIncrementor();
   const [started, setStarted] = useState(false);
   if (initializing) return null;
+  if (!started)
+    return (
+      <ChallengeTitle
+        onStart={() => setStarted(true)}
+        improve={practiceCount !== 0}
+        disableStart={noProblems}
+      >
+        <div className="flex gap-2">
+          <div className="flex grow basis-0 flex-col font-bold text-3xl">
+            <div className="flex items-center gap-1">
+              <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
+            </div>
+            <div className="flex items-center gap-1">
+              <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
+            </div>
+            <div className="flex items-center gap-1">
+              <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
+            </div>
+          </div>
+          <div className="grow basis-0 font-extrabold text-3xl">
+            <div className="flex items-center">
+              <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
+              {formatPracticeCount(practiceCount)}
+            </div>
+          </div>
+        </div>
+      </ChallengeTitle>
+    );
+  if (noProblems) {
+    console.error("Shouldn't be able to start challenge with no problems");
+    return null;
+  }
   const onProblemComplete = () => {
     wordIncrementor(problem.wordIds);
     setPracticeCount(practiceCount + 1);
     nextProblem();
   };
-  return !started ? (
-    <ChallengeTitle onStart={() => setStarted(true)} improve={practiceCount !== 0}>
-      <div className="flex gap-2">
-        <div className="flex grow basis-0 flex-col font-bold text-3xl">
-          <div className="flex items-center gap-1">
-            <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
-          </div>
-          <div className="flex items-center gap-1">
-            <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
-          </div>
-          <div className="flex items-center gap-1">
-            <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
-          </div>
-        </div>
-        <div className="grow basis-0 font-extrabold text-3xl">
-          <div className="flex items-center">
-            <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
-            {formatPracticeCount(practiceCount)}
-          </div>
-        </div>
-      </div>
-    </ChallengeTitle>
-  ) : (
+  return (
     <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
       <div className="justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />

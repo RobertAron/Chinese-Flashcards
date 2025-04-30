@@ -18,3 +18,22 @@ export interface TypingDefinitionChallenge extends TypingChallengeCore {
 }
 
 export type AllTypingChallenges = TypingCharacterChallenge | TypingAudioChallenge | TypingDefinitionChallenge;
+
+export type McqAnswer = { correct: boolean; text: string; id: string };
+type MultipleChoiceCore = {
+  id: string;
+  getOptions: () => McqAnswer[];
+  wordIds: number[];
+};
+export interface McqText extends MultipleChoiceCore {
+  type: "multiple-choice-question-character-text";
+  questionText: string;
+}
+export interface McqAudio extends MultipleChoiceCore {
+  type: "multiple-choice-question-character-audio";
+  audio: string;
+}
+
+export type AllMultipleChoiceChallenges = McqText | McqAudio;
+
+export type AllChallengeTypes = AllTypingChallenges | AllMultipleChoiceChallenges;

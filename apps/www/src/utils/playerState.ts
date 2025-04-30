@@ -11,6 +11,8 @@ const playerStateTemplate = z.object({
   settings: z.object({
     requireToneInput: z.boolean(),
     enableCharacterChallenges: z.boolean(),
+    enableMultipleChoiceChallenges: z.boolean().default(false),
+    enableTypingChallenges: z.boolean().default(true),
   }),
 });
 
@@ -22,6 +24,8 @@ const { Provider: PlayerProvider, useContext: usePlayerContextStore } = createZu
   settings: {
     requireToneInput: false,
     enableCharacterChallenges: true,
+    enableMultipleChoiceChallenges: false,
+    enableTypingChallenges: true,
   },
 });
 // Webpack bug, cannot rename and export in same line.
@@ -115,6 +119,7 @@ export function useUserSettings() {
   );
   return [userSettings, setUserSettings] as const;
 }
+export type UserSettings = ReturnType<typeof useUserSettings>[0];
 
 export function useWordPracticeCount(wordId: number) {
   const store = usePlayerContextStore();

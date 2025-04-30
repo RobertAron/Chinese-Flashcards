@@ -3,7 +3,6 @@ export function randomIntegerBetween(a: number, b: number) {
   return Math.floor(Math.random() * (range + 1)) + a;
 }
 
-
 export function shuffle<T>(array: T[]): T[] {
   const sourceItems = array.slice();
   const result: T[] = [];
@@ -18,15 +17,17 @@ export function shuffle<T>(array: T[]): T[] {
  * Don't let the last element of the array be the first in the resulting array.
  * */
 export function semiShuffle<T>(array: T[]): T[] {
-  const sourceItems = array.slice();
-  const result: T[] = [];
-  const itemIndex = randomIntegerBetween(0, sourceItems.length - 2);
-  result.push(sourceItems.splice(itemIndex, 1)[0]!);
-  while (sourceItems.length > 0) {
-    const itemIndex = randomIntegerBetween(0, sourceItems.length - 1);
-    result.push(sourceItems.splice(itemIndex, 1)[0]!);
+  // not shuffle-able
+  if (array.length<=1) return array;
+  const lastItem = array.at(-1)!;
+  const shuffled = shuffle(array)
+  if(shuffled[0]===lastItem){
+    // move it somewhere else...
+    const swapIndex = randomIntegerBetween(1, shuffled.length - 1);
+    shuffled[0] = shuffled[swapIndex]!;
+    shuffled[swapIndex] = lastItem;
   }
-  return result;
+  return shuffled;
 }
 
 export function deDupe<T, U>(arr: T[], cb: (ele: T) => U) {
