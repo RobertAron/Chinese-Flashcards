@@ -76,7 +76,7 @@ function TimeAttackRunning({
   onTimeAttackComplete: (completedTime: number | null) => void;
 }) {
   const [completedItems, setCompletedItems] = useState(0);
-  const { problem, nextProblem, initializing } = useChallengeStream();
+  const { problem, nextProblem, initializing, noProblems } = useChallengeStream();
   const time = useTime();
   const timerRef = useRef<HTMLDivElement>(null!);
   useMotionValueEvent(time, "change", (val) => {
@@ -85,6 +85,10 @@ function TimeAttackRunning({
   });
   const wordIncrementor = useWordIncrementor();
   if (initializing) return null;
+  if (noProblems) {
+    onTimeAttackComplete(null);
+    return null;
+  }
   const onProblemComplete = () => {
     wordIncrementor(problem.wordIds);
     const points = problem.wordIds.length > 1 ? 3 : 2;
