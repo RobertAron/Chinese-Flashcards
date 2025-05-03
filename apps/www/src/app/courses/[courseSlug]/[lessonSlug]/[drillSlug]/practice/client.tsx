@@ -69,7 +69,7 @@ export default function Practice() {
         <ExitButton onExit={() => setStarted(false)} />
       </div>
       <ProgressArea practiceCount={practiceCount} />
-      <div className="flex flex-col items-center self-center justify-self-center">
+      <div className="flex flex-col items-center self-stretch sm:self-center">
         <AnimatePresence mode="popLayout">
           <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
         </AnimatePresence>

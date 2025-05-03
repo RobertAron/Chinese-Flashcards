@@ -39,7 +39,7 @@ export function ExitLink({
   const combinedClassName = useMergeClasses(coreExitButtonClasses, className ?? "");
   return (
     <Link href={href} className={combinedClassName}>
-      <Undo2 className="flex-shrink-0" />
+      <Undo2 className="shrink-0" />
       <div>{children}</div>
       <div className="flex gap-1">
         <Kbd>esc</Kbd>

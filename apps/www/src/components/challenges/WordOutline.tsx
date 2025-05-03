@@ -12,7 +12,7 @@ export function WordOutline({ word }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
   return (
     <div className="flex h-full items-stretch justify-stretch gap-2 rounded-md border-2 border-black bg-white p-2">
-      <div className="flex flex-grow basis-0 flex-col items-start gap-2">
+      <div className="flex grow basis-0 flex-col items-start gap-2">
         <div className="text-6xl">{character}</div>
         <div className="font-semibold text-2xl">{pinyin}</div>
         <div className="text-pretty text-sm">{definition}</div>
@@ -27,7 +27,7 @@ function AudioSection({ src }: { src: string }) {
   const audioRef = useRef<HTMLMediaElement>(null!);
   const { audioSourceNode, playAudio } = useAudioSourceNode(audioRef);
   return (
-    <div className="grid-stack h-full w-full flex-shrink-0 flex-grow basis-0">
+    <div className="grid-stack h-full w-full shrink-0 grow basis-0">
       <audio ref={audioRef} src={src} crossOrigin="anonymous" className="hidden" />
       <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
         <button

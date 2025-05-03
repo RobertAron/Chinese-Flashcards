@@ -32,7 +32,7 @@ function ModeOption({
         duration: 0.1,
       }}
       href={href}
-      className={`group flex shrink flex-grow basis-0 items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
+      className={`group flex shrink grow basis-0 items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
     >
       {children}
     </MotionLink>
@@ -60,7 +60,7 @@ export function DrillHome() {
         <h2 className="font-bold text-2xl">Select Mode</h2>
         <div className="flex flex-wrap gap-4">
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/practice`}>
-            <div className="h-32 w-32 flex-shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
+            <div className="h-32 w-32 shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
               <ListChecks className="h-full w-full" />
             </div>
             <div>
@@ -69,7 +69,7 @@ export function DrillHome() {
             </div>
           </ModeOption>
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/time-attack`}>
-            <div className="h-32 w-32 flex-shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
+            <div className="h-32 w-32 shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
               <Timer className="h-full w-full" />
             </div>
             <div>

@@ -2,17 +2,17 @@
   "name": "vocab-sprint",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "npm@10.9.0",
   "scripts": {
-    "dev": "next dev --turbo",
     "build": "next build",
-    "start": "next start",
+    "build-storybook": "storybook build",
+    "dev": "next dev --turbo",
     "lint": "next lint",
-    "ts-check": "tsc --noEmit",
+    "start": "next start",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "ts-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.5",
     "clsx": "^2.1.1",
     "cms-data": "*",
     "drizzle-orm": "^0.39.3",
@@ -22,11 +22,13 @@
     "motion": "^12.4.5",
     "next": "^15.2.4",
     "pg": "^8.13.3",
+    "postcss": "^8",
     "react": "19.0.0",
     "react-aria-components": "^1.5.0",
     "react-dom": "19.0.0",
     "swr": "^2.3.0",
     "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^4.1.5",
     "ts-pattern": "^5.6.0",
     "zod": "^3.24.1",
     "zustand": "^5.0.3"
@@ -42,9 +44,7 @@
     "@types/node": "^20",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
-    "postcss": "^8",
-    "storybook": "^8.6.12",
-    "tailwindcss": "^3.4.1"
+    "storybook": "^8.6.12"
   },
   "overrides": {
     "@types/react": "19.0.7",
