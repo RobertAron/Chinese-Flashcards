@@ -51,7 +51,7 @@ export function Challenge({
       {
         type: P.union("multiple-choice-question-character-audio", "multiple-choice-question-character-text"),
       },
-      (problem) => <MultipleChoiceChallenge onComplete={onProblemComplete} thing={problem} />,
+      (problem) => <MultipleChoiceChallenge onComplete={onProblemComplete} problem={problem} key={problem.id}/>,
     )
     .exhaustive();
 }

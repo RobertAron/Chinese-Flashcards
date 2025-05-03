@@ -37,14 +37,14 @@ export function ChallengeAudioPlayer({ src, slow }: { src: string; slow?: boolea
     <>
       <audio ref={audioRef} src={src} autoPlay crossOrigin="anonymous" />
       <div className="grid-stack h-36 w-full">
-        <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
+        <div className="grid-stack-item z-10 m-1 self-start justify-self-end md:justify-self-start">
           <button
             type="button"
             className="group flex items-center gap-4 rounded-lg border border-black hocus:border-slate-300 bg-white/30 hocus:bg-black p-2 hocus:text-white text-sm backdrop-blur-sm"
             onClick={playAudio}
           >
             <RotateCcw className="h-4 w-4" />
-            <div className="flex gap-1">
+            <div className="hidden gap-1 md:flex">
               <Kbd>⌘</Kbd>
               <Kbd>↵</Kbd>
             </div>
