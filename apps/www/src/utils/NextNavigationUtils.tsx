@@ -1,14 +1,13 @@
 "use client";
 // https://github.com/vercel/react-transition-progress/blob/main/src/next.tsx
 
-import { LoaderCircle } from "lucide-react";
+import { AnimatePresence, motion, useAnimationFrame, useMotionValue, useTransform } from "motion/react";
 import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { formatUrl } from "next/dist/shared/lib/router/utils/format-url";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { startTransition, useCallback, useEffect, useOptimistic, useState } from "react";
 import { ezCreateContext } from "./createContext";
-
 type ProvidedValue = {
   isLoading: boolean;
   triggerLoading: () => void;
@@ -94,19 +93,39 @@ export function useLoadingRouter() {
   };
 }
 
-export function LoadingSpinner() {
+export function LoadingRender() {
   const { isLoading } = useLoadingProvider();
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [loadingId, setLoadingId] = useState<number | null>(null);
   useEffect(() => {
     if (!isLoading) {
-      setShowSpinner(false);
+      setLoadingId(null);
       return;
     }
     const timeout = setTimeout(() => {
-      setShowSpinner(true);
+      setLoadingId(Math.random());
     }, 150);
     return () => clearTimeout(timeout);
   }, [isLoading]);
-  if (!showSpinner) return null;
-  return <LoaderCircle className="fixed right-4 bottom-4 h-12 w-12 animate-spin" strokeWidth={3.5} />;
+  // return null;
+  console.log(loadingId);
+  return <AnimatePresence>{loadingId !== null && <LoadingBar key={loadingId} />}</AnimatePresence>;
+}
+
+export function LoadingBar() {
+  const currentlyShownPercent = useMotionValue(0);
+  useAnimationFrame((_, delta) => {
+    const easingFactor = 0.2; // Adjust this for speed
+    const scaledEasingFactor = easingFactor * (delta / 1000); // Scale by delta
+    currentlyShownPercent.set(
+      currentlyShownPercent.get() + (1 - currentlyShownPercent.get()) * scaledEasingFactor,
+    );
+  });
+  const value = useTransform(currentlyShownPercent, (val) => `${val * 100}%`);
+  return (
+    <motion.div
+      className="fixed top-0 left-0 z-50 h-1 bg-blue-500"
+      style={{ width: value }}
+      exit={{ width: 1, transition: { duration: 0.1 } }}
+    />
+  );
 }
