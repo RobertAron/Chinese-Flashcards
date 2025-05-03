@@ -18,7 +18,6 @@ const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezCreateCo
   (Provider) =>
     function PageLoadingContext({ children }) {
       const [isLoading, setIsLoading] = useOptimistic(false);
-      console.log(isLoading);
       const triggerLoading = useCallback(() => {
         setIsLoading(true);
       }, [setIsLoading]);

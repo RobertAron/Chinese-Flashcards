@@ -32,7 +32,6 @@ export function MultipleChoiceChallenge({
       )}
       <div className="grid grid-cols-2 grid-rows-2 gap-1">
         {options.map((ele, index) => {
-          console.log(ele.id);
           const keyboardShortcut = mapping[index];
           if (keyboardShortcut === undefined) return null;
           return (
