@@ -1,15 +1,14 @@
 "use client";
+import { Link, useLoadingRouter } from "@/utils/NextNavigationUtils";
 import { useKeyTrigger } from "@/utils/hooks";
-import { useMergeClasses } from "@/utils/styleResolvers";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useTailwindOverride } from "@/utils/styleResolvers";
 import React, { useCallback } from "react";
 import { Kbd } from "./Kbd";
 
 const baseClasses = "underline hocus:text-gray-600";
 export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof Link>) {
-  const realClassName = useMergeClasses(baseClasses, className ?? "");
-  return <Link className={realClassName} {...props} />;
+  const calculatedClassName = useTailwindOverride(baseClasses, className);
+  return <Link className={calculatedClassName} {...props} />;
 }
 
 export function BreadcrumbContainer({ children }: { children?: React.ReactNode }) {
@@ -30,7 +29,7 @@ export function BreadcrumbEscape({
   children,
   ...props
 }: Omit<React.ComponentProps<typeof Breadcrumb>, "className" | "href"> & { href: string }) {
-  const router = useRouter();
+  const router = useLoadingRouter();
   const navigate = useCallback(() => {
     router.push(props.href);
   }, [props.href, router]);

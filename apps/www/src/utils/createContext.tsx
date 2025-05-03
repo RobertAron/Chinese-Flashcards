@@ -1,7 +1,9 @@
 "use client";
 import type React from "react";
 import { createContext, use } from "react";
-export function generateContext<ProviderProps, ProvidedValue>(
+
+type DefaultProps = { children?: React.ReactNode };
+export function ezCreateContext<ProvidedValue, ProviderProps = DefaultProps>(
   generateProvider: (
     Provider: React.Context<ProvidedValue | null>,
   ) => (props: ProviderProps) => React.ReactNode,

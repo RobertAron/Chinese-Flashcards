@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { getAudioContext } from "./audioContext";
 
+// Key Trigger
 export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -12,8 +13,8 @@ export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
   }, [cb, key]);
 }
 
+// use audio source
 const mediaElementSources = new WeakMap<HTMLMediaElement, MediaElementAudioSourceNode>();
-
 function getOrCreateMediaElementSource(audioContext: AudioContext, el: HTMLMediaElement) {
   const node = mediaElementSources.get(el);
   if (node !== undefined) return node;
@@ -21,7 +22,6 @@ function getOrCreateMediaElementSource(audioContext: AudioContext, el: HTMLMedia
   mediaElementSources.set(el, generatedNode);
   return generatedNode;
 }
-
 export function useAudioSourceNode(mediaElementRef: {
   current: HTMLMediaElement;
 }) {

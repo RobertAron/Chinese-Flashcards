@@ -1,4 +1,4 @@
-import { generateContext } from "@/utils/createContext";
+import { ezCreateContext } from "@/utils/createContext";
 import { useRef } from "react";
 import { type Mutate, type StoreApi, createStore } from "zustand";
 
@@ -31,7 +31,7 @@ function createZustandStore<State extends StateObject>({
 export function createZustandContext<State extends StateObject>(defaultState: State) {
   type ContextProps = { initialState?: Partial<State>; children: React.ReactNode };
   type ProvidedValue = Mutate<ReturnType<typeof createZustandStore<State>>, []>;
-  return generateContext<ContextProps, ProvidedValue>(
+  return ezCreateContext<ProvidedValue, ContextProps>(
     (Provider) =>
       function ZustandContextProvider({ children, initialState }) {
         const store = useRef(

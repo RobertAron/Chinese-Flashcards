@@ -1,5 +1,5 @@
 "use client";
-import { generateContext } from "@/utils/createContext";
+import { ezCreateContext } from "@/utils/createContext";
 import type React from "react";
 import type { DrillInfo, PhraseDefinition, WordDefinition } from "./challengeServerUtils";
 
@@ -20,9 +20,9 @@ type ProvidedValue = {
   courseSlug: string;
 };
 
-export const { Provider: DrillProvider, useContext: useDrillContext } = generateContext<
-  ProviderProps,
-  ProvidedValue
+export const { Provider: DrillProvider, useContext: useDrillContext } = ezCreateContext<
+  ProvidedValue,
+  ProviderProps
 >(
   (Provider) =>
     function DrillProvider({

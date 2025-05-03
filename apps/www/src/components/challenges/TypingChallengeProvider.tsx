@@ -1,11 +1,10 @@
 "use client";
-import { generateContext } from "@/utils/createContext";
+import { ezCreateContext } from "@/utils/createContext";
 import { type UserSettings, useUserSettings } from "@/utils/playerState";
-import type React from "react";
+import { shuffle } from "@/utils/structureUtils";
 import type { AllMultipleChoiceChallenges, AllTypingChallenges } from "./ChallengeTypes";
 import { useDrillContext } from "./DrillProvider";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
-import { shuffle } from "@/utils/structureUtils";
 
 export type NormalizedWord = {
   wordIds: number[];
@@ -142,46 +141,41 @@ function wordsToMultipleChoiceQuestions(userSettings: UserSettings, words: Norma
   });
 }
 
-type ProviderProps = {
-  children?: React.ReactNode;
-};
 type ProvidedValue = {
   typingChallenges: AllTypingChallenges[];
   multipleChoiceChallenges: AllMultipleChoiceChallenges[];
 };
-export const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = generateContext<
-  ProviderProps,
-  ProvidedValue
->(
-  (Provider) =>
-    function DrillProvider({ children }: ProviderProps) {
-      const [userSettings] = useUserSettings();
-      const { wordDefinitions, phraseDefinitions } = useDrillContext();
-      const normalizedWords = wordDefinitions.map(
-        (ele): NormalizedWord => ({
-          ...ele,
-          wordIds: [ele.id],
-        }),
-      );
-      const normalizedPhrases = phraseDefinitions.map(
-        ({ words, ...rest }): NormalizedWord => ({
-          ...rest,
-          wordIds: words.map((ele) => ele.id),
-        }),
-      );
-      const normalizedContent = [...normalizedWords, ...normalizedPhrases];
-      const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
-      const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
-      const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
-      return (
-        <Provider
-          value={{
-            typingChallenges: wordChallenges,
-            multipleChoiceChallenges: [...mcqWords, ...mcqPhrases],
-          }}
-        >
-          {children}
-        </Provider>
-      );
-    },
-);
+export const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } =
+  ezCreateContext<ProvidedValue>(
+    (Provider) =>
+      function DrillProvider({ children }) {
+        const [userSettings] = useUserSettings();
+        const { wordDefinitions, phraseDefinitions } = useDrillContext();
+        const normalizedWords = wordDefinitions.map(
+          (ele): NormalizedWord => ({
+            ...ele,
+            wordIds: [ele.id],
+          }),
+        );
+        const normalizedPhrases = phraseDefinitions.map(
+          ({ words, ...rest }): NormalizedWord => ({
+            ...rest,
+            wordIds: words.map((ele) => ele.id),
+          }),
+        );
+        const normalizedContent = [...normalizedWords, ...normalizedPhrases];
+        const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
+        const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
+        const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
+        return (
+          <Provider
+            value={{
+              typingChallenges: wordChallenges,
+              multipleChoiceChallenges: [...mcqWords, ...mcqPhrases],
+            }}
+          >
+            {children}
+          </Provider>
+        );
+      },
+  );

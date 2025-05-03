@@ -1,9 +1,9 @@
+import { Link, LoadingProvider, LoadingSpinner } from "@/utils/NextNavigationUtils";
 import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,25 +18,28 @@ export default function RootLayout({
 }>) {
   return (
     <PlayerProvider>
-      <SyncPlayerStateToLocalStorage />
-      <html lang="en" className="h-full">
-        <body
-          className={`${GeistSans.variable} ${GeistMono.variable} relative min-h-full overflow-y-scroll pb-8 font-sans antialiased`}
-        >
-          <div>
-            <nav className="relative z-10 flex border-black border-b bg-white">
-              <div className="container mx-auto flex gap-2">
-                <Link href="/" className="flex items-center gap-2 hocus:bg-black p-1 hocus:text-white">
-                  <LanguagesIcon className="shrink-0" />
-                  <span className="font-bold text-xl">HOME</span>
-                </Link>
-              </div>
-            </nav>
-            <div className="container relative z-10 mx-auto h-full">{children}</div>
-          </div>
-          <div className="texture" />
-        </body>
-      </html>
+      <LoadingProvider>
+        <SyncPlayerStateToLocalStorage />
+        <html lang="en" className="h-full">
+          <body
+            className={`${GeistSans.variable} ${GeistMono.variable} relative min-h-full overflow-y-scroll pb-8 font-sans antialiased`}
+          >
+            <div>
+              <nav className="relative z-10 flex border-black border-b bg-white">
+                <div className="container mx-auto flex gap-2">
+                  <Link href="/" className="flex items-center gap-2 hocus:bg-black p-1 hocus:text-white">
+                    <LanguagesIcon className="shrink-0" />
+                    <span className="font-bold text-xl">HOME</span>
+                  </Link>
+                </div>
+              </nav>
+              <div className="container relative z-10 mx-auto h-full">{children}</div>
+            </div>
+            <LoadingSpinner />
+            <div className="texture" />
+          </body>
+        </html>
+      </LoadingProvider>
     </PlayerProvider>
   );
 }
