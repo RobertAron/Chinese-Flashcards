@@ -1,7 +1,14 @@
 "use client";
 // https://github.com/vercel/react-transition-progress/blob/main/src/next.tsx
 
-import { AnimatePresence, motion, useAnimationFrame, useMotionValue, useTransform } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useAnimationFrame,
+  useIsPresent,
+  useMotionValue,
+  useTransform,
+} from "motion/react";
 import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { formatUrl } from "next/dist/shared/lib/router/utils/format-url";
 import NextLink from "next/link";
@@ -107,12 +114,12 @@ export function LoadingRender() {
     return () => clearTimeout(timeout);
   }, [isLoading]);
   // return null;
-  console.log(loadingId);
   return <AnimatePresence>{loadingId !== null && <LoadingBar key={loadingId} />}</AnimatePresence>;
 }
 
 export function LoadingBar() {
   const currentlyShownPercent = useMotionValue(0);
+  const isPresent = useIsPresent();
   useAnimationFrame((_, delta) => {
     const easingFactor = 0.2; // Adjust this for speed
     const scaledEasingFactor = easingFactor * (delta / 1000); // Scale by delta
@@ -124,8 +131,12 @@ export function LoadingBar() {
   return (
     <motion.div
       className="fixed top-0 left-0 z-50 h-1 bg-blue-500"
-      style={{ width: value }}
-      exit={{ width: 1, transition: { duration: 0.1 } }}
+      style={{ width: isPresent ? value : undefined }}
+      exit={{
+        width: [null, "100%", "100%"],
+        opacity: [1, 1, 0],
+        transition: { duration: 0.5, times: [0, 0.8, 1] },
+      }}
     />
   );
 }
