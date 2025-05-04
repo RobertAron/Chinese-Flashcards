@@ -11,7 +11,7 @@ type WordOutlineProps = {
 export function WordOutline({ word }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
   return (
-    <div className="flex h-full items-stretch justify-stretch gap-2 rounded-md border-2 border-black bg-white p-2">
+    <div className="flex h-full flex-col items-stretch justify-stretch gap-2 rounded-md border-2 border-black bg-white p-2 md:flex-row">
       <div className="flex grow basis-0 flex-col items-start gap-2">
         <div className="text-6xl">{character}</div>
         <div className="font-semibold text-2xl">{pinyin}</div>

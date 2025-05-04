@@ -26,7 +26,7 @@ export function MultipleChoiceChallenge({
   return (
     <ChallengeWrapper id={problem.id} active className="self-stretch" ref={ref}>
       {problem.type === "multiple-choice-question-character-text" ? (
-        <div className="text-xl">{problem.questionText}</div>
+        <div className="grow text-3xl">{problem.questionText}</div>
       ) : (
         <ChallengeAudioPlayer slow src={problem.audio} />
       )}
@@ -64,7 +64,7 @@ function MultipleChoiceAnswer({
     <button
       onClick={onSelected}
       type="button"
-      className={clsx(buttonBehaviorClasses, "flex items-start gap-2 p-2 text-start", {
+      className={clsx(buttonBehaviorClasses, "flex items-start gap-2 p-2 text-start text-xl", {
         "bg-red-400": selected && !answer.correct,
         "bg-green-400": selected && answer.correct,
       })}

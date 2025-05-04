@@ -139,7 +139,7 @@ export function DrillHome() {
       )}
       <section className="flex w-full flex-col gap-2">
         <h2 className="font-semibold text-2xl">All Words</h2>
-        <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+        <ul className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {allWords.map((ele) => (
             <li key={ele.id}>
               <WordExperience {...ele} />

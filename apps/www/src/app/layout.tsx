@@ -27,7 +27,7 @@ export default function RootLayout({
             <div>
               <nav className="relative z-10 flex border-black border-b bg-white">
                 <div className="container mx-auto flex gap-2 pt-4 pb-2">
-                  <Link href="/" className="flex items-center gap-2 hocus:bg-black p-1 hocus:text-white">
+                  <Link href="/" className="flex items-center gap-2 hocus:bg-black p-1 pr-2 hocus:text-white">
                     <LanguagesIcon className="shrink-0" />
                     <span className="font-bold text-xl">HOME</span>
                   </Link>
