@@ -32,13 +32,17 @@ function ModeOption({
         duration: 0.1,
       }}
       href={href}
-      className={`group flex shrink grow basis-0 items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
+      className={`group flex shrink grow items-center gap-4 p-3 hover:z-10 ${buttonBehaviorClasses}`}
     >
       {children}
     </MotionLink>
   );
 }
 
+const modeOptionIconClasses =
+  "h-20 w-20 shrink-0 rounded-full bg-black p-2 md:p-4 text-white group-hocus:bg-white group-hocus:text-black sm:h-28 sm:w-28";
+const modeOptionTitleClasses = "text-5xl truncate whitespace-nowrap sm:text-6xl";
+const modeOptionSubtitleClasses = "truncate whitespace-nowrap sm:text-4xl text-2xl";
 export function DrillHome() {
   const { challengeId, wordDefinitions, phraseDefinitions, courseSlug, lessonSlug, description } =
     useDrillContext();
@@ -58,23 +62,23 @@ export function DrillHome() {
     <>
       <section className="flex w-full flex-col gap-2">
         <h2 className="font-bold text-2xl">Select Mode</h2>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row">
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/practice`}>
-            <div className="h-32 w-32 shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
+            <div className={modeOptionIconClasses}>
               <ListChecks className="h-full w-full" />
             </div>
-            <div>
-              <div className="text-6xl">Practice</div>
-              <div className="text-4xl">{formatPracticeCount(practiceCount)}</div>
+            <div className="w-0 grow">
+              <div className={modeOptionTitleClasses}>Practice</div>
+              <div className={modeOptionSubtitleClasses}>{formatPracticeCount(practiceCount)}</div>
             </div>
           </ModeOption>
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/time-attack`}>
-            <div className="h-32 w-32 shrink-0 rounded-full bg-black p-4 text-white group-hocus:bg-white group-hocus:text-black">
+            <div className={modeOptionIconClasses}>
               <Timer className="h-full w-full" />
             </div>
-            <div>
-              <div className="truncate whitespace-nowrap text-6xl">Time Attack</div>
-              <div className="truncate whitespace-nowrap text-4xl">{formatTimeAttackMs(timeAttackPb)}</div>
+            <div className="w-0 grow">
+              <div className={modeOptionTitleClasses}>Time Attack</div>
+              <div className={modeOptionSubtitleClasses}>{formatTimeAttackMs(timeAttackPb)}</div>
             </div>
           </ModeOption>
         </div>
@@ -139,7 +143,7 @@ export function DrillHome() {
       )}
       <section className="flex w-full flex-col gap-2">
         <h2 className="font-semibold text-2xl">All Words</h2>
-        <ul className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {allWords.map((ele) => (
             <li key={ele.id}>
               <WordExperience {...ele} />

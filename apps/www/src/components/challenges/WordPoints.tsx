@@ -13,13 +13,15 @@ export function WordExperience({
 }) {
   const practiceCount = useWordPracticeCount(id);
   return (
-    <div className="flex flex-col items-center justify-between gap-2 rounded-md border-2 border-black bg-white p-2 md:flex-row">
-      <div className="flex flex-col gap-1">
-        <div className="font-bold text-3xl">{characters}</div>
+    <div className="flex flex-col items-start justify-between gap-2 rounded-md border-2 border-black bg-white p-2 sm:flex-row">
+      <div className="flex w-full flex-col gap-1">
+        <div className="flex justify-between text-4xl">
+          <div className="font-bold">{characters}</div>
+          <div>x{practiceCount}</div>
+        </div>
         <div>{pinyin}</div>
-        <div>{meaning}</div>
+        <div className="min-h-8">{meaning}</div>
       </div>
-      <div className="text-4xl">x{practiceCount}</div>
     </div>
   );
 }

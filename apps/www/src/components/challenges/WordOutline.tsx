@@ -38,7 +38,7 @@ function AudioSection({ src }: { src: string }) {
           <PlayIcon className="h-4 w-4" strokeWidth={3} />
         </button>
       </div>
-      <div className="grid-stack-item h-full w-full">
+      <div className="grid-stack-item h-full min-h-24 w-full">
         {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
       </div>
     </div>
