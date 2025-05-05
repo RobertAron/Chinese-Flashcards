@@ -6,7 +6,6 @@ import { WordProgress } from "./WordProgress";
 type DefinitionChallengeProps = {
   pinyin: string;
   definition: string;
-  id: string;
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
@@ -18,12 +17,11 @@ export function DefinitionChallenge({
   onComplete,
   active,
   practice,
-  id,
   ref,
   definition,
 }: DefinitionChallengeProps) {
   return (
-    <ChallengeWrapper id={id} active={active} ref={ref}>
+    <ChallengeWrapper active={active} ref={ref}>
       <div className="flex min-h-36 items-center justify-center">
         <div className="text-center text-3xl">{definition}</div>
       </div>

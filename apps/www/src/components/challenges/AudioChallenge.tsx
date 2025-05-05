@@ -9,7 +9,6 @@ import { WordProgress } from "./WordProgress";
 
 type AudioChallengeProps = {
   pinyin: string;
-  id: string;
   onComplete?: () => void;
   active?: boolean;
   practice?: boolean;
@@ -17,9 +16,9 @@ type AudioChallengeProps = {
   ref?: Ref<HTMLDivElement>;
 };
 
-export function AudioChallenge({ pinyin, onComplete, active, practice, id, ref, src }: AudioChallengeProps) {
+export function AudioChallenge({ pinyin, onComplete, active, practice, ref, src }: AudioChallengeProps) {
   return (
-    <ChallengeWrapper id={id} active={active} ref={ref}>
+    <ChallengeWrapper active={active} ref={ref}>
       <ChallengeAudioPlayer src={src} slow={practice} />
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>

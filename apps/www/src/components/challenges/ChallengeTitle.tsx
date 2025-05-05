@@ -20,7 +20,7 @@ export function ChallengeTitle({
   const [userSettings, setUserSettings] = useUserSettings();
   const { challengeId, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
   return (
-    <div className="mx-auto flex flex-col gap-1">
+    <div className="mx-auto flex flex-col gap-1 lg:max-w-2xl">
       <h1 className="rounded-t-md bg-black p-3 font-extrabold text-4xl text-white">{challengeLabel}</h1>
       <div className="border-2 border-black bg-white p-2">{children}</div>
       <div className="flex flex-col items-start gap-2 border-2 border-black bg-white p-2">

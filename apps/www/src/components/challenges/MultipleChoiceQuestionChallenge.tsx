@@ -1,11 +1,11 @@
 import { useKeyTrigger } from "@/utils/hooks";
-import clsx from "clsx";
 import { type Ref, useState, useCallback, useEffect } from "react";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { Kbd } from "../Kbd";
 import { ChallengeAudioPlayer } from "./AudioChallenge";
 import type { AllMultipleChoiceChallenges, McqAnswer } from "./ChallengeTypes";
 import { ChallengeWrapper } from "./ChallengeWrapper";
+import { useTailwindOverride } from "@/utils/styleResolvers";
 
 const mapping: Record<number, string | undefined> = {
   0: "a",
@@ -24,7 +24,7 @@ export function MultipleChoiceChallenge({
     setOptions(problem.getOptions());
   }, [problem]);
   return (
-    <ChallengeWrapper id={problem.id} active className="self-stretch" ref={ref}>
+    <ChallengeWrapper active className="self-stretch" ref={ref}>
       {problem.type === "multiple-choice-question-character-text" ? (
         <div className="grow text-3xl">{problem.questionText}</div>
       ) : (
@@ -60,15 +60,16 @@ function MultipleChoiceAnswer({
   useKeyTrigger(letter, () => {
     onSelected();
   });
+  const buttonClasses = useTailwindOverride(
+    buttonBehaviorClasses,
+    "flex items-start gap-2 p-2 text-start text-xl",
+    {
+      "bg-red-400": selected && !answer.correct,
+      "bg-green-400": selected && answer.correct,
+    },
+  );
   return (
-    <button
-      onClick={onSelected}
-      type="button"
-      className={clsx(buttonBehaviorClasses, "flex items-start gap-2 p-2 text-start text-xl", {
-        "bg-red-400": selected && !answer.correct,
-        "bg-green-400": selected && answer.correct,
-      })}
-    >
+    <button onClick={onSelected} type="button" className={buttonClasses}>
       <Kbd>{letter.toUpperCase()}</Kbd>
       <span>{answer.text}</span>
     </button>

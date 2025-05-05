@@ -71,7 +71,13 @@ export default function Practice() {
       <ProgressArea practiceCount={practiceCount} />
       <div className="flex flex-col items-center self-stretch sm:self-center">
         <AnimatePresence mode="popLayout">
-          <Challenge onProblemComplete={onProblemComplete} challenge={problem} active practice />
+          <Challenge
+            onProblemComplete={onProblemComplete}
+            challenge={problem}
+            active
+            practice
+            key={problem.id}
+          />
         </AnimatePresence>
       </div>
     </div>
@@ -96,14 +102,12 @@ function ProgressArea({ practiceCount }: { practiceCount: number }) {
               </>
             )}
           </span>
-          <AnimatePresence mode="wait">
-            {tillNext.requiredForNext !== null && (
-              <PercentageComplete
-                percent={tillNext.current / tillNext.requiredForNext}
-                key={tillNext.requiredForNext}
-              />
-            )}
-          </AnimatePresence>
+          {tillNext.requiredForNext !== null && (
+            <PercentageComplete
+              percent={tillNext.current / tillNext.requiredForNext}
+              key={tillNext.requiredForNext}
+            />
+          )}
         </div>
       </div>
       <Experience percent={practiceCount} />

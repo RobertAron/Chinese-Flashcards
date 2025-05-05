@@ -111,9 +111,12 @@ function TimeAttackRunning({
         </div>
         <ProgressRing current={completedItems} total={itemsToComplete} />
         <AnimatePresence mode="popLayout">
-          <Challenge challenge={problem} onProblemComplete={onProblemComplete} active />
+          <Challenge challenge={problem} onProblemComplete={onProblemComplete} active key={problem.id} />
         </AnimatePresence>
       </div>
+      <button type="button" onClick={() => onProblemComplete()}>
+        GO
+      </button>
     </div>
   );
 }

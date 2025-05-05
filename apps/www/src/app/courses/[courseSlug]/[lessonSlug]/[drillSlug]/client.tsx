@@ -84,7 +84,7 @@ export function DrillHome() {
         </div>
       </section>
       {description !== null && (
-        <section className="border-2 border-black bg-white">
+        <section className="rounded-md border-2 border-black bg-white">
           <div className="border-blue-700 border-l-8 p-2">
             <h2 className="text-3xl">Description</h2>
             <p className="text-xl">{description}</p>
