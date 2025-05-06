@@ -20,7 +20,7 @@ export function ChallengeWrapper({ ref, children, className }: ChallengeWrapperP
         className,
       )}
       initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      animate={{ y: 0, opacity: 1, transition: { delay: 0.1 } }}
       exit={{
         rotate: [0, 2, 3],
         opacity: [1, 0.9, 0],

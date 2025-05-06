@@ -1,11 +1,15 @@
 {
   "name": "prisma-ui",
+  "exports": {
+    "./prisma": "./dist/prisma/index.ts"
+  },
   "scripts": {
     "pull": "prisma db pull && prisma generate",
-    "ui": "prisma studio"
+    "ui": "prisma studio",
+    "gen":"prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.6.0",
-    "prisma": "^6.6.0"
+    "@prisma/client": "^6.7.0",
+    "prisma": "^6.7.0"
   }
 }

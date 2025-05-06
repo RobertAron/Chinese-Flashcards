@@ -101,11 +101,11 @@ function TimeAttackRunning({
   };
 
   return (
-    <div className="grid-stack relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div className="grid-stack-item justify-start self-start">
+    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <div className="justify-start self-start">
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
-      <div className="grid-stack-item flex flex-col items-center gap-2 self-start justify-self-center">
+      <div className="flex flex-col items-center gap-2 self-center justify-self-center">
         <div ref={timerRef} className="font-bold font-mono text-lg">
           0.00
         </div>
@@ -114,9 +114,6 @@ function TimeAttackRunning({
           <Challenge challenge={problem} onProblemComplete={onProblemComplete} active key={problem.id} />
         </AnimatePresence>
       </div>
-      <button type="button" onClick={() => onProblemComplete()}>
-        GO
-      </button>
     </div>
   );
 }
