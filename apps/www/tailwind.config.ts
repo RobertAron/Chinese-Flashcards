@@ -30,8 +30,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)"],
-        mono: ["var(--font-geist-mono)"],
+        sans: ["var(--font-geist-sans)", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", "monospace"],
       },
       colors: {
         background: "var(--background)",
