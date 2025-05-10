@@ -33,7 +33,13 @@
         "useMediaCaption": "off"
       },
       "nursery": {
-        "useSortedClasses": "warn"
+        "useSortedClasses": {
+          "level": "warn",
+          "fix":"safe",
+          "options":{
+            "functions": ["useTailwindOverride"]
+          }
+        }
       },
       "correctness": {
         "noUnusedImports": "error",

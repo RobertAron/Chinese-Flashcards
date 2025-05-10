@@ -22,19 +22,17 @@ export default function RootLayout({
         <SyncPlayerStateToLocalStorage />
         <html lang="en" className="h-full">
           <body
-            className={`${GeistSans.variable} ${GeistMono.variable} relative min-h-full overflow-y-scroll pb-8 font-sans antialiased`}
+            className={`${GeistSans.variable} ${GeistMono.variable} relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased`}
           >
-            <div>
-              <nav className="relative z-10 flex border-black border-b bg-white">
-                <div className="container mx-auto flex gap-2 pt-4 pb-2">
-                  <Link href="/" className="flex items-center gap-2 hocus:bg-black p-1 pr-2 hocus:text-white">
-                    <LanguagesIcon className="shrink-0" />
-                    <span className="font-bold text-xl">HOME</span>
-                  </Link>
-                </div>
-              </nav>
-              <div className="container relative z-10 mx-auto h-full">{children}</div>
-            </div>
+            <nav className="relative z-10 flex border-black border-b bg-white">
+              <div className="container mx-auto flex gap-2 pt-4 pb-2">
+                <Link href="/" className="flex items-center gap-2 hocus:bg-black p-1 pr-2 hocus:text-white">
+                  <LanguagesIcon className="shrink-0" />
+                  <span className="font-bold text-xl">Chinese Challenges</span>
+                </Link>
+              </div>
+            </nav>
+            <div className="container relative z-10 mx-auto flex h-full grow">{children}</div>
             <LoadingRender />
             <div className="texture" />
           </body>
