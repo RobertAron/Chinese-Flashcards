@@ -1,6 +1,7 @@
 "use client";
 // https://github.com/samhirtarif/react-audio-visualize
 import { getAudioContext } from "@/utils/audioContext";
+import { useTailwindOverride } from "@/utils/styleResolvers";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 function average(nums: number[]) {
@@ -49,6 +50,7 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
 };
 
 export type Props = {
+  className?: string;
   /**
    * Media recorder who's stream needs to visualized
    */
@@ -110,6 +112,7 @@ export const LiveAudioVisualizer = ({
   maxDecibels = -25,
   minDecibels = -85,
   smoothingTimeConstant = 0.01,
+  className,
 }: Props) => {
   const [[width, height], setCanvasSize] = useState<[number, number]>([0, 0]);
   const containerRef = useRef<HTMLDivElement>(null!);
@@ -167,12 +170,12 @@ export const LiveAudioVisualizer = ({
     resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();
   }, []);
-
+  const classes = useTailwindOverride(
+    "relative h-full w-full overflow-hidden rounded-md border-[1.5px] border-black bg-white",
+    className,
+  );
   return (
-    <div
-      className="relative h-full w-full overflow-hidden rounded-md border-[1.5px] border-black bg-white"
-      ref={containerRef}
-    >
+    <div className={classes} ref={containerRef}>
       <canvas className="absolute inset-0" ref={canvasRef} width={width * 2} height={height * 2} />
     </div>
   );

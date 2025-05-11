@@ -8,7 +8,7 @@ export default AppServerLayoutEntrypoint(async ({ children, params }) => {
   const course = await getCourseOutline(courseSlug);
   return (
     <div className="flex grow items-stretch">
-      <div className="flex w-64 shrink-0 flex-col gap-2 border-black border-r">
+      <div className="hidden w-64 shrink-0 flex-col gap-2 border-black border-r md:flex">
         <CourseTitleLink courseSlug={course.slug}>{course.title}</CourseTitleLink>
         {course.lessons.map((lesson) => (
           <div className="flex flex-col" key={lesson.title}>
@@ -33,7 +33,7 @@ export default AppServerLayoutEntrypoint(async ({ children, params }) => {
           </div>
         ))}
       </div>
-      <div className="flex grow flex-col px-3 pb-3">{children}</div>
+      <div className="flex grow flex-col px-3 pt-1 pb-3">{children}</div>
     </div>
   );
 });

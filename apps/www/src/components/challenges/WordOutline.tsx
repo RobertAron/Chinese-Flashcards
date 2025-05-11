@@ -11,14 +11,16 @@ type WordOutlineProps = {
 export function WordOutline({ word }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
   return (
-    <div className="flex h-full flex-col items-stretch justify-stretch gap-2 rounded-md border-2 border-black bg-white p-2 md:flex-row">
-      <div className="flex grow basis-0 flex-col items-start gap-2">
-        <div className="text-6xl">{character}</div>
-        <div className="font-semibold text-2xl text-gray-600">({pinyin})</div>
-        <div className="text-pretty text-sm">{definition}</div>
-        <div className="text-pretty text-sm">{emoji}</div>
-      </div>
+    <div className="flex h-full flex-row items-stretch justify-stretch gap-2 overflow-hidden rounded-md border-2 border-black bg-white">
       <AudioSection src={audioSrc} />
+      <div className="flex grow basis-0 flex-col items-start gap-2 p-2">
+        <div className="flex flex-col">
+          <div className="font-medium text-4xl md:text-6xl">{character}</div>
+          <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
+        </div>
+        <div className="text-pretty text-xl md:text-2xl">{definition}</div>
+        <div className="text-pretty text-xl md:text-2xl">{emoji}</div>
+      </div>
     </div>
   );
 }
@@ -27,7 +29,7 @@ function AudioSection({ src }: { src: string }) {
   const audioRef = useRef<HTMLMediaElement>(null!);
   const { audioSourceNode, playAudio } = useAudioSourceNode(audioRef);
   return (
-    <div className="grid-stack h-full w-full shrink-0 grow basis-0">
+    <div className="grid-stack aspect-square h-full shrink-0">
       <audio ref={audioRef} src={src} crossOrigin="anonymous" className="hidden" />
       <div className="grid-stack-item z-10 mt-1 ml-1 self-start justify-self-start">
         <button
@@ -39,7 +41,13 @@ function AudioSection({ src }: { src: string }) {
         </button>
       </div>
       <div className="grid-stack-item h-full min-h-24 w-full">
-        {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
+        {audioSourceNode !== null && (
+          <LiveAudioVisualizer
+            className="rounded-none border-0 border-r-2"
+            mediaSource={audioSourceNode}
+            width={700}
+          />
+        )}
       </div>
     </div>
   );

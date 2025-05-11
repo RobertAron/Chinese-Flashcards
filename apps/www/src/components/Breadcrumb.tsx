@@ -5,7 +5,7 @@ import { useTailwindOverride } from "@/utils/styleResolvers";
 import React, { useCallback } from "react";
 import { Kbd } from "./Kbd";
 
-const baseClasses = "underline hocus:text-gray-600";
+const baseClasses = "underline hocus:text-gray-600 whitespace-nowrap truncate";
 export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof Link>) {
   const calculatedClassName = useTailwindOverride(baseClasses, className);
   return <Link className={calculatedClassName} {...props} />;
@@ -14,7 +14,7 @@ export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof 
 export function BreadcrumbContainer({ children }: { children?: React.ReactNode }) {
   const childrenItems = React.Children.toArray(children);
   return (
-    <nav className="flex gap-2 py-1">
+    <nav className="flex gap-2 py-1 md:hidden">
       {childrenItems.map((child, idx) => (
         <React.Fragment key={idx}>
           {child}
@@ -37,7 +37,7 @@ export function BreadcrumbEscape({
 
   return (
     <Breadcrumb className="flex gap-1 no-underline" {...props}>
-      <div className="underline">{children}</div>
+      <div className="whitespace-nowrap underline">{children}</div>
       <Kbd>esc</Kbd>
     </Breadcrumb>
   );
