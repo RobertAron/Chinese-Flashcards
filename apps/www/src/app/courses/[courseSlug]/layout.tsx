@@ -33,7 +33,7 @@ export default AppServerLayoutEntrypoint(async ({ children, params }) => {
           </div>
         ))}
       </div>
-      <div className="flex grow flex-col px-3">{children}</div>
+      <div className="flex grow flex-col px-3 pb-3">{children}</div>
     </div>
   );
 });
