@@ -35,9 +35,10 @@ function AudioSection({ src }: { src: string }) {
         <button
           type="button"
           className={`${buttonBehaviorClasses} flex items-center gap-4 rounded-lg bg-white/30 p-2 backdrop-blur-sm`}
+          aria-label="Play pronunciation"
           onClick={playAudio}
         >
-          <PlayIcon className="h-4 w-4" strokeWidth={3} />
+          <PlayIcon className="h-4 w-4" aria-hidden strokeWidth={3} />
         </button>
       </div>
       <div className="grid-stack-item h-full min-h-24 w-full">

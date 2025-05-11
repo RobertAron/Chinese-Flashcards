@@ -13,23 +13,26 @@ export default AppServerLayoutEntrypoint(async ({ children, params }) => {
         {course.lessons.map((lesson) => (
           <div className="flex flex-col" key={lesson.title}>
             <LessonLink courseSlug={courseSlug} lessonSlug={lesson.slug} title={lesson.title} />
-            <ul className="flex flex-col">
+            <ol className="flex flex-col">
               {lesson.drills.map((drill) => (
+                <li key={drill.slug}>
+                  <DrillLink
+                    courseSlug={courseSlug}
+                    lessonSlug={lesson.slug}
+                    drillSlug={drill.slug}
+                    title={drill.title}
+                  />
+                </li>
+              ))}
+              <li>
                 <DrillLink
-                  key={drill.slug}
                   courseSlug={courseSlug}
                   lessonSlug={lesson.slug}
-                  drillSlug={drill.slug}
-                  title={drill.title}
+                  drillSlug={`final-mastery-${lesson.slug}`}
+                  title="Final Mastery"
                 />
-              ))}
-              <DrillLink
-                courseSlug={courseSlug}
-                lessonSlug={lesson.slug}
-                drillSlug={`final-mastery-${lesson.slug}`}
-                title="Final Mastery"
-              />
-            </ul>
+              </li>
+            </ol>
           </div>
         ))}
       </div>

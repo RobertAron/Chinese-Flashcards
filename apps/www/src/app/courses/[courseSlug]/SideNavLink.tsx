@@ -56,7 +56,7 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
       data-selected={matchingPath}
       href={`/courses/${courseSlug}/${lessonSlug}/${drillSlug}`}
       key={drillSlug}
-      className={`${coreLinkClasses} border-[currentColor] border-l-[1.5px] pl-2`}
+      className={`${coreLinkClasses} flex border-[currentColor] border-l-[1.5px] pl-2`}
     >
       <div className="pl-2">{title}</div>
     </Link>

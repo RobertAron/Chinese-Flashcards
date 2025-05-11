@@ -176,7 +176,7 @@ export const LiveAudioVisualizer = ({
   );
   return (
     <div className={classes} ref={containerRef}>
-      <canvas className="absolute inset-0" ref={canvasRef} width={width * 2} height={height * 2} />
+      <canvas className="absolute inset-0" aria-hidden ref={canvasRef} width={width * 2} height={height * 2} />
     </div>
   );
 };
