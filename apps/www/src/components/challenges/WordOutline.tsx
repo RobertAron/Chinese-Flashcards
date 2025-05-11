@@ -14,7 +14,7 @@ export function WordOutline({ word }: WordOutlineProps) {
     <div className="flex h-full flex-col items-stretch justify-stretch gap-2 rounded-md border-2 border-black bg-white p-2 md:flex-row">
       <div className="flex grow basis-0 flex-col items-start gap-2">
         <div className="text-6xl">{character}</div>
-        <div className="font-semibold text-2xl">{pinyin}</div>
+        <div className="font-semibold text-2xl text-gray-600">({pinyin})</div>
         <div className="text-pretty text-sm">{definition}</div>
         <div className="text-pretty text-sm">{emoji}</div>
       </div>
