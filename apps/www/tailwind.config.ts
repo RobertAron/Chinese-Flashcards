@@ -42,7 +42,7 @@ export default {
       center: true,
       padding: "1rem",
       screens: {
-        sm: "480px",
+        sm: "580px",
         md: "640px",
         lg: "768px",
         xl: "1024px",

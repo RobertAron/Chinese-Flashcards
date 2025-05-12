@@ -11,11 +11,11 @@ type WordOutlineProps = {
 export function WordOutline({ word }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
   return (
-    <div className="flex h-full flex-row items-stretch justify-stretch gap-2 overflow-hidden rounded-md border-2 border-black bg-white">
+    <div className="flex h-full max-w-full grow flex-row items-stretch justify-stretch gap-2 overflow-hidden rounded-md border-2 border-black bg-white">
       <AudioSection src={audioSrc} />
       <div className="flex grow basis-0 flex-col items-start gap-2 p-2">
         <div className="flex flex-col">
-          <div className="font-medium text-4xl md:text-6xl">{character}</div>
+          <div className="text-4xl md:text-6xl">{character}</div>
           <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
         </div>
         <div className="text-pretty text-xl md:text-2xl">{definition}</div>

@@ -14,7 +14,7 @@ export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof 
 export function BreadcrumbContainer({ children }: { children?: React.ReactNode }) {
   const childrenItems = React.Children.toArray(children);
   return (
-    <nav className="flex gap-2 py-1 md:hidden">
+    <nav className="flex gap-2 py-1 lg:hidden">
       {childrenItems.map((child, idx) => (
         <React.Fragment key={idx}>
           {child}

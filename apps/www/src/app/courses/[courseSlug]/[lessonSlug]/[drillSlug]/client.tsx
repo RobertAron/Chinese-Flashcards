@@ -109,6 +109,7 @@ export function DrillHome() {
                     delay: 0.02 * index,
                   },
                 }}
+                className="flex"
               >
                 <WordOutline word={word} />
               </motion.li>
@@ -134,6 +135,7 @@ export function DrillHome() {
                     delay: 0.02 * index,
                   },
                 }}
+                className="flex"
               >
                 <WordOutline word={phrase} />
               </motion.li>
