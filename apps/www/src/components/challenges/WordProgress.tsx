@@ -125,8 +125,7 @@ function UntypedCharacter({
 export function WordProgress({ pinyin, practice, active, onComplete }: WordProgressProps) {
   const [{ requireToneInput }] = useUserSettings();
   const normalized = pinyin.split("").map((char) => toneMap[char] ?? char);
-  const [progress, setProgress] = useState(0);
-  const [secondaryProgress, setSecondaryProgress] = useState(0);
+  const [{ progress, secondaryProgress }, setProgressState] = useState({ progress: 0, secondaryProgress: 0 });
   const currentCharacter = normalized[progress];
   const isToneCharacter = typeof currentCharacter === "object";
 
@@ -158,32 +157,34 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
   useEffect(() => {
     if (!active) return;
     const cb = (e: KeyboardEvent) => {
-      const currentCharacter = normalized[progress];
-      const isToneCharacter = typeof currentCharacter === "object";
-      const rawChar = extractListenChar(currentCharacter);
-      const nextRawChar = extractListenChar(normalized[progress + 1]);
-      const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
-      const nextStep = progress + incrementAmount;
-      const onLastLetter = progress + incrementAmount === normalized.length;
-      const onToneStep = secondaryProgress === 1;
-      // characters with tones
-      if (isToneCharacter && requireToneInput) {
-        if (!onToneStep && e.key.toLocaleLowerCase() === rawChar) setSecondaryProgress(1);
-        else if (onToneStep && e.key === currentCharacter.toneKey) {
-          setProgress(nextStep);
-          setSecondaryProgress(0);
-          if (onLastLetter) onComplete?.();
+      setProgressState((prev) => {
+        const { progress, secondaryProgress } = prev;
+        const currentCharacter = normalized[progress];
+        const isToneCharacter = typeof currentCharacter === "object";
+        const rawChar = extractListenChar(currentCharacter);
+        const nextRawChar = extractListenChar(normalized[progress + 1]);
+        const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
+        const nextStep = progress + incrementAmount;
+
+        const onToneStep = secondaryProgress === 1;
+        // characters with tones
+        if (isToneCharacter && requireToneInput) {
+          if (!onToneStep && e.key.toLocaleLowerCase() === rawChar) return { progress, secondaryProgress: 1 };
+          if (onToneStep && e.key === currentCharacter.toneKey)
+            return { progress: nextStep, secondaryProgress: 0 };
         }
-      }
-      // characters without tones
-      else if (e.key.toLocaleLowerCase() === rawChar) {
-        setProgress(nextStep);
-        if (onLastLetter) onComplete?.();
-      }
+        // characters without tones
+        else if (e.key.toLocaleLowerCase() === rawChar) return { progress: nextStep, secondaryProgress: 0 };
+        return prev;
+      });
     };
     window.addEventListener("keydown", cb);
     return () => window.removeEventListener("keydown", cb);
-  }, [active, normalized, progress, secondaryProgress, onComplete, requireToneInput]);
+  }, [active, normalized, requireToneInput]);
+  useEffect(() => {
+    if (progress === normalized.length) onComplete?.();
+  }, [progress, normalized, onComplete]);
+
   return (
     <div className="relative flex flex-wrap justify-center gap-[1ch] text-center font-mono text-2xl tracking-tighter">
       {characterChunks.map((characters, index) => (

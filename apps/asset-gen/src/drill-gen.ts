@@ -6,63 +6,49 @@ async function main() {
   const prisma = new PrismaClient({
     datasourceUrl: `file:${datasourceUrl}`,
   });
-  const commonWords = await prisma.words.findMany({
-    take: 150,
-    orderBy: {
-      frequencyRank: "asc",
-    },
-  });
   await prisma.drill.create({
     data: {
-      title: "What is",
-      slug: "common-verbs-7",
-      lessonSlug: "core-verbs-1",
-      order: 6,
+      title: "Which? (HSK1)",
+      slug: "asking-questions-10",
+      lessonSlug: "core-questions-2",
+      order: 7,
       description: "",
       Phrases: {
         create: [
           {
-            characters: "我 是 美国人",
-            meaning: "I’m American.",
-            pinyin: "wǒ shì měiguó rén",
-            emojiChallenge: "🙂🟰🇺🇸👤",
+            characters: "你要哪个？",
+            meaning: "You intend which one?",
+            pinyin: "nǐ yào nǎ ge?",
+            emojiChallenge: "👤🎯⌥📦", // 👤(you) + 🎯(want) + ❓(which) + 📦(one)
           },
           {
-            characters: "今天 是 星期五",
-            meaning: "Today is Friday.",
-            pinyin: "jīntiān shì xīngqīwǔ",
-            emojiChallenge: "📅🟰5️⃣",
+            characters: "这是哪个？",
+            meaning: "this is Which one?",
+            pinyin: "zhè shì nǎ ge?",
+            emojiChallenge: "👇🟰⌥📦", // 🖐️(this) + 🟰(is) + ❓(which) + 📦(one)
           },
           {
-            characters: "这 不是 我 的 手机",
-            meaning: "This is not my phone.",
-            pinyin: "zhè bú shì wǒ de shǒujī",
-            emojiChallenge: "📍🚫🟰🙂📎📱",
+            characters: "哪个好？",
+            meaning: "Which one is good?",
+            pinyin: "nǎ ge hǎo?",
+            emojiChallenge: "⌥📦👍", // ❓(which) + 📦(one) + 👍(good)
           },
           {
-            characters: "你 是 中国 人 吗？",
-            meaning: "Are you Chinese?",
-            pinyin: "nǐ shì zhōngguó rén ma?",
-            emojiChallenge: "👤🟰🇨🇳❓",
+            characters: "你选哪个？",
+            meaning: "You pick which one?",
+            pinyin: "nǐ xuǎn nǎ ge?",
+            emojiChallenge: "👤✌️⌥📦", // 👤(you) + ✌️(pick) + ❓(which) + 📦(one)
           },
           {
-            characters: "这 是 你 的 书 吗？",
-            meaning: "Is this your book?",
-            pinyin: "zhè shì nǐ de shū ma?",
-            emojiChallenge: "📍🟰👤📎📖❓",
-          },
-          {
-            characters: "我 是 你 的 朋友",
-            meaning: "I’m your friend.",
-            pinyin: "wǒ shì nǐ de péngyǒu",
-            emojiChallenge: "🙂🟰👤📎🤝",
+            characters: "哪个是你的？",
+            meaning: "Which one is yours?",
+            pinyin: "nǎ ge shì nǐ de?",
+            emojiChallenge: "⌥📦🟰👤🔗", // ❓(which) + 📦(one) + 🟰(is) + 👤(your) + 📌(的)
           },
         ],
       },
     },
   });
-
-  console.log(JSON.stringify(commonWords));
 }
 
 main();
