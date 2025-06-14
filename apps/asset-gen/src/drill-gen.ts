@@ -8,42 +8,42 @@ async function main() {
   });
   await prisma.drill.create({
     data: {
-      title: "Which? (HSK1)",
-      slug: "asking-questions-10",
+      title: "When?",
+      slug: "asking-questions-12",
       lessonSlug: "core-questions-2",
-      order: 7,
+      order: 8,
       description: "",
       Phrases: {
         create: [
           {
-            characters: "你要哪个？",
-            meaning: "You intend which one?",
-            pinyin: "nǐ yào nǎ ge?",
-            emojiChallenge: "👤🎯⌥📦", // 👤(you) + 🎯(want) + ❓(which) + 📦(one)
+            characters: "你什么时候来？",
+            meaning: "You're coming when?",
+            pinyin: "nǐ shénme shíhou lái?",
+            emojiChallenge: "👤⌛❓👣", // 👤(you) + ⌛❓(when) + 👣(come)
           },
           {
-            characters: "这是哪个？",
-            meaning: "this is Which one?",
-            pinyin: "zhè shì nǎ ge?",
-            emojiChallenge: "👇🟰⌥📦", // 🖐️(this) + 🟰(is) + ❓(which) + 📦(one)
+            characters: "他什么时候走？",
+            meaning: "He's leaving when?",
+            pinyin: "tā shénme shíhou zǒu?",
+            emojiChallenge: "👦⌛❓🚶", // 👦(he) + ⌛❓(when) + 🏃‍♂️(leave)
           },
           {
-            characters: "哪个好？",
-            meaning: "Which one is good?",
-            pinyin: "nǎ ge hǎo?",
-            emojiChallenge: "⌥📦👍", // ❓(which) + 📦(one) + 👍(good)
+            characters: "我们什么时候吃饭？",
+            meaning: "We're eating when?",
+            pinyin: "wǒmen shénme shíhou chīfàn?",
+            emojiChallenge: "👥⌛❓🙂🍽️", // 👥(we) + ⌛❓(when) + 🍚(eat)
           },
           {
-            characters: "你选哪个？",
-            meaning: "You pick which one?",
-            pinyin: "nǐ xuǎn nǎ ge?",
-            emojiChallenge: "👤✌️⌥📦", // 👤(you) + ✌️(pick) + ❓(which) + 📦(one)
+            characters: "她什么时候工作？",
+            meaning: "She works when?",
+            pinyin: "tā shénme shíhou gōngzuò?",
+            emojiChallenge: "👩⌛❓💼", // 👩(she) + ⌛❓(when) + 💼(work)
           },
           {
-            characters: "哪个是你的？",
-            meaning: "Which one is yours?",
-            pinyin: "nǎ ge shì nǐ de?",
-            emojiChallenge: "⌥📦🟰👤🔗", // ❓(which) + 📦(one) + 🟰(is) + 👤(your) + 📌(的)
+            characters: "你们什么时候去北京？",
+            meaning: "Ya'll are going to Bejing when?",
+            pinyin: "nǐmen shénme shíhou qù Běijīng?",
+            emojiChallenge: "👥⌛❓✈️🏯", // 👥(you all) + ⌛❓(when) + ✈️(go) + 🏯(Beijing)
           },
         ],
       },
