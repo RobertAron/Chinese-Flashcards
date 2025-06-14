@@ -157,33 +157,28 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
   useEffect(() => {
     if (!active) return;
     const cb = (e: KeyboardEvent) => {
-      setProgressState((prev) => {
-        const { progress, secondaryProgress } = prev;
-        const currentCharacter = normalized[progress];
-        const isToneCharacter = typeof currentCharacter === "object";
-        const rawChar = extractListenChar(currentCharacter);
-        const nextRawChar = extractListenChar(normalized[progress + 1]);
-        const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
-        const nextStep = progress + incrementAmount;
-
-        const onToneStep = secondaryProgress === 1;
-        // characters with tones
-        if (isToneCharacter && requireToneInput) {
-          if (!onToneStep && e.key.toLocaleLowerCase() === rawChar) return { progress, secondaryProgress: 1 };
-          if (onToneStep && e.key === currentCharacter.toneKey)
-            return { progress: nextStep, secondaryProgress: 0 };
-        }
-        // characters without tones
-        else if (e.key.toLocaleLowerCase() === rawChar) return { progress: nextStep, secondaryProgress: 0 };
-        return prev;
-      });
+      const currentCharacter = normalized[progress];
+      const isToneCharacter = typeof currentCharacter === "object";
+      const rawChar = extractListenChar(currentCharacter);
+      const nextRawChar = extractListenChar(normalized[progress + 1]);
+      const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
+      const nextStep = progress + incrementAmount;
+      const onToneStep = secondaryProgress === 1;
+      // characters with tones
+      if (isToneCharacter && requireToneInput) {
+        if (!onToneStep && e.key.toLocaleLowerCase() === rawChar)
+          setProgressState({ progress, secondaryProgress: 1 });
+        else if (onToneStep && e.key === currentCharacter.toneKey)
+          setProgressState({ progress: nextStep, secondaryProgress: 0 });
+      }
+      // characters without tones
+      else if (e.key.toLocaleLowerCase() === rawChar)
+        setProgressState({ progress: nextStep, secondaryProgress: 0 });
+      if (nextStep === normalized.length) onComplete?.();
     };
     window.addEventListener("keydown", cb);
     return () => window.removeEventListener("keydown", cb);
-  }, [active, normalized, requireToneInput]);
-  useEffect(() => {
-    if (progress === normalized.length) onComplete?.();
-  }, [progress, normalized, onComplete]);
+  }, [active, normalized, requireToneInput, progress, secondaryProgress, onComplete]);
 
   return (
     <div className="relative flex flex-wrap justify-center gap-[1ch] text-center font-mono text-2xl tracking-tighter">

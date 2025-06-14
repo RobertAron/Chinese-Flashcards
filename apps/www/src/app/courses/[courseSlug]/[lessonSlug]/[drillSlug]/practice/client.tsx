@@ -72,7 +72,7 @@ export default function Practice() {
       <div className="flex flex-col items-center self-stretch sm:self-center">
         <AnimatePresence mode="popLayout">
           <Challenge
-            onProblemComplete={onProblemComplete}
+            onComplete={onProblemComplete}
             challenge={problem}
             active
             practice

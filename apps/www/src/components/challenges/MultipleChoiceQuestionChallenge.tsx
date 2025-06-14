@@ -15,20 +15,20 @@ const mapping: Record<number, string | undefined> = {
 };
 
 export function MultipleChoiceChallenge({
-  problem,
+  challenge,
   onComplete,
   ref,
-}: { problem: AllMultipleChoiceChallenges; onComplete: () => void; ref?: Ref<HTMLDivElement> }) {
-  const [options, setOptions] = useState(() => problem.getOptions());
+}: { challenge: AllMultipleChoiceChallenges; onComplete: () => void; ref?: Ref<HTMLDivElement> }) {
+  const [options, setOptions] = useState(() => challenge.getOptions());
   useEffect(() => {
-    setOptions(problem.getOptions());
-  }, [problem]);
+    setOptions(challenge.getOptions());
+  }, [challenge]);
   return (
     <ChallengeWrapper active className="self-stretch" ref={ref}>
-      {problem.type === "multiple-choice-question-character-text" ? (
-        <div className="grow text-3xl">{problem.questionText}</div>
+      {challenge.type === "multiple-choice-question-character-text" ? (
+        <div className="grow text-3xl">{challenge.questionText}</div>
       ) : (
-        <ChallengeAudioPlayer slow src={problem.audio} />
+        <ChallengeAudioPlayer slow src={challenge.audio} />
       )}
       <div className="grid grid-cols-2 grid-rows-2 gap-1">
         {options.map((ele, index) => {

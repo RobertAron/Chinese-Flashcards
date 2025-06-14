@@ -1,5 +1,5 @@
 "use client";
-import { Link } from "@/utils/NextNavigationUtils";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type LessonLinkProps = {
@@ -9,7 +9,8 @@ type LessonLinkProps = {
   children?: React.ReactNode;
 };
 
-const coreLinkClasses = "text-gray-600 truncate hocus:text-black data-[selected=true]:text-gray-800 data-[selected=true]:font-bold";
+const coreLinkClasses =
+  "text-gray-600 truncate hocus:text-black data-[selected=true]:text-gray-800 data-[selected=true]:font-bold";
 
 type CourseTitleLinkProps = {
   courseSlug: string;
@@ -29,11 +30,7 @@ export const LessonLink = ({ courseSlug, lessonSlug, title }: LessonLinkProps) =
   const href = `/courses/${courseSlug}/${lessonSlug}`;
   const matchingPath = pathname.startsWith(href);
   return (
-    <Link
-      data-selected={matchingPath}
-      href={href}
-      className={`${coreLinkClasses} font-semibold`}
-    >
+    <Link data-selected={matchingPath} href={href} className={`${coreLinkClasses} font-semibold`}>
       {title}
     </Link>
   );
@@ -62,3 +59,5 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
     </Link>
   );
 };
+
+DrillLink.displayName = "WHY_IS_THIS_RENDERING";

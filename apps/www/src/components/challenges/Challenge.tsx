@@ -1,50 +1,53 @@
-import type{ Ref } from "react";
+import type { Ref } from "react";
 import { P, match } from "ts-pattern";
 import { AudioChallenge } from "./AudioChallenge";
 import type { AllChallengeTypes } from "./ChallengeTypes";
 import { DefinitionChallenge } from "./DefinitionChallenge";
 import { MultipleChoiceChallenge } from "./MultipleChoiceQuestionChallenge";
 import { CharacterChallenge } from "./PinyinChallenge";
+import { useIsPresent } from "motion/react";
 
 export function Challenge({
   challenge,
-  onProblemComplete,
+  onComplete,
   active,
   practice,
   ref,
 }: {
   challenge: AllChallengeTypes;
-  onProblemComplete: () => void;
+  onComplete: () => void;
   active?: boolean;
   practice?: boolean;
   ref?: Ref<HTMLDivElement>;
 }) {
+  const present = useIsPresent();
+  console.log({present}, challenge.id);
   return match(challenge)
-    .with({ type: "typing-character-challenge" }, (problem) => (
+    .with({ type: "typing-character-challenge" }, (challenge) => (
       <CharacterChallenge
-        {...problem}
-        onComplete={onProblemComplete}
-        key={problem.id}
+        {...challenge}
+        onComplete={onComplete}
+        key={challenge.id}
         active={active}
         practice={practice}
         ref={ref}
       />
     ))
-    .with({ type: "typing-audio-challenge" }, (problem) => (
+    .with({ type: "typing-audio-challenge" }, (challenge) => (
       <AudioChallenge
-        {...problem}
-        onComplete={onProblemComplete}
-        key={problem.id}
+        {...challenge}
+        onComplete={onComplete}
+        key={challenge.id}
         active={active}
         practice={practice}
         ref={ref}
       />
     ))
-    .with({ type: "typing-definition-challenge" }, (problem) => (
+    .with({ type: "typing-definition-challenge" }, (challenge) => (
       <DefinitionChallenge
-        {...problem}
-        onComplete={onProblemComplete}
-        key={problem.id}
+        {...challenge}
+        onComplete={onComplete}
+        key={challenge.id}
         active
         practice={practice}
         ref={ref}
@@ -54,13 +57,8 @@ export function Challenge({
       {
         type: P.union("multiple-choice-question-character-audio", "multiple-choice-question-character-text"),
       },
-      (problem) => (
-        <MultipleChoiceChallenge
-          ref={ref}
-          onComplete={onProblemComplete}
-          problem={problem}
-          key={problem.id}
-        />
+      (challenge) => (
+        <MultipleChoiceChallenge ref={ref} onComplete={onComplete} challenge={challenge} key={challenge.id} />
       ),
     )
     .exhaustive();
