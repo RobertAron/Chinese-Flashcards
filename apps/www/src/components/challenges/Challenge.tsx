@@ -5,7 +5,6 @@ import type { AllChallengeTypes } from "./ChallengeTypes";
 import { DefinitionChallenge } from "./DefinitionChallenge";
 import { MultipleChoiceChallenge } from "./MultipleChoiceQuestionChallenge";
 import { CharacterChallenge } from "./PinyinChallenge";
-import { useIsPresent } from "motion/react";
 
 export function Challenge({
   challenge,
@@ -20,8 +19,6 @@ export function Challenge({
   practice?: boolean;
   ref?: Ref<HTMLDivElement>;
 }) {
-  const present = useIsPresent();
-  console.log({present}, challenge.id);
   return match(challenge)
     .with({ type: "typing-character-challenge" }, (challenge) => (
       <CharacterChallenge
