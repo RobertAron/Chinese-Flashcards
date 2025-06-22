@@ -6,10 +6,10 @@
   "scripts": {
     "pull": "prisma db pull && prisma generate",
     "ui": "prisma studio",
-    "gen":"prisma generate"
+    "gen": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.7.0",
-    "prisma": "^6.7.0"
+    "@prisma/client": "^6.10.1",
+    "prisma": "^6.10.1"
   }
 }
