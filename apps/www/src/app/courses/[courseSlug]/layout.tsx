@@ -1,7 +1,7 @@
 import { AppServerLayoutEntrypoint } from "@/components/AppPage";
-import { CourseTitleLink, DrillLink, LessonLink } from "./SideNavLink";
 import { getCourseOutline } from "./getCourseOutline";
 import { paramsTemplate } from "./paramsTemplate";
+import { CourseTitleLink, DrillLink, LessonLink } from "./SideNavLink";
 
 export default AppServerLayoutEntrypoint(async ({ children, params }) => {
   const { courseSlug } = paramsTemplate.parse(await params);

@@ -1,6 +1,6 @@
-import { useAudioSourceNode } from "@/utils/hooks";
 import { PlayIcon } from "lucide-react";
 import { useRef } from "react";
+import { useAudioSourceNode } from "@/utils/hooks";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { buttonBehaviorClasses } from "../coreClasses";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
@@ -18,7 +18,7 @@ export function WordOutline({ word }: WordOutlineProps) {
           <div className="text-4xl md:text-6xl">{character}</div>
           <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
         </div>
-        <hr className="w-full border-gray-400"/>
+        <hr className="w-full border-gray-400" />
         <div className="text-pretty text-xl md:text-2xl">{definition}</div>
         <div className="text-pretty text-xl md:text-2xl">{emoji}</div>
       </div>

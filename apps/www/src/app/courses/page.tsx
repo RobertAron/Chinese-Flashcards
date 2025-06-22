@@ -1,6 +1,6 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
-import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { MotionLink } from "@/components/MotionLink";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 
 export default AppServerPageEntrypoint(async function Home() {

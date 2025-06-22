@@ -1,6 +1,6 @@
+import { ChevronRight } from "lucide-react";
 import { ExitLink } from "@/app/courses/[courseSlug]/[lessonSlug]/[drillSlug]/ExitButton";
 import { useUserSettings } from "@/utils/playerState";
-import { ChevronRight } from "lucide-react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { buttonBehaviorClasses } from "../coreClasses";

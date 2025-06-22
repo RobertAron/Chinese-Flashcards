@@ -1,9 +1,11 @@
 "use client";
+import { AnimatePresence, animate, motion, useMotionValue, usePresence, useTransform } from "motion/react";
+import { type Ref, useEffect, useState } from "react";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
-import { Experience } from "@/components/Experience";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
+import { Experience } from "@/components/Experience";
 import {
   bronzePracticeCount,
   formatPracticeCount,
@@ -14,8 +16,6 @@ import {
   usePracticeCount,
   useWordIncrementor,
 } from "@/utils/playerState";
-import { AnimatePresence, animate, motion, useMotionValue, usePresence, useTransform } from "motion/react";
-import { type Ref, useEffect, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
@@ -71,13 +71,7 @@ export default function Practice() {
       <ProgressArea practiceCount={practiceCount} />
       <div className="flex flex-col items-center self-stretch sm:self-center">
         <AnimatePresence mode="popLayout">
-          <Challenge
-            onComplete={onProblemComplete}
-            challenge={problem}
-            active
-            practice
-            key={problem.id}
-          />
+          <Challenge onComplete={onProblemComplete} challenge={problem} active practice key={problem.id} />
         </AnimatePresence>
       </div>
     </div>

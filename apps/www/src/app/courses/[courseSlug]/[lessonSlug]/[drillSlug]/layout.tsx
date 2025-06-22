@@ -1,6 +1,6 @@
 import { AppServerLayoutEntrypoint } from "@/components/AppPage";
-import { DrillProvider } from "@/components/challenges/DrillProvider";
 import { getDrillInfo } from "@/components/challenges/challengeServerUtils";
+import { DrillProvider } from "@/components/challenges/DrillProvider";
 import { paramsTemplate } from "./paramsTemplate";
 
 export default AppServerLayoutEntrypoint(async function ChallengeLayout({ children, params }) {

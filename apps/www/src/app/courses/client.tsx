@@ -1,4 +1,5 @@
 "use client";
+import { ListChecks, Timer } from "lucide-react";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import {
   formatPracticeCount,
@@ -8,7 +9,6 @@ import {
   usePracticeCount,
   useTimeAttackPB,
 } from "@/utils/playerState";
-import { ListChecks, Timer } from "lucide-react";
 
 export function PracticeCountCell({ challengeId }: { challengeId: string }) {
   const [practiceCount] = usePracticeCount(challengeId);

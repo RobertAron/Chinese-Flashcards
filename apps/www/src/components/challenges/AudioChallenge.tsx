@@ -1,7 +1,7 @@
 "use client";
-import { useAudioSourceNode, useKeyTrigger } from "@/utils/hooks";
 import { RotateCcw } from "lucide-react";
 import { type Ref, useEffect, useRef } from "react";
+import { useAudioSourceNode, useKeyTrigger } from "@/utils/hooks";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { Kbd } from "../Kbd";
 import { ChallengeWrapper } from "./ChallengeWrapper";

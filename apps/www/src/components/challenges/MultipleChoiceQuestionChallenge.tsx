@@ -1,11 +1,11 @@
+import { type Ref, useCallback, useEffect, useState } from "react";
 import { useKeyTrigger } from "@/utils/hooks";
-import { type Ref, useState, useCallback, useEffect } from "react";
+import { useTailwindOverride } from "@/utils/styleResolvers";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { Kbd } from "../Kbd";
 import { ChallengeAudioPlayer } from "./AudioChallenge";
 import type { AllMultipleChoiceChallenges, McqAnswer } from "./ChallengeTypes";
 import { ChallengeWrapper } from "./ChallengeWrapper";
-import { useTailwindOverride } from "@/utils/styleResolvers";
 
 const mapping: Record<number, string | undefined> = {
   0: "a",
@@ -18,7 +18,11 @@ export function MultipleChoiceChallenge({
   challenge,
   onComplete,
   ref,
-}: { challenge: AllMultipleChoiceChallenges; onComplete: () => void; ref?: Ref<HTMLDivElement> }) {
+}: {
+  challenge: AllMultipleChoiceChallenges;
+  onComplete: () => void;
+  ref?: Ref<HTMLDivElement>;
+}) {
   const [options, setOptions] = useState(() => challenge.getOptions());
   useEffect(() => {
     setOptions(challenge.getOptions());
@@ -51,7 +55,11 @@ function MultipleChoiceAnswer({
   answer,
   letter,
   onComplete,
-}: { answer: McqAnswer; letter: string; onComplete: () => void }) {
+}: {
+  answer: McqAnswer;
+  letter: string;
+  onComplete: () => void;
+}) {
   const [selected, setSelected] = useState(false);
   const onSelected = useCallback(() => {
     setSelected(true);

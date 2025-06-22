@@ -1,8 +1,8 @@
+import { notFound } from "next/navigation";
+import React from "react";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
 import { deDupe } from "@/utils/structureUtils";
-import { notFound } from "next/navigation";
-import React from "react";
 
 type DrillIdentifier = {
   drillSlug: string;

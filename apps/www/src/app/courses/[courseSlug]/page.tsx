@@ -1,7 +1,7 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
-import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { MotionLink } from "@/components/MotionLink";
 import { LessonProgress } from "./client";
 import { generateStaticParams } from "./generateStaticParams";
 import { getCourseOutline } from "./getCourseOutline";

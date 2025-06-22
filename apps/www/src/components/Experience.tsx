@@ -1,7 +1,7 @@
 import { cubicBezier } from "motion";
 import {
-  type MotionValue,
   animate,
+  type MotionValue,
   motion,
   useMotionValue,
   useMotionValueEvent,

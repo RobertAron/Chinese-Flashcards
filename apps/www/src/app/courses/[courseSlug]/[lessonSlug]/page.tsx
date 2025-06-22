@@ -1,9 +1,9 @@
+import { notFound } from "next/navigation";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
-import { MotionLink } from "@/components/MotionLink";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { MotionLink } from "@/components/MotionLink";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
-import { notFound } from "next/navigation";
 import { PracticeCountCell, TimeAttackCell } from "../../client";
 import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";

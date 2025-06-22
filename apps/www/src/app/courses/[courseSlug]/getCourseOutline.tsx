@@ -1,6 +1,6 @@
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import { notFound } from "next/navigation";
 import React from "react";
+import { getDrizzleClient } from "@/utils/getDrizzleClient";
 
 export const getCourseOutline = React.cache(async (courseSlug: string) => {
   const course = await getDrizzleClient().query.course.findFirst({

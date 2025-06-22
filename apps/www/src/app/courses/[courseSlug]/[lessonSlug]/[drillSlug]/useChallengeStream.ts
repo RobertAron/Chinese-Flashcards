@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import type { AllChallengeTypes } from "@/components/challenges/ChallengeTypes";
 import { useTypingChallenge } from "@/components/challenges/TypingChallengeProvider";
 import { semiShuffle, shuffle } from "@/utils/structureUtils";
-import { useEffect, useState } from "react";
 
 export function useChallengeStream() {
   const { typingChallenges, multipleChoiceChallenges } = useTypingChallenge();

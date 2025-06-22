@@ -1,5 +1,5 @@
-import { Experience } from "@/components/Experience";
 import type { Meta } from "@storybook/react";
+import { Experience } from "@/components/Experience";
 
 type PageData = Meta<typeof Wrapper>;
 

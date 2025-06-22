@@ -1,8 +1,8 @@
 "use client";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 // https://github.com/samhirtarif/react-audio-visualize
 import { getAudioContext } from "@/utils/audioContext";
 import { useTailwindOverride } from "@/utils/styleResolvers";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 function average(nums: number[]) {
   if (nums.length === 0) return 0;
@@ -176,7 +176,13 @@ export const LiveAudioVisualizer = ({
   );
   return (
     <div className={classes} ref={containerRef}>
-      <canvas className="absolute inset-0" aria-hidden ref={canvasRef} width={width * 2} height={height * 2} />
+      <canvas
+        className="absolute inset-0"
+        aria-hidden
+        ref={canvasRef}
+        width={width * 2}
+        height={height * 2}
+      />
     </div>
   );
 };

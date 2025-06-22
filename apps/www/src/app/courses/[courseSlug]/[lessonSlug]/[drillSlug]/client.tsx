@@ -1,9 +1,12 @@
 "use client";
-import { MotionLink } from "@/components/MotionLink";
+import { ListChecks, Timer } from "lucide-react";
+import * as motion from "motion/react-client";
+import { useMemo } from "react";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { WordExperience } from "@/components/challenges/WordPoints";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { MotionLink } from "@/components/MotionLink";
 import {
   formatPracticeCount,
   formatTimeAttackMs,
@@ -11,17 +14,8 @@ import {
   useTimeAttackPB,
 } from "@/utils/playerState";
 import { deDupe } from "@/utils/structureUtils";
-import { ListChecks, Timer } from "lucide-react";
-import * as motion from "motion/react-client";
-import { useMemo } from "react";
 
-function ModeOption({
-  href,
-  children,
-}: {
-  href: string;
-  children?: React.ReactNode;
-}) {
+function ModeOption({ href, children }: { href: string; children?: React.ReactNode }) {
   return (
     <MotionLink
       initial={{ opacity: 0, scale: 1.05 }}

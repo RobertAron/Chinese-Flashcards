@@ -1,13 +1,11 @@
 // https://cloud.google.com/text-to-speech?hl=en
-import fs from "node:fs";
-import { $ } from "bun";
-import path from "node:path";
+import fs, { existsSync, mkdirSync } from "node:fs";
+import path, { join } from "node:path";
 import tts from "@google-cloud/text-to-speech";
+import { $ } from "bun";
 import { getDb } from "cms-data";
 import dotenv from "dotenv";
 import { askYesNo } from "./askYesNo";
-import { mkdirSync, existsSync } from "node:fs";
-import { join } from "node:path";
 
 const basePath = join(import.meta.dir, "../dist"); // Resolves to project root's dist
 const dirs = [join(basePath, "words"), join(basePath, "phrases")];
@@ -125,10 +123,10 @@ async function main() {
 
   await $`rclone copy ./dist r2Language:vocab-sprint --dry-run`;
   const uploadAudio = await askYesNo("upload audio?");
-  if(uploadAudio){
-    console.log("Running `rclone copy ./dist r2Language:vocab-sprint`")
+  if (uploadAudio) {
+    console.log("Running `rclone copy ./dist r2Language:vocab-sprint`");
     await $`rclone copy ./dist r2Language:vocab-sprint`;
   }
-  process.exit(0)
+  process.exit(0);
 }
 main();

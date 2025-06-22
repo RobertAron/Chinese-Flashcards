@@ -1,4 +1,6 @@
 "use client";
+import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
+import { useRef, useState } from "react";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
@@ -12,8 +14,6 @@ import {
   useTimeAttackPB,
   useWordIncrementor,
 } from "@/utils/playerState";
-import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
-import { useRef, useState } from "react";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 

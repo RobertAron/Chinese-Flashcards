@@ -3,8 +3,8 @@ import { ezCreateContext } from "@/utils/createContext";
 import { type UserSettings, useUserSettings } from "@/utils/playerState";
 import { shuffle } from "@/utils/structureUtils";
 import type { AllMultipleChoiceChallenges, AllTypingChallenges } from "./ChallengeTypes";
-import { useDrillContext } from "./DrillProvider";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
+import { useDrillContext } from "./DrillProvider";
 
 export type NormalizedWord = {
   wordIds: number[];

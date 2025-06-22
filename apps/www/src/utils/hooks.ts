@@ -22,9 +22,7 @@ function getOrCreateMediaElementSource(audioContext: AudioContext, el: HTMLMedia
   mediaElementSources.set(el, generatedNode);
   return generatedNode;
 }
-export function useAudioSourceNode(mediaElementRef: {
-  current: HTMLMediaElement;
-}) {
+export function useAudioSourceNode(mediaElementRef: { current: HTMLMediaElement }) {
   const [audioSourceNode, setAudioSourceNode] = useState<MediaElementAudioSourceNode | null>(null);
   useEffect(() => {
     const audioContext = getAudioContext();

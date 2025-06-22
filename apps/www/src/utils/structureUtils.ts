@@ -18,10 +18,10 @@ export function shuffle<T>(array: T[]): T[] {
  * */
 export function semiShuffle<T>(array: T[]): T[] {
   // not shuffle-able
-  if (array.length<=1) return array;
+  if (array.length <= 1) return array;
   const lastItem = array.at(-1)!;
-  const shuffled = shuffle(array)
-  if(shuffled[0]===lastItem){
+  const shuffled = shuffle(array);
+  if (shuffled[0] === lastItem) {
     // move it somewhere else...
     const swapIndex = randomIntegerBetween(1, shuffled.length - 1);
     shuffled[0] = shuffled[swapIndex]!;

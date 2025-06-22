@@ -1,8 +1,8 @@
 "use client";
-import { WordOutline } from "@/components/challenges/WordOutline";
-import { wordToAudioSource } from "@/utils/idToAudioSource";
 import Fuse from "fuse.js";
 import { useMemo, useState } from "react";
+import { WordOutline } from "@/components/challenges/WordOutline";
+import { wordToAudioSource } from "@/utils/idToAudioSource";
 import type { Words } from "./page";
 
 export function SearchPage({ words }: { words: Words }) {

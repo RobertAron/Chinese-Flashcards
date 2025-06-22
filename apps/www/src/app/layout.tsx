@@ -1,9 +1,9 @@
-import { Link, LoadingProvider, LoadingRender } from "@/utils/NextNavigationUtils";
-import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { Link, LoadingProvider, LoadingRender } from "@/utils/NextNavigationUtils";
+import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
 import "./globals.css";
 
 export const metadata: Metadata = {

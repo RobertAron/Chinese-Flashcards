@@ -1,5 +1,5 @@
-import type { AwardTypes } from "@/utils/playerState";
 import { Award } from "lucide-react";
+import type { AwardTypes } from "@/utils/playerState";
 
 export const awardColors = {
   bronze: "#CD7F32",

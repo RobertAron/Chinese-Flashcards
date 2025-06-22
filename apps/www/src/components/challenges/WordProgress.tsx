@@ -1,7 +1,7 @@
-import { useUserSettings } from "@/utils/playerState";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { type Ref, useEffect, useState } from "react";
+import { useUserSettings } from "@/utils/playerState";
 import { Kbd } from "../Kbd";
 
 type WordProgressProps = {
@@ -72,7 +72,11 @@ function TypedCharacter({
   characters,
   isTypingRequired,
   practice = false,
-}: { practice?: boolean; isTypingRequired: boolean; characters: string }) {
+}: {
+  practice?: boolean;
+  isTypingRequired: boolean;
+  characters: string;
+}) {
   return (
     <span
       className={clsx("whitespace-pre text-black", {
