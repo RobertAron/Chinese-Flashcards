@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client"
-  output = "../dist/prisma"
+  provider     = "prisma-client"
+  output       = "../dist/prisma"
   moduleFormat = "esm"
 }
 
@@ -10,10 +10,11 @@ datasource db {
 }
 
 model Course {
-  slug     String   @id
-  title    String
-  ordering Int
-  Lesson   Lesson[]
+  slug      String   @id
+  title     String
+  ordering  Int
+  createdAt DateTime @default(now())
+  Lesson    Lesson[]
 }
 
 model Drill {
@@ -22,28 +23,31 @@ model Drill {
   description String
   lessonSlug  String
   order       Int       @default(0)
+  createdAt   DateTime  @default(now())
   Lesson      Lesson    @relation(fields: [lessonSlug], references: [slug])
   Phrases     Phrases[] @relation("DrillToPhrases")
   Words       Words[]   @relation("DrillToWords")
 }
 
 model Lesson {
-  slug       String  @id
+  slug       String   @id
   title      String
   ordering   Int
   courseSlug String
+  createdAt  DateTime @default(now())
   Drill      Drill[]
-  Course     Course  @relation(fields: [courseSlug], references: [slug])
+  Course     Course   @relation(fields: [courseSlug], references: [slug])
 }
 
 model Phrases {
-  id             Int     @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   characters     String
   pinyin         String
   meaning        String
   emojiChallenge String?
-  Drill          Drill[] @relation("DrillToPhrases")
-  Words          Words[] @relation("PhrasesToWords")
+  createdAt      DateTime @default(now())
+  Drill          Drill[]  @relation("DrillToPhrases")
+  Words          Words[]  @relation("PhrasesToWords")
 }
 
 model Words {
@@ -55,14 +59,4 @@ model Words {
   emojiChallenge String?
   Drill          Drill[]   @relation("DrillToWords")
   Phrases        Phrases[] @relation("PhrasesToWords")
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model drizzle_migrations {
-  id         Int?     @id
-  hash       String
-  created_at Decimal?
-
-  @@map("drizzle-migrations")
-  @@ignore
 }
