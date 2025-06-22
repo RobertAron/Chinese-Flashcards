@@ -9,41 +9,41 @@ async function main() {
   await prisma.drill.create({
     data: {
       title: "When?",
-      slug: "asking-questions-12",
-      lessonSlug: "core-questions-2",
-      order: 8,
+      lessonSlug: "core-verbs-2",
+      slug: "common-verbs-8",
+      order: 1,
       description: "",
       Phrases: {
         create: [
           {
-            characters: "你什么时候来？",
-            meaning: "You're coming when?",
-            pinyin: "nǐ shénme shíhou lái?",
-            emojiChallenge: "👤⌛❓👣", // 👤(you) + ⌛❓(when) + 👣(come)
+            characters: "你说什么？",
+            meaning: "You said what?",
+            pinyin: "nǐ shuō shénme?",
+            emojiChallenge: "👤🗣️❓", // 👤(you) + 🗣️(say) + ❓(what)
           },
           {
-            characters: "他什么时候走？",
-            meaning: "He's leaving when?",
-            pinyin: "tā shénme shíhou zǒu?",
-            emojiChallenge: "👦⌛❓🚶", // 👦(he) + ⌛❓(when) + 🏃‍♂️(leave)
+            characters: "他说中文。",
+            meaning: "He speaks Chinese.",
+            pinyin: "tā shuō zhōngwén.",
+            emojiChallenge: "👦🗣️🇨🇳", // 👦(he) + 🗣️(speak) + 🇨🇳(Chinese)
           },
           {
-            characters: "我们什么时候吃饭？",
-            meaning: "We're eating when?",
-            pinyin: "wǒmen shénme shíhou chīfàn?",
-            emojiChallenge: "👥⌛❓🙂🍽️", // 👥(we) + ⌛❓(when) + 🍚(eat)
+            characters: "请再说一遍。",
+            meaning: "Please again say once time (Please say it again)",
+            pinyin: "qǐng zài shuō yí biàn.",
+            emojiChallenge: "🙏🔁🗣️1️⃣", // 🙏(please) + 🔁(again) + 🗣️(say) + 1️⃣(one time)
           },
           {
-            characters: "她什么时候工作？",
-            meaning: "She works when?",
-            pinyin: "tā shénme shíhou gōngzuò?",
-            emojiChallenge: "👩⌛❓💼", // 👩(she) + ⌛❓(when) + 💼(work)
+            characters: "我不会说英文。",
+            meaning: "I can't speak English.",
+            pinyin: "wǒ bú huì shuō yīngwén.",
+            emojiChallenge: "🙋‍♂️🚫🗣️🇬🇧", // 🙋‍♂️(I) + 🚫(can't) + 🗣️(speak) + 🇬🇧(English)
           },
           {
-            characters: "你们什么时候去北京？",
-            meaning: "Ya'll are going to Bejing when?",
-            pinyin: "nǐmen shénme shíhou qù Běijīng?",
-            emojiChallenge: "👥⌛❓✈️🏯", // 👥(you all) + ⌛❓(when) + ✈️(go) + 🏯(Beijing)
+            characters: "老师说得很快。",
+            meaning: "Teacher's speak very fast.",
+            pinyin: "lǎoshī shuō de hěn kuài.",
+            emojiChallenge: "👩‍🏫🗣️⚡", // 👩‍🏫(teacher) + 🗣️(speak) + ⚡(fast)
           },
         ],
       },
