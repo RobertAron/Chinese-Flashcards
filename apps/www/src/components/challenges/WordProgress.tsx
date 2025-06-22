@@ -170,11 +170,13 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
           setProgressState({ progress, secondaryProgress: 1 });
         else if (onToneStep && e.key === currentCharacter.toneKey)
           setProgressState({ progress: nextStep, secondaryProgress: 0 });
+        if (nextStep === normalized.length) onComplete?.();
       }
       // characters without tones
-      else if (e.key.toLocaleLowerCase() === rawChar)
+      else if (e.key.toLocaleLowerCase() === rawChar) {
         setProgressState({ progress: nextStep, secondaryProgress: 0 });
-      if (nextStep === normalized.length) onComplete?.();
+        if (nextStep === normalized.length) onComplete?.();
+      }
     };
     window.addEventListener("keydown", cb);
     return () => window.removeEventListener("keydown", cb);

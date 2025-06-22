@@ -61,7 +61,6 @@ export function DrillHome() {
   return (
     <>
       <section className="flex w-full flex-col gap-2">
-        <h2 className="font-bold text-2xl">Select Mode</h2>
         <div className="flex flex-col gap-4 lg:flex-row">
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/practice`}>
             <div className={modeOptionIconClasses}>
