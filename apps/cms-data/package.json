@@ -10,7 +10,7 @@
     },
     "./*": {
       "import": "./dist/*.js",
-      "types":"./dist/*.d.ts"
+      "types": "./dist/*.d.ts"
     }
   },
   "scripts": {
@@ -21,11 +21,11 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "drizzle-kit": "^0.30.4"
+    "drizzle-kit": "^0.31.2"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
-    "drizzle-orm": "^0.39.3",
+    "drizzle-orm": "^0.44.2",
     "rimraf": "^6.0.1"
   }
 }

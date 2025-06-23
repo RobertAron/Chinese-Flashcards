@@ -16,7 +16,7 @@ export const drillToWords = sqliteTable("_DrillToWords", {
 },
 (table) => [
 	uniqueIndex("_DrillToWords_AB_unique").on(table.a, table.b),
-	index().on(table.b),
+	index("_DrillToWords_B_index").on(table.b),
 ]);
 
 export const drillToPhrases = sqliteTable("_DrillToPhrases", {
@@ -25,7 +25,7 @@ export const drillToPhrases = sqliteTable("_DrillToPhrases", {
 },
 (table) => [
 	uniqueIndex("_DrillToPhrases_AB_unique").on(table.a, table.b),
-	index().on(table.b),
+	index("_DrillToPhrases_B_index").on(table.b),
 ]);
 
 export const phrasesToWords = sqliteTable("_PhrasesToWords", {
@@ -33,7 +33,7 @@ export const phrasesToWords = sqliteTable("_PhrasesToWords", {
 	b: integer("B").notNull().references(() => words.id, { onDelete: "cascade", onUpdate: "cascade" } ),
 },
 (table) => [
-	index().on(table.b),
+	index("_PhrasesToWords_B_index").on(table.b),
 	uniqueIndex("_PhrasesToWords_AB_unique").on(table.a, table.b),
 ]);
 
