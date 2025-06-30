@@ -50,7 +50,7 @@
         "cms-data": "*",
         "drizzle-orm": "^0.39.3",
         "fuse.js": "^7.1.0",
-        "geist": "^1.3.1",
+        "geist": "^1.4.2",
         "lucide-react": "^0.469.0",
         "motion": "^12.4.5",
         "next": "^15.2.4",
@@ -1298,7 +1298,7 @@
 
     "gcp-metadata": ["gcp-metadata@6.1.1", "", { "dependencies": { "gaxios": "^6.1.1", "google-logging-utils": "^0.0.2", "json-bigint": "^1.0.0" } }, "sha512-a4tiq7E0/5fTjxPAaH4jpjkSv/uCaU2p5KC6HVGrvl0cDjA8iBZv4vv1gyzlmK0ZUKqwpOyQMKzZQe3lTit77A=="],
 
-    "geist": ["geist@1.3.1", "", { "peerDependencies": { "next": ">=13.2.0" } }, "sha512-Q4gC1pBVPN+D579pBaz0TRRnGA4p9UK6elDY/xizXdFk/g4EKR5g0I+4p/Kj6gM0SajDBZ/0FvDV9ey9ud7BWw=="],
+    "geist": ["geist@1.4.2", "", { "peerDependencies": { "next": ">=13.2.0" } }, "sha512-OQUga/KUc8ueijck6EbtT07L4tZ5+TZgjw8PyWfxo16sL5FWk7gNViPNU8hgCFjy6bJi9yuTP+CRpywzaGN8zw=="],
 
     "gensync": ["gensync@1.0.0-beta.2", "", {}, "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg=="],
 
