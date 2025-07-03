@@ -8,42 +8,48 @@ async function main() {
   });
   await prisma.drill.create({
     data: {
-      title: "When?",
+      title: "To come",
       lessonSlug: "core-verbs-2",
-      slug: "common-verbs-8",
-      order: 1,
+      slug: "common-verbs-9",
+      order: 2,
       description: "",
       Phrases: {
         create: [
           {
-            characters: "你说什么？",
-            meaning: "You said what?",
-            pinyin: "nǐ shuō shénme?",
-            emojiChallenge: "👤🗣️❓", // 👤(you) + 🗣️(say) + ❓(what)
+            characters: "你来中国了吗？",
+            meaning: "Did you come to China?",
+            pinyin: "nǐ lái zhōngguó le ma?",
+            emojiChallenge: "👤🛬🇨🇳",
           },
           {
-            characters: "他说中文。",
-            meaning: "He speaks Chinese.",
-            pinyin: "tā shuō zhōngwén.",
-            emojiChallenge: "👦🗣️🇨🇳", // 👦(he) + 🗣️(speak) + 🇨🇳(Chinese)
+            characters: "他今天不来学校。",
+            meaning: "He's not coming to school today.",
+            pinyin: "tā jīntiān bù lái xuéxiào.",
+            emojiChallenge: "👦📅🚫🛬🏫",
           },
           {
-            characters: "请再说一遍。",
-            meaning: "Please again say once time (Please say it again)",
-            pinyin: "qǐng zài shuō yí biàn.",
-            emojiChallenge: "🙏🔁🗣️1️⃣", // 🙏(please) + 🔁(again) + 🗣️(say) + 1️⃣(one time)
+            characters: "你几点来？",
+            meaning: "What time are you coming?",
+            pinyin: "nǐ jǐ diǎn lái?",
+            emojiChallenge: "👤⏰❓🛬",
           },
           {
-            characters: "我不会说英文。",
-            meaning: "I can't speak English.",
-            pinyin: "wǒ bú huì shuō yīngwén.",
-            emojiChallenge: "🙋‍♂️🚫🗣️🇬🇧", // 🙋‍♂️(I) + 🚫(can't) + 🗣️(speak) + 🇬🇧(English)
+            characters: "请你来这儿。",
+            meaning: "Please come here.",
+            pinyin: "qǐng nǐ lái zhèr.",
+            emojiChallenge: "🙏👤🛬📍",
           },
           {
-            characters: "老师说得很快。",
-            meaning: "Teacher's speak very fast.",
-            pinyin: "lǎoshī shuō de hěn kuài.",
-            emojiChallenge: "👩‍🏫🗣️⚡", // 👩‍🏫(teacher) + 🗣️(speak) + ⚡(fast)
+            characters: "老师来了！",
+            meaning: "The teacher came!",
+            pinyin: "lǎoshī lái le!",
+            emojiChallenge: "👩‍🏫🛬❗",
+          },
+          {
+            characters: "明天她来我家。",
+            meaning: "She is coming to my house tomorrow.",
+            pinyin: "míngtiān tā lái wǒ jiā.",
+            emojiChallenge: "📆👧🛬🏠",
           },
         ],
       },

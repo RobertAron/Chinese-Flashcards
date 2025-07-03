@@ -1,7 +1,7 @@
 {
   "name": "prisma-ui",
   "exports": {
-    "./prisma": "./dist/prisma/index.ts"
+    "./prisma": "./dist/prisma/client.ts"
   },
   "scripts": {
     "pull": "prisma db pull && prisma generate",
