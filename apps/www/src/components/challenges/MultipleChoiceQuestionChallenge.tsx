@@ -28,7 +28,7 @@ export function MultipleChoiceChallenge({
     setOptions(challenge.getOptions());
   }, [challenge]);
   return (
-    <ChallengeWrapper active className="self-stretch" ref={ref}>
+    <ChallengeWrapper className="self-stretch" ref={ref}>
       {challenge.type === "multiple-choice-question-character-text" ? (
         <div className="grow text-3xl">{challenge.questionText}</div>
       ) : (

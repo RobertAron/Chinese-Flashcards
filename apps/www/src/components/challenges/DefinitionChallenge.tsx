@@ -21,7 +21,7 @@ export function DefinitionChallenge({
   definition,
 }: DefinitionChallengeProps) {
   return (
-    <ChallengeWrapper active={active} ref={ref}>
+    <ChallengeWrapper ref={ref}>
       <div className="flex min-h-36 items-center justify-center">
         <div className="text-center text-3xl">{definition}</div>
       </div>

@@ -18,7 +18,7 @@ type AudioChallengeProps = {
 
 export function AudioChallenge({ pinyin, onComplete, active, practice, ref, src }: AudioChallengeProps) {
   return (
-    <ChallengeWrapper active={active} ref={ref}>
+    <ChallengeWrapper ref={ref}>
       <ChallengeAudioPlayer src={src} slow={practice} />
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>

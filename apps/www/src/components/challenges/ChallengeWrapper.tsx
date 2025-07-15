@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import type { Ref } from "react";
 
 export type ChallengeWrapperProps = {
-  active?: boolean;
   ref?: Ref<HTMLDivElement>;
   children?: React.ReactNode;
   className?: string;
@@ -16,15 +15,18 @@ export function ChallengeWrapper({ ref, children, className }: ChallengeWrapperP
   return (
     <motion.div
       className={clsx(
-        "flex min-h-60 w-full flex-col items-center gap-4 rounded-md border-2 border-black bg-white px-3 py-2 sm:min-w-md lg:max-w-lg",
+        "flex min-h-60 w-full flex-col items-center gap-4 rounded-md border-2 border-black bg-white px-3 py-2 sm:w-md lg:w-lg",
         className,
       )}
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1, transition: { delay: 0.1 } }}
+      initial={{ y: 100, opacity: 0, rotate: 0, scale: 1 }}
+      animate={{ transition: { delay: 0.1 }, y: 0, opacity: 1, rotate: 0, scale: 1 }}
       exit={{
-        rotate: [0, 2, 3],
-        opacity: [1, 0.9, 0],
         transition: { times: [0, 0.9, 1], duration: fullDuration * 0.6 },
+        y: 5,
+        opacity: [1, 0.9, 0],
+        rotate: [0, 2, 3],
+        scale: 1.03,
+        z: 10,
       }}
       transition={{ ease, duration: fullDuration }}
       ref={ref}
