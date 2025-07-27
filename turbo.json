@@ -9,6 +9,10 @@
     "generate": {
       "dependsOn": ["^generate"],
       "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
     }
   },
   "envMode": "loose"

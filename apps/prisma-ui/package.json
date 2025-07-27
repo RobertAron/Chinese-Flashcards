@@ -5,7 +5,7 @@
   },
   "scripts": {
     "pull": "prisma db pull && prisma generate",
-    "ui": "prisma studio",
+    "dev": "prisma studio",
     "gen": "prisma generate"
   },
   "dependencies": {
