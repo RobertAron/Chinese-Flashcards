@@ -2,11 +2,14 @@
   "name": "vocab-sprint",
   "packageManager": "bun@1.2.4",
   "devDependencies": {
-    "@biomejs/biome": "2.0.0",
+    "@biomejs/biome": "^2.1.2",
     "turbo": "^2.5.5",
     "typescript": "^5.8.2"
   },
   "workspaces": [
     "apps/*"
-  ]
+  ],
+  "scripts": {
+    "prettier:fix": "biome format --fix"
+  }
 }
