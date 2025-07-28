@@ -1,6 +1,9 @@
 "use client";
+import { Crown, Squircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { practiceCountToColor } from "@/utils/colorUtils";
+import { usePracticeCount } from "@/utils/playerState";
 
 type LessonLinkProps = {
   courseSlug: string;
@@ -48,16 +51,23 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
   const pathname = usePathname();
   const href = `/courses/${courseSlug}/${lessonSlug}/${drillSlug}`;
   const matchingPath = pathname.startsWith(href);
+  const [practiceCount] = usePracticeCount(drillSlug);
+  const className = practiceCountToColor(practiceCount).font;
   return (
     <Link
       data-selected={matchingPath}
       href={`/courses/${courseSlug}/${lessonSlug}/${drillSlug}`}
       key={drillSlug}
-      className={`${coreLinkClasses} flex border-[currentColor] border-l-[1.5px] pl-2`}
+      className={`${coreLinkClasses} flex border-[currentColor] border-l pl-1`}
     >
-      <div className="pl-2">{title}</div>
+      <div className="flex items-center gap-1 pl-2">
+        {practiceCount === 0 ? (
+          <Squircle strokeWidth={3} className="h-4 w-4 text-gray-600" />
+        ) : (
+          <Crown strokeWidth={3} className={`${className} h-4 w-4`} />
+        )}
+        <span>{title}</span>
+      </div>
     </Link>
   );
 };
-
-DrillLink.displayName = "WHY_IS_THIS_RENDERING";

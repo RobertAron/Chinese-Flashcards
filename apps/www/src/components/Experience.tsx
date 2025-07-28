@@ -8,6 +8,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useEffect, useState } from "react";
+import { practiceCountColors } from "@/utils/colorUtils";
 
 export function Experience({ percent }: { percent: number }) {
   const experience = useMotionValue(percent);
@@ -20,34 +21,16 @@ export function Experience({ percent }: { percent: number }) {
   }, [experience, percent]);
   return (
     <motion.div className="flex [&>*+*]:border-l-0">
-      <ExperienceArea
-        experience={experience}
-        min={0}
-        max={100}
-        bgClassName="bg-blue-300"
-        filledClassName="bg-blue-600"
-      />
-      <ExperienceArea
-        experience={experience}
-        min={100}
-        max={250}
-        bgClassName="bg-green-300"
-        filledClassName="bg-green-600"
-      />
-      <ExperienceArea
-        experience={experience}
-        min={250}
-        max={500}
-        bgClassName="bg-yellow-300"
-        filledClassName="bg-yellow-600"
-      />
-      <ExperienceArea
-        experience={experience}
-        min={500}
-        max={1000}
-        bgClassName="bg-red-300"
-        filledClassName="bg-red-600"
-      />
+      {Object.entries(practiceCountColors).map(([key, val]) => (
+        <ExperienceArea
+          key={key}
+          experience={experience}
+          min={val.min}
+          max={val.max}
+          bgClassName={val.background}
+          filledClassName={val.primary}
+        />
+      ))}
     </motion.div>
   );
 }
