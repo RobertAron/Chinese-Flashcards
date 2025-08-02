@@ -36,6 +36,8 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
   // clear
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // start drawing
+  // avoid setting new color if it's the same
+  let oldR = 0;
   for (let i = 0; i < data.length; ++i) {
     const dataPoint = data[i]!;
     if (dataPoint === 0) continue;
@@ -44,7 +46,11 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
     const x = (i / data.length) * width;
     const y = height - dataPointHeight;
     const w = itemWidth + 2;
-    ctx.fillStyle = `rgb(${dataPointHeightNormalized * 255} 0 ${255 - dataPointHeightNormalized * 255})`;
+    const r = Math.round(dataPointHeightNormalized * 255);
+    if (r !== oldR) {
+      ctx.fillStyle = `rgb(${r}, 0, ${255 - r})`;
+      oldR = r;
+    }
     ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), dataPointHeight);
   }
 };
@@ -118,7 +124,7 @@ export const LiveAudioVisualizer = ({
   const containerRef = useRef<HTMLDivElement>(null!);
   const [analyserResources, setAnalyserResources] = useState<{
     analyser: AnalyserNode;
-    dataTarget: Uint8Array;
+    dataTarget: Uint8Array<ArrayBuffer>;
   } | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
