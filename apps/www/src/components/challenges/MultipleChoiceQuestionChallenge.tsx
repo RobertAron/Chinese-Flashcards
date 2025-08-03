@@ -1,6 +1,7 @@
 import { type Ref, useCallback, useEffect, useState } from "react";
 import { useKeyTrigger } from "@/utils/hooks";
 import { useTailwindOverride } from "@/utils/styleResolvers";
+import { Button } from "../Button";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { Kbd } from "../Kbd";
 import { ChallengeAudioPlayer } from "./AudioChallenge";
@@ -77,9 +78,9 @@ function MultipleChoiceAnswer({
     },
   );
   return (
-    <button onClick={onSelected} type="button" className={buttonClasses}>
+    <Button onClick={onSelected} type="button" className={buttonClasses}>
       <Kbd>{letter.toUpperCase()}</Kbd>
       <span>{answer.text}</span>
-    </button>
+    </Button>
   );
 }
