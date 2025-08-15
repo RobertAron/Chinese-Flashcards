@@ -96,6 +96,7 @@ function UntypedCharacter({
   showLetter,
   active = false,
   practice = false,
+  index = 0,
 }: {
   isTypingRequired: boolean;
   characters: string;
@@ -103,6 +104,7 @@ function UntypedCharacter({
   showLetter: boolean;
   active?: boolean;
   practice?: boolean;
+  index?: number;
 }) {
   return (
     <motion.span
@@ -113,8 +115,8 @@ function UntypedCharacter({
       initial={{ color: "#94a3b800" }}
       animate={active ? "active" : "initial"}
       transition={{
-        duration: practice && isTypingRequired ? 4 : 0,
-        delay: practice && isTypingRequired ? 4 : 0,
+        duration: practice && isTypingRequired ? 2 : 0,
+        delay: practice && isTypingRequired ? 4 + index * 0.5 : 0,
       }}
       variants={{
         initial: { color: "#94a3b800" },
@@ -188,15 +190,15 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
 
   return (
     <div className="relative flex flex-wrap justify-center gap-[1ch] text-center font-mono text-2xl tracking-tighter">
-      {characterChunks.map((characters, index) => (
-        <span key={index} className="flex gap-[0.05em]">
-          {characters.map((ele, index) =>
+      {characterChunks.map((characters, chunkIndex) => (
+        <span key={chunkIndex} className="flex gap-[0.05em]">
+          {characters.map((ele, characterIndex) =>
             ele.hasBeenTyped ? (
               <TypedCharacter
                 characters={ele.characters}
                 practice={practice}
                 isTypingRequired={ele.isTypingRequired}
-                key={index}
+                key={characterIndex}
               />
             ) : (
               <UntypedCharacter
@@ -205,7 +207,8 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
                 isCurrentCharacter={ele.isCurrentCharacter}
                 isTypingRequired={ele.isTypingRequired}
                 showLetter={ele.showLetter}
-                key={index}
+                key={characterIndex}
+                index={chunkIndex}
                 practice={practice}
               />
             ),
