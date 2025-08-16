@@ -15,16 +15,16 @@ export default AppServerPageEntrypoint(async function Home() {
     },
   });
   return (
-    <main className="flex flex-col gap-4">
+    <main className="flex w-full flex-col gap-4">
       <h1 className="font-bold text-5xl underline">Courses</h1>
-      <div className="grid grid-cols-3 gap-1">
+      <div className="grid w-full grid-cols-3 gap-1">
         {courses.map((topic) => (
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.05 }}
             animate={{ opacity: 1, scaleY: 1 }}
             whileHover={{ scale: 1.05 }}
             whileFocus={{ scale: 1.05 }}
-            className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
+            className={`col-span-3 grid ${buttonBehaviorClasses}`}
             href={`/courses/${topic.slug}`}
             key={topic.slug}
           >
