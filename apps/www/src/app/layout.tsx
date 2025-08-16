@@ -32,7 +32,7 @@ export default function RootLayout({
                 </Link>
               </div>
             </nav>
-            <div className="container relative z-10 mx-auto flex h-full grow">{children}</div>
+            <div className="container relative z-10 mx-auto flex h-full w-full grow">{children}</div>
             <LoadingRender />
             <div className="texture" />
           </body>
