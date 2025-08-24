@@ -7,8 +7,8 @@ import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerSta
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "中国 Flashcards",
-  description: "中国 Flashcards",
+  title: "中文 Flashcards",
+  description: "中文 Flashcards",
 };
 
 export default function RootLayout({
