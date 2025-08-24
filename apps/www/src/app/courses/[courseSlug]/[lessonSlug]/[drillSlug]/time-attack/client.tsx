@@ -141,7 +141,7 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
         role="img"
         aria-label="progress par"
       >
-        <text textAnchor="end" x="50" y="50" dominantBaseline="text-top">
+        <text textAnchor="end" x="50" y="50" dominantBaseline="auto">
           {current.toString().padStart(2, "0")}
         </text>
         <text textAnchor="start" x="50" y="50" dominantBaseline="hanging">

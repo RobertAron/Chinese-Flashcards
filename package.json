@@ -11,5 +11,8 @@
   ],
   "scripts": {
     "prettier:fix": "biome format --fix"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.12"
   }
 }
