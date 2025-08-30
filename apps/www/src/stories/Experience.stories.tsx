@@ -16,7 +16,7 @@ function Wrapper({ percent }: WrapperProps) {
 }
 
 export default {
-  title: "Inputs/Slider",
+  title: "Exp/Slider",
   component: Wrapper,
   argTypes: {
     percent: {

@@ -18,6 +18,8 @@ import {
 } from "@/utils/playerState";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
+import { FrillContainer, useExpFrills } from "@/components/ExpFrill";
+import { Button } from "@/components/Button";
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
