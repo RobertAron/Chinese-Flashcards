@@ -6,39 +6,48 @@ async function main() {
   const prisma = new PrismaClient({
     datasourceUrl: `file:${datasourceUrl}`,
   });
-  await prisma.phrases.createMany({
-    data: [
-      {
-        characters: "别人 在 学校 学汉语。",
-        meaning: "Other people are studying Chinese at school.",
-        pinyin: "biéren zài xuéxiào xué hànyǔ.",
-        emojiChallenge: "👥📍🏫📚🀄",
+  await prisma.drill.create({
+    data: {
+      slug: "people-adjectives-2",
+      title: "adjective 1",
+      lessonSlug: "people-adjectives",
+      description:
+        "Typically the way to apply an adjective is `(subject) (很/好) (adjective)`. In these situations, a closer literal translations of these words would be `is`. 好 can be used to mean something is good, or something is very. In fact, someone can even be 好好. This is sort of like saying someone is 'pretty pretty'.",
+      Phrases: {
+        create: [
+          {
+            characters: "他 今天 很 忙。",
+            meaning: "He is very busy today.",
+            pinyin: "tā jīntiān hěn máng.",
+            emojiChallenge: "👦📅🕒",
+          },
+          {
+            characters: "小猫 很 聪明。",
+            meaning: "The kitten is very smart.",
+            pinyin: "xiǎomāo hěn cōngmíng.",
+            emojiChallenge: "🐱🧠✨",
+          },
+          {
+            characters: "这个 苹果 好 大。",
+            meaning: "This apple is very big.",
+            pinyin: "zhège píngguǒ hǎo dà.",
+            emojiChallenge: "🍎👀📏",
+          },
+          {
+            characters: "这个 苹果 很 好。",
+            meaning: "This apple is good.",
+            pinyin: "zhège píngguǒ hěn hǎo.",
+            emojiChallenge: "🍎👍😊",
+          },
+          {
+            characters: "小朋友 很 聪明 会 说 汉语。",
+            meaning: "The kids are smart, (they) can speak Chinese.",
+            pinyin: "xiǎopéngyǒu hěn cōngmíng huì shuō hànyǔ.",
+            emojiChallenge: "👧👦🗣️🀄",
+          },
+        ],
       },
-      {
-        characters: "别人 喜欢 吃 米饭。",
-        meaning: "Other people like to eat rice.",
-        pinyin: "biéren xǐhuan chī mǐfàn.",
-        emojiChallenge: "👥❤️🍽️🍚",
-      },
-      {
-        characters: "小朋友 在 公园 玩。",
-        meaning: "The little kids at the park are playing.",
-        pinyin: "xiǎopéngyǒu zài gōngyuán wán.",
-        emojiChallenge: "👧👦🌳⚽",
-      },
-      {
-        characters: "小朋友 喜欢 看书。",
-        meaning: "The little kids like reading books.",
-        pinyin: "xiǎopéngyǒu xǐhuan kàn shū.",
-        emojiChallenge: "👧👦📚😊",
-      },
-      {
-        characters: "小朋友 在 家 画画。",
-        meaning: "The little kids at home are drawing",
-        pinyin: "xiǎopéngyǒu zài jiā huàhuà.",
-        emojiChallenge: "👧👦📍🏠🎨",
-      },
-    ],
+    },
   });
 }
 
