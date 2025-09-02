@@ -43,21 +43,21 @@ export function ChallengeAudioPlayer({ src, slow }: { src: string; slow?: boolea
   return (
     <>
       <audio ref={audioRef} src={src} autoPlay crossOrigin="anonymous" />
-      <div className="grid-stack h-36 w-full">
-        <div className="grid-stack-item z-10 m-1 self-start justify-self-end md:justify-self-start">
+      <div className="w-full grid-stack h-36">
+        <div className="z-10 self-start m-1 grid-stack-item justify-self-end md:justify-self-start">
           <Button
             type="button"
-            className="group flex items-center gap-4 rounded-lg border border-black hocus:border-slate-300 bg-white/30 hocus:bg-black p-2 hocus:text-white text-sm backdrop-blur-sm active:bg-black/20"
+            className="flex items-center p-2 text-sm border border-black rounded-lg group gap-4 hocus:border-slate-300 bg-white/30 hocus:bg-black hocus:text-white backdrop-blur-sm active:bg-black/20"
             onClick={playAudio}
           >
-            <RotateCcw className="h-4 w-4" />
+            <RotateCcw className="w-4 h-4" />
             <div className="hidden gap-1 md:flex">
               <Kbd>⌘</Kbd>
               <Kbd>↵</Kbd>
             </div>
           </Button>
         </div>
-        <div className="grid-stack-item h-full w-full">
+        <div className="w-full h-full grid-stack-item">
           {audioSourceNode !== null && <LiveAudioVisualizer mediaSource={audioSourceNode} width={700} />}
         </div>
       </div>

@@ -6,7 +6,7 @@ type CheckboxProps = Omit<AriaCheckboxProps, "children"> & {
 };
 export function Checkbox({ children, ...restProps }: CheckboxProps) {
   return (
-    <AriaCheckbox className="group flex gap-2" {...restProps}>
+    <AriaCheckbox className="flex group gap-2" {...restProps}>
       {({ isSelected }) => (
         <>
           <div

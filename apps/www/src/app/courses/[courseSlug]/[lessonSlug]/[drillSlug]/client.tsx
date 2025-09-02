@@ -54,11 +54,11 @@ export function DrillHome() {
   }, [wordDefinitions, phraseDefinitions]);
   return (
     <>
-      <section className="flex w-full flex-col gap-2">
+      <section className="flex flex-col w-full gap-2">
         <div className="flex flex-col gap-4 lg:flex-row">
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/practice`}>
             <div className={modeOptionIconClasses}>
-              <ListChecks className="h-full w-full" />
+              <ListChecks className="w-full h-full" />
             </div>
             <div className="w-0 grow">
               <div className={modeOptionTitleClasses}>Practice</div>
@@ -67,7 +67,7 @@ export function DrillHome() {
           </ModeOption>
           <ModeOption href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}/time-attack`}>
             <div className={modeOptionIconClasses}>
-              <Timer className="h-full w-full" />
+              <Timer className="w-full h-full" />
             </div>
             <div className="w-0 grow">
               <div className={modeOptionTitleClasses}>Time Attack</div>
@@ -77,17 +77,17 @@ export function DrillHome() {
         </div>
       </section>
       {description !== null && (
-        <section className="rounded-md border-2 border-black bg-white">
-          <div className="rounded-sm border-blue-500 border-l-8 p-2">
+        <section className="bg-white border-2 border-black rounded-md">
+          <div className="p-2 border-l-8 border-blue-500 rounded-sm">
             <h2 className="text-3xl">Description</h2>
             <p className="text-xl">{description}</p>
           </div>
         </section>
       )}
       {wordDefinitions.length > 0 && (
-        <section className="flex w-full flex-col gap-2">
-          <h2 className="font-semibold text-2xl">Practice Words</h2>
-          <ul className="grid w-full gap-4">
+        <section className="flex flex-col w-full gap-2">
+          <h2 className="text-2xl font-semibold">Practice Words</h2>
+          <ul className="w-full grid gap-4">
             {wordDefinitions.map((word, index) => (
               <motion.li
                 key={word.id}
@@ -111,9 +111,9 @@ export function DrillHome() {
         </section>
       )}
       {phraseDefinitions.length > 0 && (
-        <section className="flex w-full flex-col gap-2">
-          <h2 className="font-semibold text-2xl">Phrases</h2>
-          <ul className="grid w-full gap-4">
+        <section className="flex flex-col w-full gap-2">
+          <h2 className="text-2xl font-semibold">Phrases</h2>
+          <ul className="w-full grid gap-4">
             {phraseDefinitions.map((phrase, index) => (
               <motion.li
                 key={phrase.id}
@@ -136,9 +136,9 @@ export function DrillHome() {
           </ul>
         </section>
       )}
-      <section className="flex w-full flex-col gap-2">
-        <h2 className="font-semibold text-2xl">All Words</h2>
-        <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="flex flex-col w-full gap-2">
+        <h2 className="text-2xl font-semibold">All Words</h2>
+        <ul className="w-full grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {allWords.map((ele) => (
             <li key={ele.id}>
               <WordExperience {...ele} />

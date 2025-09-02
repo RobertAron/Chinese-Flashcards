@@ -25,7 +25,7 @@ export function TimeAttack() {
   return !timeAttackRunning ? (
     <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
       <div className="flex gap-2">
-        <div className="flex grow basis-0 flex-col font-bold text-3xl">
+        <div className="flex flex-col text-3xl font-bold grow basis-0">
           <div className="flex items-center gap-1">
             <PlayerAwardIcon awardType="gold" /> {formatTimeAttackMs(timeForGold)}
           </div>
@@ -36,8 +36,8 @@ export function TimeAttack() {
             <PlayerAwardIcon awardType="bronze" /> {formatTimeAttackMs(timeForBronze)}
           </div>
         </div>
-        <div className="flex grow basis-0 flex-col items-end text-lg">
-          <div className="flex gap-1 truncate">
+        <div className="flex flex-col items-end text-lg grow basis-0">
+          <div className="flex truncate gap-1">
             <span>Previous Best:</span>
             <span className="flex items-center gap-1">
               <PlayerAwardIcon awardType={timeAttackToAward(previousBest)} />
@@ -101,12 +101,12 @@ function TimeAttackRunning({
   };
 
   return (
-    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div className="justify-start self-start">
+    <div className="relative flex flex-col items-center justify-center h-full align-middle grow gap-2">
+      <div className="self-start justify-start">
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
-      <div className="flex flex-col items-center gap-2 self-center justify-self-center">
-        <div ref={timerRef} className="font-bold font-mono text-lg">
+      <div className="flex flex-col items-center self-center gap-2 justify-self-center">
+        <div ref={timerRef} className="font-mono text-lg font-bold">
           0.00
         </div>
         <ProgressRing current={completedItems} total={itemsToComplete} />
@@ -136,7 +136,7 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
   return (
     <figure className="grid h-[100px] w-[100px] font-mono">
       <svg
-        className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-700"
+        className="w-full h-full text-3xl text-blue-700 col-span-3 row-span-3"
         viewBox="0 0 100 100"
         role="img"
         aria-label="progress par"

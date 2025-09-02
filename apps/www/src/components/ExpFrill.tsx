@@ -56,7 +56,7 @@ function ExpFrill({ ref }: { ref?: Ref<HTMLDivElement> }) {
       initial={{ opacity: 0, scale: 0, rotateY: 0, rotateX: -5 }}
       animate={{ opacity: 1, scale: 1, rotateY: -40, rotateX: 0 }}
       exit={{ opacity: 0, scale: 1.5, rotateY: -40, rotateX: 5 }}
-      className="-translate-y-1/2 absolute flex h-8 w-max items-center justify-center text-nowrap rounded-md border border-black bg-amber-300 px-1 py-5 font-mono text-4xl"
+      className="absolute flex items-center justify-center h-8 px-1 py-5 font-mono text-4xl border border-black -translate-y-1/2 w-max text-nowrap rounded-md bg-amber-300"
     >
       +1
     </motion.div>

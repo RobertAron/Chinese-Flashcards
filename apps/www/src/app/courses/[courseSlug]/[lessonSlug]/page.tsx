@@ -35,7 +35,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
         <BreadcrumbEscape href={`/courses/${courseSlug}`}>{lesson.course.title}</BreadcrumbEscape>
       </BreadcrumbContainer>
       <main className="flex flex-col gap-4">
-        <h1 className="font-bold text-5xl underline">{lesson.title}</h1>
+        <h1 className="text-5xl font-bold underline">{lesson.title}</h1>
         <div className="grid grid-cols-3 gap-1">
           <div className="col-span-3 grid grid-cols-subgrid">
             <div>Drill</div>

@@ -22,7 +22,7 @@ type CourseTitleLinkProps = {
 export const CourseTitleLink = ({ courseSlug, children }: CourseTitleLinkProps) => {
   const href = `/courses/${courseSlug}`;
   return (
-    <Link href={href} className="truncate border-black border-b-1 px-1 py-2 font-bold text-2xl text-black">
+    <Link href={href} className="px-1 py-2 text-2xl font-bold text-black truncate border-black border-b-1">
       {children}
     </Link>
   );
@@ -60,9 +60,9 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
       key={drillSlug}
       className={`${coreLinkClasses} flex border-[currentColor] border-l pl-1`}
     >
-      <div className="flex items-center gap-1 pl-2">
+      <div className="flex items-center pl-2 gap-1">
         {practiceCount === 0 ? (
-          <Squircle strokeWidth={3} className="h-4 w-4 text-gray-600" />
+          <Squircle strokeWidth={3} className="w-4 h-4 text-gray-600" />
         ) : (
           <Crown strokeWidth={3} className={`${className} h-4 w-4`} />
         )}

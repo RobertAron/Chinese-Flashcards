@@ -17,7 +17,7 @@ export function PracticeCountCell({ challengeId }: { challengeId: string }) {
     <div className="flex items-center justify-end gap-2">
       <PlayerAwardIcon awardType={award} />
       <span>{formatPracticeCount(practiceCount)}</span>
-      <ListChecks className="h-4 w-4" />
+      <ListChecks className="w-4 h-4" />
     </div>
   );
 }
@@ -28,7 +28,7 @@ export function TimeAttackCell({ challengeId }: { challengeId: string }) {
     <div className="flex items-center justify-end gap-2">
       <PlayerAwardIcon awardType={award} />
       <span>{formatTimeAttackMs(timeAttackPB)}</span>
-      <Timer className="h-4 w-4" />
+      <Timer className="w-4 h-4" />
     </div>
   );
 }

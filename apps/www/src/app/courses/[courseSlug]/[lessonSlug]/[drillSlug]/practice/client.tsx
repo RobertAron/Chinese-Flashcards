@@ -36,7 +36,7 @@ export default function Practice() {
         disableStart={noProblems}
       >
         <div className="flex gap-2">
-          <div className="flex grow basis-0 flex-col font-bold text-3xl">
+          <div className="flex flex-col text-3xl font-bold grow basis-0">
             <div className="flex items-center gap-1">
               <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
             </div>
@@ -47,7 +47,7 @@ export default function Practice() {
               <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
             </div>
           </div>
-          <div className="grow basis-0 font-extrabold text-3xl">
+          <div className="text-3xl font-extrabold grow basis-0">
             <div className="flex items-center">
               <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
               {formatPracticeCount(practiceCount)}
@@ -66,8 +66,8 @@ export default function Practice() {
     nextProblem();
   };
   return (
-    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
-      <div className="justify-start self-start">
+    <div className="relative flex flex-col items-center justify-center h-full align-middle grow gap-2">
+      <div className="self-start justify-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
       <ProgressArea practiceCount={practiceCount} />
@@ -83,7 +83,7 @@ export default function Practice() {
 function ProgressArea({ practiceCount }: { practiceCount: number }) {
   const tillNext = practiceCountTillNextValues(practiceCount);
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex flex-col w-full">
       <div className="flex items-end justify-between pl-4 font-mono">
         <span>
           <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />

@@ -43,16 +43,6 @@
       "a11y": {
         "useMediaCaption": "off"
       },
-      "nursery": {
-        "useSortedClasses": {
-          "fix": "safe",
-          "level": "warn",
-          "options": {
-            "attributes": ["className"],
-            "functions": ["cn", "clsx", "cva", "tw"]
-          }
-        }
-      },
       "correctness": {
         "noUnusedImports": "error",
         "noUnusedVariables": "error",

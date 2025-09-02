@@ -19,7 +19,7 @@ export function LessonProgress({ drillSlugs }: { drillSlugs: string[] }) {
     { bronze: 0, silver: 0, gold: 0 },
   );
   return (
-    <div className="flex justify-end gap-2 text-lg">
+    <div className="flex justify-end text-lg gap-2">
       <div>🏅{allAwards.gold}x</div>
       <div>🥈{allAwards.silver}x</div>
       <div>🥉{allAwards.bronze}x</div>

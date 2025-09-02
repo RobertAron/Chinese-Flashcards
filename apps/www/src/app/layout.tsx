@@ -24,15 +24,15 @@ export default function RootLayout({
           <body
             className={`${GeistSans.variable} ${GeistMono.variable} relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased`}
           >
-            <nav className="relative z-10 flex border-black border-b bg-white px-4">
-              <div className="container mx-auto flex gap-2 p-0 pl-4">
-                <Link href="/" className="flex items-center gap-2 hocus:bg-black p-2 pr-2 hocus:text-white">
+            <nav className="relative z-10 flex bg-white border-b border-black">
+              <div className="container flex gap-2 p-0 pl-4 mx-auto">
+                <Link href="/" className="flex items-center gap-2 py-2 hocus:bg-black hocus:text-white">
                   <LanguagesIcon className="shrink-0" />
-                  <span className="font-bold text-xl">Chinese Challenges</span>
+                  <span className="text-xl font-bold">Chinese Challenges</span>
                 </Link>
               </div>
             </nav>
-            <div className="container relative z-10 mx-auto flex h-full w-full grow">{children}</div>
+            <div className="container relative z-10 flex w-full h-full mx-auto grow">{children}</div>
             <LoadingRender />
             <div className="texture" />
           </body>
