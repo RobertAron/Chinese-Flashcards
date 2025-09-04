@@ -53,8 +53,8 @@ const letterMapping: Record<string, string[]> = {
   ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
 };
 
-const noTypingRequired = /[ .?？’]/;
-const punctuation = /[.?？’]/;
+const noTypingRequired = /[ .?？’,!]/;
+const punctuation = /[.?？’,!]/;
 function extractListenChar(char: string | ToneMapConfig | undefined) {
   const isToneCharacter = typeof char === "object";
   return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();
@@ -166,8 +166,10 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
       const currentCharacter = normalized[progress];
       const isToneCharacter = typeof currentCharacter === "object";
       const rawChar = extractListenChar(currentCharacter);
-      const nextRawChar = extractListenChar(normalized[progress + 1]);
-      const incrementAmount = noTypingRequired.test(nextRawChar) ? 2 : 1;
+      let incrementAmount = 1;
+      while (noTypingRequired.test(extractListenChar(normalized[progress + incrementAmount]))) {
+        incrementAmount += 1;
+      }
       const nextStep = progress + incrementAmount;
       const onToneStep = secondaryProgress === 1;
       // characters with tones
@@ -234,14 +236,14 @@ function ToneHints({
   return (
     <motion.div className="absolute flex -translate-x-1/2 top-full left-1/2" ref={ref}>
       <motion.div
-        className="relative flex p-2 bg-white border-2 border-black gap-2 rounded-md"
+        className="relative flex gap-2 p-2 bg-white border-2 border-black rounded-md"
         initial={{ top: 30, opacity: 0 }}
         animate={{ top: 0, opacity: 1 }}
         exit={{ top: 30, opacity: 0 }}
         transition={{ duration: 0.075 }}
       >
         {letterMapping[character.stripped]?.map((ele, index) => (
-          <div className="flex items-center px-2 py-1 border rounded-sm gap-3 border-slate-700" key={index}>
+          <div className="flex items-center gap-3 px-2 py-1 border rounded-sm border-slate-700" key={index}>
             <Kbd>{index + 1}</Kbd>
             <div className="text-lg">{ele}</div>
           </div>
