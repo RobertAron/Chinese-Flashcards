@@ -16,7 +16,6 @@ export const practiceCountColors = {
   2: {
     min: 250,
     max: 500,
-
     background: "bg-yellow-300",
     primary: "bg-yellow-600",
     font: "text-yellow-600",
