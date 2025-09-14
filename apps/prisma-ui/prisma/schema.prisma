@@ -58,6 +58,16 @@ model Words {
   meaning        String
   frequencyRank  Int
   emojiChallenge String?
+  hskLevel       HskLevel?
   Drill          Drill[]   @relation("DrillToWords")
   Phrases        Phrases[] @relation("PhrasesToWords")
+}
+
+enum HskLevel {
+  hsk1
+  hsk2
+  hsk3
+  hsk4
+  hsk5
+  hsk6
 }

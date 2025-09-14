@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "audio-gen": "bun src/audio-gen.ts",
-    "drill-gen": "bun src/drill-gen.ts"
+    "drill-gen": "bun src/drill-gen.ts",
+    "hsk-gen": "bun src/word-gen.ts"
   },
   "keywords": [],
   "author": "",

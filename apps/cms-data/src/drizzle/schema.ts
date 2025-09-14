@@ -1,6 +1,9 @@
 import { sqliteTable, AnySQLiteColumn, integer, text, uniqueIndex, index, foreignKey, numeric } from "drizzle-orm/sqlite-core"
   import { sql } from "drizzle-orm"
 
+export const hskLevels = ["hsk1","hsk2","hsk3","hsk4","hsk5","hsk6"] as const;
+export type HskLevel = (typeof hskLevels)[number];
+
 export const words = sqliteTable("Words", {
 	id: integer().primaryKey({ autoIncrement: true }).notNull(),
 	characters: text().notNull(),
@@ -8,6 +11,7 @@ export const words = sqliteTable("Words", {
 	meaning: text().notNull(),
 	frequencyRank: integer().notNull(),
 	emojiChallenge: text(),
+	hskLevel: text().$type<HskLevel>(),
 });
 
 export const drillToWords = sqliteTable("_DrillToWords", {
