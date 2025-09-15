@@ -1,3 +1,4 @@
+import type { HskLevel } from "cms-data/drizzle/schema";
 import { notFound } from "next/navigation";
 import React from "react";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
@@ -94,6 +95,7 @@ async function getAllWordsInDrill(drillSlug: string) {
                       characters: true,
                       pinyin: true,
                       meaning: true,
+                      hskLevel: true,
                     },
                   },
                 },
@@ -146,11 +148,12 @@ type DefinitionCore = {
 
 export interface WordDefinition extends DefinitionCore {
   type: "word";
+  hskLevel: HskLevel | null;
 }
 
 export interface PhraseDefinition extends DefinitionCore {
   type: "phrase";
-  words: { characters: string; pinyin: string; id: number; meaning: string }[];
+  words: { characters: string; pinyin: string; id: number; meaning: string; hskLevel: HskLevel | null }[];
 }
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   const data = await (params.drillSlug.startsWith("final-mastery")
@@ -174,6 +177,7 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
           pinyin: word.pinyin,
           id: word.id,
           meaning: word.meaning,
+          hskLevel: word.hskLevel,
         })),
         audioSrc: phraseToAudioSource(ele.id),
       }),

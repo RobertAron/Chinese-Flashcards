@@ -117,7 +117,7 @@ async function main() {
     const [response] = res;
     if (response.audioContent == null) throw new Error(JSON.stringify(res));
     await fs.promises.writeFile(speechFile, response.audioContent, "binary");
-    await delay(100);
+    await delay(50);
     console.log("complete with", speechFile);
   }
 
@@ -125,7 +125,7 @@ async function main() {
   const uploadAudio = await askYesNo("upload audio?");
   if (uploadAudio) {
     console.log("Running `rclone copy ./dist r2Language:vocab-sprint`");
-    await $`rclone copy ./dist r2Language:vocab-sprint`;
+    await $`rclone copy ./dist r2Language:vocab-sprint -v`;
   }
   process.exit(0);
 }

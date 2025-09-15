@@ -1,4 +1,9 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "tailwindCSS.classAttributes": [".*ClassName", ".*Classes"]
+  "tailwindCSS.classAttributes": [".*ClassName", ".*Classes"],
+  "tailwindCSS.experimental.classRegex": [
+    ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "'([^']*)'"],
+    ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "\"([^\"]*)\""],
+    ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "\\`([^\\`]*)\\`"]
+  ]
 }

@@ -7,7 +7,7 @@ import type { Words } from "./page";
 
 export function SearchPage({ words }: { words: Words }) {
   const fuseWords = useMemo(
-    () => new Fuse(words, { distance: 0.1, keys: ["characters", "meaning"] }),
+    () => new Fuse(words, { distance: 0.1, keys: ["characters", "meaning", "pinyin"] }),
     [words],
   );
   const [input, setInput] = useState("");
@@ -20,8 +20,8 @@ export function SearchPage({ words }: { words: Words }) {
           .map((ele) => ele.item);
 
   return (
-    <div className="py-4 grid grid-flow-row gap-3">
-      <div>
+    <div className="grid w-full grid-flow-row gap-3 py-4">
+      <div className="flex flex-col gap-2">
         <h1 className="text-5xl font-bold underline">Dictionary</h1>
         <label className="flex flex-col gap-1">
           <span className="sr-only">Search</span>
@@ -33,7 +33,7 @@ export function SearchPage({ words }: { words: Words }) {
           />
         </label>
       </div>
-      <hr className="my-4 border border-gray-400" />
+      <hr className="my-1 border border-gray-400" />
       {matchingWords.slice(0, 10).map((word) => {
         return (
           <WordOutline

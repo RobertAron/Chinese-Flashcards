@@ -43,11 +43,12 @@ export function DrillHome() {
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   const allWords = useMemo(() => {
-    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters, meaning }) => ({
+    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters, meaning, hskLevel }) => ({
       id,
       pinyin,
       characters,
       meaning,
+      hskLevel,
     }));
     const wordsUsed = phraseDefinitions.flatMap(({ words }) => words);
     return deDupe([...wordsRaw, ...wordsUsed], ({ id }) => id);
