@@ -1,7 +1,7 @@
 import { sqliteTable, AnySQLiteColumn, integer, text, uniqueIndex, index, foreignKey, numeric } from "drizzle-orm/sqlite-core"
   import { sql } from "drizzle-orm"
 
-export const hskLevels = ["hsk1","hsk2","hsk3","hsk4","hsk5","hsk6"] as const;
+export const hskLevels = ["hsk1","hsk2","hsk3","hsk4","hsk5","hsk6","hsk7"] as const;
 export type HskLevel = (typeof hskLevels)[number];
 
 export const words = sqliteTable("Words", {

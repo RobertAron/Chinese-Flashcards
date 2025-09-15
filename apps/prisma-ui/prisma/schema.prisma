@@ -70,4 +70,5 @@ enum HskLevel {
   hsk4
   hsk5
   hsk6
+  hsk7
 }
