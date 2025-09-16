@@ -20,7 +20,7 @@ export function SearchPage({ words }: { words: Words }) {
           .map((ele) => ele.item);
 
   return (
-    <div className="grid w-full grid-flow-row gap-3 py-4">
+    <div className="w-full py-4 grid grid-flow-row gap-3">
       <div className="flex flex-col gap-2">
         <h1 className="text-5xl font-bold underline">Dictionary</h1>
         <label className="flex flex-col gap-1">

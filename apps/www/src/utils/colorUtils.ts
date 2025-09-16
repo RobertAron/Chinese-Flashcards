@@ -1,5 +1,6 @@
 export const practiceCountColors = {
   0: {
+    key: 0,
     min: 0,
     max: 100,
     background: "bg-blue-300",
@@ -7,6 +8,7 @@ export const practiceCountColors = {
     font: "text-blue-600",
   },
   1: {
+    key: 1,
     min: 100,
     max: 250,
     background: "bg-green-300",
@@ -14,6 +16,7 @@ export const practiceCountColors = {
     font: "text-green-600",
   },
   2: {
+    key: 2,
     min: 250,
     max: 500,
     background: "bg-yellow-300",
@@ -21,13 +24,14 @@ export const practiceCountColors = {
     font: "text-yellow-600",
   },
   3: {
+    key: 3,
     min: 500,
     max: 1000,
     background: "bg-red-300",
     primary: "bg-red-600",
     font: "text-red-600",
   },
-};
+} as const;
 
 export function practiceCountToColor(count: number) {
   if (count < 100) return practiceCountColors[0];

@@ -12,14 +12,14 @@ type WordOutlineProps = {
 export function WordOutline({ word }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
   return (
-    <div className="relative flex flex-row items-stretch h-full max-w-full gap-2 overflow-hidden bg-white border-2 border-black rounded-md grow justify-stretch">
+    <div className="relative flex flex-row items-stretch h-full max-w-full overflow-hidden bg-white border-2 border-black gap-2 rounded-md grow justify-stretch">
       {word.type === "word" && word.hskLevel !== null && (
         <div className="absolute right-2 top-2">
           <HskBadge hskLevel={word.hskLevel} />
         </div>
       )}
       <AudioSection src={audioSrc} />
-      <div className="flex flex-col items-start gap-2 p-2 grow basis-0">
+      <div className="flex flex-col items-start p-2 gap-2 grow basis-0">
         <div className="flex flex-col">
           <div className="text-4xl md:text-6xl">{character}</div>
           <div className="text-xl font-semibold md:text-2xl">{pinyin}</div>

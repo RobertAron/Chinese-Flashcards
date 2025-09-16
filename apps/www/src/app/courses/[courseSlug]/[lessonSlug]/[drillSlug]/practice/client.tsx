@@ -1,4 +1,5 @@
 "use client";
+import { CrownIcon } from "lucide-react";
 import { AnimatePresence, animate, motion, useMotionValue, usePresence, useTransform } from "motion/react";
 import { type Ref, useEffect, useState } from "react";
 import { PlayerAwardIcon } from "@/components/CompletionAward";
@@ -6,20 +7,28 @@ import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { Experience } from "@/components/Experience";
+import { practiceCountColors, practiceCountToColor } from "@/utils/colorUtils";
 import {
-  bronzePracticeCount,
   formatPracticeCount,
-  goldPracticeCount,
   practiceCountTillNextValues,
   practiceCountToAward,
-  silverPracticeCount,
   usePracticeCount,
   useWordIncrementor,
 } from "@/utils/playerState";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
-import { FrillContainer, useExpFrills } from "@/components/ExpFrill";
-import { Button } from "@/components/Button";
+
+function PracticeCountItem({ id, showRange }: { id: keyof typeof practiceCountColors; showRange?: boolean }) {
+  const data = practiceCountColors[id];
+  const minString = data.min.toString().padStart(4, " ");
+  const maxString = data.max.toString().padStart(4, " ");
+  return (
+    <div className="flex items-center gap-1">
+      <CrownIcon strokeWidth={3} className={`${practiceCountColors[id].font} h-8 w-8`} />
+      {showRange && <pre>{`${minString} - ${maxString}`}</pre>}
+    </div>
+  );
+}
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
@@ -37,20 +46,15 @@ export default function Practice() {
       >
         <div className="flex gap-2">
           <div className="flex flex-col text-3xl font-bold grow basis-0">
-            <div className="flex items-center gap-1">
-              <PlayerAwardIcon awardType="gold" /> {goldPracticeCount}
-            </div>
-            <div className="flex items-center gap-1">
-              <PlayerAwardIcon awardType="silver" /> {silverPracticeCount}
-            </div>
-            <div className="flex items-center gap-1">
-              <PlayerAwardIcon awardType="bronze" /> {bronzePracticeCount}
-            </div>
+            <PracticeCountItem id={3} showRange />
+            <PracticeCountItem id={2} showRange />
+            <PracticeCountItem id={1} showRange />
+            <PracticeCountItem id={0} showRange />
           </div>
           <div className="text-3xl font-extrabold grow basis-0">
-            <div className="flex items-center">
-              <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
-              {formatPracticeCount(practiceCount)}
+            <div className="flex items-center font-mono">
+              <PracticeCountItem id={practiceCountToColor(practiceCount).key} />
+              <span>{formatPracticeCount(practiceCount)}</span>
             </div>
           </div>
         </div>
@@ -66,7 +70,7 @@ export default function Practice() {
     nextProblem();
   };
   return (
-    <div className="relative flex flex-col items-center justify-center h-full align-middle grow gap-2">
+    <div className="relative flex flex-col items-center justify-center h-full gap-2 align-middle grow">
       <div className="self-start justify-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
