@@ -7,7 +7,7 @@ import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { Experience } from "@/components/Experience";
-import { practiceCountColors, practiceCountToColor } from "@/utils/colorUtils";
+import { practiceCountColors, practiceCountToColor } from "@/utils/colorMapping";
 import {
   formatPracticeCount,
   practiceCountTillNextValues,

@@ -8,7 +8,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useEffect, useState } from "react";
-import { practiceCountColors } from "@/utils/colorUtils";
+import { practiceCountColors } from "@/utils/colorMapping";
 
 export function Experience({ percent }: { percent: number }) {
   const experience = useMotionValue(percent);

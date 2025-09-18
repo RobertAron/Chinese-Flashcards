@@ -2,7 +2,7 @@
 import { Crown, Squircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { practiceCountToColor } from "@/utils/colorUtils";
+import { practiceCountToColor } from "@/utils/colorMapping";
 import { usePracticeCount } from "@/utils/playerState";
 
 type LessonLinkProps = {

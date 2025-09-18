@@ -150,9 +150,9 @@ export function useWordIncrementor() {
 
 export type AwardTypes = "bronze" | "silver" | "gold" | null;
 
-export const timeForGold = 25 * 1000;
-export const timeForSilver = 50 * 1000;
-export const timeForBronze = 75 * 1000;
+const timeForGold = 25 * 1000;
+const timeForSilver = 50 * 1000;
+const timeForBronze = 75 * 1000;
 export function timeAttackToAward(ms: number | null): AwardTypes {
   if (ms === null) return null;
   if (ms < timeForGold) return "gold";

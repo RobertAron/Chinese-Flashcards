@@ -1,19 +1,12 @@
 "use client";
+import { ChevronsUpIcon } from "lucide-react";
 import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
 import { useRef, useState } from "react";
-import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
-import {
-  formatTimeAttackMs,
-  timeAttackToAward,
-  timeForBronze,
-  timeForGold,
-  timeForSilver,
-  useTimeAttackPB,
-  useWordIncrementor,
-} from "@/utils/playerState";
+import { timeAttackColors, timeAttackCountToColor } from "@/utils/colorMapping";
+import { formatTimeAttackMs, useTimeAttackPB, useWordIncrementor } from "@/utils/playerState";
 import { ExitButton } from "../ExitButton";
 import { useChallengeStream } from "../useChallengeStream";
 
@@ -22,25 +15,26 @@ export function TimeAttack() {
   const { challengeId } = useDrillContext();
   const [recentFinish, setRecentFinish] = useState<number | null>(null);
   const [previousBest, setNewBest] = useTimeAttackPB(challengeId);
+  const currentAward = previousBest === null ? null : timeAttackCountToColor(previousBest);
+  const recentAward = previousBest === null ? null : timeAttackCountToColor(previousBest);
   return !timeAttackRunning ? (
     <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
       <div className="flex gap-2">
         <div className="flex flex-col text-3xl font-bold grow basis-0">
-          <div className="flex items-center gap-1">
-            <PlayerAwardIcon awardType="gold" /> {formatTimeAttackMs(timeForGold)}
-          </div>
-          <div className="flex items-center gap-1">
-            <PlayerAwardIcon awardType="silver" /> {formatTimeAttackMs(timeForSilver)}
-          </div>
-          <div className="flex items-center gap-1">
-            <PlayerAwardIcon awardType="bronze" /> {formatTimeAttackMs(timeForBronze)}
-          </div>
+          {Object.values(timeAttackColors)
+            .map((ele) => (
+              <div className="flex items-center gap-1" key={ele.key}>
+                <ChevronsUpIcon strokeWidth={3} className={`${ele.font} w-8 h-8`} />
+                {formatTimeAttackMs(ele.requiredTime)}
+              </div>
+            ))
+            .toReversed()}
         </div>
         <div className="flex flex-col items-end text-lg grow basis-0">
           <div className="flex truncate gap-1">
             <span>Previous Best:</span>
             <span className="flex items-center gap-1">
-              <PlayerAwardIcon awardType={timeAttackToAward(previousBest)} />
+              {currentAward && <ChevronsUpIcon strokeWidth={3} className={`${currentAward.font} w-8 h-8`} />}
               {formatTimeAttackMs(previousBest)}
             </span>
           </div>
@@ -49,7 +43,7 @@ export function TimeAttack() {
               <div>Recent Finish</div>
               <div className="flex items-end gap-1">
                 {recentFinish === previousBest && "🎉"}
-                <PlayerAwardIcon awardType={timeAttackToAward(recentFinish)} />
+                {recentAward && <ChevronsUpIcon strokeWidth={3} className={`${recentAward.font} w-8 h-8`} />}
                 {formatTimeAttackMs(recentFinish)}
               </div>
             </div>
@@ -101,7 +95,7 @@ function TimeAttackRunning({
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-full align-middle grow gap-2">
+    <div className="relative flex flex-col items-center justify-center h-full align-middle gap-2 grow">
       <div className="self-start justify-start">
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
