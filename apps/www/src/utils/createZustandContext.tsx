@@ -34,16 +34,13 @@ function createZustandStore<State extends StateObject>({
 export function createZustandContext<State extends StateObject>(defaultState: State) {
   type ContextProps = { initialState?: Partial<State>; children: React.ReactNode };
   type ProvidedValue = Mutate<ReturnType<typeof createZustandStore<State>>, []>;
-  return ezCreateContext<ProvidedValue, ContextProps>(
-    (Provider) =>
-      function ZustandContextProvider({ children, initialState }) {
-        const store = useRef(
-          createZustandStore<State>({
-            defaultState,
-            initialState,
-          }),
-        ).current;
-        return <Provider value={store}>{children}</Provider>;
-      },
-  );
+  return ezCreateContext<ProvidedValue, ContextProps>((P) => ({ children, initialState }) => {
+    const store = useRef(
+      createZustandStore<State>({
+        defaultState,
+        initialState,
+      }),
+    ).current;
+    return <P value={store}>{children}</P>;
+  });
 }
