@@ -125,7 +125,7 @@ async function main() {
   const uploadAudio = await askYesNo("upload audio?");
   if (uploadAudio) {
     console.log("Running `rclone copy ./dist r2Language:vocab-sprint`");
-    await $`rclone copy ./dist r2Language:vocab-sprint -v`;
+    await $`rclone copy ./dist r2Language:vocab-sprint -v --transfers=8`;
   }
   process.exit(0);
 }

@@ -3,14 +3,33 @@ import { useCallback, useEffect, useState } from "react";
 import { getAudioContext } from "./audioContext";
 
 // Key Trigger
-export function useKeyTrigger(key: string, cb: (e: KeyboardEvent) => void) {
+export function useKeyTrigger(
+  key: string,
+  cb: (e: KeyboardEvent) => void,
+  {
+    alt = false,
+    ctrl = false,
+    meta = false,
+    shift = false,
+  }: {
+    ctrl?: boolean;
+    alt?: boolean;
+    shift?: boolean;
+    meta?: boolean;
+  } = {},
+) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === key) cb(event);
+      const keyMatch = event.key === key;
+      const matchesModifiers =
+        event.altKey === alt && event.ctrlKey === ctrl && event.metaKey === meta && event.shiftKey === shift;
+      if (keyMatch && matchesModifiers) {
+        cb(event);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [cb, key]);
+  }, [cb, key, alt, ctrl, meta, shift]);
 }
 
 // use audio source

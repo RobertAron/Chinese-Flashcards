@@ -8,47 +8,47 @@ async function main() {
   });
   await prisma.drill.create({
     data: {
-      slug: "places-locations-2",
-      title: "Company, Park, Nearby",
+      slug: "places-locations-3",
+      title: "Bank, Airport, Shop",
       lessonSlug: "places-nouns",
       description: "",
       Phrases: {
         create: [
           {
-            characters: "我 有 一个 公司。",
-            meaning: "I own a company.",
-            pinyin: "wǒ yǒu yí gè gōngsī.",
-            emojiChallenge: "🙂⊢1️⃣🏢",
-          },
-          {
-            characters: "他 今天 去 公司",
-            meaning: "He is today going to the company",
-            pinyin: "tā jīntiān qù gōngsī.",
-            emojiChallenge: "🧑📅🏃‍♂️🏢",
-          },
-          {
-            characters: "我们 在 公园 玩。",
-            meaning: "We are at the park playing.",
-            pinyin: "wǒmen zài gōngyuán wán.",
-            emojiChallenge: "🙂👥📍🌳⚽",
-          },
-          {
-            characters: "公园 非常 大",
-            meaning: "The park is extremely big.",
-            pinyin: "gōngyuán fēicháng dà.",
-            emojiChallenge: "🌳⇈⛰",
-          },
-          {
             characters: "银行 在 学校 附近。",
-            meaning: "The bank and school are nearby",
+            meaning: "The bank is near the school.",
             pinyin: "yínháng zài xuéxiào fùjìn.",
-            emojiChallenge: "🏦🏫👣",
+            emojiChallenge: "🏦📍🏫",
           },
           {
-            characters: "这 附近 有 饭店 吗？",
-            meaning: "This nearby, has a restaurant?",
-            pinyin: "zhè fùjìn yǒu fàndiàn ma?",
-            emojiChallenge: "👇👣⊢🍜❓",
+            characters: "我 去 银行 取钱。",
+            meaning: "I go to the bank to withdraw money.",
+            pinyin: "wǒ qù yínháng qǔqián.",
+            emojiChallenge: "🙂🏃‍♂️🏦💰",
+          },
+          {
+            characters: "我们 去 机场。",
+            meaning: "We are going to the airport.",
+            pinyin: "wǒmen qù jīchǎng.",
+            emojiChallenge: "👥🏃‍♂️✈️",
+          },
+          {
+            characters: "机场 有 很多 出租车。",
+            meaning: "There are many taxis at the airport.",
+            pinyin: "jīchǎng yǒu hěn duō chūzūchē.",
+            emojiChallenge: "✈️🚖🚖🚖",
+          },
+          {
+            characters: "我 在 商店 买 水果。",
+            meaning: "I am buying fruit at the shop.",
+            pinyin: "wǒ zài shāngdiàn mǎi shuǐguǒ.",
+            emojiChallenge: "🙂📍🏪🍎🍌",
+          },
+          {
+            characters: "这个 商店 的 衣服 很 漂亮。",
+            meaning: "The clothes in this shop are very pretty.",
+            pinyin: "zhè gè shāngdiàn de yīfu hěn piàoliang.",
+            emojiChallenge: "👇🏪👗✨",
           },
         ],
       },

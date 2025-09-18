@@ -39,7 +39,9 @@ export function ChallengeAudioPlayer({ src, slow }: { src: string; slow?: boolea
     const ipad = isIpad();
     audioRef.current.playbackRate = slow && !ipad ? 0.7 : 1;
   }, [slow]);
-  useKeyTrigger("Enter", playAudio);
+  useKeyTrigger("Enter", playAudio, {
+    meta: true,
+  });
   return (
     <>
       <audio ref={audioRef} src={src} autoPlay crossOrigin="anonymous" />
@@ -47,7 +49,7 @@ export function ChallengeAudioPlayer({ src, slow }: { src: string; slow?: boolea
         <div className="z-10 self-start m-1 grid-stack-item justify-self-end md:justify-self-start">
           <Button
             type="button"
-            className="flex items-center p-2 text-sm border border-black rounded-lg group gap-4 hocus:border-slate-300 bg-white/30 hocus:bg-black hocus:text-white backdrop-blur-sm active:bg-black/20"
+            className="flex items-center p-2 text-sm rounded-lg gap-4 hocus:border-slate-300 backdrop-blur-sm bg-white/30"
             onClick={playAudio}
           >
             <RotateCcw className="w-4 h-4" />
