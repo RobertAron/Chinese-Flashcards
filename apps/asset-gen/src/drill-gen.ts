@@ -6,49 +6,101 @@ async function main() {
   const prisma = new PrismaClient({
     datasourceUrl: `file:${datasourceUrl}`,
   });
+
+  // Drill 1: 厕所 & 酒店
   await prisma.drill.create({
     data: {
-      slug: "places-locations-3",
-      title: "Bank, Airport, Shop",
+      slug: "places-locations-5",
+      title: "Toilet, Hotel",
       lessonSlug: "places-nouns",
       description: "",
       Phrases: {
         create: [
           {
-            characters: "银行 在 学校 附近。",
-            meaning: "The bank is near the school.",
-            pinyin: "yínháng zài xuéxiào fùjìn.",
-            emojiChallenge: "🏦📍🏫",
+            characters: "厕所 在 哪儿？",
+            meaning: "Where is the toilet?",
+            pinyin: "cèsuǒ zài nǎr?",
+            emojiChallenge: "🚻❓",
           },
           {
-            characters: "我 去 银行 取钱。",
-            meaning: "I go to the bank to withdraw money.",
-            pinyin: "wǒ qù yínháng qǔqián.",
-            emojiChallenge: "🙂🏃‍♂️🏦💰",
+            characters: "厕所 在 楼上。",
+            meaning: "The toilet is upstairs.",
+            pinyin: "cèsuǒ zài lóushàng.",
+            emojiChallenge: "🚻⬆️🏠",
           },
           {
-            characters: "我们 去 机场。",
-            meaning: "We are going to the airport.",
-            pinyin: "wǒmen qù jīchǎng.",
-            emojiChallenge: "👥🏃‍♂️✈️",
+            characters: "厕所 很 干净。",
+            meaning: "The toilet is very clean.",
+            pinyin: "cèsuǒ hěn gānjìng.",
+            emojiChallenge: "🚻✨",
           },
           {
-            characters: "机场 有 很多 出租车。",
-            meaning: "There are many taxis at the airport.",
-            pinyin: "jīchǎng yǒu hěn duō chūzūchē.",
-            emojiChallenge: "✈️🚖🚖🚖",
+            characters: "酒店 很 贵。",
+            meaning: "The hotel is expensive.",
+            pinyin: "jiǔdiàn hěn guì.",
+            emojiChallenge: "🏨💰",
           },
           {
-            characters: "我 在 商店 买 水果。",
-            meaning: "I am buying fruit at the shop.",
-            pinyin: "wǒ zài shāngdiàn mǎi shuǐguǒ.",
-            emojiChallenge: "🙂📍🏪🍎🍌",
+            characters: "我们 住 在 酒店。",
+            meaning: "We are staying at the hotel.",
+            pinyin: "wǒmen zhù zài jiǔdiàn.",
+            emojiChallenge: "👥🏨🛏️",
           },
           {
-            characters: "这个 商店 的 衣服 很 漂亮。",
-            meaning: "The clothes in this shop are very pretty.",
-            pinyin: "zhè gè shāngdiàn de yīfu hěn piàoliang.",
-            emojiChallenge: "👇🏪👗✨",
+            characters: "酒店 前 有 出租车。",
+            meaning: "There are taxis in front of the hotel.",
+            pinyin: "jiǔdiàn qián yǒu chūzūchē.",
+            emojiChallenge: "🏨🚖🚖",
+          },
+        ],
+      },
+    },
+  });
+
+  // Drill 2: 超市 & 后边
+  await prisma.drill.create({
+    data: {
+      slug: "places-locations-6",
+      title: "Supermarket, Behind",
+      lessonSlug: "places-nouns",
+      description: "",
+      Phrases: {
+        create: [
+          {
+            characters: "我 去 超市 买 米。",
+            meaning: "I’m going to the supermarket to buy rice.",
+            pinyin: "wǒ qù chāoshì mǎi mǐ.",
+            emojiChallenge: "🙂🏃‍♂️🏪🍚",
+          },
+          {
+            characters: "超市 里 有 冰淇淋。",
+            meaning: "There is ice cream in the supermarket.",
+            pinyin: "chāoshì lǐ yǒu bīngqílín.",
+            emojiChallenge: "🏪🍦",
+          },
+          {
+            characters: "超市 开 到 十点。",
+            meaning: "The supermarket is open until ten.",
+            pinyin: "chāoshì kāi dào shí diǎn.",
+            emojiChallenge: "🏪🕙",
+          },
+          {
+            characters: "老师 在 我 后边。",
+            meaning: "The teacher is behind me.",
+            pinyin: "lǎoshī zài wǒ hòubian.",
+            emojiChallenge: "👩‍🏫🙂⬅️",
+          },
+          {
+            characters: "山 在 城市 后边。",
+            meaning: "The mountain is behind the city.",
+            pinyin: "shān zài chéngshì hòubian.",
+            emojiChallenge: "🏔️🏙️⬅️",
+          },
+          {
+            characters: "猫 在 桌子 后边。",
+            meaning: "The cat is behind the table.",
+            pinyin: "māo zài zhuōzi hòubian.",
+            emojiChallenge: "🐱🪑⬅️",
           },
         ],
       },
