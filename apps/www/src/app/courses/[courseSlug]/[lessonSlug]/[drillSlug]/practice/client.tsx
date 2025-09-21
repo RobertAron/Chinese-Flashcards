@@ -1,17 +1,14 @@
 "use client";
-import { CrownIcon } from "lucide-react";
 import { AnimatePresence, animate, motion, useMotionValue, usePresence, useTransform } from "motion/react";
 import { type Ref, useEffect, useState } from "react";
-import { PlayerAwardIcon } from "@/components/CompletionAward";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { Experience } from "@/components/Experience";
-import { practiceCountColors, practiceCountToColor } from "@/utils/colorMapping";
+import { PracticeCountIcon, practiceCountColors } from "@/utils/colorMapping";
 import {
   formatPracticeCount,
   practiceCountTillNextValues,
-  practiceCountToAward,
   usePracticeCount,
   useWordIncrementor,
 } from "@/utils/playerState";
@@ -20,12 +17,14 @@ import { useChallengeStream } from "../useChallengeStream";
 
 function PracticeCountItem({ id, showRange }: { id: keyof typeof practiceCountColors; showRange?: boolean }) {
   const data = practiceCountColors[id];
-  const minString = data.min.toString().padStart(4, " ");
-  const maxString = data.max.toString().padStart(4, " ");
+  const minString = data.min.toString().padStart(3, " ");
+  const maxString = data.max.toString().padStart(3, " ");
   return (
     <div className="flex items-center gap-1">
-      <CrownIcon strokeWidth={3} className={`${practiceCountColors[id].font} h-8 w-8`} />
-      {showRange && <pre>{`${minString} - ${maxString}`}</pre>}
+      <PracticeCountIcon count={practiceCountColors[id].min} large />
+      {showRange && (
+        <pre>{data.max === Number.POSITIVE_INFINITY ? `${minString}+` : `${minString} - ${maxString}`}</pre>
+      )}
     </div>
   );
 }
@@ -53,7 +52,7 @@ export default function Practice() {
           </div>
           <div className="text-3xl font-extrabold grow basis-0">
             <div className="flex items-center font-mono">
-              <PracticeCountItem id={practiceCountToColor(practiceCount).key} />
+              <PracticeCountIcon count={practiceCount} large />
               <span>{formatPracticeCount(practiceCount)}</span>
             </div>
           </div>
@@ -90,7 +89,7 @@ function ProgressArea({ practiceCount }: { practiceCount: number }) {
     <div className="flex flex-col w-full">
       <div className="flex items-end justify-between pl-4 font-mono">
         <span>
-          <PlayerAwardIcon awardType={practiceCountToAward(practiceCount)} />
+          <PracticeCountIcon count={practiceCount} large />
         </span>
         <div className="flex items-end gap-1">
           <span className="flex items-center text-2xl">

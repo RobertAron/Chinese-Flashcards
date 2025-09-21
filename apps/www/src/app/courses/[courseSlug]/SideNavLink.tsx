@@ -1,8 +1,7 @@
 "use client";
-import { Crown, Squircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { practiceCountToColor } from "@/utils/colorMapping";
+import { PracticeCountIcon } from "@/utils/colorMapping";
 import { usePracticeCount } from "@/utils/playerState";
 
 type LessonLinkProps = {
@@ -52,7 +51,6 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
   const href = `/courses/${courseSlug}/${lessonSlug}/${drillSlug}`;
   const matchingPath = pathname.startsWith(href);
   const [practiceCount] = usePracticeCount(drillSlug);
-  const className = practiceCountToColor(practiceCount).font;
   return (
     <Link
       data-selected={matchingPath}
@@ -61,11 +59,7 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
       className={`${coreLinkClasses} flex border-[currentColor] border-l pl-1`}
     >
       <div className="flex items-center pl-2 gap-1">
-        {practiceCount === 0 ? (
-          <Squircle strokeWidth={3} className="w-4 h-4 text-gray-600" />
-        ) : (
-          <Crown strokeWidth={3} className={`${className} h-4 w-4`} />
-        )}
+        <PracticeCountIcon count={practiceCount} />
         <span>{title}</span>
       </div>
     </Link>

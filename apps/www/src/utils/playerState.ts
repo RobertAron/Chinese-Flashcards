@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 import { useStore } from "zustand";
+import { practiceCountColors as pcc } from "./colorMapping";
 import { createZustandContext } from "./createZustandContext";
 
 const playerStateTemplate = z.object({
@@ -148,18 +149,6 @@ export function useWordIncrementor() {
   );
 }
 
-export type AwardTypes = "bronze" | "silver" | "gold" | null;
-
-const timeForGold = 25 * 1000;
-const timeForSilver = 50 * 1000;
-const timeForBronze = 75 * 1000;
-export function timeAttackToAward(ms: number | null): AwardTypes {
-  if (ms === null) return null;
-  if (ms < timeForGold) return "gold";
-  if (ms < timeForSilver) return "silver";
-  if (ms < timeForBronze) return "bronze";
-  return null;
-}
 export function formatTimeAttackMs(ms: number | null) {
   if (ms === null) return "NOT COMPLETED";
   return `${(ms / 1000).toFixed(2)}s`;
@@ -172,38 +161,16 @@ export const totalTillBronze = bronzePracticeCount;
 export const totalTillSilver = bronzePracticeCount + silverPracticeCount;
 export const totalTillGold = bronzePracticeCount + silverPracticeCount + goldPracticeCount;
 
-export function practiceCountToAward(count: number | null): AwardTypes {
-  if (count === null) return null;
-  if (count > totalTillGold) return "gold";
-  if (count > totalTillSilver) return "silver";
-  if (count > totalTillBronze) return "bronze";
-  return null;
-}
-
 export function formatPracticeCount(count: number | null) {
   if (count === 0) return "NOT STARTED";
   return `x${count}`;
 }
 
-export function practiceCountTillNextValues(count: number | null) {
-  // no medal
-  if (count === null || count < totalTillBronze)
-    return {
-      current: count ?? 0,
-      requiredForNext: bronzePracticeCount,
-    };
-  // have bronze...
-  if (count < totalTillSilver)
-    return {
-      current: count - totalTillBronze,
-      requiredForNext: silverPracticeCount,
-    };
-  // have silver...
-  if (count < totalTillGold) {
-    return { current: count - totalTillSilver, requiredForNext: goldPracticeCount };
-  }
-  return {
-    current: count,
-    requiredForNext: null,
-  };
+export function practiceCountTillNextValues(c: number | null) {
+  if (c === null || c === 0) return { current: 0, requiredForNext: pcc[0].min };
+  if (c <= pcc[0].max) return { current: c - pcc[0].min, requiredForNext: pcc[0].max - pcc[0].min + 1 };
+  if (c <= pcc[1].max) return { current: c - pcc[1].min, requiredForNext: pcc[1].max - pcc[1].min + 1 };
+  if (c <= pcc[2].max) return { current: c - pcc[2].min, requiredForNext: pcc[2].max - pcc[2].min + 1 };
+  if (c <= pcc[3].max) return { current: c - pcc[3].min, requiredForNext: pcc[3].max - pcc[3].min + 1 };
+  return { current: c, requiredForNext: null };
 }
