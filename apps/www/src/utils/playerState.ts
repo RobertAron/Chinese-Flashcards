@@ -154,23 +154,16 @@ export function formatTimeAttackMs(ms: number | null) {
   return `${(ms / 1000).toFixed(2)}s`;
 }
 
-export const bronzePracticeCount = 100;
-export const silverPracticeCount = 150;
-export const goldPracticeCount = 250;
-export const totalTillBronze = bronzePracticeCount;
-export const totalTillSilver = bronzePracticeCount + silverPracticeCount;
-export const totalTillGold = bronzePracticeCount + silverPracticeCount + goldPracticeCount;
-
 export function formatPracticeCount(count: number | null) {
   if (count === 0) return "NOT STARTED";
   return `x${count}`;
 }
 
 export function practiceCountTillNextValues(c: number | null) {
-  if (c === null || c === 0) return { current: 0, requiredForNext: pcc[0].min };
-  if (c <= pcc[0].max) return { current: c - pcc[0].min, requiredForNext: pcc[0].max - pcc[0].min + 1 };
-  if (c <= pcc[1].max) return { current: c - pcc[1].min, requiredForNext: pcc[1].max - pcc[1].min + 1 };
-  if (c <= pcc[2].max) return { current: c - pcc[2].min, requiredForNext: pcc[2].max - pcc[2].min + 1 };
-  if (c <= pcc[3].max) return { current: c - pcc[3].min, requiredForNext: pcc[3].max - pcc[3].min + 1 };
+  if (c === null || c < pcc[0].max)
+    return { current: 0, requiredForNext: pcc[0].max };
+  if (c < pcc[1].max) return { current: c - pcc[1].min, requiredForNext: pcc[1].max - pcc[1].min };
+  if (c < pcc[2].max) return { current: c - pcc[2].min, requiredForNext: pcc[2].max - pcc[2].min };
+  if (c < pcc[3].max) return { current: c - pcc[3].min, requiredForNext: pcc[3].max - pcc[3].min };
   return { current: c, requiredForNext: null };
 }

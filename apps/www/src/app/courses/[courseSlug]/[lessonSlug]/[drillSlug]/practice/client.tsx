@@ -69,7 +69,7 @@ export default function Practice() {
     nextProblem();
   };
   return (
-    <div className="relative flex flex-col items-center justify-center h-full gap-2 align-middle grow">
+    <div className="relative flex flex-col items-center justify-center h-full align-middle gap-2 grow">
       <div className="self-start justify-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>

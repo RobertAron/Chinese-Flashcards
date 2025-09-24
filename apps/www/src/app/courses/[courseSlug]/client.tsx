@@ -1,11 +1,11 @@
 "use client";
 import {
-  practiceCountColors,
   PracticeCountIcon,
+  practiceCountColors,
   practiceCountToColor,
+  TimeAttackIcon,
   timeAttackColors,
   timeAttackCountToColor,
-  TimeAttackIcon,
 } from "@/utils/colorMapping";
 import { useFullPlayerState } from "@/utils/playerState";
 
@@ -31,29 +31,29 @@ export function LessonProgress({ drillSlugs }: { drillSlugs: string[] }) {
   // TODO NEXT
   // Make keep medals?
   return (
-    <div className="flex justify-end gap-4 text-lg">
-      <div className="flex items-center w-48">
+    <div className="flex flex-col justify-end gap-0.5 text-lg justify-self-end">
+      <div className="flex items-center">
         <PracticeCountIcon count={practiceCountColors[3].min} />
         <TimeAttackIcon timeMs={timeAttackColors[3].requiredTime} />
-        <span>X</span>
+        <span>・</span>
         {allAwards[3]}
       </div>
-      <div className="flex items-center w-48">
+      <div className="flex items-center">
         <PracticeCountIcon count={practiceCountColors[2].min} />
         <TimeAttackIcon timeMs={timeAttackColors[2].requiredTime} />
-        <span>X</span>
+        <span>・</span>
         {allAwards[2]}
       </div>
-      <div className="flex items-center w-48">
+      <div className="flex items-center">
         <PracticeCountIcon count={practiceCountColors[1].min} />
         <TimeAttackIcon timeMs={timeAttackColors[1].requiredTime} />
-        <span>X</span>
+        <span>・</span>
         {allAwards[1]}
       </div>
-      <div className="flex items-center w-48">
+      <div className="flex items-center">
         <PracticeCountIcon count={practiceCountColors[0].min} />
         <TimeAttackIcon timeMs={timeAttackColors[0].requiredTime} />
-        <span>X</span>
+        <span>・</span>
         {allAwards[0]}
       </div>
     </div>

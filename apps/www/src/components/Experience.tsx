@@ -25,7 +25,7 @@ export function Experience({ percent }: { percent: number }) {
         <ExperienceArea
           key={key}
           experience={experience}
-          min={val.min}
+          min={val.min === 1 ? 0 : val.min}
           max={val.max}
           bgClassName={val.background}
           filledClassName={val.primary}

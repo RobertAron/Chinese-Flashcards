@@ -4,7 +4,7 @@ export const practiceCountColors = {
   0: {
     key: 0,
     min: 1,
-    max: 99,
+    max: 100,
     background: "bg-blue-300",
     primary: "bg-blue-600",
     font: "text-blue-600",
@@ -12,7 +12,7 @@ export const practiceCountColors = {
   1: {
     key: 1,
     min: 100,
-    max: 249,
+    max: 250,
     background: "bg-green-300",
     primary: "bg-green-600",
     font: "text-green-600",
@@ -20,7 +20,7 @@ export const practiceCountColors = {
   2: {
     key: 2,
     min: 250,
-    max: 499,
+    max: 500,
     background: "bg-yellow-300",
     primary: "bg-yellow-600",
     font: "text-yellow-600",
