@@ -160,8 +160,7 @@ export function formatPracticeCount(count: number | null) {
 }
 
 export function practiceCountTillNextValues(c: number | null) {
-  if (c === null || c < pcc[0].max)
-    return { current: 0, requiredForNext: pcc[0].max };
+  if (c === null || c < pcc[0].max) return { current: c ?? 0, requiredForNext: pcc[0].max };
   if (c < pcc[1].max) return { current: c - pcc[1].min, requiredForNext: pcc[1].max - pcc[1].min };
   if (c < pcc[2].max) return { current: c - pcc[2].min, requiredForNext: pcc[2].max - pcc[2].min };
   if (c < pcc[3].max) return { current: c - pcc[3].min, requiredForNext: pcc[3].max - pcc[3].min };

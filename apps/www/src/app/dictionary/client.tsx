@@ -7,7 +7,18 @@ import type { Words } from "./page";
 
 export function SearchPage({ words }: { words: Words }) {
   const fuseWords = useMemo(
-    () => new Fuse(words, { distance: 0.1, keys: ["characters", "meaning", "pinyin"] }),
+    () =>
+      new Fuse(words, {
+        distance: 0.4,
+        threshold: 0.5, // lower = stricter, higher = fuzzier
+        minMatchCharLength: 1,
+        ignoreLocation: true,
+        keys: [
+          { name: "characters", weight: 0.6 },
+          { name: "pinyin", weight: 0.3 },
+          { name: "meaning", weight: 0.1 },
+        ],
+      }),
     [words],
   );
   const [input, setInput] = useState("");
