@@ -2,19 +2,14 @@ import type { HskLevel } from "cms-data/drizzle/schema";
 import { useWordPracticeCount } from "@/utils/playerState";
 import { HskBadge } from "../HskBadge";
 
-export function WordExperience({
-  characters,
-  pinyin,
-  id,
-  meaning,
-  hskLevel,
-}: {
+export type WordExperienceProps = {
   characters: string;
   pinyin: string;
   id: number;
   meaning: string;
   hskLevel: HskLevel | null;
-}) {
+};
+export function WordExperience({ characters, pinyin, id, meaning, hskLevel }: WordExperienceProps) {
   const practiceCount = useWordPracticeCount(id);
   return (
     <div className="flex flex-col items-start justify-between p-2 bg-white border-2 border-black gap-2 rounded-md sm:flex-row">

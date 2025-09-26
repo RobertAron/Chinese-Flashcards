@@ -42,6 +42,7 @@ async function getAllWordsInLesson(lessonSlug: string) {
                           characters: true,
                           pinyin: true,
                           meaning: true,
+                          hskLevel: true,
                         },
                       },
                     },
