@@ -21,17 +21,16 @@ type ProvidedValue = {
   triggerLoading: () => void;
 };
 
-const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezCreateContext<ProvidedValue>(
-  (Provider) =>
-    function PageLoadingContext({ children }) {
-      const [isLoading, setIsLoading] = useOptimistic(false);
-      const triggerLoading = useCallback(() => {
-        setIsLoading(true);
-      }, [setIsLoading]);
-      return <Provider value={{ isLoading, triggerLoading }}>{children}</Provider>;
-    },
+export const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezCreateContext<ProvidedValue>(
+  (P) => (props) => {
+    const { children } = props;
+    const [isLoading, setIsLoading] = useOptimistic(false);
+    const triggerLoading = useCallback(() => {
+      setIsLoading(true);
+    }, [setIsLoading]);
+    return <P value={{ isLoading, triggerLoading }}>{children}</P>;
+  },
 );
-export { LoadingProvider, useLoadingProvider };
 
 function isModifiedEvent(event: React.MouseEvent): boolean {
   const eventTarget = event.currentTarget as HTMLAnchorElement | SVGAElement;

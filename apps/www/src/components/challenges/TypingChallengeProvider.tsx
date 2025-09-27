@@ -146,36 +146,33 @@ type ProvidedValue = {
   multipleChoiceChallenges: AllMultipleChoiceChallenges[];
 };
 export const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } =
-  ezCreateContext<ProvidedValue>(
-    (Provider) =>
-      function DrillProvider({ children }) {
-        const [userSettings] = useUserSettings();
-        const { wordDefinitions, phraseDefinitions } = useDrillContext();
-        const normalizedWords = wordDefinitions.map(
-          (ele): NormalizedWord => ({
-            ...ele,
-            wordIds: [ele.id],
-          }),
-        );
-        const normalizedPhrases = phraseDefinitions.map(
-          ({ words, ...rest }): NormalizedWord => ({
-            ...rest,
-            wordIds: words.map((ele) => ele.id),
-          }),
-        );
-        const normalizedContent = [...normalizedWords, ...normalizedPhrases];
-        const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
-        const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
-        const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
-        return (
-          <Provider
-            value={{
-              typingChallenges: wordChallenges,
-              multipleChoiceChallenges: [...mcqWords, ...mcqPhrases],
-            }}
-          >
-            {children}
-          </Provider>
-        );
-      },
-  );
+  ezCreateContext<ProvidedValue>((P) => ({ children }) => {
+    const [userSettings] = useUserSettings();
+    const { wordDefinitions, phraseDefinitions } = useDrillContext();
+    const normalizedWords = wordDefinitions.map(
+      (ele): NormalizedWord => ({
+        ...ele,
+        wordIds: [ele.id],
+      }),
+    );
+    const normalizedPhrases = phraseDefinitions.map(
+      ({ words, ...rest }): NormalizedWord => ({
+        ...rest,
+        wordIds: words.map((ele) => ele.id),
+      }),
+    );
+    const normalizedContent = [...normalizedWords, ...normalizedPhrases];
+    const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
+    const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
+    const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
+    return (
+      <P
+        value={{
+          typingChallenges: wordChallenges,
+          multipleChoiceChallenges: [...mcqWords, ...mcqPhrases],
+        }}
+      >
+        {children}
+      </P>
+    );
+  });

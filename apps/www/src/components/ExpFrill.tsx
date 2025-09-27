@@ -15,8 +15,7 @@ let id = 0;
 export const { Provider: ExpFrillProvider, useContext: useExpFrills } = ezCreateContext<
   FillContextValue,
   FillContextProps
->((P) => (props) => {
-  const { children } = props;
+>((P) => ({ children }) => {
   const [items, setItems] = useState<{ id: number }[]>([]);
 
   const addItem = () => {
