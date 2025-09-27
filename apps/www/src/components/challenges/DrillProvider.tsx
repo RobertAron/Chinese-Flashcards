@@ -23,32 +23,30 @@ type ProvidedValue = {
 export const { Provider: DrillProvider, useContext: useDrillContext } = ezCreateContext<
   ProvidedValue,
   ProviderProps
->(
-  (Provider) =>
-    function DrillProvider({
-      children,
-      drillTitle,
-      words,
-      courseSlug,
-      lessonSlug,
-      drillSlug,
-      phrases,
-      description,
-    }: ProviderProps) {
-      return (
-        <Provider
-          value={{
-            challengeId: drillSlug,
-            challengeLabel: drillTitle,
-            wordDefinitions: words,
-            phraseDefinitions: phrases,
-            description,
-            courseSlug,
-            lessonSlug,
-          }}
-        >
-          {children}
-        </Provider>
-      );
-    },
-);
+>((P) => (props: ProviderProps) => {
+  const {
+    courseSlug,
+    description,
+    drillSlug,
+    drillTitle,
+    lessonSlug,
+    phrases,
+    words,
+    children,
+  } = props;
+  return (
+    <P
+      value={{
+        challengeId: drillSlug,
+        challengeLabel: drillTitle,
+        wordDefinitions: words,
+        phraseDefinitions: phrases,
+        description,
+        courseSlug,
+        lessonSlug,
+      }}
+    >
+      {children}
+    </P>
+  );
+});
