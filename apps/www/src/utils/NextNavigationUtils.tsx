@@ -21,7 +21,7 @@ type ProvidedValue = {
   triggerLoading: () => void;
 };
 
-export const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezCreateContext<ProvidedValue>(
+const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezCreateContext<ProvidedValue>(
   (P) => (props) => {
     const { children } = props;
     const [isLoading, setIsLoading] = useOptimistic(false);
@@ -31,6 +31,10 @@ export const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezC
     return <P value={{ isLoading, triggerLoading }}>{children}</P>;
   },
 );
+export {
+  LoadingProvider,
+  useLoadingProvider
+}
 
 function isModifiedEvent(event: React.MouseEvent): boolean {
   const eventTarget = event.currentTarget as HTMLAnchorElement | SVGAElement;

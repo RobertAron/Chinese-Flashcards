@@ -145,8 +145,9 @@ type ProvidedValue = {
   typingChallenges: AllTypingChallenges[];
   multipleChoiceChallenges: AllMultipleChoiceChallenges[];
 };
-export const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } =
-  ezCreateContext<ProvidedValue>((P) => ({ children }) => {
+const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ezCreateContext<ProvidedValue>(
+  (P) => (props) => {
+    const { children } = props;
     const [userSettings] = useUserSettings();
     const { wordDefinitions, phraseDefinitions } = useDrillContext();
     const normalizedWords = wordDefinitions.map(
@@ -175,4 +176,6 @@ export const { Provider: TypingChallengeProvider, useContext: useTypingChallenge
         {children}
       </P>
     );
-  });
+  },
+);
+export { TypingChallengeProvider, useTypingChallenge };

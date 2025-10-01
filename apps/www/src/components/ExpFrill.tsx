@@ -12,7 +12,7 @@ type FillContextValue = {
 };
 
 let id = 0;
-export const { Provider: ExpFrillProvider, useContext: useExpFrills } = ezCreateContext<
+const { Provider: ExpFrillProvider, useContext: useExpFrills } = ezCreateContext<
   FillContextValue,
   FillContextProps
 >((P) => ({ children }) => {
@@ -29,6 +29,7 @@ export const { Provider: ExpFrillProvider, useContext: useExpFrills } = ezCreate
   };
   return <P value={{ pushFrill: addItem, items }}>{children}</P>;
 });
+export { ExpFrillProvider, useExpFrills };
 
 export function FrillContainer({ children }: { children?: React.ReactNode }) {
   const { items } = useExpFrills();

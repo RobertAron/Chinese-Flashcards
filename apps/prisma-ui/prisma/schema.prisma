@@ -2,7 +2,6 @@ generator client {
   provider        = "prisma-client"
   output          = "../dist/prisma"
   moduleFormat    = "esm"
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
