@@ -116,7 +116,7 @@ function UntypedCharacter({
       animate={active ? "active" : "initial"}
       transition={{
         duration: practice && isTypingRequired ? 2 : 0,
-        delay: practice && isTypingRequired ? 4 + index * 0.5 : 0,
+        delay: practice && isTypingRequired ? 4 + index * 0.75 : 0,
       }}
       variants={{
         initial: { color: "#94a3b800" },
@@ -236,14 +236,14 @@ function ToneHints({
   return (
     <motion.div className="absolute flex -translate-x-1/2 top-full left-1/2" ref={ref}>
       <motion.div
-        className="relative flex p-2 bg-white border-2 border-black gap-2 rounded-md"
+        className="relative flex gap-2 p-2 bg-white border-2 border-black rounded-md"
         initial={{ top: 30, opacity: 0 }}
         animate={{ top: 0, opacity: 1 }}
         exit={{ top: 30, opacity: 0 }}
         transition={{ duration: 0.075 }}
       >
         {letterMapping[character.stripped]?.map((ele, index) => (
-          <div className="flex items-center px-2 py-1 border rounded-sm gap-3 border-slate-700" key={index}>
+          <div className="flex items-center gap-3 px-2 py-1 border rounded-sm border-slate-700" key={index}>
             <Kbd>{index + 1}</Kbd>
             <div className="text-lg">{ele}</div>
           </div>
