@@ -54,7 +54,7 @@ const letterMapping: Record<string, string[]> = {
 };
 
 const noTypingRequired = /[ .?？’,!]/;
-const punctuation = /[.?？’,!]/;
+export const punctuation = /[.?？’,!]/;
 function extractListenChar(char: string | ToneMapConfig | undefined) {
   const isToneCharacter = typeof char === "object";
   return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();

@@ -23,6 +23,9 @@
     },
     "rules": {
       "recommended": true,
+      "performance": {
+        "noImgElement": "off"
+      },
       "style": {
         "noNonNullAssertion": "off",
         "noParameterAssign": "error",

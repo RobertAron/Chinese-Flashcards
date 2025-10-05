@@ -1,3 +1,4 @@
+import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import { ConditionalWord } from "./client";
 
@@ -11,8 +12,8 @@ const getWords = () =>
       ]),
   });
 
-export type Words = Awaited<ReturnType<typeof getWords>>[number];
-export default async function Page() {
+
+export default AppServerPageEntrypoint(async function Page() {
   const words = await getWords();
   return (
     <div className="grid grid-cols-4 gap-2">
@@ -21,4 +22,4 @@ export default async function Page() {
       ))}
     </div>
   );
-}
+});
