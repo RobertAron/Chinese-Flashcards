@@ -1,10 +1,10 @@
 "use client";
 import { useMemo, useState } from "react";
 import { WordExperience } from "@/components/challenges/WordPoints";
-import { TextField } from "@/components/TextField";
-import type { CreateImageAction, WordsPromise } from "./dev.page";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { punctuation } from "@/components/challenges/WordProgress";
+import { TextField } from "@/components/TextField";
+import { punctuation } from "@/utils/specialCharacters";
+import type { CreateImageAction, WordsPromise } from "./dev.page";
 
 export function Admin({
   words,

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
+import { punctuation } from "@/utils/specialCharacters";
 import { deDupe } from "@/utils/structureUtils";
 
 type DrillIdentifier = {
@@ -97,7 +98,6 @@ async function getAllWordsInDrill(drillSlug: string) {
                 columns: {
                   order: true,
                 },
-
                 with: {
                   word: {
                     columns: {
@@ -188,7 +188,7 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
           id: word.id,
           meaning: word.meaning,
           hskLevel: word.hskLevel,
-        })),
+        })).filter((ele) => !punctuation.test(ele.characters)),
         characters: phraseWords.map(({ word }) => word.characters).join(" "),
         pinyin: phraseWords.map(({ word }) => word.pinyin).join(" "),
         emojiChallenge: "",

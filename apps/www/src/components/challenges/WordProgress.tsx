@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { type Ref, useEffect, useEffectEvent, useState } from "react";
 import { useUserSettings } from "@/utils/playerState";
+import { noTypingRequired, punctuation } from "@/utils/specialCharacters";
 import { Kbd } from "../Kbd";
 
 type WordProgressProps = {
@@ -53,8 +54,6 @@ const letterMapping: Record<string, string[]> = {
   ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
 };
 
-const noTypingRequired = /[ .?？’,!。，！，]/;
-export const punctuation = /[.?？’,!。，！，]/;
 function extractListenChar(char: string | ToneMapConfig | undefined) {
   const isToneCharacter = typeof char === "object";
   return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();
