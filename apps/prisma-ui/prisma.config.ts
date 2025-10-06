@@ -14,7 +14,7 @@ export default defineConfig({
     studio: true,
     adapter: true,
   },
-  adapter,
+  // adapter,
   studio: {
     adapter,
   },

@@ -34,13 +34,17 @@ async function getAllWordsInLesson(lessonSlug: string) {
             with: {
               phrase: {
                 with: {
-                  phrasesToWords: {
+                  phraseWords: {
+                    orderBy: (t, { asc }) => asc(t.order),
+                    columns: {
+                      order: true,
+                    },
                     with: {
                       word: {
                         columns: {
-                          id: true,
                           characters: true,
                           pinyin: true,
+                          id: true,
                           meaning: true,
                           hskLevel: true,
                         },
@@ -88,13 +92,18 @@ async function getAllWordsInDrill(drillSlug: string) {
         with: {
           phrase: {
             with: {
-              phrasesToWords: {
+              phraseWords: {
+                orderBy: (t, { asc }) => asc(t.order),
+                columns: {
+                  order: true,
+                },
+
                 with: {
                   word: {
                     columns: {
-                      id: true,
                       characters: true,
                       pinyin: true,
+                      id: true,
                       meaning: true,
                       hskLevel: true,
                     },
@@ -170,16 +179,19 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
       }),
     ),
     phrases: data.phrases.map(
-      ({ phrasesToWords, ...ele }): PhraseDefinition => ({
+      ({ phraseWords, ...ele }): PhraseDefinition => ({
         ...ele,
         type: "phrase" as const,
-        words: phrasesToWords.map(({ word }) => ({
+        words: phraseWords.map(({ word }) => ({
           characters: word.characters,
           pinyin: word.pinyin,
           id: word.id,
           meaning: word.meaning,
           hskLevel: word.hskLevel,
         })),
+        characters: phraseWords.map(({ word }) => word.characters).join(" "),
+        pinyin: phraseWords.map(({ word }) => word.pinyin).join(" "),
+        emojiChallenge: "",
         audioSrc: phraseToAudioSource(ele.id),
       }),
     ),

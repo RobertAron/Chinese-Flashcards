@@ -1,8 +1,8 @@
+import clsx from "clsx";
 import type { HskLevel } from "cms-data/drizzle/schema";
+import { useMemo } from "react";
 import { useWordPracticeCount } from "@/utils/playerState";
 import { HskBadge } from "../HskBadge";
-import { useMemo } from "react";
-import clsx from "clsx";
 
 export type WordExperienceProps = {
   characters: string;

@@ -78,10 +78,7 @@ export const lesson = sqliteTable("Lesson", {
 
 export const phrases = sqliteTable("Phrases", {
 	id: integer().primaryKey({ autoIncrement: true }).notNull(),
-	characters: text().notNull(),
-	pinyin: text().notNull(),
 	meaning: text().notNull(),
-	emojiChallenge: text(),
 	createdAt: numeric().default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 });
 
