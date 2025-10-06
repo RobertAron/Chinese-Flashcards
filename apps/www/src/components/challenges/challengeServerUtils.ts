@@ -182,17 +182,25 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
       ({ phraseWords, ...ele }): PhraseDefinition => ({
         ...ele,
         type: "phrase" as const,
-        words: phraseWords.map(({ word }) => ({
-          characters: word.characters,
-          pinyin: word.pinyin,
-          id: word.id,
-          meaning: word.meaning,
-          hskLevel: word.hskLevel,
-        })).filter((ele) => !punctuation.test(ele.characters)),
-        characters: phraseWords.map(({ word }) => word.characters).join(" "),
-        pinyin: phraseWords.map(({ word }) => word.pinyin).join(" "),
-        emojiChallenge: "",
+        words: phraseWords
+          .map(({ word }) => ({
+            characters: word.characters,
+            pinyin: word.pinyin,
+            id: word.id,
+            meaning: word.meaning,
+            hskLevel: word.hskLevel,
+          }))
+          .filter((ele) => !punctuation.test(ele.characters)),
+        characters: phraseWords
+          .map(({ word }) => word.characters)
+          .join(" ")
+          .replaceAll("  ", " "),
+        pinyin: phraseWords
+          .map(({ word }) => word.pinyin)
+          .join(" ")
+          .replaceAll("  ", " "),
         audioSrc: phraseToAudioSource(ele.id),
+        emojiChallenge: null,
       }),
     ),
   };
