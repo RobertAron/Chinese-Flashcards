@@ -1,19 +1,21 @@
 import "dotenv/config";
-import { defineConfig } from "prisma/config";
 import { resolve } from "node:path";
 import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
+import { defineConfig } from "prisma/config";
 
+const path = resolve(__dirname, "../www/local.db");
+const url = `file:${path}`;
+const adapter = async () =>
+  new PrismaBetterSQLite3({
+    url,
+  });
 export default defineConfig({
   experimental: {
     studio: true,
+    adapter: true,
   },
+  adapter,
   studio: {
-    adapter: async () => {
-      const path = resolve(__dirname, process.env.DATABASE_URL!);
-      console.log(path)
-      return new PrismaBetterSQLite3({
-        url: process.env.DATABASE_URL!,
-      });
-    },
+    adapter,
   },
 });

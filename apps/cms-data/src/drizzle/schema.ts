@@ -85,3 +85,13 @@ export const phrases = sqliteTable("Phrases", {
 	createdAt: numeric().default(sql`(CURRENT_TIMESTAMP)`).notNull(),
 });
 
+export const phraseWords = sqliteTable("PhraseWords", {
+	id: integer().primaryKey({ autoIncrement: true }).notNull(),
+	order: integer().notNull(),
+	phrasesId: integer().notNull().references(() => phrases.id, { onDelete: "restrict", onUpdate: "cascade" } ),
+	wordsId: integer().notNull().references(() => words.id, { onDelete: "restrict", onUpdate: "cascade" } ),
+},
+(table) => [
+	uniqueIndex("PhraseWords_phrasesId_order_key").on(table.phrasesId, table.order),
+]);
+

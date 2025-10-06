@@ -1,12 +1,12 @@
 generator client {
-  provider        = "prisma-client"
-  output          = "../dist/prisma"
-  moduleFormat    = "esm"
+  provider     = "prisma-client"
+  output       = "../dist/prisma"
+  moduleFormat = "esm"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = ""
 }
 
 model Course {
@@ -40,26 +40,39 @@ model Lesson {
 }
 
 model Phrases {
-  id             Int      @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   characters     String
   pinyin         String
   meaning        String
   emojiChallenge String?
-  createdAt      DateTime @default(now())
-  Drill          Drill[]  @relation("DrillToPhrases")
-  Words          Words[]  @relation("PhrasesToWords")
+  createdAt      DateTime      @default(now())
+  Drill          Drill[]       @relation("DrillToPhrases")
+  Words          Words[]       @relation("PhrasesToWords")
+  PhraseWords    PhraseWords[]
+}
+
+model PhraseWords {
+  id        Int     @id @default(autoincrement())
+  order     Int
+  phrasesId Int
+  wordsId   Int
+  word      Words   @relation(fields: [wordsId], references: [id])
+  phrase    Phrases @relation(fields: [phrasesId], references: [id])
+
+  @@unique([phrasesId, order])
 }
 
 model Words {
-  id             Int       @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   characters     String
   pinyin         String
   meaning        String
   frequencyRank  Int
   emojiChallenge String?
   hskLevel       HskLevel?
-  Drill          Drill[]   @relation("DrillToWords")
-  Phrases        Phrases[] @relation("PhrasesToWords")
+  Drill          Drill[]       @relation("DrillToWords")
+  Phrases        Phrases[]     @relation("PhrasesToWords")
+  PhraseWords    PhraseWords[]
 }
 
 enum HskLevel {

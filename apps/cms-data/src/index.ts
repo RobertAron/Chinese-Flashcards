@@ -7,3 +7,7 @@ export function getDb(file: string) {
   const client = createClient({ url: `file:${file}` });
   return drizzle({ client, schema: { ...schema, ...relations } });
 }
+
+export {
+  schema
+}

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { words, drillToWords, drill, phrases, drillToPhrases, phrasesToWords, lesson, course } from "./schema";
+import { words, drillToWords, drill, phrases, drillToPhrases, phrasesToWords, lesson, course, phraseWords } from "./schema";
 
 export const drillToWordsRelations = relations(drillToWords, ({one}) => ({
 	word: one(words, {
@@ -15,6 +15,7 @@ export const drillToWordsRelations = relations(drillToWords, ({one}) => ({
 export const wordsRelations = relations(words, ({many}) => ({
 	drillToWords: many(drillToWords),
 	phrasesToWords: many(phrasesToWords),
+	phraseWords: many(phraseWords),
 }));
 
 export const drillRelations = relations(drill, ({one, many}) => ({
@@ -40,6 +41,7 @@ export const drillToPhrasesRelations = relations(drillToPhrases, ({one}) => ({
 export const phrasesRelations = relations(phrases, ({many}) => ({
 	drillToPhrases: many(drillToPhrases),
 	phrasesToWords: many(phrasesToWords),
+	phraseWords: many(phraseWords),
 }));
 
 export const phrasesToWordsRelations = relations(phrasesToWords, ({one}) => ({
@@ -63,4 +65,15 @@ export const lessonRelations = relations(lesson, ({one, many}) => ({
 
 export const courseRelations = relations(course, ({many}) => ({
 	lessons: many(lesson),
+}));
+
+export const phraseWordsRelations = relations(phraseWords, ({one}) => ({
+	phrase: one(phrases, {
+		fields: [phraseWords.phrasesId],
+		references: [phrases.id]
+	}),
+	word: one(words, {
+		fields: [phraseWords.wordsId],
+		references: [words.id]
+	}),
 }));
