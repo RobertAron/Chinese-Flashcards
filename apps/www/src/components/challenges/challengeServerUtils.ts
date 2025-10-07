@@ -165,6 +165,7 @@ export interface PhraseDefinition extends DefinitionCore {
   type: "phrase";
   words: { characters: string; pinyin: string; id: number; meaning: string; hskLevel: HskLevel | null }[];
 }
+const spacePunctuation = new RegExp(` (?=${punctuation.source})`, "g");
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)
@@ -194,11 +195,13 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
         characters: phraseWords
           .map(({ word }) => word.characters)
           .join(" ")
-          .replaceAll("  ", " "),
+          .replaceAll(spacePunctuation, " ")
+          .trim(),
         pinyin: phraseWords
           .map(({ word }) => word.pinyin)
           .join(" ")
-          .replaceAll("  ", " "),
+          .replaceAll(spacePunctuation, "")
+          .trim(),
         audioSrc: phraseToAudioSource(ele.id),
         emojiChallenge: null,
       }),
