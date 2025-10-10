@@ -4,19 +4,14 @@ import { WordExperience } from "@/components/challenges/WordPoints";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { TextField } from "@/components/TextField";
 import { punctuation } from "@/utils/specialCharacters";
-import type { CreateImageAction, WordsPromise } from "./dev.page";
+import { useMakeAudio, useMakeImage } from "./api/[[...route]]/client";
+import type { WordsPromise } from "./page";
 
-export function Admin({
-  words,
-  createImageAction,
-}: {
-  words: WordsPromise;
-  createImageAction: CreateImageAction;
-}) {
+export function Admin({ words }: { words: WordsPromise }) {
   const wordsLookup = useMemo(() => Object.groupBy(words, (ele) => ele.characters), [words]);
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("");
-  const [imageBinary, setImageBinary] = useState<undefined | string>(undefined);
+  const { data: imageBinary, trigger: makeImage, isMutating } = useMakeImage();
 
   return (
     <div className="flex flex-col gap-2">
@@ -34,27 +29,49 @@ export function Admin({
           })}
       </div>
       <TextField label="Meaning" value={meaning} onChange={(e) => setMeaning(e)} />
+      <TTSPlayer />
       <button
         type="button"
-        onClick={async () => {
-          const res = await createImageAction?.(phrase);
-          setImageBinary(res);
-        }}
+        onClick={() => makeImage({ phrase })}
         className={buttonBehaviorClasses}
+        disabled={isMutating}
       >
-        Make Image
+        {isMutating ? "Loading" : "Make Image"}
       </button>
-      {imageBinary === undefined ? (
+      {imageBinary?.b64 === undefined ? (
         <div>no image</div>
       ) : (
         <img
           width={500}
           height={500}
-          src={`data:image/png;base64,${imageBinary}`}
+          src={`data:image/png;base64,${imageBinary.b64}`}
           alt="Generated content"
-          className="rounded-xl shadow-md"
+          className="shadow-md rounded-xl"
         />
       )}
+    </div>
+  );
+}
+
+export default function TTSPlayer() {
+  const { data, trigger, isMutating } = useMakeAudio();
+  const audioUrl = useMemo(() => {
+    if (data === undefined) return null;
+    const blob = new Blob([data], { type: "audio/mpeg" });
+    return URL.createObjectURL(blob);
+  }, [data]);
+
+  return (
+    <div className="p-4">
+      <button
+        className={buttonBehaviorClasses}
+        onClick={() => trigger({ phrase: "Hello world!" })}
+        disabled={isMutating}
+        type="button"
+      >
+        {isMutating ? "Generating..." : "Generate Audio"}
+      </button>
+      {audioUrl && <audio controls src={audioUrl} className="mt-4" />}
     </div>
   );
 }

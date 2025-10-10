@@ -14,16 +14,17 @@
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.3",
     "@tailwindcss/postcss": "^4.1.13",
     "clsx": "^2.1.1",
     "cms-data": "*",
     "drizzle-orm": "^0.39.3",
     "fuse.js": "^7.1.0",
     "geist": "^1.5.1",
+    "hono": "^4.9.10",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.22",
     "next": "^15.6.0-canary.42",
-    "openai": "^6.1.0",
     "postcss": "^8",
     "react": "^19.2.0",
     "react-aria-components": "^1.12.2",
@@ -36,6 +37,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@google-cloud/text-to-speech": "^6.3.0",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/addon-onboarding": "^8.6.12",
@@ -46,6 +48,7 @@
     "@types/node": "^24.5.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "openai": "^6.1.0",
     "storybook": "^8.6.12"
   },
   "overrides": {
