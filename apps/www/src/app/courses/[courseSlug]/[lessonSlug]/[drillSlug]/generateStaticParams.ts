@@ -1,15 +1,13 @@
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import type { ParamsShape } from "./paramsTemplate";
 
 export async function generateStaticParams(): Promise<ParamsShape[]> {
-  const lessons = await getDrizzleClient().query.lesson.findMany({
-    columns: {
+  const lessons = await getPrismaClient().lesson.findMany({
+    select: {
       slug: true,
       courseSlug: true,
-    },
-    with: {
-      drills: {
-        columns: {
+      Drill: {
+        select: {
           slug: true,
         },
       },
@@ -21,7 +19,7 @@ export async function generateStaticParams(): Promise<ParamsShape[]> {
       lessonSlug: lesson.slug,
       drillSlug: `final-mastery-${lesson.slug}`,
     },
-    ...lesson.drills.map(
+    ...lesson.Drill.map(
       (drill): ParamsShape => ({
         courseSlug: lesson.courseSlug,
         lessonSlug: lesson.slug,

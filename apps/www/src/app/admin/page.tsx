@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import { Admin } from "./client";
 
 const getWords = () =>
-  getDrizzleClient().query.words.findMany({
-    orderBy: (t, { asc }) => asc(t.frequencyRank),
+  getPrismaClient().words.findMany({
+    orderBy: {
+      frequencyRank: "desc",
+    },
   });
 
 export type WordsPromise = Awaited<ReturnType<typeof getWords>>;

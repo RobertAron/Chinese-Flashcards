@@ -13,6 +13,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "tscheck": {
+      "dependsOn": ["^tscheck"],
+      "outputs": [],
+      "inputs": ["$TURBO_DEFAULT$"]
     }
   },
   "envMode": "loose"

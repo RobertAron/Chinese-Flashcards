@@ -1,5 +1,5 @@
 import path from "node:path";
-import { PrismaClient } from "prisma-ui/prisma";
+import { PrismaClient } from "@vocab-sprint/db";
 import { hsk7 } from "../hsk/7";
 
 async function main() {

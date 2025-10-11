@@ -1,11 +1,13 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import { SearchPage } from "./client";
 
 export type Words = Awaited<ReturnType<typeof getWords>>;
 const getWords = () =>
-  getDrizzleClient().query.words.findMany({
-    orderBy: (t, { asc }) => asc(t.frequencyRank),
+  getPrismaClient().words.findMany({
+    orderBy: {
+      frequencyRank: "desc",
+    },
   });
 export default AppServerPageEntrypoint(async () => {
   return <SearchPage words={await getWords()} />;

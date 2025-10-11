@@ -5,20 +5,19 @@
   "scripts": {
     "build": "next build",
     "build-storybook": "storybook build",
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "lint": "biome check",
     "format": "biome format --write",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "typegen": "next typegen",
-    "ts-check": "tsc --noEmit"
+    "tscheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.3",
     "@tailwindcss/postcss": "^4.1.13",
     "clsx": "^2.1.1",
-    "cms-data": "*",
-    "drizzle-orm": "^0.39.3",
+    "vocab-db": "*",
     "fuse.js": "^7.1.0",
     "geist": "^1.5.1",
     "hono": "^4.9.10",

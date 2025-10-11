@@ -3,7 +3,7 @@ import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import { PracticeCountCell, TimeAttackCell } from "../../client";
 import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
@@ -11,17 +11,20 @@ import { paramsTemplate } from "./paramsTemplate";
 export { generateStaticParams };
 export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
   const { lessonSlug, courseSlug } = paramsTemplate.parse(await params);
-  const lesson = await getDrizzleClient().query.lesson.findFirst({
-    where: (t, { eq }) => eq(t.slug, lessonSlug),
-    columns: {
-      title: true,
+  const lesson = await getPrismaClient().lesson.findFirst({
+    where: {
+      slug: lessonSlug,
     },
-    with: {
-      drills: {
-        orderBy: (t, { asc }) => asc(t.order),
+    // where: (t, { eq }) => eq(t.slug, lessonSlug),
+    select: {
+      title: true,
+      Drill: {
+        orderBy: {
+          order: "asc",
+        },
       },
-      course: {
-        columns: {
+      Course: {
+        select: {
           title: true,
         },
       },
@@ -32,17 +35,17 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
     <>
       <BreadcrumbContainer>
         <Breadcrumb href="/courses">Courses</Breadcrumb>
-        <BreadcrumbEscape href={`/courses/${courseSlug}`}>{lesson.course.title}</BreadcrumbEscape>
+        <BreadcrumbEscape href={`/courses/${courseSlug}`}>{lesson.Course.title}</BreadcrumbEscape>
       </BreadcrumbContainer>
       <main className="flex flex-col gap-4">
         <h1 className="text-5xl font-bold underline">{lesson.title}</h1>
         <div className="grid grid-cols-3 gap-1">
-          <div className="col-span-3 grid grid-cols-subgrid">
+          <div className="grid col-span-3 grid-cols-subgrid">
             <div>Drill</div>
             <div className="text-end">Practice</div>
             <div className="text-end">Speedrun</div>
           </div>
-          {lesson.drills.map((ele) => (
+          {lesson.Drill.map((ele) => (
             <MotionLink
               initial={{ opacity: 0, scaleY: 1.05 }}
               animate={{ opacity: 1, scaleY: 1 }}

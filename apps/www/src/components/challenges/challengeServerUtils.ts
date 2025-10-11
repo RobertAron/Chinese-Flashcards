@@ -1,7 +1,7 @@
-import type { HskLevel } from "cms-data/drizzle/schema";
 import { notFound } from "next/navigation";
 import React from "react";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import type { HskLevel } from "vocab-db/prisma";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
 import { punctuation } from "@/utils/specialCharacters";
 import { deDupe } from "@/utils/structureUtils";
@@ -13,94 +13,31 @@ type DrillIdentifier = {
 };
 
 async function getAllWordsInLesson(lessonSlug: string) {
-  const lesson = await getDrizzleClient().query.lesson.findFirst({
-    where: (lessonTable, { eq }) => eq(lessonTable.slug, lessonSlug),
-    columns: {
-      title: true,
+  const lesson = await getPrismaClient().lesson.findFirst({
+    where: {
+      slug: lessonSlug,
     },
-    with: {
-      course: {
-        columns: {
+    select: {
+      title: true,
+      Course: {
+        select: {
           title: true,
         },
       },
-      drills: {
-        with: {
-          drillToWords: {
-            with: {
-              word: true,
-            },
-          },
-          drillToPhrases: {
-            with: {
-              phrase: {
-                with: {
-                  phraseWords: {
-                    orderBy: (t, { asc }) => asc(t.order),
-                    columns: {
-                      order: true,
-                    },
-                    with: {
-                      word: {
-                        columns: {
-                          characters: true,
-                          pinyin: true,
-                          id: true,
-                          meaning: true,
-                          hskLevel: true,
-                        },
-                      },
-                    },
-                  },
+      Drill: {
+        select: {
+          Words: true,
+          Phrases: {
+            select: {
+              id: true,
+              meaning: true,
+              PhraseWords: {
+                orderBy: {
+                  order: "asc",
                 },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
-  if (lesson == null) notFound();
-  return {
-    courseTitle: lesson.course.title,
-    lessonTitle: lesson.title,
-    drillTitle: "Final Mastery",
-    description: null,
-    words: deDupe(
-      lesson.drills.flatMap((drill) => drill.drillToWords.map((ele) => ele.word)),
-      (ele) => ele.id,
-    ),
-    phrases: deDupe(
-      lesson.drills.flatMap((drill) => drill.drillToPhrases.map((ele) => ele.phrase)),
-      (ele) => ele.id,
-    ),
-  };
-}
-async function getAllWordsInDrill(drillSlug: string) {
-  const drill = await getDrizzleClient().query.drill.findFirst({
-    where: (t, { eq }) => eq(t.slug, drillSlug),
-    columns: {
-      title: true,
-      description: true,
-    },
-    with: {
-      drillToWords: {
-        with: {
-          word: true,
-        },
-      },
-      drillToPhrases: {
-        with: {
-          phrase: {
-            with: {
-              phraseWords: {
-                orderBy: (t, { asc }) => asc(t.order),
-                columns: {
-                  order: true,
-                },
-                with: {
+                select: {
                   word: {
-                    columns: {
+                    select: {
                       characters: true,
                       pinyin: true,
                       id: true,
@@ -114,14 +51,61 @@ async function getAllWordsInDrill(drillSlug: string) {
           },
         },
       },
-      lesson: {
-        columns: {
+    },
+  });
+  if (lesson == null) notFound();
+  return {
+    courseTitle: lesson.Course.title,
+    lessonTitle: lesson.title,
+    drillTitle: "Final Mastery",
+    description: null,
+    words: deDupe(
+      lesson.Drill.flatMap((drill) => drill.Words),
+      (ele) => ele.id,
+    ),
+    phrases: deDupe(
+      lesson.Drill.flatMap((drill) => drill.Phrases),
+      (ele) => ele.id,
+    ),
+  };
+}
+async function getAllWordsInDrill(drillSlug: string) {
+  const drill = await getPrismaClient().drill.findFirst({
+    where: {
+      slug: drillSlug,
+    },
+    select: {
+      title: true,
+      description: true,
+      Words: true,
+      Lesson: {
+        select: {
           title: true,
-        },
-        with: {
-          course: {
-            columns: {
+          Course: {
+            select: {
               title: true,
+            },
+          },
+        },
+      },
+      Phrases: {
+        select: {
+          id: true,
+          meaning: true,
+          PhraseWords: {
+            orderBy: {
+              order: "asc",
+            },
+            select: {
+              word: {
+                select: {
+                  characters: true,
+                  pinyin: true,
+                  id: true,
+                  meaning: true,
+                  hskLevel: true,
+                },
+              },
             },
           },
         },
@@ -130,18 +114,12 @@ async function getAllWordsInDrill(drillSlug: string) {
   });
   if (drill == null) notFound();
   return {
-    courseTitle: drill.lesson.course.title,
-    lessonTitle: drill.lesson.title,
+    courseTitle: drill.Lesson.Course.title,
+    lessonTitle: drill.Lesson.title,
     drillTitle: drill.title,
     description: drill.description === "" ? null : drill.description,
-    words: deDupe(
-      drill.drillToWords.flatMap((ele) => ele.word),
-      (ele) => ele.id,
-    ),
-    phrases: deDupe(
-      drill.drillToPhrases.flatMap((ele) => ele.phrase),
-      (ele) => ele.id,
-    ),
+    words: deDupe(drill.Words, (ele) => ele.id),
+    phrases: deDupe(drill.Phrases, (ele) => ele.id),
   };
 }
 
@@ -180,25 +158,21 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
       }),
     ),
     phrases: data.phrases.map(
-      ({ phraseWords, ...ele }): PhraseDefinition => ({
+      ({ PhraseWords, ...ele }): PhraseDefinition => ({
         ...ele,
         type: "phrase" as const,
-        words: phraseWords
-          .map(({ word }) => ({
-            characters: word.characters,
-            pinyin: word.pinyin,
-            id: word.id,
-            meaning: word.meaning,
-            hskLevel: word.hskLevel,
-          }))
-          .filter((ele) => !punctuation.test(ele.characters)),
-        characters: phraseWords
-          .map(({ word }) => word.characters)
+        words: PhraseWords.map(({ word }) => ({
+          characters: word.characters,
+          pinyin: word.pinyin,
+          id: word.id,
+          meaning: word.meaning,
+          hskLevel: word.hskLevel,
+        })).filter((ele) => !punctuation.test(ele.characters)),
+        characters: PhraseWords.map(({ word }) => word.characters)
           .join(" ")
           .replaceAll(spacePunctuation, " ")
           .trim(),
-        pinyin: phraseWords
-          .map(({ word }) => word.pinyin)
+        pinyin: PhraseWords.map(({ word }) => word.pinyin)
           .join(" ")
           .replaceAll(spacePunctuation, "")
           .trim(),

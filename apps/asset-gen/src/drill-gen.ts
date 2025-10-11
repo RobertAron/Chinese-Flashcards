@@ -1,5 +1,5 @@
 import path from "node:path";
-import { PrismaClient } from "prisma-ui/prisma";
+import { PrismaClient } from "vocab-db/prisma";
 
 async function main() {
   const datasourceUrl = path.resolve(`${process.cwd()}/../www/local.db`);

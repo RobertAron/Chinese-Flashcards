@@ -1,23 +1,23 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 
 export default AppServerPageEntrypoint(async function Home() {
-  const courses = await getDrizzleClient().query.course.findMany({
-    orderBy: (t, { asc }) => asc(t.ordering),
-    columns: {
+  const courses = await getPrismaClient().course.findMany({
+    orderBy: {
+      ordering: "asc",
+    },
+    select: {
       slug: true,
       title: true,
-    },
-    with: {
-      lessons: true,
+      Lesson: true,
     },
   });
   return (
     <main className="flex flex-col w-full gap-4">
       <h1 className="text-5xl font-bold underline">Courses</h1>
-      <div className="w-full grid grid-cols-3 gap-1">
+      <div className="grid w-full grid-cols-3 gap-1">
         {courses.map((topic) => (
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.05 }}

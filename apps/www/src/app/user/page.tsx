@@ -1,17 +1,16 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import { ConditionalWord } from "./client";
 
 const getWords = () =>
-  getDrizzleClient().query.words.findMany({
-    orderBy: (t, { asc }) => asc(t.frequencyRank),
-    where: (t, { inArray }) =>
-      inArray(t.hskLevel, [
-        "hsk1",
-        //  "hsk2", "hsk3"
-      ]),
+  getPrismaClient().words.findMany({
+    orderBy: {
+      frequencyRank: "asc",
+    },
+    where: {
+      hskLevel: "hsk1",
+    },
   });
-
 
 export default AppServerPageEntrypoint(async function Page() {
   const words = await getWords();

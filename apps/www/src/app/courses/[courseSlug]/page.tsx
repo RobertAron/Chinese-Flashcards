@@ -19,7 +19,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
       <main className="flex flex-col gap-4">
         <h1 className="text-5xl font-bold underline">{course.title}</h1>
         <div className="grid grid-cols-3 gap-1">
-          {course.lessons.map((ele) => (
+          {course.Lesson.map((ele) => (
             <MotionLink
               initial={{ opacity: 0, scaleY: 1.05 }}
               animate={{ opacity: 1, scaleY: 1 }}
@@ -31,7 +31,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
             >
               <div className="col-span-2">{ele.title}</div>
               <LessonProgress
-                drillSlugs={[...ele.drills.map((ele) => ele.slug), `final-mastery-${ele.slug}`]}
+                drillSlugs={[...ele.Drill.map((ele) => ele.slug), `final-mastery-${ele.slug}`]}
               />
             </MotionLink>
           ))}

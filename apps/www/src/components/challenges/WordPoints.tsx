@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import type { HskLevel } from "cms-data/drizzle/schema";
 import { useMemo } from "react";
+import type { HskLevel } from "vocab-db/prisma";
 import { useWordPracticeCount } from "@/utils/playerState";
 import { HskBadge } from "../HskBadge";
 

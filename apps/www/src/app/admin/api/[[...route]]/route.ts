@@ -1,4 +1,3 @@
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import tts from "@google-cloud/text-to-speech";
 import { zValidator } from "@hono/zod-validator";
 import { S3Client } from "bun";
@@ -6,6 +5,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import OpenAI from "openai";
 import z from "zod";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 
 const auth = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 if (!auth) throw new Error("Missing GOOGLE_APPLICATION_CREDENTIALS");
@@ -85,18 +85,17 @@ ${phrase}
     zValidator(
       "form",
       z.object({
-        phrase:z.string(),
-        meaning:z.string(),
+        phrase: z.string(),
+        meaning: z.string(),
         audio: z.file(),
-        picture:z.file(),
+        picture: z.file(),
       }),
     ),
     async (c) => {
-      getDrizzleClient().insert()
+      getPrismaClient().insert();
       // r2.write('/')
       const form = c.req.valid("form");
       const file = form.audio;
-
 
       // Example: echo the uploaded file back for download
       const buffer = await file.arrayBuffer();
