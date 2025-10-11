@@ -1,6 +1,7 @@
+import { getDrizzleClient } from "@/utils/getDrizzleClient";
 import tts from "@google-cloud/text-to-speech";
 import { zValidator } from "@hono/zod-validator";
-// import { S3Client } from "bun";
+import { S3Client } from "bun";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import OpenAI from "openai";
@@ -9,12 +10,12 @@ import z from "zod";
 const auth = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 if (!auth) throw new Error("Missing GOOGLE_APPLICATION_CREDENTIALS");
 
-// const r2 = new S3Client({
-//   accessKeyId: process.env.ACCESS_KEY_ID,
-//   secretAccessKey: process.env.SECRET_ACCESS_KEY,
-//   bucket: "vocab-sprint",
-//   endpoint: process.env.CF_R2_ENDPOINT,
-// });
+const r2 = new S3Client({
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  bucket: "vocab-sprint",
+  endpoint: process.env.CF_R2_ENDPOINT,
+});
 const openaiClient = new OpenAI();
 
 const { client_email, private_key } = JSON.parse(auth);
@@ -78,7 +79,37 @@ ${phrase}
     });
     const b64 = img.data?.[0]!.b64_json!;
     return c.json({ b64 });
-  });
+  })
+  .post(
+    "/submit-challenge",
+    zValidator(
+      "form",
+      z.object({
+        phrase:z.string(),
+        meaning:z.string(),
+        audio: z.file(),
+        picture:z.file(),
+      }),
+    ),
+    async (c) => {
+      getDrizzleClient().insert()
+      // r2.write('/')
+      const form = c.req.valid("form");
+      const file = form.audio;
+
+
+      // Example: echo the uploaded file back for download
+      const buffer = await file.arrayBuffer();
+
+      // Set Content-Type and Content-Disposition so browser treats it as a download
+      return new Response(buffer, {
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+          "Content-Disposition": `attachment; filename="${file.name}"`,
+        },
+      });
+    },
+  );
 export type Api = typeof app;
 
 export const GET = handle(app);

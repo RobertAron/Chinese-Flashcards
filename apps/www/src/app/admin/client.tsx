@@ -4,7 +4,7 @@ import { WordExperience } from "@/components/challenges/WordPoints";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { TextField } from "@/components/TextField";
 import { punctuation } from "@/utils/specialCharacters";
-import { useMakeAudio, useMakeImage } from "./api/[[...route]]/client";
+import { useMakeAudio, useMakeImage, useSubmitChallenge } from "./api/[[...route]]/client";
 import type { WordsPromise } from "./page";
 
 export function Admin({ words }: { words: WordsPromise }) {
@@ -60,6 +60,7 @@ export default function TTSPlayer() {
     const blob = new Blob([data], { type: "audio/mpeg" });
     return URL.createObjectURL(blob);
   }, [data]);
+  const { trigger: submitChallenge } = useSubmitChallenge();
 
   return (
     <div className="p-4">
@@ -72,6 +73,15 @@ export default function TTSPlayer() {
         {isMutating ? "Generating..." : "Generate Audio"}
       </button>
       {audioUrl && <audio controls src={audioUrl} className="mt-4" />}
+      <button
+        type="button"
+        className={buttonBehaviorClasses}
+        onClick={() => {
+          if (data !== undefined) submitChallenge({ audio: new File([data], "hello.mp3", { type: "mp3" }) });
+        }}
+      >
+        submit audio
+      </button>
     </div>
   );
 }
