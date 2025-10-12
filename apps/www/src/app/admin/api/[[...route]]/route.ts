@@ -110,15 +110,18 @@ ${phrase}
       const { id } = await getPrismaClient().phrases.create({
         data: {
           meaning,
-          Words: {
-            connect: words.map((ele) => ({ id: ele })),
+          PhraseWords: {
+            createMany: { data: words.map((ele, index) => ({ order: index, wordsId: ele })) },
           },
         },
         select: {
           id: true,
         },
       });
-      await Promise.all([r2.write(`test/phrases/${id}.mp3`, audio), r2.write(`test/phrases/${id}.webp`, imageWebp)]);
+      await Promise.all([
+        r2.write(`phrases/${id}.mp3`, audio),
+        r2.write(`phrases/${id}.webp`, imageWebp),
+      ]);
       return c.json({ message: "OK" });
     },
   );

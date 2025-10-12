@@ -22,6 +22,9 @@
       "next": "all"
     },
     "rules": {
+      "nursery": {
+        "useSortedClasses": "on"
+      },
       "recommended": true,
       "performance": {
         "noImgElement": "off"
