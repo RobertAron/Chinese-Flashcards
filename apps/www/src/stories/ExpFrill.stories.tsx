@@ -8,12 +8,12 @@ type WrapperProps = Record<string, never>;
 
 function Wrapper(_: WrapperProps) {
   return (
-    <div className="flex items-center justify-center h-full p-10">
+    <div className="flex h-full items-center justify-center p-10">
       <div className="relative flex flex-col gap-10">
         <ExpFrillProvider>
           <AddFrillButton />
           <FrillContainer>
-            <div className="relative p-2 bg-white border border-black">Some content</div>
+            <div className="relative border border-black bg-white p-2">Some content</div>
           </FrillContainer>
         </ExpFrillProvider>
       </div>

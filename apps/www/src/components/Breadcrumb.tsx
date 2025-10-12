@@ -14,7 +14,7 @@ export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof 
 export function BreadcrumbContainer({ children }: { children?: React.ReactNode }) {
   const childrenItems = React.Children.toArray(children);
   return (
-    <nav className="flex py-1 gap-2 lg:hidden">
+    <nav className="flex gap-2 py-1 lg:hidden">
       {childrenItems.map((child, idx) => (
         <React.Fragment key={idx}>
           {child}
@@ -36,8 +36,8 @@ export function BreadcrumbEscape({
   useKeyTrigger("Escape", navigate);
 
   return (
-    <Breadcrumb className="flex no-underline gap-1" {...props}>
-      <div className="underline whitespace-nowrap">{children}</div>
+    <Breadcrumb className="flex gap-1 no-underline" {...props}>
+      <div className="whitespace-nowrap underline">{children}</div>
       <Kbd>esc</Kbd>
     </Breadcrumb>
   );

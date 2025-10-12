@@ -31,7 +31,7 @@ export function LessonProgress({ drillSlugs }: { drillSlugs: string[] }) {
   // TODO NEXT
   // Make keep medals?
   return (
-    <div className="flex flex-col justify-end gap-0.5 text-lg justify-self-end">
+    <div className="flex flex-col justify-end gap-0.5 justify-self-end text-lg">
       <div className="flex items-center">
         <PracticeCountIcon count={practiceCountColors[3].min} />
         <TimeAttackIcon timeMs={timeAttackColors[3].requiredTime} />

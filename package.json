@@ -10,6 +10,9 @@
     "apps/*"
   ],
   "scripts": {
-    "prettier:fix": "biome format --fix"
+    "format": "biome format",
+    "format:fix": "biome format --fix",
+    "check": "biome format",
+    "check:fix": "biome check --fix"
   }
 }

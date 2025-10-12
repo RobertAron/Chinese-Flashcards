@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "biomejs.biome",
-    "heybourn.headwind"
-  ]
+  "recommendations": ["biomejs.biome", "heybourn.headwind"]
 }

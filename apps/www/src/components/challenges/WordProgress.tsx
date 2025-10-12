@@ -234,16 +234,16 @@ function ToneHints({
 }) {
   if (!possibleToneChars.has(character.stripped)) return null;
   return (
-    <motion.div className="absolute flex -translate-x-1/2 top-full left-1/2" ref={ref}>
+    <motion.div className="-translate-x-1/2 absolute top-full left-1/2 flex" ref={ref}>
       <motion.div
-        className="relative flex gap-2 p-2 bg-white border-2 border-black rounded-md"
+        className="relative flex gap-2 rounded-md border-2 border-black bg-white p-2"
         initial={{ top: 30, opacity: 0 }}
         animate={{ top: 0, opacity: 1 }}
         exit={{ top: 30, opacity: 0 }}
         transition={{ duration: 0.075 }}
       >
         {letterMapping[character.stripped]?.map((ele, index) => (
-          <div className="flex items-center gap-3 px-2 py-1 border rounded-sm border-slate-700" key={index}>
+          <div className="flex items-center gap-3 rounded-sm border border-slate-700 px-2 py-1" key={index}>
             <Kbd>{index + 1}</Kbd>
             <div className="text-lg">{ele}</div>
           </div>

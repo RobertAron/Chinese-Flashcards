@@ -20,21 +20,21 @@ export function TimeAttack() {
   return !timeAttackRunning ? (
     <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
       <div className="flex gap-2">
-        <div className="flex flex-col text-3xl font-bold grow basis-0">
+        <div className="flex grow basis-0 flex-col font-bold text-3xl">
           {Object.values(timeAttackColors)
             .map((ele) => (
               <div className="flex items-center gap-1" key={ele.key}>
-                <ChevronsUpIcon strokeWidth={3} className={`${ele.font} w-8 h-8`} />
+                <ChevronsUpIcon strokeWidth={3} className={`${ele.font} h-8 w-8`} />
                 {formatTimeAttackMs(ele.requiredTime)}
               </div>
             ))
             .toReversed()}
         </div>
-        <div className="flex flex-col items-end text-lg grow basis-0">
-          <div className="flex truncate gap-1">
+        <div className="flex grow basis-0 flex-col items-end text-lg">
+          <div className="flex gap-1 truncate">
             <span>Previous Best:</span>
             <span className="flex items-center gap-1">
-              {currentAward && <ChevronsUpIcon strokeWidth={3} className={`${currentAward.font} w-8 h-8`} />}
+              {currentAward && <ChevronsUpIcon strokeWidth={3} className={`${currentAward.font} h-8 w-8`} />}
               {formatTimeAttackMs(previousBest)}
             </span>
           </div>
@@ -43,7 +43,7 @@ export function TimeAttack() {
               <div>Recent Finish</div>
               <div className="flex items-end gap-1">
                 {recentFinish === previousBest && "🎉"}
-                {recentAward && <ChevronsUpIcon strokeWidth={3} className={`${recentAward.font} w-8 h-8`} />}
+                {recentAward && <ChevronsUpIcon strokeWidth={3} className={`${recentAward.font} h-8 w-8`} />}
                 {formatTimeAttackMs(recentFinish)}
               </div>
             </div>
@@ -95,12 +95,12 @@ function TimeAttackRunning({
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-full align-middle gap-2 grow">
-      <div className="self-start justify-start">
+    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <div className="justify-start self-start">
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
-      <div className="flex flex-col items-center self-center gap-2 justify-self-center">
-        <div ref={timerRef} className="font-mono text-lg font-bold">
+      <div className="flex flex-col items-center gap-2 self-center justify-self-center">
+        <div ref={timerRef} className="font-bold font-mono text-lg">
           0.00
         </div>
         <ProgressRing current={completedItems} total={itemsToComplete} />
@@ -130,7 +130,7 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
   return (
     <figure className="grid h-[100px] w-[100px] font-mono">
       <svg
-        className="w-full h-full text-3xl text-blue-700 col-span-3 row-span-3"
+        className="col-span-3 row-span-3 h-full w-full text-3xl text-blue-700"
         viewBox="0 0 100 100"
         role="img"
         aria-label="progress par"

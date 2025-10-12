@@ -118,10 +118,7 @@ ${phrase}
           id: true,
         },
       });
-      await Promise.all([
-        r2.write(`phrases/${id}.mp3`, audio),
-        r2.write(`phrases/${id}.webp`, imageWebp),
-      ]);
+      await Promise.all([r2.write(`phrases/${id}.mp3`, audio), r2.write(`phrases/${id}.webp`, imageWebp)]);
       return c.json({ message: "OK" });
     },
   );

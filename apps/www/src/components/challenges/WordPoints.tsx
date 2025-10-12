@@ -29,7 +29,7 @@ export function WordExperience({
   }, [className]);
   return (
     <div className={classes}>
-      <div className="flex flex-col w-full gap-1">
+      <div className="flex w-full flex-col gap-1">
         <div className="flex justify-between text-4xl">
           <span className="font-bold">{characters}</span>
           <div className="flex flex-col items-end gap-1">

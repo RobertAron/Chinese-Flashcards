@@ -31,7 +31,7 @@ export function MultipleChoiceChallenge({
   return (
     <ChallengeWrapper className="self-stretch" ref={ref}>
       {challenge.type === "multiple-choice-question-character-text" ? (
-        <div className="text-3xl grow">{challenge.questionText}</div>
+        <div className="grow text-3xl">{challenge.questionText}</div>
       ) : (
         <ChallengeAudioPlayer slow src={challenge.audio} />
       )}

@@ -11,7 +11,7 @@ const hskClasses: Record<HskLevel, string> = {
 };
 export function HskBadge({ hskLevel }: { hskLevel: HskLevel }) {
   return (
-    <div className={`${hskClasses[hskLevel]} p-1 px-2 border border-black rounded-full text-xs text-center`}>
+    <div className={`${hskClasses[hskLevel]} rounded-full border border-black p-1 px-2 text-center text-xs`}>
       {hskLevel}
     </div>
   );

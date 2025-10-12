@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* biome-ignore lint/suspicious/noUnknownAtRules: tw-thing */
 @config "../../tailwind.config.ts";
 
 @layer base {
@@ -91,13 +92,16 @@
 }
 
 /* This stays outside because it's not really a style rule */
+/* biome-ignore lint/suspicious/noUnknownAtRules: tw-thing */
 @custom-variant hocus {
   @media (hover: hover) {
     &:hover {
+      /* biome-ignore lint/suspicious/noUnknownAtRules: tw-thing */
       @slot;
     }
   }
   &:focus-visible {
+    /* biome-ignore lint/suspicious/noUnknownAtRules: tw-thing */
     @slot;
   }
 }

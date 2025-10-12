@@ -31,13 +31,13 @@ export function SearchPage({ words }: { words: Words }) {
           .map((ele) => ele.item);
 
   return (
-    <div className="w-full py-4 grid grid-flow-row gap-3">
+    <div className="grid w-full grid-flow-row gap-3 py-4">
       <div className="flex flex-col gap-2">
-        <h1 className="text-5xl font-bold underline">Dictionary</h1>
+        <h1 className="font-bold text-5xl underline">Dictionary</h1>
         <label className="flex flex-col gap-1">
           <span className="sr-only">Search</span>
           <input
-            className="p-2 border-2 border-black rounded-sm"
+            className="rounded-sm border-2 border-black p-2"
             placeholder="Search..."
             value={input}
             onChange={(e) => setInput(e.target.value)}

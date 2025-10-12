@@ -15,8 +15,8 @@ export default AppServerPageEntrypoint(async function Home() {
     },
   });
   return (
-    <main className="flex flex-col w-full gap-4">
-      <h1 className="text-5xl font-bold underline">Courses</h1>
+    <main className="flex w-full flex-col gap-4">
+      <h1 className="font-bold text-5xl underline">Courses</h1>
       <div className="grid w-full grid-cols-3 gap-1">
         {courses.map((topic) => (
           <MotionLink
@@ -28,7 +28,7 @@ export default AppServerPageEntrypoint(async function Home() {
             href={`/courses/${topic.slug}`}
             key={topic.slug}
           >
-            <div className="text-4xl font-bold">{topic.title}</div>
+            <div className="font-bold text-4xl">{topic.title}</div>
           </MotionLink>
         ))}
       </div>

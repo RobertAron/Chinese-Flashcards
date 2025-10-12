@@ -86,7 +86,7 @@ async function main() {
   const batchSize = 10;
   for (let i = 0; i < phrases.length; i += batchSize) {
     const batch = phrases.slice(i, i + batchSize);
-    await Promise.all(batch.map((item) => makeConvertUpload(item.characters,`${item.id}`)));
+    await Promise.all(batch.map((item) => makeConvertUpload(item.characters, `${item.id}`)));
   }
 }
 

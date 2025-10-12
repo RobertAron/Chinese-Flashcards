@@ -44,13 +44,13 @@ export default function Practice() {
         disableStart={noProblems}
       >
         <div className="flex gap-2">
-          <div className="flex flex-col text-3xl font-bold grow basis-0">
+          <div className="flex grow basis-0 flex-col font-bold text-3xl">
             <PracticeCountItem id={3} showRange />
             <PracticeCountItem id={2} showRange />
             <PracticeCountItem id={1} showRange />
             <PracticeCountItem id={0} showRange />
           </div>
-          <div className="text-3xl font-extrabold grow basis-0">
+          <div className="grow basis-0 font-extrabold text-3xl">
             <div className="flex items-center font-mono">
               <PracticeCountIcon count={practiceCount} large />
               <span>{formatPracticeCount(practiceCount)}</span>
@@ -69,8 +69,8 @@ export default function Practice() {
     nextProblem();
   };
   return (
-    <div className="relative flex flex-col items-center justify-center h-full align-middle gap-2 grow">
-      <div className="self-start justify-start">
+    <div className="relative flex h-full grow flex-col items-center justify-center gap-2 align-middle">
+      <div className="justify-start self-start">
         <ExitButton onExit={() => setStarted(false)} />
       </div>
       <ProgressArea practiceCount={practiceCount} />
@@ -86,7 +86,7 @@ export default function Practice() {
 function ProgressArea({ practiceCount }: { practiceCount: number }) {
   const tillNext = practiceCountTillNextValues(practiceCount);
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <div className="flex items-end justify-between pl-4 font-mono">
         <span>
           <PracticeCountIcon count={practiceCount} large />

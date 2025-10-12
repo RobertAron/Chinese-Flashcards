@@ -17,7 +17,7 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
         <BreadcrumbEscape href="/courses">Courses</BreadcrumbEscape>
       </BreadcrumbContainer>
       <main className="flex flex-col gap-4">
-        <h1 className="text-5xl font-bold underline">{course.title}</h1>
+        <h1 className="font-bold text-5xl underline">{course.title}</h1>
         <div className="grid grid-cols-3 gap-1">
           {course.Lesson.map((ele) => (
             <MotionLink

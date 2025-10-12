@@ -9,7 +9,7 @@ import { useTailwindOverride } from "@/utils/styleResolvers";
 export function ExitButton({ onExit }: { onExit: () => void }) {
   useKeyTrigger("Escape", onExit);
   return (
-    <Button onClick={onExit} className="flex p-2 bg-white rounded-lg group gap-2">
+    <Button onClick={onExit} className="group flex gap-2 rounded-lg bg-white p-2">
       <Undo2 />
       <div>Exit</div>
       <div className="flex gap-1">

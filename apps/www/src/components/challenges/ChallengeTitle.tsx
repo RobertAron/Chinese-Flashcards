@@ -23,10 +23,10 @@ export function ChallengeTitle({
   const { challengeId, challengeLabel, courseSlug, lessonSlug } = useDrillContext();
   useKeyTrigger("Enter", onStart);
   return (
-    <div className="flex flex-col mx-auto gap-1 lg:max-w-2xl">
-      <h1 className="p-3 text-4xl font-extrabold text-white bg-black rounded-t-md">{challengeLabel}</h1>
-      <div className="p-2 bg-white border-2 border-black">{children}</div>
-      <div className="flex flex-col items-start p-2 bg-white border-2 border-black gap-2">
+    <div className="mx-auto flex flex-col gap-1 lg:max-w-2xl">
+      <h1 className="rounded-t-md bg-black p-3 font-extrabold text-4xl text-white">{challengeLabel}</h1>
+      <div className="border-2 border-black bg-white p-2">{children}</div>
+      <div className="flex flex-col items-start gap-2 border-2 border-black bg-white p-2">
         <Checkbox
           isSelected={userSettings.enableCharacterChallenges}
           onChange={(selected) => {
@@ -72,7 +72,7 @@ export function ChallengeTitle({
           Enable Multiple Choice Challenges
         </Checkbox>
       </div>
-      <div className="flex border-black gap-1">
+      <div className="flex gap-1 border-black">
         <ExitLink
           className={`${buttonBehaviorClasses} flex w-0 min-w-max items-center justify-center gap-2 rounded-none rounded-bl-md bg-white px-4 py-2`}
           href={`/courses/${courseSlug}/${lessonSlug}/${challengeId}`}
@@ -80,7 +80,7 @@ export function ChallengeTitle({
           Exit
         </ExitLink>
         <Button
-          className="flex items-center justify-center px-4 py-2 text-xl font-bold bg-white grow basis-0 gap-1 rounded-br-md"
+          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2 font-bold text-xl"
           onClick={onStart}
           disabled={disableStart}
         >

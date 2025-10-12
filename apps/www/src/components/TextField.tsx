@@ -24,7 +24,7 @@ export function TextField({ label, description, errorMessage, className, ...prop
   return (
     <AriaTextField className={classes} {...props}>
       <AriaLabel className="text-slate-800">{label}</AriaLabel>
-      <AriaInput className="bg-white border-2 rounded-sm border-black p-1" />
+      <AriaInput className="rounded-sm border-2 border-black bg-white p-1" />
       {description !== undefined && <AriaText slot="description">{description}</AriaText>}
       <AriaFieldError>{errorMessage}</AriaFieldError>
     </AriaTextField>

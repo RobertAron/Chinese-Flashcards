@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/.storybook", "!**/cms-data"]
+    "includes": ["**", "!**/.storybook", "!**/cms-data", "!**/hsk"]
   },
   "formatter": {
     "enabled": true,
@@ -23,7 +23,14 @@
     },
     "rules": {
       "nursery": {
-        "useSortedClasses": "on"
+        "useSortedClasses": {
+          "level": "error",
+          "fix": "safe",
+          "options": {
+            "attributes": ["className"],
+            "functions": ["cn"]
+          }
+        }
       },
       "recommended": true,
       "performance": {
