@@ -14,13 +14,13 @@ export type NormalizedWord = {
   pinyin: string;
   meaning: string;
   audioSrc: string;
-  emojiChallenge: string | null;
+  imageSrc: string | null;
 };
 export type PhraseOrWordDefinition = WordDefinition | PhraseDefinition;
 function wordsToTypingChallenges(userSettings: UserSettings, words: NormalizedWord[]) {
   if (!userSettings.enableTypingChallenges) return [];
   return words.flatMap((wordOrPhrase): AllTypingChallenges[] => {
-    const { characters, meaning, id, pinyin, audioSrc, emojiChallenge, type, wordIds } = wordOrPhrase;
+    const { characters, meaning, id, pinyin, audioSrc, imageSrc, type, wordIds } = wordOrPhrase;
     const result: AllTypingChallenges[] = [
       { type: "typing-audio-challenge", id: `${type}-${id}-audio`, pinyin, src: audioSrc, wordIds },
       {
@@ -31,13 +31,14 @@ function wordsToTypingChallenges(userSettings: UserSettings, words: NormalizedWo
         wordIds,
       },
     ];
-    if (emojiChallenge != null)
+    if (imageSrc != null)
       result.push({
-        type: "typing-character-challenge",
+        type: "typing-image-challenge",
         id: `${type}-${id}-emoji`,
         pinyin,
-        characters: emojiChallenge,
+        imageSrc: imageSrc,
         wordIds,
+        definition: meaning,
       });
     if (userSettings.enableCharacterChallenges)
       result.push({
@@ -154,6 +155,7 @@ const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ez
       (ele): NormalizedWord => ({
         ...ele,
         wordIds: [ele.id],
+        imageSrc: null,
       }),
     );
     const normalizedPhrases = phraseDefinitions.map(
@@ -166,6 +168,7 @@ const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ez
     const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
     const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
     const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
+    console.log(normalizedContent);
     return (
       <P
         value={{

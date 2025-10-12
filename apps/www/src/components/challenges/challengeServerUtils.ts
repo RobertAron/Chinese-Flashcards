@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 import type { HskLevel } from "vocab-db/prisma";
 import { getPrismaClient } from "@/utils/getPrismaClient";
-import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
+import { phraseToAudioSource, phraseToImageSource, wordToAudioSource } from "@/utils/idToAudioSource";
 import { punctuation } from "@/utils/specialCharacters";
 import { deDupe } from "@/utils/structureUtils";
 
@@ -141,6 +141,7 @@ export interface WordDefinition extends DefinitionCore {
 
 export interface PhraseDefinition extends DefinitionCore {
   type: "phrase";
+  imageSrc: string;
   words: { characters: string; pinyin: string; id: number; meaning: string; hskLevel: HskLevel | null }[];
 }
 const spacePunctuation = new RegExp(` (?=${punctuation.source})`, "g");
@@ -178,6 +179,7 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
           .trim(),
         audioSrc: phraseToAudioSource(ele.id),
         emojiChallenge: null,
+        imageSrc: phraseToImageSource(ele.id),
       }),
     ),
   };
