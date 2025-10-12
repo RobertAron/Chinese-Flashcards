@@ -55,20 +55,39 @@ const app = new Hono()
   )
   .post("/generate-image", zValidator("json", z.object({ phrase: z.string() })), async (c) => {
     const { phrase } = c.req.valid("json");
-    const prompt = `
-You will receive a Chinese phrase. Create an image that visually represents the meaning of the phrase.
-The image will be used as a flashcard, where the viewer guesses or writes the phrase based on the image.
-Guidelines:
-•	Do not include text.
-•	Do not include chinese characters.
-•	Do not include emojis.
-•	Style should be minimal/anime/cartoon.
-•	Every word in the phrase must be visually represented — the image should make each word essential to understanding the overall meaning.
-•	The background should be white, or grey.
-•	Use fairly saturated colors otherwise. Avoid sepia colors.
-•	Keep the image simple by reducing hues. Use primarily these colors.
-Phrase:
-${phrase}
+  const prompt = `
+### Chinese Phrase Image Generation Prompt
+You will receive a **Chinese phrase**. Create a single image that conveys the **complete meaning** of the phrase through **visual storytelling**.  
+The image will be used as a flashcard where the viewer guesses or writes the phrase based on the scene.
+---
+Style & Visual Guidelines
+- Do **not** include any text, Chinese characters, or emojis.  
+- Style: **minimal**, **anime/cartoon**.  
+- Background: **white** or **light grey**.  
+- Use **fairly saturated colors**, avoid sepia tones.  
+- Keep the composition **simple and clear**.
+---
+Semantic Requirements
+- Depict a **scene** where the phrase would naturally occur — not just isolated objects.  
+- Every **word** in the phrase must be visually represented.  
+- Clearly show **relationships** (e.g., who is whose sister, what action happened, where it took place).  
+- Express **time or tense** if relevant — use visual cues like:
+  - faded backgrounds or sepia tones for “past”
+  - younger/older versions of a character for age differences
+  - contextual objects or clothing to indicate time period  
+- The image should make sense **only when all words** are understood together (not from one word alone).
+---
+Process
+Before creating the image:
+1. **Describe** in one sentence the full scene that represents the meaning of the phrase — including *who*, *when*, *where*, and *what’s happening*.  
+2. Then, **draw that scene**.
+---
+Example
+**Phrase:** 我 妹妹 小 时候 住 在 北京。  
+**Interpretation:** “My little sister lived in Beijing when she was young.”  
+**Good depiction:** An adult reminiscing while looking at a childhood photo of his little sister playing near a Beijing hutong, showing both past and relationship context.
+---
+**Phrase:** ${phrase}
 `;
     const img = await openaiClient.images.generate({
       model: "gpt-image-1-mini",
