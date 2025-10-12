@@ -168,7 +168,6 @@ const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ez
     const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
     const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
     const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
-    console.log(normalizedContent);
     return (
       <P
         value={{

@@ -82,7 +82,6 @@ async function main() {
     id: ele.id,
     characters: ele.PhraseWords.map((ele) => ele.word.characters).join(""),
   }));
-  console.log(phrases);
   const batchSize = 10;
   for (let i = 0; i < phrases.length; i += batchSize) {
     const batch = phrases.slice(i, i + batchSize);

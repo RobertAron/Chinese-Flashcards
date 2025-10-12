@@ -6,7 +6,6 @@ const client = hc<Api>("");
 
 export function useMakeAudio() {
   return useSWRMutation("makeAudio", async (_: string, { arg: { phrase } }: { arg: { phrase: string } }) => {
-    console.log({ phrase });
     const response = await client.admin.api["generate-audio"].$post({ json: { phrase } });
     if (!response.ok) throw new Error();
     return await response.blob();
