@@ -4,6 +4,7 @@ import { S3Client } from "bun";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import OpenAI from "openai";
+import sharp from "sharp";
 import z from "zod";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 
@@ -13,7 +14,6 @@ if (!auth) throw new Error("Missing GOOGLE_APPLICATION_CREDENTIALS");
 const r2 = new S3Client({
   accessKeyId: process.env.ACCESS_KEY_ID,
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  bucket: "vocab-sprint",
   endpoint: process.env.CF_R2_ENDPOINT,
 });
 const openaiClient = new OpenAI();
@@ -71,11 +71,11 @@ Phrase:
 ${phrase}
 `;
     const img = await openaiClient.images.generate({
-      model: "gpt-image-1",
+      model: "gpt-image-1-mini",
       prompt,
       n: 1,
       size: "1024x1024",
-      quality: "medium",
+      quality: "high",
     });
     const b64 = img.data?.[0]!.b64_json!;
     return c.json({ b64 });
@@ -85,28 +85,41 @@ ${phrase}
     zValidator(
       "form",
       z.object({
-        phrase: z.string(),
         meaning: z.string(),
         audio: z.file(),
-        picture: z.file(),
+        picture: z.string().transform((base64String) => {
+          const buffer = Buffer.from(base64String, "base64");
+          const blob = new Blob([buffer], { type: "image/png" });
+          const file = new File([blob], "example.png", { type: "image/png" });
+          return file;
+        }),
+        // weird bug
+        words: z.array(z.string().pipe(z.coerce.number())),
       }),
     ),
     async (c) => {
-      getPrismaClient().insert();
-      // r2.write('/')
-      const form = c.req.valid("form");
-      const file = form.audio;
-
-      // Example: echo the uploaded file back for download
-      const buffer = await file.arrayBuffer();
-
-      // Set Content-Type and Content-Disposition so browser treats it as a download
-      return new Response(buffer, {
-        headers: {
-          "Content-Type": file.type || "application/octet-stream",
-          "Content-Disposition": `attachment; filename="${file.name}"`,
+      const { audio, meaning, picture, words } = c.req.valid("form");
+      const imageWebp = await sharp(Buffer.from(await picture.arrayBuffer()))
+        .webp({
+          quality: 80,
+          effort: 5,
+          lossless: false,
+          alphaQuality: 90,
+        })
+        .toBuffer();
+      const { id } = await getPrismaClient().phrases.create({
+        data: {
+          meaning,
+          Words: {
+            connect: words.map((ele) => ({ id: ele })),
+          },
+        },
+        select: {
+          id: true,
         },
       });
+      await Promise.all([r2.write(`test/phrases/${id}.mp3`, audio), r2.write(`test/phrases/${id}.webp`, imageWebp)]);
+      return c.json({ message: "OK" });
     },
   );
 export type Api = typeof app;
