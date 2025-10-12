@@ -13,3 +13,6 @@ export function wordToAudioSource(id: number) {
 export function phraseToAudioSource(id: number) {
   return `${getUrl()}/phrases/${id}.mp3`;
 }
+export function phraseToImageSource(id: number) {
+  return `${getUrl()}/phrases/${id}.webp`;
+}

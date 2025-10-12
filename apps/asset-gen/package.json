@@ -5,7 +5,8 @@
   "scripts": {
     "audio-gen": "bun src/audio-gen.ts",
     "drill-gen": "bun src/drill-gen.ts",
-    "hsk-gen": "bun src/word-gen.ts"
+    "hsk-gen": "bun src/word-gen.ts",
+    "tscheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +15,8 @@
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.7.0",
     "dotenv": "^16.4.7",
-    "cms-data": "*",
-    "prisma-ui": "*"
+    "sharp": "^0.34.4",
+    "vocab-db": "*"
   },
   "devDependencies": {
     "@types/bun": "latest"

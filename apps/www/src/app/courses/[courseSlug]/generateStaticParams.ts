@@ -1,9 +1,9 @@
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
+import { getPrismaClient } from "@/utils/getPrismaClient";
 import type { ParamsShape } from "./paramsTemplate";
 
 export async function generateStaticParams(): Promise<ParamsShape[]> {
-  const courses = await getDrizzleClient().query.course.findMany({
-    columns: {
+  const courses = await getPrismaClient().course.findMany({
+    select: {
       slug: true,
     },
   });

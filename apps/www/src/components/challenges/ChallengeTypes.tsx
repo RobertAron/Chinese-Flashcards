@@ -16,8 +16,17 @@ export interface TypingDefinitionChallenge extends TypingChallengeCore {
   type: "typing-definition-challenge";
   definition: string;
 }
+export interface TypingImageChallenge extends TypingChallengeCore {
+  type: "typing-image-challenge";
+  imageSrc: string;
+  definition: string;
+}
 
-export type AllTypingChallenges = TypingCharacterChallenge | TypingAudioChallenge | TypingDefinitionChallenge;
+export type AllTypingChallenges =
+  | TypingCharacterChallenge
+  | TypingAudioChallenge
+  | TypingDefinitionChallenge
+  | TypingImageChallenge;
 
 export type McqAnswer = { correct: boolean; text: string; id: string };
 type MultipleChoiceCore = {

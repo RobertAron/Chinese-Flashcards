@@ -1,4 +1,4 @@
-import type { HskLevel } from "cms-data/drizzle/schema";
+import type { HskLevel } from "vocab-db/prisma";
 
 const hskClasses: Record<HskLevel, string> = {
   hsk1: "bg-teal-300 text-black",

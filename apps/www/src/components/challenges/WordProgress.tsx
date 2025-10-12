@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
-import { type Ref, useEffect, useState } from "react";
+import { type Ref, useEffect, useEffectEvent, useState } from "react";
 import { useUserSettings } from "@/utils/playerState";
+import { noTypingRequired, punctuation } from "@/utils/specialCharacters";
 import { Kbd } from "../Kbd";
 
 type WordProgressProps = {
@@ -53,8 +54,6 @@ const letterMapping: Record<string, string[]> = {
   ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
 };
 
-const noTypingRequired = /[ .?？’,!]/;
-const punctuation = /[.?？’,!]/;
 function extractListenChar(char: string | ToneMapConfig | undefined) {
   const isToneCharacter = typeof char === "object";
   return ((isToneCharacter ? char.letterKey : char) ?? "").toLowerCase();
@@ -160,35 +159,36 @@ export function WordProgress({ pinyin, practice, active, onComplete }: WordProgr
     [[]],
   );
 
+  const cb = useEffectEvent((e: KeyboardEvent) => {
+    const currentCharacter = normalized[progress];
+    const isToneCharacter = typeof currentCharacter === "object";
+    const rawChar = extractListenChar(currentCharacter);
+    let incrementAmount = 1;
+    while (noTypingRequired.test(extractListenChar(normalized[progress + incrementAmount]))) {
+      incrementAmount += 1;
+    }
+    const nextStep = progress + incrementAmount;
+    const onToneStep = secondaryProgress === 1;
+    // characters with tones
+    if (isToneCharacter && requireToneInput) {
+      if (!onToneStep && e.key.toLocaleLowerCase() === rawChar)
+        setProgressState({ progress, secondaryProgress: 1 });
+      else if (onToneStep && e.key === currentCharacter.toneKey)
+        setProgressState({ progress: nextStep, secondaryProgress: 0 });
+      if (nextStep === normalized.length) onComplete?.();
+    }
+    // characters without tones
+    else if (e.key.toLocaleLowerCase() === rawChar) {
+      setProgressState({ progress: nextStep, secondaryProgress: 0 });
+      if (nextStep === normalized.length) onComplete?.();
+    }
+  });
+
   useEffect(() => {
     if (!active) return;
-    const cb = (e: KeyboardEvent) => {
-      const currentCharacter = normalized[progress];
-      const isToneCharacter = typeof currentCharacter === "object";
-      const rawChar = extractListenChar(currentCharacter);
-      let incrementAmount = 1;
-      while (noTypingRequired.test(extractListenChar(normalized[progress + incrementAmount]))) {
-        incrementAmount += 1;
-      }
-      const nextStep = progress + incrementAmount;
-      const onToneStep = secondaryProgress === 1;
-      // characters with tones
-      if (isToneCharacter && requireToneInput) {
-        if (!onToneStep && e.key.toLocaleLowerCase() === rawChar)
-          setProgressState({ progress, secondaryProgress: 1 });
-        else if (onToneStep && e.key === currentCharacter.toneKey)
-          setProgressState({ progress: nextStep, secondaryProgress: 0 });
-        if (nextStep === normalized.length) onComplete?.();
-      }
-      // characters without tones
-      else if (e.key.toLocaleLowerCase() === rawChar) {
-        setProgressState({ progress: nextStep, secondaryProgress: 0 });
-        if (nextStep === normalized.length) onComplete?.();
-      }
-    };
     window.addEventListener("keydown", cb);
     return () => window.removeEventListener("keydown", cb);
-  }, [active, normalized, requireToneInput, progress, secondaryProgress, onComplete]);
+  }, [active]);
 
   return (
     <div className="relative flex flex-wrap justify-center gap-[1ch] text-center font-mono text-2xl tracking-tighter">

@@ -3,6 +3,7 @@ import { match, P } from "ts-pattern";
 import { AudioChallenge } from "./AudioChallenge";
 import type { AllChallengeTypes } from "./ChallengeTypes";
 import { DefinitionChallenge } from "./DefinitionChallenge";
+import { ImageChallenge } from "./ImageChallenge";
 import { MultipleChoiceChallenge } from "./MultipleChoiceQuestionChallenge";
 import { CharacterChallenge } from "./PinyinChallenge";
 
@@ -42,6 +43,16 @@ export function Challenge({
     ))
     .with({ type: "typing-definition-challenge" }, (challenge) => (
       <DefinitionChallenge
+        {...challenge}
+        onComplete={onComplete}
+        key={challenge.id}
+        active
+        practice={practice}
+        ref={ref}
+      />
+    ))
+    .with({ type: "typing-image-challenge" }, (challenge) => (
+      <ImageChallenge
         {...challenge}
         onComplete={onComplete}
         key={challenge.id}

@@ -25,7 +25,7 @@ export default function RootLayout({
             className={`${GeistSans.variable} ${GeistMono.variable} relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased`}
           >
             <nav className="relative z-10 flex bg-white border-b border-black">
-              <div className="container flex mx-auto gap-2 justify-between items-center">
+              <div className="container flex mx-auto gap-2 justify-between items-center text-black">
                 <Link href="/" className="flex items-center py-2 gap-2 hocus:bg-black hocus:text-white">
                   <LanguagesIcon className="shrink-0" />
                   <span className="text-xl font-bold">Chinese Challenges</span>

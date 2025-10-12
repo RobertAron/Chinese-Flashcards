@@ -1,8 +1,5 @@
 "use client";
-import {
-  PracticeCountIcon,
-  TimeAttackIcon
-} from "@/utils/colorMapping";
+import { PracticeCountIcon, TimeAttackIcon } from "@/utils/colorMapping";
 import {
   formatPracticeCount,
   formatTimeAttackMs,

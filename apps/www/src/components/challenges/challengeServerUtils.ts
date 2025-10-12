@@ -1,8 +1,9 @@
-import type { HskLevel } from "cms-data/drizzle/schema";
 import { notFound } from "next/navigation";
 import React from "react";
-import { getDrizzleClient } from "@/utils/getDrizzleClient";
-import { phraseToAudioSource, wordToAudioSource } from "@/utils/idToAudioSource";
+import type { HskLevel } from "vocab-db/prisma";
+import { getPrismaClient } from "@/utils/getPrismaClient";
+import { phraseToAudioSource, phraseToImageSource, wordToAudioSource } from "@/utils/idToAudioSource";
+import { punctuation } from "@/utils/specialCharacters";
 import { deDupe } from "@/utils/structureUtils";
 
 type DrillIdentifier = {
@@ -12,39 +13,36 @@ type DrillIdentifier = {
 };
 
 async function getAllWordsInLesson(lessonSlug: string) {
-  const lesson = await getDrizzleClient().query.lesson.findFirst({
-    where: (lessonTable, { eq }) => eq(lessonTable.slug, lessonSlug),
-    columns: {
-      title: true,
+  const lesson = await getPrismaClient().lesson.findFirst({
+    where: {
+      slug: lessonSlug,
     },
-    with: {
-      course: {
-        columns: {
+    select: {
+      title: true,
+      Course: {
+        select: {
           title: true,
         },
       },
-      drills: {
-        with: {
-          drillToWords: {
-            with: {
-              word: true,
-            },
-          },
-          drillToPhrases: {
-            with: {
-              phrase: {
-                with: {
-                  phrasesToWords: {
-                    with: {
-                      word: {
-                        columns: {
-                          id: true,
-                          characters: true,
-                          pinyin: true,
-                          meaning: true,
-                          hskLevel: true,
-                        },
-                      },
+      Drill: {
+        select: {
+          Words: true,
+          Phrases: {
+            select: {
+              id: true,
+              meaning: true,
+              PhraseWords: {
+                orderBy: {
+                  order: "asc",
+                },
+                select: {
+                  word: {
+                    select: {
+                      characters: true,
+                      pinyin: true,
+                      id: true,
+                      meaning: true,
+                      hskLevel: true,
                     },
                   },
                 },
@@ -57,62 +55,57 @@ async function getAllWordsInLesson(lessonSlug: string) {
   });
   if (lesson == null) notFound();
   return {
-    courseTitle: lesson.course.title,
+    courseTitle: lesson.Course.title,
     lessonTitle: lesson.title,
     drillTitle: "Final Mastery",
     description: null,
     words: deDupe(
-      lesson.drills.flatMap((drill) => drill.drillToWords.map((ele) => ele.word)),
+      lesson.Drill.flatMap((drill) => drill.Words),
       (ele) => ele.id,
     ),
     phrases: deDupe(
-      lesson.drills.flatMap((drill) => drill.drillToPhrases.map((ele) => ele.phrase)),
+      lesson.Drill.flatMap((drill) => drill.Phrases),
       (ele) => ele.id,
     ),
   };
 }
 async function getAllWordsInDrill(drillSlug: string) {
-  const drill = await getDrizzleClient().query.drill.findFirst({
-    where: (t, { eq }) => eq(t.slug, drillSlug),
-    columns: {
+  const drill = await getPrismaClient().drill.findFirst({
+    where: {
+      slug: drillSlug,
+    },
+    select: {
       title: true,
       description: true,
-    },
-    with: {
-      drillToWords: {
-        with: {
-          word: true,
-        },
-      },
-      drillToPhrases: {
-        with: {
-          phrase: {
-            with: {
-              phrasesToWords: {
-                with: {
-                  word: {
-                    columns: {
-                      id: true,
-                      characters: true,
-                      pinyin: true,
-                      meaning: true,
-                      hskLevel: true,
-                    },
-                  },
-                },
-              },
+      Words: true,
+      Lesson: {
+        select: {
+          title: true,
+          Course: {
+            select: {
+              title: true,
             },
           },
         },
       },
-      lesson: {
-        columns: {
-          title: true,
-        },
-        with: {
-          course: {
-            columns: {
-              title: true,
+      Phrases: {
+        select: {
+          id: true,
+          meaning: true,
+          PhraseWords: {
+            orderBy: {
+              order: "asc",
+            },
+            select: {
+              word: {
+                select: {
+                  characters: true,
+                  pinyin: true,
+                  id: true,
+                  meaning: true,
+                  hskLevel: true,
+                },
+              },
             },
           },
         },
@@ -121,18 +114,12 @@ async function getAllWordsInDrill(drillSlug: string) {
   });
   if (drill == null) notFound();
   return {
-    courseTitle: drill.lesson.course.title,
-    lessonTitle: drill.lesson.title,
+    courseTitle: drill.Lesson.Course.title,
+    lessonTitle: drill.Lesson.title,
     drillTitle: drill.title,
     description: drill.description === "" ? null : drill.description,
-    words: deDupe(
-      drill.drillToWords.flatMap((ele) => ele.word),
-      (ele) => ele.id,
-    ),
-    phrases: deDupe(
-      drill.drillToPhrases.flatMap((ele) => ele.phrase),
-      (ele) => ele.id,
-    ),
+    words: deDupe(drill.Words, (ele) => ele.id),
+    phrases: deDupe(drill.Phrases, (ele) => ele.id),
   };
 }
 
@@ -154,8 +141,10 @@ export interface WordDefinition extends DefinitionCore {
 
 export interface PhraseDefinition extends DefinitionCore {
   type: "phrase";
+  imageSrc: string;
   words: { characters: string; pinyin: string; id: number; meaning: string; hskLevel: HskLevel | null }[];
 }
+const spacePunctuation = new RegExp(` (?=${punctuation.source})`, "g");
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)
@@ -170,17 +159,27 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
       }),
     ),
     phrases: data.phrases.map(
-      ({ phrasesToWords, ...ele }): PhraseDefinition => ({
+      ({ PhraseWords, ...ele }): PhraseDefinition => ({
         ...ele,
         type: "phrase" as const,
-        words: phrasesToWords.map(({ word }) => ({
+        words: PhraseWords.map(({ word }) => ({
           characters: word.characters,
           pinyin: word.pinyin,
           id: word.id,
           meaning: word.meaning,
           hskLevel: word.hskLevel,
-        })),
+        })).filter((ele) => !punctuation.test(ele.characters)),
+        characters: PhraseWords.map(({ word }) => word.characters)
+          .join(" ")
+          .replaceAll(spacePunctuation, " ")
+          .trim(),
+        pinyin: PhraseWords.map(({ word }) => word.pinyin)
+          .join(" ")
+          .replaceAll(spacePunctuation, "")
+          .trim(),
         audioSrc: phraseToAudioSource(ele.id),
+        emojiChallenge: null,
+        imageSrc: phraseToImageSource(ele.id),
       }),
     ),
   };
