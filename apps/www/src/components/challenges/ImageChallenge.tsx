@@ -24,7 +24,7 @@ export function ImageChallenge({
 }: ImageChallengeProps) {
   return (
     <ChallengeWrapper ref={ref}>
-      <img width={200} height={200} src={imageSrc} aria-label={definition} className="rounded-sm" />
+      <img width={280} height={280} src={imageSrc} aria-label={definition} className="rounded-sm" />
       <WordProgress pinyin={pinyin} active={active} practice={practice} onComplete={onComplete} />
     </ChallengeWrapper>
   );
