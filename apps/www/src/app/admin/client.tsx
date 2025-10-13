@@ -5,7 +5,7 @@ import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { TextField } from "@/components/TextField";
 import { punctuation } from "@/utils/specialCharacters";
 import { useMakeAudio, useMakeImage, useSubmitChallenge } from "./api/[[...route]]/client";
-import type { WordsPromise } from "./page";
+import type { WordsPromise } from "./page.dev";
 
 export function Admin({ words }: { words: WordsPromise }) {
   const wordsLookup = useMemo(() => Object.groupBy(words, (ele) => ele.characters), [words]);

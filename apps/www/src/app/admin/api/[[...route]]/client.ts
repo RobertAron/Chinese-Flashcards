@@ -1,6 +1,6 @@
 import { hc } from "hono/client";
 import useSWRMutation from "swr/mutation";
-import type { Api } from "./route";
+import type { Api } from "./route.dev";
 
 const client = hc<Api>("");
 
