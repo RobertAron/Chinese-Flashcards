@@ -114,7 +114,7 @@ export function DrillHome() {
       {phraseDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
           <h2 className="font-semibold text-2xl">Phrases</h2>
-          <ul className="grid w-full gap-4">
+          <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {phraseDefinitions.map((phrase, index) => (
               <motion.li
                 key={phrase.id}

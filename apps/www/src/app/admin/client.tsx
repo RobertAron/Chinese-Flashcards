@@ -11,8 +11,8 @@ export function Admin({ words }: { words: WordsPromise }) {
   const wordsLookup = useMemo(() => Object.groupBy(words, (ele) => ele.characters), [words]);
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("My cat is very big.");
-  const { data: imageBinary, trigger: makeImage, isMutating: isMakeImageMutating } = useMakeImage();
-  const { data: dataMakeAudio, trigger: triggerMakeAudio, isMutating: isMakeAudioMutating } = useMakeAudio();
+  const { data: imageBinary, trigger: makeImage, isMutating: isMakeImageMutating, reset: resetImage } = useMakeImage();
+  const { data: dataMakeAudio, trigger: triggerMakeAudio, isMutating: isMakeAudioMutating, reset: resetAudio } = useMakeAudio();
   const audioUrl = useMemo(() => {
     if (dataMakeAudio === undefined) return null;
     const blob = new Blob([dataMakeAudio], { type: "audio/mpeg" });
@@ -77,8 +77,8 @@ export function Admin({ words }: { words: WordsPromise }) {
         <button
           type="button"
           className={`${buttonBehaviorClasses} col-span-2`}
-          onClick={() => {
-            submitChallenge({
+          onClick={async () => {
+            await submitChallenge({
               form: {
                 audio: new File([dataMakeAudio], "audio.mp3", { type: dataMakeAudio.type }),
                 picture: imageBinary.b64,
@@ -86,6 +86,10 @@ export function Admin({ words }: { words: WordsPromise }) {
                 words: phraseWords.filter((ele) => ele !== undefined).map((ele) => `${ele.id}`),
               },
             });
+            setPhrase("")
+            setMeaning("")
+            resetImage();
+            resetAudio();
           }}
         >
           Upload
