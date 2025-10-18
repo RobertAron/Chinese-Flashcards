@@ -73,8 +73,8 @@ function MultipleChoiceAnswer({
     buttonBehaviorClasses,
     "flex items-start gap-2 p-2 text-start text-xl",
     {
-      "bg-red-400": selected && !answer.correct,
-      "bg-green-400": selected && answer.correct,
+      "bg-red-200 hocus:bg-red-900": selected && !answer.correct,
+      "bg-green-200 hocus:bg-green-900": selected && answer.correct,
     },
   );
   return (

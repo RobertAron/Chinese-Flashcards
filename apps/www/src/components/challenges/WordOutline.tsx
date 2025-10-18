@@ -10,7 +10,7 @@ type WordOutlineProps = {
   word: PhraseDefinition | WordDefinition;
 };
 export function WordOutline({ word }: WordOutlineProps) {
-  const { characters: character, meaning: definition, pinyin, emojiChallenge: emoji, audioSrc } = word;
+  const { characters: character, meaning: definition, pinyin, audioSrc } = word;
   return (
     <div className="relative flex h-full max-w-full grow flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white">
       {word.type === "phrase" && (
@@ -19,7 +19,7 @@ export function WordOutline({ word }: WordOutlineProps) {
         </div>
       )}
       {word.type === "word" && word.hskLevel !== null && (
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-0">
           <HskBadge hskLevel={word.hskLevel} />
         </div>
       )}

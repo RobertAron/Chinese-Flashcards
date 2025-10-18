@@ -23,7 +23,7 @@ export function WordExperience({
   const practiceCount = useWordPracticeCount(id);
   const classes = useMemo(() => {
     return clsx(
-      "flex flex-col items-start justify-between p-2 bg-white border-2 border-black gap-2 rounded-md sm:flex-row",
+      "relative flex flex-col items-start justify-between gap-2 rounded-md border-2 border-black bg-white p-2 sm:flex-row",
       className,
     );
   }, [className]);
