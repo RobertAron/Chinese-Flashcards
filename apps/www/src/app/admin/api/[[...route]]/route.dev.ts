@@ -61,7 +61,7 @@ You will receive a **Chinese phrase**. Create a single image that conveys the **
 The image will be used as a flashcard where the viewer guesses or writes the phrase based on the scene.
 ---
 Style & Visual Guidelines
-- Do **not** include any text, Chinese characters, or emojis.  
+- Do **not** include any text, Chinese characters, or emojis.
 - Style: **minimal**, **anime/cartoon**.  
 - Background: **white** or **light grey**.  
 - Use **fairly saturated colors**, avoid sepia tones.  
@@ -85,7 +85,7 @@ Before creating the image:
 Example
 **Phrase:** 我 妹妹 小 时候 住 在 北京。  
 **Interpretation:** “My little sister lived in Beijing when she was young.”  
-**Good depiction:** An adult reminiscing while looking at a childhood photo of his little sister playing near a Beijing hutong, showing both past and relationship context.
+**Good depiction:** An adult reminiscing (my) while looking at a childhood photo (little sister young) of his little sister playing near a Beijing house (lived at), showing both past and relationship context.
 ---
 **Phrase:** ${phrase}
 `;
@@ -95,6 +95,9 @@ Example
       n: 1,
       size: "1024x1024",
       quality: "high",
+    }).catch(err=>{
+      console.log(JSON.stringify(err,null,2))
+      throw err
     });
     const b64 = img.data?.[0]!.b64_json!;
     return c.json({ b64 });
