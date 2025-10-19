@@ -18,12 +18,9 @@ export function WordOutline({ word }: WordOutlineProps) {
           <img src={word.imageSrc} width={500} height={500} aria-label={word.meaning} />
         </div>
       )}
-      {word.type === "word" && word.hskLevel !== null && (
-        <div className="absolute top-0">
-          <HskBadge hskLevel={word.hskLevel} />
-        </div>
-      )}
-      <AudioSection src={audioSrc} />
+      <div className="border-y-2 first:border-t-0">
+        <AudioSection src={audioSrc} />
+      </div>
       <div className="flex grow basis-0 flex-col items-start gap-2 p-2">
         <div className="text-3xl md:text-4xl">{character}</div>
         <hr className="w-full border-gray-400" />
@@ -31,6 +28,12 @@ export function WordOutline({ word }: WordOutlineProps) {
         <hr className="w-full border-gray-400" />
         <div className="text-pretty text-xl md:text-2xl">{definition}</div>
       </div>
+      {/* make sure this is last so it goes on top. */}
+      {word.type === "word" && word.hskLevel !== null && (
+        <div className="absolute top-1 right-1">
+          <HskBadge hskLevel={word.hskLevel} />
+        </div>
+      )}
     </div>
   );
 }
@@ -41,7 +44,7 @@ function AudioSection({ src }: { src: string }) {
   return (
     <div className="grid-stack h-16 w-full">
       <audio ref={audioRef} src={src} crossOrigin="anonymous" className="hidden" />
-      <div className="grid-stack-item z-10 mt-1 ml-1 self-center justify-self-start">
+      <div className="grid-stack-item z-10 self-center justify-self-start pl-1">
         <button
           type="button"
           className={`${buttonBehaviorClasses} flex items-center gap-4 rounded-lg bg-white/30 p-2 backdrop-blur-sm`}
@@ -53,11 +56,7 @@ function AudioSection({ src }: { src: string }) {
       </div>
       <div className="grid-stack-item h-full w-full">
         {audioSourceNode !== null && (
-          <LiveAudioVisualizer
-            className="rounded-none border-0 border-y-2"
-            mediaSource={audioSourceNode}
-            width={700}
-          />
+          <LiveAudioVisualizer className="rounded-none border-0" mediaSource={audioSourceNode} width={700} />
         )}
       </div>
     </div>
