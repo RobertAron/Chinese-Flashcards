@@ -6,7 +6,8 @@
   "scripts": {
     "pull": "prisma db pull && prisma generate",
     "dev": "prisma studio",
-    "gen": "prisma generate"
+    "gen": "prisma generate",
+    "build": "prisma generate"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^6.17.1",
