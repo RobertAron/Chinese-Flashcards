@@ -11,8 +11,18 @@ export function Admin({ words }: { words: WordsPromise }) {
   const wordsLookup = useMemo(() => Object.groupBy(words, (ele) => ele.characters), [words]);
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("My cat is very big.");
-  const { data: imageBinary, trigger: makeImage, isMutating: isMakeImageMutating, reset: resetImage } = useMakeImage();
-  const { data: dataMakeAudio, trigger: triggerMakeAudio, isMutating: isMakeAudioMutating, reset: resetAudio } = useMakeAudio();
+  const {
+    data: imageBinary,
+    trigger: makeImage,
+    isMutating: isMakeImageMutating,
+    reset: resetImage,
+  } = useMakeImage();
+  const {
+    data: dataMakeAudio,
+    trigger: triggerMakeAudio,
+    isMutating: isMakeAudioMutating,
+    reset: resetAudio,
+  } = useMakeAudio();
   const audioUrl = useMemo(() => {
     if (dataMakeAudio === undefined) return null;
     const blob = new Blob([dataMakeAudio], { type: "audio/mpeg" });
@@ -26,6 +36,9 @@ export function Admin({ words }: { words: WordsPromise }) {
     .join("")
     .split(" ")
     .map((ele) => {
+      const hmm = wordsLookup[ele];
+      if (hmm === undefined) return undefined;
+      if(hmm.length>1) return null;
       return wordsLookup[ele]?.[0];
     });
 
@@ -34,6 +47,7 @@ export function Admin({ words }: { words: WordsPromise }) {
       <TextField className="col-span-2" label="Phrase" value={phrase} onChange={(e) => setPhrase(e)} />
       <div className="col-span-2 grid grid-cols-6 gap-2">
         {phraseWords.map((word, index) => {
+          if (word === null) return <div key={`${index}-UNKNOWN`}>Todo fix this...</div>
           if (word === undefined) return <div key={`${index}-UNKNOWN`}>UNKNOWN</div>;
           return <WordExperience className="col-span-1" key={`${index}-${word.id}`} {...word} />;
         })}
@@ -86,8 +100,8 @@ export function Admin({ words }: { words: WordsPromise }) {
                 words: phraseWords.filter((ele) => ele !== undefined).map((ele) => `${ele.id}`),
               },
             });
-            setPhrase("")
-            setMeaning("")
+            setPhrase("");
+            setMeaning("");
             resetImage();
             resetAudio();
           }}
