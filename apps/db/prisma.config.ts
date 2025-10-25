@@ -10,11 +10,12 @@ const adapter = async () =>
     url,
   });
 export default defineConfig({
+  engine:"js",
   experimental: {
     studio: true,
     adapter: true,
   },
-  // adapter,
+  adapter,
   studio: {
     adapter,
   },
