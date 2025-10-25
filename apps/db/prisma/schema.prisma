@@ -4,11 +4,6 @@ generator client {
   moduleFormat = "esm"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:../../www/local.db"
-}
-
 model Course {
   slug      String   @id
   title     String
