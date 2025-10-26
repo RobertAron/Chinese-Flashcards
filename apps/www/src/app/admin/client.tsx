@@ -1,16 +1,25 @@
 "use client";
 import { useMemo, useState } from "react";
+import { Button } from "@/components/Button";
 import { WordExperience } from "@/components/challenges/WordPoints";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { TextField } from "@/components/TextField";
-import { punctuation } from "@/utils/specialCharacters";
 import { useMakeAudio, useMakeImage, useSubmitChallenge } from "./api/[[...route]]/client";
 import type { WordsPromise } from "./page.dev";
+
+function getSelectedWord<T>(wordPosition: number, wordSelections: number[], possibleWords: T[]) {
+  const [firstWord] = possibleWords;
+  const selectedIndex = wordSelections[wordPosition] ?? 0;
+  const rawWord = possibleWords[selectedIndex];
+  if (rawWord === undefined) return firstWord ?? null;
+  return rawWord;
+}
 
 export function Admin({ words }: { words: WordsPromise }) {
   const wordsLookup = useMemo(() => Object.groupBy(words, (ele) => ele.characters), [words]);
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("My cat is very big.");
+  const [variantLookup, setVariantLookup] = useState<number[]>([]);
   const {
     data: imageBinary,
     trigger: makeImage,
@@ -30,26 +39,42 @@ export function Admin({ words }: { words: WordsPromise }) {
   }, [dataMakeAudio]);
   const { trigger: submitChallenge } = useSubmitChallenge();
 
-  const phraseWords = phrase
-    .split("")
-    .filter((ele) => !punctuation.test(ele))
-    .join("")
-    .split(" ")
-    .map((ele) => {
-      const hmm = wordsLookup[ele];
-      if (hmm === undefined) return undefined;
-      if(hmm.length>1) return null;
-      return wordsLookup[ele]?.[0];
-    });
+  const phraseWords = phrase.split(" ").map((ele) => wordsLookup[ele]);
+  const chosenWords = phraseWords.filter(ele=>ele!==undefined).map((words, wordPosition) =>
+    getSelectedWord(wordPosition, variantLookup, words),
+  );
 
   return (
     <div className="grid grid-cols-2 gap-2">
       <TextField className="col-span-2" label="Phrase" value={phrase} onChange={(e) => setPhrase(e)} />
       <div className="col-span-2 grid grid-cols-6 gap-2">
-        {phraseWords.map((word, index) => {
-          if (word === null) return <div key={`${index}-UNKNOWN`}>Todo fix this...</div>
-          if (word === undefined) return <div key={`${index}-UNKNOWN`}>UNKNOWN</div>;
-          return <WordExperience className="col-span-1" key={`${index}-${word.id}`} {...word} />;
+        {phraseWords.map((words, wordPosition) => {
+          if (words === undefined) return <div key={`${wordPosition}-UNKNOWN`}>UNKNOWN</div>;
+          const word = getSelectedWord(wordPosition, variantLookup, words);
+          if (word === null) return <div key={`${wordPosition}-UNKNOWN`}>UNKNOWN</div>;
+          return (
+            <div className="flex flex-col gap-1" key={`${wordPosition}-${word.id}`}>
+              {words?.length > 1 && (
+                <div className="flex gap-1 *:grow">
+                  {new Array(words?.length).fill(null).map((_, index) => {
+                    return (
+                      <Button
+                        key={index}
+                        onClick={() => {
+                          setVariantLookup((curr) => {
+                            const copy = curr.slice();
+                            copy[wordPosition] = index;
+                            return copy;
+                          });
+                        }}
+                      >{`${index}`}</Button>
+                    );
+                  })}
+                </div>
+              )}
+              <WordExperience className="col-span-1" {...word} />
+            </div>
+          );
         })}
       </div>
       <TextField className="col-span-2" label="Meaning" value={meaning} onChange={(e) => setMeaning(e)} />
@@ -57,7 +82,7 @@ export function Admin({ words }: { words: WordsPromise }) {
         <button
           className={buttonBehaviorClasses}
           onClick={() =>
-            triggerMakeAudio({ phrase: phraseWords.map((ele) => ele?.characters ?? "").join("") })
+            triggerMakeAudio({ phrase: chosenWords.map((ele) => ele?.characters ?? "").join("") })
           }
           disabled={isMakeAudioMutating}
           type="button"
@@ -97,7 +122,7 @@ export function Admin({ words }: { words: WordsPromise }) {
                 audio: new File([dataMakeAudio], "audio.mp3", { type: dataMakeAudio.type }),
                 picture: imageBinary.b64,
                 meaning,
-                words: phraseWords.filter((ele) => ele !== undefined).map((ele) => `${ele.id}`),
+                words: chosenWords.filter((ele) => ele !== null).map((ele) => `${ele.id}`),
               },
             });
             setPhrase("");

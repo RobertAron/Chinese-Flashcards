@@ -20,6 +20,7 @@ export function useKeyTrigger(
 ) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      console.log(event.key)
       const keyMatch = event.key === key;
       const matchesModifiers =
         event.altKey === alt && event.ctrlKey === ctrl && event.metaKey === meta && event.shiftKey === shift;

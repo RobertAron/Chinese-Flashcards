@@ -81,6 +81,8 @@ Process
 Before creating the image:
 1. **Describe** in one sentence the full scene that represents the meaning of the phrase — including *who*, *when*, *where*, and *what’s happening*.  
 2. Then, **draw that scene**.
+3. If the phrase is a question, make sure it's a conversation between two people.
+4. Unless relevant content, make sure things like TVs have no content on them.
 ---
 Example
 **Phrase:** 我 妹妹 小 时候 住 在 北京。  

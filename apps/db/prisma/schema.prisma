@@ -4,6 +4,11 @@ generator client {
   moduleFormat = "esm"
 }
 
+datasource db {
+  provider = "sqlite"
+  url      = "file:../../www/local.db"
+}
+
 model Course {
   slug      String   @id
   title     String
@@ -35,12 +40,12 @@ model Lesson {
 }
 
 model Phrases {
-  id             Int           @id @default(autoincrement())
-  meaning        String
-  createdAt      DateTime      @default(now())
-  Drill          Drill[]       @relation("DrillToPhrases")
-  Words          Words[]       @relation("PhrasesToWords")
-  PhraseWords    PhraseWords[]
+  id          Int           @id @default(autoincrement())
+  meaning     String
+  createdAt   DateTime      @default(now())
+  Drill       Drill[]       @relation("DrillToPhrases")
+  Words       Words[]       @relation("PhrasesToWords")
+  PhraseWords PhraseWords[]
 }
 
 model PhraseWords {
