@@ -28,7 +28,7 @@
           "fix": "safe",
           "options": {
             "attributes": ["className"],
-            "functions": ["cn","clsx"]
+            "functions": ["cn", "clsx"]
           }
         }
       },
@@ -73,6 +73,11 @@
     "formatter": {
       "quoteStyle": "double",
       "semicolons": "always"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }
