@@ -1,6 +1,6 @@
 @import "tailwindcss";
 /* biome-ignore: tw-thing */
-@config "../../tailwind.config.ts";
+@config "../../tailwind.config.mjs";
 
 @layer base {
   /* 1. Use a more-intuitive box-sizing model */

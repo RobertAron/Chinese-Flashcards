@@ -1,4 +1,3 @@
-import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
 const gridStackPlugin = plugin(({ addUtilities }) => {
@@ -21,7 +20,10 @@ const gridStackPlugin = plugin(({ addUtilities }) => {
   });
 });
 
-export default {
+/**
+ * @type {import('tailwindcss').Config}
+ */
+const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -63,4 +65,6 @@ export default {
     },
   },
   plugins: [gridStackPlugin],
-} satisfies Config;
+};
+
+export default config;

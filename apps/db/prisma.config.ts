@@ -1,12 +1,12 @@
 import "dotenv/config";
 import { resolve } from "node:path";
-import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaLibSQL } from "@prisma/adapter-libsql";
 import { defineConfig } from "prisma/config";
 
 const path = resolve(__dirname, "./local.db");
 const url = `file:${path}`;
 const adapter = async () =>
-  new PrismaBetterSQLite3({
+  new PrismaLibSQL({
     url,
   });
 export default defineConfig({
