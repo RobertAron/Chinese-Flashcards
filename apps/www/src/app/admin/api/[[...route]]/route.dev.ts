@@ -72,22 +72,24 @@ Semantic Requirements
 - Every **word** in the phrase must be visually represented.  
 - Clearly show **relationships** (e.g., who is whose sister, what action happened, where it took place).  
 - Express **time or tense** if relevant — use visual cues like:
-  - faded backgrounds or sepia tones for “past”
   - younger/older versions of a character for age differences
   - contextual objects or clothing to indicate time period  
 - The image should make sense **only when all words** are understood together (not from one word alone).
+- If the content was in the past, make sure that it shows that the task is completed/not in progress.
+  For example if the phrase is about being done eating, there should be an empty plate.
 ---
 Process
 Before creating the image:
 1. **Describe** in one sentence the full scene that represents the meaning of the phrase — including *who*, *when*, *where*, and *what’s happening*.  
-2. Then, **draw that scene**.
+2. Image a cartoon where a character would say the phrase. Draw that setting.
 3. If the phrase is a question, make sure it's a conversation between two people.
 4. Unless relevant content, make sure things like TVs have no content on them.
+5. Then, **draw that scene**.
 ---
 Example
 **Phrase:** 我 妹妹 小 时候 住 在 北京。  
 **Interpretation:** “My little sister lived in Beijing when she was young.”  
-**Good depiction:** An adult reminiscing (my) while looking at a childhood photo (little sister young) of his little sister playing near a Beijing house (lived at), showing both past and relationship context.
+**Cartoon Example:** An adult reminiscing (my) while looking at a childhood photo (little sister young) of his little sister playing near a Beijing house (lived at), showing both past and relationship context.
 ---
 **Phrase:** ${phrase}
 `;
@@ -101,6 +103,7 @@ Example
       console.log(JSON.stringify(err,null,2))
       throw err
     });
+    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: its there 4 sure
     const b64 = img.data?.[0]!.b64_json!;
     return c.json({ b64 });
   })
