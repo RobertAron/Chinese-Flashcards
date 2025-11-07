@@ -40,10 +40,10 @@ const toneMap: Record<string, ToneMapConfig | undefined> = {
   ú: { actual: "ú", stripped: "u", toneKey: "2", letterKey: "u" },
   ǔ: { actual: "ǔ", stripped: "u", toneKey: "3", letterKey: "u" },
   ù: { actual: "ù", stripped: "u", toneKey: "4", letterKey: "u" }, // u
-  ǖ: { actual: "ǖ", stripped: "ü", toneKey: "1", letterKey: "u" },
-  ǘ: { actual: "ǘ", stripped: "ü", toneKey: "2", letterKey: "u" },
-  ǚ: { actual: "ǚ", stripped: "ü", toneKey: "3", letterKey: "u" },
-  ǜ: { actual: "ǜ", stripped: "ü", toneKey: "4", letterKey: "u" }, // ü
+  ǖ: { actual: "ǖ", stripped: "ü", toneKey: "1", letterKey: "v" },
+  ǘ: { actual: "ǘ", stripped: "ü", toneKey: "2", letterKey: "v" },
+  ǚ: { actual: "ǚ", stripped: "ü", toneKey: "3", letterKey: "v" },
+  ǜ: { actual: "ǜ", stripped: "ü", toneKey: "4", letterKey: "v" }, // ü
 };
 const letterMapping: Record<string, string[]> = {
   a: ["ā", "á", "ǎ", "à"],
