@@ -5,5 +5,13 @@
     ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "'([^']*)'"],
     ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "\"([^\"]*)\""],
     ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "\\`([^\\`]*)\\`"]
-  ]
+  ],
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.hg/store/**": true,
+    "**/.git/**": true,
+    "**/node_modules/**": true,
+    "**/.vscode/**": true
+  }
 }
