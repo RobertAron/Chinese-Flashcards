@@ -171,7 +171,7 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
         })).filter((ele) => !punctuation.test(ele.characters)),
         characters: PhraseWords.map(({ word }) => word.characters)
           .join(" ")
-          .replaceAll(spacePunctuation, " ")
+          .replaceAll(spacePunctuation, "")
           .trim(),
         pinyin: PhraseWords.map(({ word }) => word.pinyin)
           .join(" ")

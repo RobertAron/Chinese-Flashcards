@@ -1,6 +1,6 @@
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
-import { CircleUserRoundIcon, LanguagesIcon } from "lucide-react";
+import { BookMarkedIcon, CircleUserRoundIcon, LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Link, LoadingProvider, LoadingRender } from "@/utils/NextNavigationUtils";
 import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
@@ -30,12 +30,20 @@ export default function RootLayout({
                   <LanguagesIcon className="shrink-0" />
                   <span className="font-bold text-xl">Chinese Challenges</span>
                 </Link>
-                <Link
-                  href="/user"
-                  className="flex h-10 w-10 items-center gap-2 rounded-full hocus:bg-black py-2 hocus:text-white"
-                >
-                  <CircleUserRoundIcon className="h-full w-full shrink-0" />
-                </Link>
+                <div className="flex gap-2">
+                  <Link
+                    href="/dictionary"
+                    className="flex h-10 w-10 items-center gap-2 rounded-full hocus:bg-black py-2 hocus:text-white"
+                  >
+                    <BookMarkedIcon className="h-full w-full shrink-0" />
+                  </Link>
+                  <Link
+                    href="/user"
+                    className="flex h-10 w-10 items-center gap-2 rounded-full hocus:bg-black py-2 hocus:text-white"
+                  >
+                    <CircleUserRoundIcon className="h-full w-full shrink-0" />
+                  </Link>
+                </div>
               </div>
             </nav>
             <div className="container relative z-10 mx-auto flex h-full w-full grow">{children}</div>

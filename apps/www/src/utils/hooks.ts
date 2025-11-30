@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useEffectEvent, useState } from "react";
 import { getAudioContext } from "./audioContext";
 
 // Key Trigger
@@ -18,19 +18,18 @@ export function useKeyTrigger(
     meta?: boolean;
   } = {},
 ) {
+  const event = useEffectEvent((event: KeyboardEvent) => {
+    const keyMatch = event.key === key;
+    const matchesModifiers =
+      event.altKey === alt && event.ctrlKey === ctrl && event.metaKey === meta && event.shiftKey === shift;
+    if (keyMatch && matchesModifiers) {
+      cb(event);
+    }
+  });
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      console.log(event.key)
-      const keyMatch = event.key === key;
-      const matchesModifiers =
-        event.altKey === alt && event.ctrlKey === ctrl && event.metaKey === meta && event.shiftKey === shift;
-      if (keyMatch && matchesModifiers) {
-        cb(event);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [cb, key, alt, ctrl, meta, shift]);
+    window.addEventListener("keydown", event);
+    return () => window.removeEventListener("keydown", event);
+  }, []);
 }
 
 // use audio source
