@@ -13,5 +13,6 @@
     "**/.git/**": true,
     "**/node_modules/**": true,
     "**/.vscode/**": true
-  }
+  },
+  "prisma.pinToPrisma6": true
 }

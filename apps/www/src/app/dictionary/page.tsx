@@ -6,7 +6,7 @@ export type Words = Awaited<ReturnType<typeof getWords>>;
 const getWords = () =>
   getPrismaClient().words.findMany({
     orderBy: {
-      frequencyRank: "desc",
+      frequencyRank: "asc",
     },
   });
 export default AppServerPageEntrypoint(async () => {

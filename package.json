@@ -2,8 +2,8 @@
   "name": "vocab-sprint",
   "packageManager": "bun@1.2.4",
   "devDependencies": {
-    "@biomejs/biome": "^2.3.0",
-    "turbo": "2.5.9-canary.3",
+    "@biomejs/biome": "^2.3.8",
+    "turbo": "2.6.3",
     "typescript": "^5.9.3"
   },
   "workspaces": [

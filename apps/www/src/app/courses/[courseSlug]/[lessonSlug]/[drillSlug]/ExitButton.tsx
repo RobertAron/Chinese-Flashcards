@@ -5,7 +5,7 @@ import { Button } from "@/components/Button";
 import { Kbd } from "@/components/Kbd";
 import { useKeyTrigger } from "@/utils/hooks";
 import { Link, useLoadingRouter } from "@/utils/NextNavigationUtils";
-import { useTailwindOverride } from "@/utils/styleResolvers";
+import { twCn } from "@/utils/styleResolvers";
 export function ExitButton({ onExit }: { onExit: () => void }) {
   useKeyTrigger("Escape", onExit);
   return (
@@ -35,9 +35,8 @@ export function ExitLink({
   }, [href, router]);
   useKeyTrigger("Escape", navigate);
 
-  const combinedClassName = useTailwindOverride(coreExitButtonClasses, className);
   return (
-    <Link href={href} className={combinedClassName}>
+    <Link href={href} className={twCn(coreExitButtonClasses, className)}>
       <Undo2 className="shrink-0" />
       <div>{children}</div>
       <div className="flex gap-1">

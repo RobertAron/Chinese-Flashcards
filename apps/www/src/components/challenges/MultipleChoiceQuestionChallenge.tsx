@@ -1,6 +1,6 @@
 import { type Ref, useCallback, useEffect, useState } from "react";
 import { useKeyTrigger } from "@/utils/hooks";
-import { useTailwindOverride } from "@/utils/styleResolvers";
+import { twCn } from "@/utils/styleResolvers";
 import { Button } from "../Button";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { Kbd } from "../Kbd";
@@ -69,7 +69,7 @@ function MultipleChoiceAnswer({
   useKeyTrigger(letter, () => {
     onSelected();
   });
-  const buttonClasses = useTailwindOverride(
+  const buttonClasses = twCn(
     buttonBehaviorClasses,
     "flex items-start gap-2 p-2 text-start text-xl",
     {

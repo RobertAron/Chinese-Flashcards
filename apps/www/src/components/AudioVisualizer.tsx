@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 // https://github.com/samhirtarif/react-audio-visualize
 import { getAudioContext } from "@/utils/audioContext";
-import { useTailwindOverride } from "@/utils/styleResolvers";
+import { twCn } from "@/utils/styleResolvers";
 
 function average(nums: number[]) {
   if (nums.length === 0) return 0;
@@ -176,7 +176,7 @@ export const LiveAudioVisualizer = ({
     resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();
   }, []);
-  const classes = useTailwindOverride(
+  const classes = twCn(
     "relative h-full w-full overflow-hidden rounded-md border-[1.5px] border-black bg-white",
     className,
   );

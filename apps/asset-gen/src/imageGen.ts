@@ -57,6 +57,7 @@ Example
     size: "1024x1024",
     quality: "high",
   });
+  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it's there
   const b64 = img.data?.[0]!.b64_json!;
   const buffer = Buffer.from(b64, "base64");
   const blob = new Blob([buffer], { type: "image/png" });
