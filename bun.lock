@@ -26,7 +26,7 @@
     "apps/db": {
       "name": "vocab-db",
       "dependencies": {
-        "@prisma/adapter-libsql": "^6.19.0",
+        "@prisma/adapter-libsql": "6.19.0",
         "@prisma/client": "6.19.0",
         "dotenv": "^17.2.3",
       },
@@ -39,7 +39,7 @@
       "version": "0.1.0",
       "dependencies": {
         "@hono/zod-validator": "^0.7.5",
-        "@prisma/adapter-libsql": "^6.19.0",
+        "@prisma/adapter-libsql": "6.19.0",
         "@tailwindcss/postcss": "^4.1.17",
         "babel-plugin-react-compiler": "^1.0.0",
         "clsx": "^2.1.1",

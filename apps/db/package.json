@@ -10,7 +10,7 @@
     "build": "prisma generate"
   },
   "dependencies": {
-    "@prisma/adapter-libsql": "^6.19.0",
+    "@prisma/adapter-libsql": "6.19.0",
     "@prisma/client": "6.19.0",
     "dotenv": "^17.2.3"
   },
