@@ -19,6 +19,7 @@ export function Admin({ words }: { words: WordsPromise }) {
   const wordsLookup = useMemo(() => Object.groupBy(words, (ele) => ele.characters), [words]);
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("My cat is very big.");
+  const [extraInstructions, setExtraInstructions] = useState("");
   const [variantLookup, setVariantLookup] = useState<number[]>([]);
   const {
     data: imageBinary,
@@ -40,9 +41,9 @@ export function Admin({ words }: { words: WordsPromise }) {
   const { trigger: submitChallenge } = useSubmitChallenge();
 
   const phraseWords = phrase.split(" ").map((ele) => wordsLookup[ele]);
-  const chosenWords = phraseWords.filter(ele=>ele!==undefined).map((words, wordPosition) =>
-    getSelectedWord(wordPosition, variantLookup, words),
-  );
+  const chosenWords = phraseWords
+    .filter((ele) => ele !== undefined)
+    .map((words, wordPosition) => getSelectedWord(wordPosition, variantLookup, words));
 
   return (
     <div className="grid grid-cols-2 gap-2">
@@ -92,9 +93,14 @@ export function Admin({ words }: { words: WordsPromise }) {
         {audioUrl && <audio controls src={audioUrl} className="mt-4" />}
       </div>
       <div className="col-span-1 flex flex-col gap-2 rounded-md border-2 bg-white p-3">
+        <TextField
+          label="Extra instructions"
+          value={extraInstructions}
+          onChange={(v) => setExtraInstructions(v)}
+        />
         <button
           type="button"
-          onClick={() => makeImage({ phrase })}
+          onClick={() => makeImage({ phrase, extraInstructions })}
           className={buttonBehaviorClasses}
           disabled={isMakeImageMutating}
         >
@@ -127,6 +133,7 @@ export function Admin({ words }: { words: WordsPromise }) {
             });
             setPhrase("");
             setMeaning("");
+            setExtraInstructions("");
             resetImage();
             resetAudio();
           }}

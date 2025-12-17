@@ -53,9 +53,12 @@ const app = new Hono()
       return new Response(Buffer.from(response.audioContent));
     },
   )
-  .post("/generate-image", zValidator("json", z.object({ phrase: z.string() })), async (c) => {
-    const { phrase } = c.req.valid("json");
-  const prompt = `
+  .post(
+    "/generate-image",
+    zValidator("json", z.object({ phrase: z.string(), extraInstructions: z.string() })),
+    async (c) => {
+      const { phrase, extraInstructions } = c.req.valid("json");
+      const prompt = `
 ### Chinese Phrase Image Generation Prompt
 You will receive a **Chinese phrase**. Create a single image that conveys the **complete meaning** of the phrase through **visual storytelling**.  
 The image will be used as a flashcard where the viewer guesses or writes the phrase based on the scene.
@@ -91,22 +94,31 @@ Example
 **Interpretation:** “My little sister lived in Beijing when she was young.”  
 **Cartoon Example:** An adult reminiscing (my) while looking at a childhood photo (little sister young) of his little sister playing near a Beijing house (lived at), showing both past and relationship context.
 ---
+${
+  extraInstructions !== "" &&
+  `Extra Instructions
+${extraInstructions}
+---`
+}
 **Phrase:** ${phrase}
 `;
-    const img = await openaiClient.images.generate({
-      model: "gpt-image-1-mini",
-      prompt,
-      n: 1,
-      size: "1024x1024",
-      quality: "high",
-    }).catch(err=>{
-      console.log(JSON.stringify(err,null,2))
-      throw err
-    });
-    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: its there 4 sure
-    const b64 = img.data?.[0]!.b64_json!;
-    return c.json({ b64 });
-  })
+      const img = await openaiClient.images
+        .generate({
+          model: "gpt-image-1-mini",
+          prompt,
+          n: 1,
+          size: "1024x1024",
+          quality: "high",
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err, null, 2));
+          throw err;
+        });
+      // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: its there 4 sure
+      const b64 = img.data?.[0]!.b64_json!;
+      return c.json({ b64 });
+    },
+  )
   .post(
     "/submit-challenge",
     zValidator(

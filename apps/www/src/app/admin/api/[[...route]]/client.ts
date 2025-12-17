@@ -12,11 +12,19 @@ export function useMakeAudio() {
   });
 }
 export function useMakeImage() {
-  return useSWRMutation("makeImage", async (_: string, { arg: { phrase } }: { arg: { phrase: string } }) => {
-    const response = await client.admin.api["generate-image"].$post({ json: { phrase } });
-    if (!response.ok) throw new Error();
-    return await response.json();
-  });
+  return useSWRMutation(
+    "makeImage",
+    async (
+      _: string,
+      { arg: { phrase, extraInstructions } }: { arg: { phrase: string; extraInstructions: string } },
+    ) => {
+      const response = await client.admin.api["generate-image"].$post({
+        json: { phrase, extraInstructions },
+      });
+      if (!response.ok) throw new Error();
+      return await response.json();
+    },
+  );
 }
 
 const submitChallenge = client.admin.api["submit-challenge"].$post;
