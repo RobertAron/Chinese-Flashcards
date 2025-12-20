@@ -20,10 +20,10 @@ export default AppServerPageEntrypoint(async function Home() {
       <div className="grid w-full grid-cols-3 gap-1">
         {courses.map((topic) => (
           <MotionLink
-            initial={{ opacity: 0, scaleY: 1.05 }}
+            initial={{ opacity: 0, scaleY: 1.02 }}
             animate={{ opacity: 1, scaleY: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileFocus={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
+            whileFocus={{ scale: 1.02 }}
             className={`col-span-3 grid ${buttonBehaviorClasses}`}
             href={`/courses/${topic.slug}`}
             key={topic.slug}

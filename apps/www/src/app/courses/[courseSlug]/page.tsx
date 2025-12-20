@@ -21,10 +21,10 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
         <div className="grid grid-cols-3 gap-1">
           {course.Lesson.map((ele) => (
             <MotionLink
-              initial={{ opacity: 0, scaleY: 1.05 }}
+              initial={{ opacity: 0, scaleY: 1.02 }}
               animate={{ opacity: 1, scaleY: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileFocus={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
+              whileFocus={{ scale: 1.02 }}
               className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
               href={`/courses/${courseSlug}/${ele.slug}`}
               key={ele.slug}

@@ -47,10 +47,10 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
           </div>
           {lesson.Drill.map((ele) => (
             <MotionLink
-              initial={{ opacity: 0, scaleY: 1.05 }}
+              initial={{ opacity: 0, scaleY: 1.02 }}
               animate={{ opacity: 1, scaleY: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileFocus={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
+              whileFocus={{ scale: 1.02 }}
               className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
               href={`/courses/${courseSlug}/${lessonSlug}/${ele.slug}`}
               key={ele.slug}
@@ -61,10 +61,10 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
             </MotionLink>
           ))}
           <MotionLink
-            initial={{ opacity: 0, scaleY: 1.05 }}
+            initial={{ opacity: 0, scaleY: 1.02 }}
             animate={{ opacity: 1, scaleY: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileFocus={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
+            whileFocus={{ scale: 1.02 }}
             className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
             href={`/courses/${courseSlug}/${lessonSlug}/final-mastery-${lessonSlug}`}
           >
