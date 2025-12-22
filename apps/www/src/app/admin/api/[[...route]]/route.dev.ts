@@ -59,52 +59,25 @@ const app = new Hono()
     async (c) => {
       const { phrase, extraInstructions } = c.req.valid("json");
       const prompt = `
-### Chinese Phrase Image Generation Prompt
-You will receive a **Chinese phrase**. Create a single image that conveys the **complete meaning** of the phrase through **visual storytelling**.  
-The image will be used as a flashcard where the viewer guesses or writes the phrase based on the scene.
----
-Style & Visual Guidelines
-- Do **not** include any text, Chinese characters, or emojis.
-- Style: **minimal**, **anime/cartoon**.  
-- Background: **white** or **light grey**.  
-- Use **fairly saturated colors**, avoid sepia tones.  
-- Keep the composition **simple and clear**.
----
-Semantic Requirements
-- Depict a **scene** where the phrase would naturally occur — not just isolated objects.  
-- Every **word** in the phrase must be visually represented.  
-- Clearly show **relationships** (e.g., who is whose sister, what action happened, where it took place).  
-- Express **time or tense** if relevant — use visual cues like:
-  - younger/older versions of a character for age differences
-  - contextual objects or clothing to indicate time period  
-- The image should make sense **only when all words** are understood together (not from one word alone).
-- If the content was in the past, make sure that it shows that the task is completed/not in progress.
-  For example if the phrase is about being done eating, there should be an empty plate.
----
-Process
-Before creating the image:
-1. **Describe** in one sentence the full scene that represents the meaning of the phrase — including *who*, *when*, *where*, and *what’s happening*.  
-2. Image a cartoon where a character would say the phrase. Draw that setting.
-3. If the phrase is a question, make sure it's a conversation between two people.
-4. Unless relevant content, make sure things like TVs have no content on them.
-5. Then, **draw that scene**.
----
-Example
-**Phrase:** 我 妹妹 小 时候 住 在 北京。  
-**Interpretation:** “My little sister lived in Beijing when she was young.”  
-**Cartoon Example:** An adult reminiscing (my) while looking at a childhood photo (little sister young) of his little sister playing near a Beijing house (lived at), showing both past and relationship context.
----
-${
-  extraInstructions !== "" &&
-  `Extra Instructions
-${extraInstructions}
----`
-}
-**Phrase:** ${phrase}
+Create a single minimalist anime-style illustration that visually represents the full meaning of this Chinese phrase.
+
+The image is used as a flashcard: the viewer should be able to guess the entire phrase from the scene alone.
+
+Rules:
+- No text, symbols, or characters of any kind
+- Simple composition, white or light gray background
+- Clean anime/cartoon style with fairly saturated colors
+- Depict a natural scene (not isolated objects)
+- Every word in the phrase must be visually implied through the scene
+- Clearly show relationships, actions, location, and time
+- If the phrase refers to the past, show the action as completed
+
+Phrase: ${phrase}
+${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
 `;
       const img = await openaiClient.images
         .generate({
-          model: "gpt-image-1-mini",
+          model: "gpt-image-1.5",
           prompt,
           n: 1,
           size: "1024x1024",
