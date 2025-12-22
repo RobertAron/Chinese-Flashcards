@@ -62,16 +62,17 @@ model PhraseWords {
 }
 
 model Words {
-  id             Int           @id @default(autoincrement())
-  characters     String
-  pinyin         String
-  meaning        String
-  frequencyRank  Int
-  emojiChallenge String?
-  hskLevel       HskLevel?
-  Drill          Drill[]       @relation("DrillToWords")
-  Phrases        Phrases[]     @relation("PhrasesToWords")
-  PhraseWords    PhraseWords[]
+  id                Int           @id @default(autoincrement())
+  characters        String
+  pinyin            String
+  meaning           String
+  frequencyRank     Int
+  emojiChallenge    String?
+  buildingBlockOnly Boolean       @default(false)
+  hskLevel          HskLevel?
+  Drill             Drill[]       @relation("DrillToWords")
+  Phrases           Phrases[]     @relation("PhrasesToWords")
+  PhraseWords       PhraseWords[]
 }
 
 enum HskLevel {
