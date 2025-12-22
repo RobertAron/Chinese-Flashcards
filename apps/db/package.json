@@ -6,7 +6,7 @@
   "scripts": {
     "pull": "prisma db pull && prisma generate",
     "dev": "prisma studio",
-    "gen": "prisma generate",
+    "generate": "prisma generate",
     "build": "prisma generate"
   },
   "dependencies": {

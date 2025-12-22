@@ -1,8 +1,10 @@
+"use client";
 import clsx from "clsx";
 import { useMemo } from "react";
 import type { HskLevel } from "vocab-db/prisma";
 import { useWordPracticeCount } from "@/utils/playerState";
 import { HskBadge } from "../HskBadge";
+import { CuboidIcon, InfoIcon } from "lucide-react";
 
 export type WordExperienceProps = {
   characters: string;
@@ -11,6 +13,7 @@ export type WordExperienceProps = {
   meaning: string;
   hskLevel: HskLevel | null;
   className?: string;
+  buildingBlockOnly?: boolean;
 };
 export function WordExperience({
   characters,
@@ -19,6 +22,7 @@ export function WordExperience({
   meaning,
   hskLevel,
   className,
+  buildingBlockOnly,
 }: WordExperienceProps) {
   const practiceCount = useWordPracticeCount(id);
   const classes = useMemo(() => {
@@ -35,6 +39,12 @@ export function WordExperience({
           <div className="flex flex-col items-end gap-1">
             <span>x{practiceCount}</span>
             {hskLevel && <HskBadge hskLevel={hskLevel} />}
+            {buildingBlockOnly && (
+              <div className="flex items-center gap-1 rounded-full border bg-indigo-50 p-1 px-2 text-xs">
+                <CuboidIcon />
+                <span>Building Block Only</span>
+              </div>
+            )}
           </div>
         </div>
         <div>{pinyin}</div>

@@ -5,12 +5,12 @@ import { defineConfig, type PrismaConfig } from "prisma/config";
 
 const path = resolve(__dirname, "./local.db");
 const url = `file:${path}`;
-console.log(process.argv);
+
+
 const adapter = async () =>
   new PrismaLibSQL({
     url,
   });
-
 const normalConfig: PrismaConfig = {
   engine: "js",
   experimental: {

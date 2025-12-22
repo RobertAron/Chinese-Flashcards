@@ -1,6 +1,7 @@
 import { AppServerPageEntrypoint } from "@/components/AppPage";
+import { WordExperience } from "@/components/challenges/WordPoints";
 import { getPrismaClient } from "@/utils/getPrismaClient";
-import { ConditionalWord, ExperienceBox } from "./client";
+import { ExperienceBox } from "./client";
 
 const getWords = () =>
   getPrismaClient().words.findMany({
@@ -23,7 +24,7 @@ export default AppServerPageEntrypoint(async function Page() {
       </div>
       <div className="grid grid-cols-4 gap-2">
         {words.slice(0, 1_000).map((ele) => (
-          <ConditionalWord key={ele.id} {...ele} />
+          <WordExperience key={ele.id} {...ele} />
         ))}
       </div>
     </div>

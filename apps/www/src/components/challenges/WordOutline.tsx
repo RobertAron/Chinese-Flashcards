@@ -34,6 +34,7 @@ export function WordOutline({ word }: WordOutlineProps) {
           <HskBadge hskLevel={word.hskLevel} />
         </div>
       )}
+      ??
     </div>
   );
 }
