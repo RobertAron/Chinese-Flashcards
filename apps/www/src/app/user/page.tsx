@@ -17,7 +17,7 @@ export default AppServerPageEntrypoint(async function Page() {
   const words = await getWords();
   return (
     <div className="flex flex-col gap-2 py-2">
-      <div className="grid grid-cols-24 gap-1">
+      <div className="grid grid-cols-24 gap-2">
         {words.map((ele) => (
           <ExperienceBox key={ele.id} wordId={ele.id} />
         ))}

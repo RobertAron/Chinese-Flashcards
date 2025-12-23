@@ -28,6 +28,28 @@ export const calculateBarData = (frequencyData: Uint8Array, desiredBars = 4000):
   return results.map((ele) => average(ele));
 };
 
+// blue 600
+const blue = {
+  r: 37,
+  g: 99,
+  b: 235,
+};
+// red 600
+const red = {
+  r: 220,
+  g: 38,
+  b: 38,
+};
+const lerp = (a: number, b: number, percent: number) => a + (b - a) * percent;
+const remapClamped = (a1: number, b1: number, a2: number, b2: number) => {
+  const denom = b1 - a1;
+  const m = denom === 0 ? 0 : (b2 - a2) / denom;
+  const c = a2 - a1 * m;
+  const min = Math.min(a1, b1);
+  const max = Math.max(a1, b1);
+  return (x: number) => m * Math.min(max, Math.max(min, x)) + c;
+};
+const rangeRemap = remapClamped(0.5, 0.95, 0, 1);
 export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
   const width = canvas.width;
   const height = canvas.height;
@@ -37,7 +59,7 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // start drawing
   // avoid setting new color if it's the same
-  let oldR = 0;
+  let oldLerpness = 0;
   for (let i = 0; i < data.length; ++i) {
     const dataPoint = data[i]!;
     if (dataPoint === 0) continue;
@@ -46,10 +68,16 @@ export const draw = (data: number[], canvas: HTMLCanvasElement): void => {
     const x = (i / data.length) * width;
     const y = height - dataPointHeight;
     const w = itemWidth + 2;
-    const r = Math.round(dataPointHeightNormalized * 255);
-    if (r !== oldR) {
-      ctx.fillStyle = `rgb(${r}, 0, ${255 - r})`;
-      oldR = r;
+    const lerpness = dataPointHeightNormalized;
+    // optimization. Remap color only when colors change
+    // (setting fillStyle is very slow)
+    if (lerpness !== oldLerpness) {
+      const lerpnessRemapped = rangeRemap(lerpness);
+      const r = lerp(blue.r, red.r, lerpnessRemapped);
+      const g = lerp(blue.g, red.g, lerpnessRemapped);
+      const b = lerp(blue.b, red.b, lerpnessRemapped);
+      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      oldLerpness = lerpness;
     }
     ctx.fillRect(Math.floor(x), Math.floor(y), Math.ceil(w), dataPointHeight);
   }

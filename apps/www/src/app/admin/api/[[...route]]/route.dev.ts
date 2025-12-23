@@ -69,8 +69,10 @@ Rules:
 - Clean anime/cartoon style with fairly saturated colors
 - Depict a natural scene (not isolated objects)
 - Every word in the phrase must be visually implied through the scene
-- Clearly show relationships, actions, location, and time
+- Clearly show relationships, actions, location, and time when they are part of the phrase
 - If the phrase refers to the past, show the action as completed
+- The picture should cover the entire frame in most circumstances
+- Do not include content which is not relevant to the phrase
 
 Phrase: ${phrase}
 ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
@@ -88,7 +90,7 @@ ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
           throw err;
         });
       // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: its there 4 sure
-      const b64 = img.data?.[0]!.b64_json!;
+      const b64 = img.data?.[0]!.b64_json;
       return c.json({ b64 });
     },
   )
