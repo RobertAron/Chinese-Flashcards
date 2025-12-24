@@ -66,8 +66,8 @@ The image is used as a flashcard: the viewer should be able to guess the entire 
 Rules:
 - No text, symbols, or characters of any kind
 - Simple composition, white or light gray background
-- Clean anime/cartoon style with fairly saturated colors
-- Depict a natural scene (not isolated objects)
+- Clean cartoon (slightly anime) style with fairly saturated colors
+- Depict a coherent scene with an environment (indoor or outdoor)
 - Every word in the phrase must be visually implied through the scene
 - Clearly show relationships, actions, location, and time when they are part of the phrase
 - If the phrase refers to the past, show the action as completed
