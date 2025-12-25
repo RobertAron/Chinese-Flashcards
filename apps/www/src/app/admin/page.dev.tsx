@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { Admin } from "./client";
@@ -14,9 +13,7 @@ export type WordsPromise = Awaited<ReturnType<typeof getWords>>;
 
 export const dynamic = "force-static";
 export default AppServerPageEntrypoint(async () => {
-  if (process.env.NODE_ENV !== "development") notFound();
   const words = await getWords();
-
   return (
     <div className="grid w-full grid-flow-row gap-3 py-4">
       <div className="flex flex-col gap-2">
