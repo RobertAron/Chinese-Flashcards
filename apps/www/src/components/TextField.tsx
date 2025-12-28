@@ -15,15 +15,23 @@ interface TextFieldProps extends Omit<AriaTextFieldProps, "className"> {
   description?: string;
   className?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
+  placeholder?: string;
 }
 
-export function TextField({ label, description, errorMessage, className, ...props }: TextFieldProps) {
+export function TextField({
+  label,
+  description,
+  errorMessage,
+  className,
+  placeholder,
+  ...props
+}: TextFieldProps) {
   return (
     <AriaTextField className={clsx("flex flex-col gap-0.5", className)} {...props}>
-      <AriaLabel className="text-slate-800">
+      <AriaLabel id="test" className="text-slate-800">
         {label}
       </AriaLabel>
-      <AriaInput className="rounded-sm border-2 border-black bg-white p-1" />
+      <AriaInput className="rounded-sm border-2 border-black bg-white p-1" placeholder={placeholder} />
       {description !== undefined && <AriaText slot="description">{description}</AriaText>}
       <AriaFieldError>{errorMessage}</AriaFieldError>
     </AriaTextField>

@@ -10,6 +10,7 @@ const getWords = () =>
     },
     where: {
       hskLevel: "hsk1",
+      buildingBlockOnly: false,
     },
   });
 

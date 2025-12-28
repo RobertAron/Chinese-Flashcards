@@ -2,6 +2,7 @@
 import Fuse from "fuse.js";
 import { useMemo, useState } from "react";
 import { WordOutline } from "@/components/challenges/WordOutline";
+import { TextField } from "@/components/TextField";
 import { wordToAudioSource } from "@/utils/idToAudioSource";
 import type { Words } from "./page";
 
@@ -48,15 +49,12 @@ export function SearchPage({ words }: { words: Words }) {
     <div className="grid w-full grid-flow-row gap-3 py-4">
       <div className="flex flex-col gap-2">
         <h1 className="font-bold text-5xl underline">Dictionary</h1>
-        <label className="flex flex-col gap-1">
-          <span className="sr-only">Search</span>
-          <input
-            className="rounded-sm border-2 border-black p-2"
-            placeholder="Search..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-        </label>
+        <TextField
+          aria-label="Search"
+          placeholder="Search..."
+          value={input}
+          onChange={(e) => setInput(e)}
+        />
       </div>
       <hr className="my-1 border border-gray-400" />
       {matchingWords.slice(0, 30).map((word) => {
