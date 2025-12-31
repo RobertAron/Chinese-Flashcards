@@ -7,6 +7,9 @@ const getWords = () =>
     orderBy: {
       frequencyRank: "desc",
     },
+    where:{
+      buildingBlockOnly:false,
+    }
   });
 
 export type WordsPromise = Awaited<ReturnType<typeof getWords>>;

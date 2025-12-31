@@ -39,3 +39,18 @@ export function useSubmitChallenge() {
     },
   );
 }
+
+const generatePhraseSuggestionEndpoint = client.admin.api["generate-phrase-suggestion"].$post;
+type GeneratePhraseParams = Parameters<typeof generatePhraseSuggestionEndpoint>[0];
+export function useMakePhraseSuggestions() {
+  return useSWRMutation(
+    "submit-for-suggestions",
+    async (_: string, { arg: { json } }: { arg: GeneratePhraseParams }) => {
+      const response = await generatePhraseSuggestionEndpoint({
+        json,
+      });
+      if (!response.ok) throw new Error();
+      return response.json();
+    },
+  );
+}

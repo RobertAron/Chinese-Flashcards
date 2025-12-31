@@ -4,6 +4,7 @@ import { S3Client } from "bun";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import OpenAI from "openai";
+import { zodTextFormat } from "openai/helpers/zod";
 import sharp from "sharp";
 import z from "zod";
 import { getPrismaClient } from "@/utils/getPrismaClient";
@@ -22,9 +23,93 @@ const { client_email, private_key } = JSON.parse(auth);
 const client = new tts.TextToSpeechClient({
   credentials: { client_email, private_key },
 });
-
+const phraseResponse = z.object({
+  suggestions: z
+    .object({
+      phrase: z.string(),
+      meaning: z.string(),
+      imageDescription: z.string(),
+    })
+    .array()
+    .min(5)
+    .max(10),
+});
+const practiceState = z.preprocess(
+  (v) => {
+    if (typeof v !== "string") return v;
+    return JSON.parse(v);
+  },
+  z.record(z.string(), z.object({ characters: z.string(), meaning: z.string() })),
+);
+export type ParsedPracticeState = z.output<typeof practiceState>;
+// https://platform.openai.com/docs/guides/structured-outputs?example=structured-data#structured-data-extraction
 const app = new Hono()
   .basePath("/admin/api")
+  .post(
+    "/generate-phrase-suggestion",
+    zValidator(
+      "json",
+      z.object({
+        word: z.string(),
+        practiceState: practiceState,
+      }),
+    ),
+    async (c) => {
+      const query = c.req.valid("json");
+      const { output_parsed } = await openaiClient.responses.parse({
+        model: "gpt-5",
+        text: { format: zodTextFormat(phraseResponse, "PracticePhraseSuggestion") },
+        input: [
+          {
+            role: "system",
+            content: `
+You are an expert in chinese language teaching, as well as a creative writer. Your job is to help the student become HSK1 proficient. Your job is to create several phrases to help the student learn HSK1 skills.
+
+- You will be given a chinese word which must be included in the phrases.
+- You will also be given a list of all HSK1 words, in order by how common they are, starting with the most common to the least.
+
+When reasonable, sprinkle in words that the user has not practiced yet, especially if they are more common.
+The images will be used to create a flashcard like experience, which will include the text, TTS of the phrase, and a picture. Practicing the phrases will be similar to reading a children's book. Therefore, it would be beneficial for the phrases to match that style of writing. You will also be asked to create a short description of a scene which could be used to help prompt the user to speak the phrase. 
+
+Constraints:
+- Phrase length: 6–12 Chinese characters
+- 1-2 clauses
+- Avoid extremely common structure "我 + 动词 + 你 + 时间"
+- Each phrase should _slightly_ be stranger than the last, enabling some children's book like phrases that you might see in something like "If you give a mouse a cookie". Not quite as creative as something as alice in wonderland though.
+- Put spaces between each word and punctuation. For example: "学 中文 半年 ， 会 说 了 。"
+- The suggested picture should not suggest including text, unless absolutely necessary.
+
+Structured output as an array. 5 minimum. 10 maximum.:
+- phrase: Chinese only, include punctuation. Put spaces between each word. E.G 我 等 你 半天 。
+- meaning: English only translation of the phrase.
+- imageDescription: one sentence describing the exact scene to illustrate
+
+Guideline examples for abstract words:
+
+- 最 / 最好 / 最多 (best / most):
+  Show clear comparison (e.g. 3 items), with the target item visibly superior
+  (bigger, brighter, centered, or being chosen)
+
+- Timing (tomorrow, today, later):
+  sunrise, calendar page turning, morning light through a window, split image showing comparison between now/later
+
+- 想 (want):
+  Character reaching toward or looking longingly at an object
+
+- 有 / 没有 (have / not have):
+  Object in hand vs empty hands
+`.trim(),
+          },
+          {
+            role: "user",
+            content: JSON.stringify(query),
+          },
+        ],
+      });
+      if (output_parsed === null) return c.text("Error", { status: 500 });
+      return c.json(output_parsed.suggestions, { status: 200 });
+    },
+  )
   .post(
     "/generate-audio",
     zValidator(
