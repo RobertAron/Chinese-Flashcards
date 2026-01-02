@@ -82,7 +82,7 @@ export function ChallengeTitle({
         <Button
           className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2 font-bold text-xl"
           onClick={onStart}
-          disabled={disableStart}
+          isDisabled={disableStart}
         >
           <Kbd>↵</Kbd>
           <span>{again ? "IMPROVE" : "START"}</span>

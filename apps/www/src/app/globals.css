@@ -94,13 +94,22 @@
 /* This stays outside because it's not really a style rule */
 @custom-variant hocus {
   @media (hover: hover) {
-    &:hover {
-      /* biome-ignore lint/suspicious/noUnknownAtRules: tw-thing */
+    &:not([data-pressed="true"]):hover {
       @slot;
     }
   }
-  &:focus-visible {
-    /* biome-ignore lint/suspicious/noUnknownAtRules: tw-thing */
+  &:not([data-pressed="true"]):focus-visible {
+    @slot;
+  }
+
+  &:not([data-pressed="true"])[data-focus-visible="true"] {
+    @slot;
+  }
+}
+
+@custom-variant pressed {
+  &:active,
+  &[data-pressed="true"] {
     @slot;
   }
 }

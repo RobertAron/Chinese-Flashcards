@@ -2,6 +2,7 @@ import { PlayIcon } from "lucide-react";
 import { useRef } from "react";
 import { useAudioSourceNode } from "@/utils/hooks";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
+import { Button } from "../Button";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { HskBadge } from "../HskBadge";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
@@ -45,14 +46,13 @@ function AudioSection({ src }: { src: string }) {
     <div className="grid-stack h-16 w-full">
       <audio ref={audioRef} src={src} crossOrigin="anonymous" className="hidden" />
       <div className="grid-stack-item z-10 self-center justify-self-start pl-1">
-        <button
-          type="button"
+        <Button
           className={`${buttonBehaviorClasses} flex items-center gap-4 rounded-lg bg-white/30 p-2 backdrop-blur-sm`}
           aria-label="Play pronunciation"
           onClick={playAudio}
         >
           <PlayIcon className="h-4 w-4" aria-hidden strokeWidth={3} />
-        </button>
+        </Button>
       </div>
       <div className="grid-stack-item h-full w-full">
         {audioSourceNode !== null && (

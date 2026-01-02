@@ -1,8 +1,8 @@
 import clsx from "clsx";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { buttonBehaviorClasses } from "./coreClasses";
 
-type ButtonProps = React.ComponentPropsWithRef<"button">;
-export const Button = ({ className, ...restProps }: ButtonProps) => (
-  <button {...restProps} className={twMerge(clsx(buttonBehaviorClasses, className))} />
+export const Button = ({ className, ...restProps }: AriaButtonProps) => (
+  <AriaButton {...restProps} className={twMerge(clsx(buttonBehaviorClasses, className))} />
 );

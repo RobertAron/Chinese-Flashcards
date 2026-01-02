@@ -70,10 +70,11 @@ export function Admin({ words }: { words: WordsPromise }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 rounded-sm border border-black bg-white p-2 shadow-lg">
+        <h2 className="text-3xl">Generate Suggestions</h2>
         <TextField value={word} onChange={(e) => setWord(e)} label="word" />
         <Button
           className="flex gap-2"
-          disabled={isMakingSuggestions}
+          isDisabled={isMakingSuggestions}
           onClick={async () => {
             triggerMakePhraseSuggestions({
               json: {
@@ -84,23 +85,24 @@ export function Admin({ words }: { words: WordsPromise }) {
           }}
         >
           <SparklesIcon />
-          <span>Generate Phrase</span>
+          <span>Generate Phrase Suggestions</span>
         </Button>
-      </div>
-      <div className="grid grid-cols-4 gap-2">
-        {phraseSuggestions.map((suggestion, index) => (
-          <Button
-            key={index}
-            className="text-sm"
-            onClick={() => {
-              setMeaning(suggestion.meaning);
-              setPhrase(suggestion.phrase);
-              setExtraInstructions(suggestion.imageDescription);
-            }}
-          >
-            {suggestion.meaning}
-          </Button>
-        ))}
+        <hr />
+        <div className="grid grid-cols-4 gap-2">
+          {phraseSuggestions.map((suggestion, index) => (
+            <Button
+              key={index}
+              className="text-sm"
+              onClick={() => {
+                setMeaning(suggestion.meaning);
+                setPhrase(suggestion.phrase);
+                setExtraInstructions(suggestion.imageDescription);
+              }}
+            >
+              {suggestion.meaning}
+            </Button>
+          ))}
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-2 rounded-sm border border-black bg-white p-2 shadow-xl">
         <h2 className="text-3xl">Submit Phrase</h2>
@@ -141,7 +143,7 @@ export function Admin({ words }: { words: WordsPromise }) {
             onClick={() =>
               triggerMakeAudio({ phrase: chosenWords.map((ele) => ele?.characters ?? "").join("") })
             }
-            disabled={isMakeAudioMutating}
+            isDisabled={isMakeAudioMutating}
           >
             {isMakeAudioMutating ? "Generating..." : "Generate Audio"}
           </Button>
@@ -153,7 +155,7 @@ export function Admin({ words }: { words: WordsPromise }) {
             value={extraInstructions}
             onChange={(v) => setExtraInstructions(v)}
           />
-          <Button onClick={() => makeImage({ phrase, extraInstructions })} disabled={isMakeImageMutating}>
+          <Button onClick={() => makeImage({ phrase, extraInstructions })} isDisabled={isMakeImageMutating}>
             {isMakeImageMutating ? "Loading" : "Make Image"}
           </Button>
           {imageBinary?.b64 === undefined ? (

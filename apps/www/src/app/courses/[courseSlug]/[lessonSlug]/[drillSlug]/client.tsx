@@ -43,7 +43,7 @@ export function DrillHome() {
   const [timeAttackPb] = useTimeAttackPB(challengeId);
   const [practiceCount] = usePracticeCount(challengeId);
   const allWords = useMemo(() => {
-    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters, meaning, hskLevel, }) => ({
+    const wordsRaw = wordDefinitions.map(({ id, pinyin, characters, meaning, hskLevel }) => ({
       id,
       pinyin,
       characters,
@@ -80,7 +80,9 @@ export function DrillHome() {
       {description !== null && (
         <section className="w-full rounded-md border-2 border-black bg-blue-50">
           <div className="flex flex-col gap-1 rounded-sm border-blue-500 border-l-8 p-2">
-            <h2 className="text-3xl">Description</h2>
+            <h6 className="flex items-center gap-2 text-2xl">
+              <span>Description</span>
+            </h6>
             <p className="text-xl">{description}</p>
           </div>
         </section>
