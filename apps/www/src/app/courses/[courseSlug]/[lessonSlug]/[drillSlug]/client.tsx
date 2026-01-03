@@ -34,7 +34,7 @@ function ModeOption({ href, children }: { href: string; children?: React.ReactNo
 }
 
 const modeOptionIconClasses =
-  "h-20 w-20 shrink-0 rounded-full bg-black p-2 md:p-4 text-white group-hocus:bg-white group-hocus:text-black sm:h-28 sm:w-28";
+  "h-20 w-20 shrink-0 rounded-full bg-black p-2 md:p-4 text-white group-hocus:bg-white group-hocus:text-black group-pressed:bg-white group-pressed:text-black sm:h-28 sm:w-28";
 const modeOptionTitleClasses = "text-5xl truncate whitespace-nowrap sm:text-6xl";
 const modeOptionSubtitleClasses = "truncate whitespace-nowrap sm:text-4xl text-2xl";
 export function DrillHome() {

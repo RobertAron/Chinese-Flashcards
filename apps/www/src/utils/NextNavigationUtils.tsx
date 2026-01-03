@@ -1,6 +1,5 @@
 "use client";
 // https://github.com/vercel/react-transition-progress/blob/main/src/next.tsx
-
 import {
   AnimatePresence,
   motion,
@@ -13,7 +12,8 @@ import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.sh
 import { formatUrl } from "next/dist/shared/lib/router/utils/format-url";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
-import { startTransition, useCallback, useEffect, useOptimistic, useState } from "react";
+import { startTransition, useCallback, useEffect, useOptimistic, useRef, useState } from "react";
+import { mergeProps, useHover, usePress } from "react-aria";
 import { ezCreateContext } from "./createContext";
 
 type ProvidedValue = {
@@ -50,24 +50,34 @@ export type LoadableLinkProps = Omit<React.ComponentProps<typeof NextLink>, "onC
 export function Link({ href, children, replace, scroll, ...rest }: LoadableLinkProps) {
   const router = useLoadingRouter();
   const { triggerLoading } = useLoadingProvider();
+  const ref = useRef<HTMLAnchorElement>(null);
+  const { hoverProps, isHovered } = useHover({});
+  const { pressProps, isPressed } = usePress({ ref });
+  const onClick = (e: React.MouseEvent) => {
+    if (isModifiedEvent(e)) return;
+    const url = typeof href === "string" ? href : formatUrl(href);
+    e.preventDefault();
+    startTransition(() => {
+      triggerLoading();
+      if (replace) {
+        router.replace(url, { scroll });
+      } else {
+        router.push(url, { scroll });
+      }
+    });
+  };
+  const props = mergeProps(
+    {
+      ref,
+      href,
+      onClick,
+    },
+    rest,
+    pressProps,
+    hoverProps,
+  );
   return (
-    <NextLink
-      href={href}
-      onClick={(e) => {
-        if (isModifiedEvent(e)) return;
-        e.preventDefault();
-        startTransition(() => {
-          triggerLoading();
-          const url = typeof href === "string" ? href : formatUrl(href);
-          if (replace) {
-            router.replace(url, { scroll });
-          } else {
-            router.push(url, { scroll });
-          }
-        });
-      }}
-      {...rest}
-    >
+    <NextLink {...props} data-pressed={isPressed || undefined} data-hovered={isHovered || undefined}>
       {children}
     </NextLink>
   );

@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { Link, LoadingProvider, LoadingRender } from "@/utils/NextNavigationUtils";
 import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
 import "./globals.css";
+import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { cn } from "@/utils/cn";
 
 export const metadata: Metadata = {
   title: "中文 Flashcards",
@@ -26,20 +28,29 @@ export default function RootLayout({
           >
             <nav className="relative z-10 flex border-black border-b bg-white">
               <div className="container mx-auto flex items-center justify-between gap-2 text-black">
-                <Link href="/" className="flex items-center gap-2 hocus:bg-black py-2 hocus:text-white">
+                <Link
+                  href="/"
+                  className={cn(buttonBehaviorClasses, "flex h-full items-center gap-2 border-none")}
+                >
                   <LanguagesIcon className="shrink-0" />
                   <span className="font-bold text-xl">Chinese Challenges</span>
                 </Link>
                 <div className="flex gap-2">
                   <Link
                     href="/dictionary"
-                    className="flex h-10 w-10 items-center gap-2 rounded-full hocus:bg-black py-2 hocus:text-white"
+                    className={cn(
+                      buttonBehaviorClasses,
+                      "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
+                    )}
                   >
                     <BookMarkedIcon className="h-full w-full shrink-0" />
                   </Link>
                   <Link
                     href="/user"
-                    className="flex h-10 w-10 items-center gap-2 rounded-full hocus:bg-black py-2 hocus:text-white"
+                    className={cn(
+                      buttonBehaviorClasses,
+                      "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
+                    )}
                   >
                     <CircleUserRoundIcon className="h-full w-full shrink-0" />
                   </Link>
