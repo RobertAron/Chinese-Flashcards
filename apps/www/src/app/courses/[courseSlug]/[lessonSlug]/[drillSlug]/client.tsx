@@ -78,16 +78,30 @@ export function DrillHome() {
         </div>
       </section>
       {description !== null && (
-        <section className="w-full rounded-md border-2 border-black bg-blue-50">
+        <motion.section
+          className="w-full rounded-md border-2 border-black bg-blue-50"
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.1,
+          }}
+        >
           <div className="flex flex-col gap-1 rounded-sm border-blue-500 border-l-8 p-2">
             <h6 className="flex items-center gap-2 text-2xl">
               <span>Description</span>
             </h6>
             <p className="text-xl">{description}</p>
           </div>
-        </section>
+        </motion.section>
       )}
-      <section className="w-full rounded-md border-2 border-black bg-blue-50">
+      <motion.section
+        className="w-full rounded-md border-2 border-black bg-blue-50"
+        initial={{ opacity: 0, scale: 1.02 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.1,
+        }}
+      >
         <div className="flex flex-col gap-1 rounded-sm border-blue-500 border-l-8 p-2">
           <h6 className="flex items-center gap-2 text-2xl">
             <BrainIcon className="inline-block" />
@@ -97,7 +111,7 @@ export function DrillHome() {
             Go through every item and speak with the audio until you're comfortable speaking the content.
           </p>
         </div>
-      </section>
+      </motion.section>
       {wordDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
           <h2 className="font-semibold text-2xl">Practice Words</h2>
