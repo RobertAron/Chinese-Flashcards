@@ -50,9 +50,7 @@ export function SentenceBuildingChallenge({
 
   // Call onComplete when correct
   useEffect(() => {
-    if (isCorrect === true) {
-      onComplete?.();
-    }
+    if (isCorrect) onComplete?.();
   }, [isCorrect, onComplete]);
 
   // Keyboard handler for number keys
