@@ -6,6 +6,7 @@ import { DefinitionChallenge } from "./DefinitionChallenge";
 import { ImageChallenge } from "./ImageChallenge";
 import { MultipleChoiceChallenge } from "./MultipleChoiceQuestionChallenge";
 import { CharacterChallenge } from "./PinyinChallenge";
+import { SentenceBuildingChallenge } from "./SentenceBuildingChallenge";
 
 export function Challenge({
   challenge,
@@ -69,5 +70,13 @@ export function Challenge({
         <MultipleChoiceChallenge ref={ref} onComplete={onComplete} challenge={challenge} key={challenge.id} />
       ),
     )
+    .with({ type: "sentence-building-challenge" }, (challenge) => (
+      <SentenceBuildingChallenge
+        {...challenge}
+        onComplete={onComplete}
+        key={challenge.id}
+        ref={ref}
+      />
+    ))
     .exhaustive();
 }

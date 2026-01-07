@@ -2,7 +2,7 @@
 import { ezCreateContext } from "@/utils/createContext";
 import { type UserSettings, useUserSettings } from "@/utils/playerState";
 import { shuffle } from "@/utils/structureUtils";
-import type { AllMultipleChoiceChallenges, AllTypingChallenges } from "./ChallengeTypes";
+import type { AllMultipleChoiceChallenges, AllTypingChallenges, SentenceBuildingChallenge } from "./ChallengeTypes";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
 import { useDrillContext } from "./DrillProvider";
 
@@ -142,9 +142,34 @@ function wordsToMultipleChoiceQuestions(userSettings: UserSettings, words: Norma
   });
 }
 
+function phrasesToSentenceBuildingChallenges(
+  userSettings: UserSettings,
+  phrases: PhraseDefinition[],
+): SentenceBuildingChallenge[] {
+  if (!userSettings.enableSentenceBuildingChallenges) return [];
+  return phrases
+    .filter((phrase) => phrase.words.length >= 2)
+    .map((phrase) => {
+      const words = phrase.words.map((word, index) => ({
+        character: word.characters,
+        id: `${phrase.id}-word-${word.id}-${index}`,
+      }));
+      const correctOrder = words.map((word) => word.id);
+      return {
+        type: "sentence-building-challenge" as const,
+        id: `phrase-${phrase.id}-sentence-building`,
+        wordIds: phrase.words.map((w) => w.id),
+        englishTranslation: phrase.meaning,
+        words,
+        correctOrder,
+      };
+    });
+}
+
 type ProvidedValue = {
   typingChallenges: AllTypingChallenges[];
   multipleChoiceChallenges: AllMultipleChoiceChallenges[];
+  sentenceBuildingChallenges: SentenceBuildingChallenge[];
 };
 const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ezCreateContext<ProvidedValue>(
   (P) => (props) => {
@@ -168,11 +193,13 @@ const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ez
     const wordChallenges = wordsToTypingChallenges(userSettings, normalizedContent);
     const mcqWords = wordsToMultipleChoiceQuestions(userSettings, normalizedWords);
     const mcqPhrases = wordsToMultipleChoiceQuestions(userSettings, normalizedPhrases);
+    const sentenceBuildingChallenges = phrasesToSentenceBuildingChallenges(userSettings, phraseDefinitions);
     return (
       <P
         value={{
           typingChallenges: wordChallenges,
           multipleChoiceChallenges: [...mcqWords, ...mcqPhrases],
+          sentenceBuildingChallenges,
         }}
       >
         {children}

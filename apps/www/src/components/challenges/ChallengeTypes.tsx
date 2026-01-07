@@ -45,4 +45,14 @@ export interface McqAudio extends MultipleChoiceCore {
 
 export type AllMultipleChoiceChallenges = McqText | McqAudio;
 
-export type AllChallengeTypes = AllTypingChallenges | AllMultipleChoiceChallenges;
+export type SentenceWord = { character: string; id: string };
+export interface SentenceBuildingChallenge {
+  type: "sentence-building-challenge";
+  id: string;
+  wordIds: number[];
+  englishTranslation: string;
+  words: SentenceWord[];
+  correctOrder: string[];
+}
+
+export type AllChallengeTypes = AllTypingChallenges | AllMultipleChoiceChallenges | SentenceBuildingChallenge;

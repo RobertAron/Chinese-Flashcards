@@ -71,6 +71,17 @@ export function ChallengeTitle({
         >
           Enable Multiple Choice Challenges
         </Checkbox>
+        <Checkbox
+          isSelected={userSettings.enableSentenceBuildingChallenges}
+          onChange={(selected) => {
+            setUserSettings({
+              ...userSettings,
+              enableSentenceBuildingChallenges: selected,
+            });
+          }}
+        >
+          Enable Sentence Building Challenges
+        </Checkbox>
       </div>
       <div className="flex gap-1 border-black">
         <ExitLink

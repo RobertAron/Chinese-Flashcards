@@ -14,6 +14,7 @@ const playerStateTemplate = z.object({
     enableCharacterChallenges: z.boolean(),
     enableMultipleChoiceChallenges: z.boolean().default(false),
     enableTypingChallenges: z.boolean().default(true),
+    enableSentenceBuildingChallenges: z.boolean().default(true),
   }),
 });
 
@@ -27,6 +28,7 @@ const { Provider: PlayerProvider, useContext: usePlayerContextStore } = createZu
     enableCharacterChallenges: true,
     enableMultipleChoiceChallenges: false,
     enableTypingChallenges: true,
+    enableSentenceBuildingChallenges: true,
   },
 });
 // Webpack bug, cannot rename and export in same line.

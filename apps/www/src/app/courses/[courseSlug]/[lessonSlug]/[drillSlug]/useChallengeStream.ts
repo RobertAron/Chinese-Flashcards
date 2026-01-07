@@ -4,12 +4,12 @@ import { useTypingChallenge } from "@/components/challenges/TypingChallengeProvi
 import { semiShuffle, shuffle } from "@/utils/structureUtils";
 
 export function useChallengeStream() {
-  const { typingChallenges, multipleChoiceChallenges } = useTypingChallenge();
+  const { typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges } = useTypingChallenge();
   const [problemIndex, setProblemIndex] = useState(0);
   const [problems, setProblemList] = useState<null | AllChallengeTypes[]>(null);
   useEffect(() => {
-    setProblemList(shuffle([...typingChallenges, ...multipleChoiceChallenges]));
-  }, [typingChallenges, multipleChoiceChallenges]);
+    setProblemList(shuffle([...typingChallenges, ...multipleChoiceChallenges, ...sentenceBuildingChallenges]));
+  }, [typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges]);
   if (problems === null) {
     return { initializing: true } as const;
   }
