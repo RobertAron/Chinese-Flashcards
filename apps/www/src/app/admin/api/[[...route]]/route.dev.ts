@@ -39,7 +39,7 @@ const practiceState = z.preprocess(
     if (typeof v !== "string") return v;
     return JSON.parse(v);
   },
-  z.record(z.string(), z.object({ characters: z.string(), meaning: z.string() })),
+  z.record(z.string(), z.object({ characters: z.string(), meaning: z.string(), practiceCount: z.number() })),
 );
 export type ParsedPracticeState = z.output<typeof practiceState>;
 // https://platform.openai.com/docs/guides/structured-outputs?example=structured-data#structured-data-extraction
@@ -50,12 +50,13 @@ const app = new Hono()
     zValidator(
       "json",
       z.object({
-        word: z.string(),
-        practiceState: practiceState,
+        word: z.string().nonempty(),
+        practiceState,
       }),
     ),
     async (c) => {
       const query = c.req.valid("json");
+      console.log("starting phrase suggestion query");
       const { output_parsed } = await openaiClient.responses.parse({
         model: "gpt-5",
         text: { format: zodTextFormat(phraseResponse, "PracticePhraseSuggestion") },
@@ -66,20 +67,20 @@ const app = new Hono()
 You are an expert in chinese language teaching, as well as a creative writer. Your job is to help the student become HSK1 proficient. Your job is to create several phrases to help the student learn HSK1 skills.
 
 - You will be given a chinese word which must be included in the phrases.
-- You will also be given a list of all HSK1 words, in order by how common they are, starting with the most common to the least.
+- You will also be given a list of all HSK1 words, in order by how common they are, starting with the most common to the least. Each word has a practice count; words with a count of 0 are unpracticed and should be preferred when reasonable.
 
-When reasonable, sprinkle in words that the user has not practiced yet, especially if they are more common.
-The images will be used to create a flashcard like experience, which will include the text, TTS of the phrase, and a picture. Practicing the phrases will be similar to reading a children's book. Therefore, it would be beneficial for the phrases to match that style of writing. You will also be asked to create a short description of a scene which could be used to help prompt the user to speak the phrase. 
+When reasonable, sprinkle in words that the user has not practiced yet, especially if they are more common. They will be included in the input under the practiceCount key, in order. For example 不是 is near the top. If you see "不是":0 you should try to include it.
+The images will be used to create a flashcard like experience, which will include the text, TTS of the phrase, and a picture. Practicing the phrases will be similar to reading a children's book. Therefore, it would be beneficial for the phrases to match that style of writing. You will also be asked to create a short description of a scene which could be used to help prompt the user to speak the phrase.
 
 Constraints:
 - Phrase length: 6–12 Chinese characters
 - 1-2 clauses
 - Avoid extremely common structure "我 + 动词 + 你 + 时间"
-- Each phrase should _slightly_ be stranger than the last, enabling some children's book like phrases that you might see in something like "If you give a mouse a cookie". Not quite as creative as something as alice in wonderland though.
+- The described scenes and phrases can be silly. Think of interesting cartoon scenes. A person is shocked they slept through class, or eats an apple and becomes very small.
 - Put spaces between each word and punctuation. For example: "学 中文 半年 ， 会 说 了 。"
 - The suggested picture should not suggest including text, unless absolutely necessary.
 
-Structured output as an array. 5 minimum. 10 maximum.:
+Structured output as an object, with a key suggestions. Suggestions should be an array of 5-10 of the following object with these properties:
 - phrase: Chinese only, include punctuation. Put spaces between each word. E.G 我 等 你 半天 。
 - meaning: English only translation of the phrase.
 - imageDescription: one sentence describing the exact scene to illustrate

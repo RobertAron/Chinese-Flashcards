@@ -28,17 +28,6 @@ export function ChallengeTitle({
       <div className="border-2 border-black bg-white p-2">{children}</div>
       <div className="flex flex-col items-start gap-2 border-2 border-black bg-white p-2">
         <Checkbox
-          isSelected={userSettings.enableCharacterChallenges}
-          onChange={(selected) => {
-            setUserSettings({
-              ...userSettings,
-              enableCharacterChallenges: selected,
-            });
-          }}
-        >
-          Enable Character Challenges
-        </Checkbox>
-        <Checkbox
           isSelected={userSettings.requireToneInput}
           onChange={(selected) => {
             setUserSettings({
@@ -48,6 +37,17 @@ export function ChallengeTitle({
           }}
         >
           Require Tone Inputs
+        </Checkbox>
+        <Checkbox
+          isSelected={userSettings.enableCharacterChallenges}
+          onChange={(selected) => {
+            setUserSettings({
+              ...userSettings,
+              enableCharacterChallenges: selected,
+            });
+          }}
+        >
+          Enable Character Challenges
         </Checkbox>
         <Checkbox
           isSelected={userSettings.enableTypingChallenges}

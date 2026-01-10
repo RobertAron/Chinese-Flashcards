@@ -9,7 +9,7 @@ export function Checkbox({ children, ...restProps }: CheckboxProps) {
     <AriaCheckbox className="group flex gap-2" {...restProps}>
       {({ isSelected }) => (
         <>
-          <div className="rounded-md border-2 border-black group-data-[focused=true]:bg-slate-100 group-data-[hovered=true]:bg-slate-100 group-data-[pressed=true]:bg-slate-200 group-data-[focus-visible=true]:ring">
+          <div className="rounded-md border-2 border-black group-hocus:bg-slate-100 group-pressed:bg-slate-200 group-hocus:ring">
             <motion.svg
               role="img"
               aria-label="checkbox"

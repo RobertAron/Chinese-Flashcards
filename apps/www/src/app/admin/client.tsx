@@ -87,22 +87,26 @@ export function Admin({ words }: { words: WordsPromise }) {
           <SparklesIcon />
           <span>Generate Phrase Suggestions</span>
         </Button>
-        <hr />
-        <div className="grid grid-cols-4 gap-2">
-          {phraseSuggestions.map((suggestion, index) => (
-            <Button
-              key={index}
-              className="text-sm"
-              onClick={() => {
-                setMeaning(suggestion.meaning);
-                setPhrase(suggestion.phrase);
-                setExtraInstructions(suggestion.imageDescription);
-              }}
-            >
-              {suggestion.meaning}
-            </Button>
-          ))}
-        </div>
+        {phraseSuggestions.length > 0 && (
+          <>
+            <hr />
+            <div className="grid grid-cols-4 gap-2">
+              {phraseSuggestions.map((suggestion, index) => (
+                <Button
+                  key={index}
+                  className="text-sm"
+                  onClick={() => {
+                    setMeaning(suggestion.meaning);
+                    setPhrase(suggestion.phrase);
+                    setExtraInstructions(suggestion.imageDescription);
+                  }}
+                >
+                  {suggestion.meaning}
+                </Button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-2 rounded-sm border border-black bg-white p-2 shadow-xl">
         <h2 className="text-3xl">Submit Phrase</h2>
