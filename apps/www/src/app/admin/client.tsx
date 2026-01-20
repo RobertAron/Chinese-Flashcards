@@ -33,9 +33,10 @@ export function Admin({ words }: { words: WordsPromise }) {
       ]),
   );
   const [word, setWord] = useState("");
+  const [extraWordInstructions, setExtraWordInstructions] = useState("")
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("My cat is very big.");
-  const [extraInstructions, setExtraInstructions] = useState("");
+  const [extraPictureInstructions, setExtraPictureInstructions] = useState("");
   const [variantLookup, setVariantLookup] = useState<number[]>([]);
   const {
     data: imageBinary,
@@ -72,6 +73,7 @@ export function Admin({ words }: { words: WordsPromise }) {
       <div className="flex flex-col gap-2 rounded-sm border border-black bg-white p-2 shadow-lg">
         <h2 className="text-3xl">Generate Suggestions</h2>
         <TextField value={word} onChange={(e) => setWord(e)} label="word" />
+        <TextField value={extraWordInstructions} onChange={(e) => setExtraWordInstructions(e)} label="phrase suggestions" />
         <Button
           className="flex gap-2"
           isDisabled={isMakingSuggestions}
@@ -79,6 +81,7 @@ export function Admin({ words }: { words: WordsPromise }) {
             triggerMakePhraseSuggestions({
               json: {
                 word,
+                extraWordInstructions,
                 practiceState,
               },
             });
@@ -98,7 +101,7 @@ export function Admin({ words }: { words: WordsPromise }) {
                   onClick={() => {
                     setMeaning(suggestion.meaning);
                     setPhrase(suggestion.phrase);
-                    setExtraInstructions(suggestion.imageDescription);
+                    setExtraPictureInstructions(suggestion.imageDescription);
                   }}
                 >
                   {suggestion.meaning}
@@ -156,10 +159,10 @@ export function Admin({ words }: { words: WordsPromise }) {
         <div className="col-span-1 flex flex-col gap-2 rounded-md border-2 bg-white p-3">
           <TextField
             label="Extra instructions"
-            value={extraInstructions}
-            onChange={(v) => setExtraInstructions(v)}
+            value={extraPictureInstructions}
+            onChange={(v) => setExtraPictureInstructions(v)}
           />
-          <Button onClick={() => makeImage({ phrase, extraInstructions })} isDisabled={isMakeImageMutating}>
+          <Button onClick={() => makeImage({ phrase, extraInstructions: extraPictureInstructions })} isDisabled={isMakeImageMutating}>
             {isMakeImageMutating ? "Loading" : "Make Image"}
           </Button>
           {imageBinary?.b64 === undefined ? (
@@ -188,7 +191,7 @@ export function Admin({ words }: { words: WordsPromise }) {
               });
               setPhrase("");
               setMeaning("");
-              setExtraInstructions("");
+              setExtraPictureInstructions("");
               resetImage();
               resetAudio();
             }}
