@@ -6,7 +6,6 @@ import { defineConfig, type PrismaConfig } from "prisma/config";
 const path = resolve(__dirname, "./local.db");
 const url = `file:${path}`;
 
-
 const adapter = async () =>
   new PrismaLibSQL({
     url,

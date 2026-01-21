@@ -33,7 +33,7 @@ export function Admin({ words }: { words: WordsPromise }) {
       ]),
   );
   const [word, setWord] = useState("");
-  const [extraWordInstructions, setExtraWordInstructions] = useState("")
+  const [extraWordInstructions, setExtraWordInstructions] = useState("");
   const [phrase, setPhrase] = useState("我 的 猫 非常 大");
   const [meaning, setMeaning] = useState("My cat is very big.");
   const [extraPictureInstructions, setExtraPictureInstructions] = useState("");
@@ -73,7 +73,11 @@ export function Admin({ words }: { words: WordsPromise }) {
       <div className="flex flex-col gap-2 rounded-sm border border-black bg-white p-2 shadow-lg">
         <h2 className="text-3xl">Generate Suggestions</h2>
         <TextField value={word} onChange={(e) => setWord(e)} label="word" />
-        <TextField value={extraWordInstructions} onChange={(e) => setExtraWordInstructions(e)} label="phrase suggestions" />
+        <TextField
+          value={extraWordInstructions}
+          onChange={(e) => setExtraWordInstructions(e)}
+          label="phrase suggestions"
+        />
         <Button
           className="flex gap-2"
           isDisabled={isMakingSuggestions}
@@ -162,7 +166,10 @@ export function Admin({ words }: { words: WordsPromise }) {
             value={extraPictureInstructions}
             onChange={(v) => setExtraPictureInstructions(v)}
           />
-          <Button onClick={() => makeImage({ phrase, extraInstructions: extraPictureInstructions })} isDisabled={isMakeImageMutating}>
+          <Button
+            onClick={() => makeImage({ phrase, extraInstructions: extraPictureInstructions })}
+            isDisabled={isMakeImageMutating}
+          >
             {isMakeImageMutating ? "Loading" : "Make Image"}
           </Button>
           {imageBinary?.b64 === undefined ? (

@@ -39,3 +39,36 @@ export function deDupe<T, U>(arr: T[], cb: (ele: T) => U) {
     return true;
   });
 }
+
+/**
+ * Group items by a key, shuffle within each group, shuffle the groups, then flatten.
+ */
+export function groupedShuffle<T>(items: T[], getKey: (item: T) => string): T[] {
+  const grouped = Object.groupBy(items, getKey);
+  const groups = Object.values(grouped)
+    .filter((group): group is T[] => group !== undefined)
+    .map((group) => shuffle(group));
+  return shuffle(groups).flat();
+}
+
+/**
+ * Like semiShuffle but for grouped items. Shuffles within each group, then shuffles
+ * groups ensuring the last item's group doesn't end up first.
+ */
+export function semiGroupedShuffle<T>(items: T[], getKey: (item: T) => string): T[] {
+  const lastItem = items.at(-1);
+  if (lastItem === undefined) return [];
+  const lastKey = getKey(lastItem);
+  const grouped = Object.groupBy(items, getKey);
+  const entries = Object.entries(grouped)
+    .filter((ele): ele is [string, T[]] => ele[1] !== undefined)
+    .map(([key, group]): [string, T[]] => [key, shuffle(group)]);
+  if (entries.length <= 1) return entries.flatMap(([, group]) => group);
+  // Move lastKey entry to end so semiShuffle treats it as "last"
+  const lastIndex = entries.findIndex(([key]) => key === lastKey);
+  if (lastIndex !== -1 && lastIndex !== entries.length - 1) {
+    const [entry] = entries.splice(lastIndex, 1);
+    entries.push(entry!);
+  }
+  return semiShuffle(entries).flatMap(([, group]) => group);
+}

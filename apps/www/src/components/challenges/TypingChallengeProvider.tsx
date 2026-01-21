@@ -2,7 +2,11 @@
 import { ezCreateContext } from "@/utils/createContext";
 import { type UserSettings, useUserSettings } from "@/utils/playerState";
 import { shuffle } from "@/utils/structureUtils";
-import type { AllMultipleChoiceChallenges, AllTypingChallenges, SentenceBuildingChallenge } from "./ChallengeTypes";
+import type {
+  AllMultipleChoiceChallenges,
+  AllTypingChallenges,
+  SentenceBuildingChallenge,
+} from "./ChallengeTypes";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
 import { useDrillContext } from "./DrillProvider";
 

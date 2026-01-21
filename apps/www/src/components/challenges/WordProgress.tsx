@@ -234,7 +234,7 @@ function ToneHints({
 }) {
   if (!possibleToneChars.has(character.stripped)) return null;
   return (
-    <motion.div className="-translate-x-1/2 absolute top-full left-1/2 flex" ref={ref}>
+    <motion.div className="absolute top-full left-1/2 flex -translate-x-1/2" ref={ref}>
       <motion.div
         className="relative flex gap-2 rounded-md border-2 border-black bg-white p-2"
         initial={{ top: 30, opacity: 0 }}

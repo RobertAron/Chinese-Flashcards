@@ -35,7 +35,7 @@ export function FrillContainer({ children }: { children?: React.ReactNode }) {
   const { items } = useExpFrills();
   return (
     <div className="relative">
-      <div className="-translate-y-1/2 perspective-[200px] absolute top-1/2 left-full h-0 w-0 [transform-style:preserve-3d]">
+      <div className="perspective-[200px] absolute top-1/2 left-full h-0 w-0 -translate-y-1/2 [transform-style:preserve-3d]">
         <AnimatePresence mode="popLayout">
           {items.map(({ id }) => (
             <ExpFrill key={`${id}`} />
@@ -56,7 +56,7 @@ function ExpFrill({ ref }: { ref?: Ref<HTMLDivElement> }) {
       initial={{ opacity: 0, scale: 0, rotateY: 0, rotateX: -5 }}
       animate={{ opacity: 1, scale: 1, rotateY: -40, rotateX: 0 }}
       exit={{ opacity: 0, scale: 1.5, rotateY: -40, rotateX: 5 }}
-      className="-translate-y-1/2 absolute flex h-8 w-max items-center justify-center text-nowrap rounded-md border border-black bg-amber-300 px-1 py-5 font-mono text-4xl"
+      className="absolute flex h-8 w-max -translate-y-1/2 items-center justify-center text-nowrap rounded-md border border-black bg-amber-300 px-1 py-5 font-mono text-4xl"
     >
       +1
     </motion.div>

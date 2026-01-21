@@ -71,12 +71,7 @@ export function Challenge({
       ),
     )
     .with({ type: "sentence-building-challenge" }, (challenge) => (
-      <SentenceBuildingChallenge
-        {...challenge}
-        onComplete={onComplete}
-        key={challenge.id}
-        ref={ref}
-      />
+      <SentenceBuildingChallenge {...challenge} onComplete={onComplete} key={challenge.id} ref={ref} />
     ))
     .exhaustive();
 }

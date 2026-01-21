@@ -31,8 +31,8 @@ function PracticeCountItem({ id, showRange }: { id: keyof typeof practiceCountCo
 
 export default function Practice() {
   const { challengeId } = useDrillContext();
-  const { problem, nextProblem, initializing, noProblems } = useChallengeStream();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
+  const { problem, nextProblem, initializing, noProblems } = useChallengeStream(practiceCount);
   const wordIncrementor = useWordIncrementor();
   const [started, setStarted] = useState(false);
   if (initializing) return null;

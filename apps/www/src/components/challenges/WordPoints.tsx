@@ -40,7 +40,7 @@ export function WordExperience({
               {hskLevel && <HskBadge hskLevel={hskLevel} />}
               {buildingBlockOnly && (
                 <div className="flex h-6 items-center justify-center rounded-full border bg-indigo-50 p-1 text-sm">
-                  <CuboidIcon className="h-5 w-5"/>
+                  <CuboidIcon className="h-5 w-5" />
                   <span>Building Block Only</span>
                 </div>
               )}

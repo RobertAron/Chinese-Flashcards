@@ -69,14 +69,10 @@ function MultipleChoiceAnswer({
   useKeyTrigger(letter, () => {
     onSelected();
   });
-  const buttonClasses = twCn(
-    buttonBehaviorClasses,
-    "flex items-start gap-2 p-2 text-start text-xl",
-    {
-      "bg-red-200 hocus:bg-red-900": selected && !answer.correct,
-      "bg-green-200 hocus:bg-green-900": selected && answer.correct,
-    },
-  );
+  const buttonClasses = twCn(buttonBehaviorClasses, "flex items-start gap-2 p-2 text-start text-xl", {
+    "bg-red-200 hocus:bg-red-900": selected && !answer.correct,
+    "bg-green-200 hocus:bg-green-900": selected && answer.correct,
+  });
   return (
     <Button onClick={onSelected} type="button" className={buttonClasses}>
       <Kbd>{letter.toUpperCase()}</Kbd>
