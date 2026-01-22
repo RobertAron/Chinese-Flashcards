@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v4-mini";
 
 export const paramsTemplate = z.object({
   courseSlug: z.string(),

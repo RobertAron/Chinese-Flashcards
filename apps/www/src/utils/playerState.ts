@@ -1,20 +1,20 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { z } from "zod";
+import { z } from "zod/v4-mini";
 import { useStore } from "zustand";
 import { practiceCountColors as pcc } from "./colorMapping";
 import { createZustandContext } from "./createZustandContext";
 
 const playerStateTemplate = z.object({
-  wordPracticeCounts: z.record(z.string(), z.number().optional()),
-  challengePracticeCounts: z.record(z.string(), z.number().optional()),
-  challengeTimeAttackPB: z.record(z.string(), z.number().optional()),
+  wordPracticeCounts: z.record(z.string(), z.optional(z.number())),
+  challengePracticeCounts: z.record(z.string(), z.optional(z.number())),
+  challengeTimeAttackPB: z.record(z.string(), z.optional(z.number())),
   settings: z.object({
     requireToneInput: z.boolean(),
     enableCharacterChallenges: z.boolean(),
-    enableMultipleChoiceChallenges: z.boolean().default(false),
-    enableTypingChallenges: z.boolean().default(true),
-    enableSentenceBuildingChallenges: z.boolean().default(true),
+    enableMultipleChoiceChallenges: z._default(z.boolean(), false),
+    enableTypingChallenges: z._default(z.boolean(), true),
+    enableSentenceBuildingChallenges: z._default(z.boolean(), true),
   }),
 });
 
