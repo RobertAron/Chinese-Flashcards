@@ -26,7 +26,17 @@ async function getAllWordsInLesson(lessonSlug: string) {
       },
       Drill: {
         select: {
-          Words: true,
+          Words: {
+            include: {
+              canonicalWord: {
+                select: {
+                  id: true,
+                  characters: true,
+                  meaning: true,
+                },
+              },
+            },
+          },
           Phrases: {
             select: {
               id: true,
@@ -43,6 +53,13 @@ async function getAllWordsInLesson(lessonSlug: string) {
                       id: true,
                       meaning: true,
                       hskLevel: true,
+                      canonicalWord: {
+                        select: {
+                          id: true,
+                          characters: true,
+                          meaning: true,
+                        },
+                      },
                     },
                   },
                 },
@@ -77,7 +94,17 @@ async function getAllWordsInDrill(drillSlug: string) {
     select: {
       title: true,
       description: true,
-      Words: true,
+      Words: {
+        include: {
+          canonicalWord: {
+            select: {
+              id: true,
+              characters: true,
+              meaning: true,
+            },
+          },
+        },
+      },
       Lesson: {
         select: {
           title: true,
@@ -104,6 +131,13 @@ async function getAllWordsInDrill(drillSlug: string) {
                   id: true,
                   meaning: true,
                   hskLevel: true,
+                  canonicalWord: {
+                    select: {
+                      id: true,
+                      characters: true,
+                      meaning: true,
+                    },
+                  },
                 },
               },
             },
@@ -134,15 +168,29 @@ type DefinitionCore = {
   emojiChallenge: string | null;
 };
 
+export type CanonicalWordInfo = {
+  id: number;
+  characters: string;
+  meaning: string;
+};
+
 export interface WordDefinition extends DefinitionCore {
   type: "word";
   hskLevel: HskLevel | null;
+  canonicalWord: CanonicalWordInfo | null;
 }
 
 export interface PhraseDefinition extends DefinitionCore {
   type: "phrase";
   imageSrc: string;
-  words: { characters: string; pinyin: string; id: number; meaning: string; hskLevel: HskLevel | null }[];
+  words: {
+    characters: string;
+    pinyin: string;
+    id: number;
+    meaning: string;
+    hskLevel: HskLevel | null;
+    canonicalWord: CanonicalWordInfo | null;
+  }[];
 }
 const spacePunctuation = new RegExp(` (?=${punctuation.source})`, "g");
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
@@ -154,8 +202,10 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
     words: data.words.map(
       (ele): WordDefinition => ({
         ...ele,
+        meaning: ele.canonicalWord?.meaning ?? ele.meaning,
         type: "word" as const,
         audioSrc: wordToAudioSource(ele.id),
+        canonicalWord: ele.canonicalWord ?? null,
       }),
     ),
     phrases: data.phrases.map(
@@ -166,8 +216,9 @@ export const getDrillInfo = React.cache(async function c(params: DrillIdentifier
           characters: word.characters,
           pinyin: word.pinyin,
           id: word.id,
-          meaning: word.meaning,
+          meaning: word.canonicalWord?.meaning ?? word.meaning,
           hskLevel: word.hskLevel,
+          canonicalWord: word.canonicalWord ?? null,
         })).filter((ele) => !punctuation.test(ele.characters)),
         characters: PhraseWords.map(({ word }) => word.characters)
           .join(" ")

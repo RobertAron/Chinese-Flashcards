@@ -10,6 +10,15 @@ const getWords = () =>
     where: {
       buildingBlockOnly: false,
     },
+    include: {
+      canonicalWord: {
+        select: {
+          id: true,
+          characters: true,
+          meaning: true,
+        },
+      },
+    },
   });
 
 export type WordsPromise = Awaited<ReturnType<typeof getWords>>;

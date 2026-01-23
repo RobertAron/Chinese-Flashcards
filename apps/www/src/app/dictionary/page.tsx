@@ -8,6 +8,15 @@ const getWords = () =>
     orderBy: {
       frequencyRank: "asc",
     },
+    include: {
+      canonicalWord: {
+        select: {
+          id: true,
+          characters: true,
+          meaning: true,
+        },
+      },
+    },
   });
 export default AppServerPageEntrypoint(async () => {
   return <SearchPage words={await getWords()} />;

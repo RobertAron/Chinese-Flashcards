@@ -1,4 +1,5 @@
-import { PlayIcon } from "lucide-react";
+import { LinkIcon, PlayIcon } from "lucide-react";
+import Link from "next/link";
 import { useRef } from "react";
 import { useAudioSourceNode } from "@/utils/hooks";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
@@ -28,6 +29,18 @@ export function WordOutline({ word }: WordOutlineProps) {
         <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
         <hr className="w-full border-gray-400" />
         <div className="text-pretty text-xl md:text-2xl">{definition}</div>
+        {word.type === "word" && word.canonicalWord !== null && (
+          <>
+            <hr className="w-full border-gray-400" />
+            <Link
+              href={`/dictionary?search=${encodeURIComponent(word.canonicalWord.characters)}`}
+              className="flex items-center gap-1 text-blue-600 hover:underline"
+            >
+              <LinkIcon className="h-4 w-4" />
+              <span>See: {word.canonicalWord.characters}</span>
+            </Link>
+          </>
+        )}
       </div>
       {/* make sure this is last so it goes on top. */}
       {word.type === "word" && word.hskLevel !== null && (

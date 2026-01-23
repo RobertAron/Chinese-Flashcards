@@ -12,6 +12,15 @@ const getWords = () =>
       hskLevel: "hsk1",
       buildingBlockOnly: false,
     },
+    include: {
+      canonicalWord: {
+        select: {
+          id: true,
+          characters: true,
+          meaning: true,
+        },
+      },
+    },
   });
 
 export default AppServerPageEntrypoint(async function Page() {

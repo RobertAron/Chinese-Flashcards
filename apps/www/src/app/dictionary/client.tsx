@@ -1,6 +1,7 @@
 "use client";
 import Fuse from "fuse.js";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { TextField } from "@/components/TextField";
 import { wordToAudioSource } from "@/utils/idToAudioSource";
@@ -14,6 +15,8 @@ const stripPinyinTones = (input: string) =>
     .replace(/ǖ|ǘ|ǚ|ǜ/g, "u");
 
 export function SearchPage({ words }: { words: Words }) {
+  const searchParams = useSearchParams();
+  const searchFromUrl = searchParams.get("search") ?? "";
   const fuseWords = useMemo(() => {
     const withToneless = words.map((ele) => ({
       ...ele,
@@ -34,6 +37,9 @@ export function SearchPage({ words }: { words: Words }) {
     });
   }, [words]);
   const [input, setInput] = useState("");
+  useEffect(() => {
+    if (searchFromUrl) setInput(searchFromUrl);
+  }, [searchFromUrl]);
   const matchingWords =
     input === ""
       ? words
@@ -59,6 +65,8 @@ export function SearchPage({ words }: { words: Words }) {
               type: "word",
               audioSrc: wordToAudioSource(word.id),
               ...word,
+              meaning: word.canonicalWord?.meaning ?? word.meaning,
+              canonicalWord: word.canonicalWord ?? null,
             }}
             key={word.id}
           />

@@ -1,9 +1,11 @@
 "use client";
-import { CuboidIcon } from "lucide-react";
+import { CuboidIcon, LinkIcon } from "lucide-react";
+import Link from "next/link";
 import type { HskLevel } from "vocab-db/prisma";
 import { cn } from "@/utils/cn";
 import { useWordPracticeCount } from "@/utils/playerState";
 import { HskBadge } from "../HskBadge";
+import type { CanonicalWordInfo } from "./challengeServerUtils";
 
 export type WordExperienceProps = {
   characters: string;
@@ -13,6 +15,7 @@ export type WordExperienceProps = {
   hskLevel: HskLevel | null;
   className?: string;
   buildingBlockOnly?: boolean;
+  canonicalWord?: CanonicalWordInfo | null;
 };
 export function WordExperience({
   characters,
@@ -22,6 +25,7 @@ export function WordExperience({
   hskLevel,
   className,
   buildingBlockOnly,
+  canonicalWord,
 }: WordExperienceProps) {
   const practiceCount = useWordPracticeCount(id);
   return (
@@ -48,7 +52,16 @@ export function WordExperience({
           </div>
         </div>
         <div>{pinyin}</div>
-        <div className="min-h-8">{meaning}</div>
+        <div className="min-h-8">{canonicalWord?.meaning ?? meaning}</div>
+        {canonicalWord && (
+          <Link
+            href={`/dictionary?search=${encodeURIComponent(canonicalWord.characters)}`}
+            className="flex items-center gap-1 text-blue-600 hover:underline"
+          >
+            <LinkIcon className="h-4 w-4" />
+            <span>See: {canonicalWord.characters}</span>
+          </Link>
+        )}
       </div>
     </div>
   );
