@@ -70,6 +70,9 @@ model Words {
   emojiChallenge    String?
   buildingBlockOnly Boolean       @default(false)
   hskLevel          HskLevel?
+  canonicalWordId   Int?
+  canonicalWord     Words?        @relation("WordVariants", fields: [canonicalWordId], references: [id])
+  variants          Words[]       @relation("WordVariants")
   Drill             Drill[]       @relation("DrillToWords")
   Phrases           Phrases[]     @relation("PhrasesToWords")
   PhraseWords       PhraseWords[]
