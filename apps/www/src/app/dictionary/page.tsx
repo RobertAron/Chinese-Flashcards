@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { SearchPage } from "./client";
@@ -19,5 +20,9 @@ const getWords = () =>
     },
   });
 export default AppServerPageEntrypoint(async () => {
-  return <SearchPage words={await getWords()} />;
+  return (
+    <Suspense>
+      <SearchPage words={await getWords()} />
+    </Suspense>
+  );
 });

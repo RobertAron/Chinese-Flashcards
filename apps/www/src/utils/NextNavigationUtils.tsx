@@ -47,7 +47,7 @@ function isModifiedEvent(event: React.MouseEvent): boolean {
 }
 
 export type LoadableLinkProps = Omit<React.ComponentProps<typeof NextLink>, "onClick">;
-export function Link({ href, children, replace, scroll, ...rest }: LoadableLinkProps) {
+export function Link({ href, children, replace, scroll, prefetch = false, ...rest }: LoadableLinkProps) {
   const router = useLoadingRouter();
   const { triggerLoading } = useLoadingProvider();
   const ref = useRef<HTMLAnchorElement>(null);

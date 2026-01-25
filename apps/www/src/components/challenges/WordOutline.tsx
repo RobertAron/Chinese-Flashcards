@@ -1,7 +1,7 @@
 import { LinkIcon, PlayIcon } from "lucide-react";
-import Link from "next/link";
 import { useRef } from "react";
 import { useAudioSourceNode } from "@/utils/hooks";
+import { Link } from "@/utils/NextNavigationUtils";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
 import { Button } from "../Button";
 import { buttonBehaviorClasses } from "../coreClasses";
@@ -33,6 +33,7 @@ export function WordOutline({ word }: WordOutlineProps) {
           <>
             <hr className="w-full border-gray-400" />
             <Link
+              prefetch={false}
               href={`/dictionary?search=${encodeURIComponent(word.canonicalWord.characters)}`}
               className="flex items-center gap-1 text-blue-600 hover:underline"
             >

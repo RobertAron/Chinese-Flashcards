@@ -1,8 +1,8 @@
 "use client";
 import { CuboidIcon, LinkIcon } from "lucide-react";
-import Link from "next/link";
 import type { HskLevel } from "vocab-db/prisma";
 import { cn } from "@/utils/cn";
+import { Link } from "@/utils/NextNavigationUtils";
 import { useWordPracticeCount } from "@/utils/playerState";
 import { HskBadge } from "../HskBadge";
 import type { CanonicalWordInfo } from "./challengeServerUtils";

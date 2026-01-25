@@ -75,3 +75,4 @@ import { prisma } from "vocab-db/prisma";
 - Use `cn()` from `@/utils/cn` for Tailwind class merging
 - React Server Components by default; use `"use client"` directive only when needed
 - Zod for validation in API routes with `@hono/zod-validator`
+- Use `Link` from `@/utils/NextNavigationUtils` instead of `next/link` directly - it integrates with the app's loading state to show a progress bar during navigation

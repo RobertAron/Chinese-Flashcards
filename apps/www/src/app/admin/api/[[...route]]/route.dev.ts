@@ -57,6 +57,7 @@ const app = new Hono()
     ),
     async (c) => {
       const query = c.req.valid("json");
+      console.log(query.practiceState);
       console.log("starting phrase suggestion query");
       const { output_parsed } = await openaiClient.responses.parse({
         model: "gpt-5",
@@ -71,7 +72,7 @@ You are an expert in chinese language teaching, as well as a creative writer. Yo
 - You will also be given a list of all HSK1 words, in order by how common they are, starting with the most common to the least. Each word has a practice count; words with a count of 0 are unpracticed and should be preferred when reasonable.
 - You may also be given some 'extraWordInstructions' in the user input which outlines some content to write about.
 
-When reasonable, sprinkle in words that the user has not practiced yet, especially if they are more common. They will be included in the input under the practiceCount key, in order. For example 不是 is near the top. If you see "不是":0 you should try to include it.
+When reasonable, sprinkle in words that the user has not practiced yet, especially if they are more common. They will be included in the input under the 'practiceState' property, in order for most common word to least. For example 不是 is near the top. If you see {characters: "不是"，practiceCount: 0} you should try to include 不是.
 The images will be used to create a flashcard like experience, which will include the text, TTS of the phrase, and a picture. Practicing the phrases will be similar to reading a children's book. Therefore, it would be beneficial for the phrases to match that style of writing. You will also be asked to create a short description of a scene which could be used to help prompt the user to speak the phrase.
 
 Constraints:

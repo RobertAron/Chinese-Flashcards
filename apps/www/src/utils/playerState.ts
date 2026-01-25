@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { z } from "zod/v4-mini";
+import * as z from "zod/mini";
 import { useStore } from "zustand";
 import { practiceCountColors as pcc } from "./colorMapping";
 import { createZustandContext } from "./createZustandContext";
