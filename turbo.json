@@ -18,6 +18,24 @@
       "dependsOn": ["^tscheck"],
       "outputs": [],
       "inputs": ["$TURBO_DEFAULT$"]
+    },
+    "lint": {
+      "cache": false
+    },
+    "lint:fix": {
+      "cache": false
+    },
+    "format": {
+      "cache": false
+    },
+    "format:fix": {
+      "cache": false
+    },
+    "check": {
+      "cache": false
+    },
+    "check:fix": {
+      "cache": false
     }
   },
   "envMode": "loose"

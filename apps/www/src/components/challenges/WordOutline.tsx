@@ -1,4 +1,5 @@
-import { LinkIcon, PlayIcon } from "lucide-react";
+"use client";
+import { BookMarkedIcon, PlayIcon } from "lucide-react";
 import { useRef } from "react";
 import { useAudioSourceNode } from "@/utils/hooks";
 import { Link } from "@/utils/NextNavigationUtils";
@@ -29,17 +30,27 @@ export function WordOutline({ word }: WordOutlineProps) {
         <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
         <hr className="w-full border-gray-400" />
         <div className="text-pretty text-xl md:text-2xl">{definition}</div>
-        {word.type === "word" && word.canonicalWord !== null && (
+        {word.type === "word" && (
           <>
             <hr className="w-full border-gray-400" />
-            <Link
-              prefetch={false}
-              href={`/dictionary?search=${encodeURIComponent(word.canonicalWord.characters)}`}
-              className="flex items-center gap-1 text-blue-600 hover:underline"
-            >
-              <LinkIcon className="h-4 w-4" />
-              <span>See: {word.canonicalWord.characters}</span>
-            </Link>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href={`/dictionary/${word.id}`}
+                className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0`}
+              >
+                <BookMarkedIcon className="h-4 w-4" />
+                <span>View details</span>
+              </Link>
+              {word.canonicalWord !== null && (
+                <Link
+                  href={`/dictionary/${word.canonicalWord.id}`}
+                  className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md`}
+                >
+                  <BookMarkedIcon className="h-4 w-4" />
+                  <span>See: {word.canonicalWord.characters}</span>
+                </Link>
+              )}
+            </div>
           </>
         )}
       </div>

@@ -1,20 +1,31 @@
 "use client";
 import React, { useCallback } from "react";
+import { cn } from "@/utils/cn";
 import { useKeyTrigger } from "@/utils/hooks";
 import { Link, useLoadingRouter } from "@/utils/NextNavigationUtils";
 import { twCn } from "@/utils/styleResolvers";
 import { Kbd } from "./Kbd";
 
-const baseClasses = "underline hocus:text-gray-600 whitespace-nowrap truncate";
+const baseClasses = "underline hocus:text-gray-600 whitespace-nowrap";
 export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof Link>) {
   const calculatedClassName = twCn(baseClasses, className);
   return <Link className={calculatedClassName} {...props} />;
 }
 
-export function BreadcrumbContainer({ children }: { children?: React.ReactNode }) {
+export function BreadcrumbContainer({
+  children,
+  alwaysShow = false,
+}: {
+  children?: React.ReactNode;
+  alwaysShow?: boolean;
+}) {
   const childrenItems = React.Children.toArray(children);
   return (
-    <nav className="flex gap-2 py-1 lg:hidden">
+    <nav
+      className={cn("flex gap-2 py-1", {
+        "lg:hidden": !alwaysShow,
+      })}
+    >
       {childrenItems.map((child, idx) => (
         <React.Fragment key={idx}>
           {child}

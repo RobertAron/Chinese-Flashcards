@@ -3,7 +3,7 @@ import React from "react";
 import type { HskLevel } from "vocab-db/prisma";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { phraseToAudioSource, phraseToImageSource, wordToAudioSource } from "@/utils/idToAudioSource";
-import { punctuation } from "@/utils/specialCharacters";
+import { punctuation, spacePunctuation } from "@/utils/specialCharacters";
 import { deDupe } from "@/utils/structureUtils";
 
 type DrillIdentifier = {
@@ -192,7 +192,7 @@ export interface PhraseDefinition extends DefinitionCore {
     canonicalWord: CanonicalWordInfo | null;
   }[];
 }
-const spacePunctuation = new RegExp(` (?=${punctuation.source})`, "g");
+
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)

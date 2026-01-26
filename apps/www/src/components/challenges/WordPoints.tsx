@@ -1,9 +1,10 @@
 "use client";
-import { CuboidIcon, LinkIcon } from "lucide-react";
+import { BookMarkedIcon, CuboidIcon } from "lucide-react";
 import type { HskLevel } from "vocab-db/prisma";
 import { cn } from "@/utils/cn";
 import { Link } from "@/utils/NextNavigationUtils";
 import { useWordPracticeCount } from "@/utils/playerState";
+import { buttonBehaviorClasses } from "../coreClasses";
 import { HskBadge } from "../HskBadge";
 import type { CanonicalWordInfo } from "./challengeServerUtils";
 
@@ -53,15 +54,24 @@ export function WordExperience({
         </div>
         <div>{pinyin}</div>
         <div className="min-h-8">{canonicalWord?.meaning ?? meaning}</div>
-        {canonicalWord && (
+        <div className="flex flex-wrap gap-2">
           <Link
-            href={`/dictionary?search=${encodeURIComponent(canonicalWord.characters)}`}
-            className="flex items-center gap-1 text-blue-600 hover:underline"
+            href={`/dictionary/${id}`}
+            className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0`}
           >
-            <LinkIcon className="h-4 w-4" />
-            <span>See: {canonicalWord.characters}</span>
+            <BookMarkedIcon className="h-4 w-4" />
+            <span>View details</span>
           </Link>
-        )}
+          {canonicalWord && (
+            <Link
+              href={`/dictionary/${canonicalWord.id}`}
+              className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md`}
+            >
+              <BookMarkedIcon className="h-4 w-4" />
+              <span>See: {canonicalWord.characters}</span>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
