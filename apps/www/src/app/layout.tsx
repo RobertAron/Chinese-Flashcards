@@ -39,6 +39,7 @@ export default function RootLayout({
                   <Link
                     prefetch={false}
                     href="/dictionary"
+                    aria-label="Dictionary"
                     className={cn(
                       buttonBehaviorClasses,
                       "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
@@ -48,6 +49,7 @@ export default function RootLayout({
                   </Link>
                   <Link
                     href="/user"
+                    aria-label="User profile"
                     className={cn(
                       buttonBehaviorClasses,
                       "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
