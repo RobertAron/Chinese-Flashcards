@@ -1,4 +1,4 @@
-import { type Ref, useCallback, useEffect, useState } from "react";
+import { type Ref, useCallback, useState } from "react";
 import { useKeyTrigger } from "@/utils/hooks";
 import { twCn } from "@/utils/styleResolvers";
 import { Button } from "../Button";
@@ -24,10 +24,12 @@ export function MultipleChoiceChallenge({
   onComplete: () => void;
   ref?: Ref<HTMLDivElement>;
 }) {
+  const [prevChallenge, setPrevChallenge] = useState(challenge);
   const [options, setOptions] = useState(() => challenge.getOptions());
-  useEffect(() => {
+  if (prevChallenge !== challenge) {
+    setPrevChallenge(challenge);
     setOptions(challenge.getOptions());
-  }, [challenge]);
+  }
   return (
     <ChallengeWrapper className="self-stretch" ref={ref}>
       {challenge.type === "multiple-choice-question-character-text" ? (

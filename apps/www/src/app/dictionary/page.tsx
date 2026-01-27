@@ -19,10 +19,16 @@ const getWords = () =>
       },
     },
   });
-export default AppServerPageEntrypoint(async () => {
+
+async function DictionaryLoader() {
+  const words = await getWords();
+  return <SearchPage words={words} />;
+}
+
+export default AppServerPageEntrypoint(() => {
   return (
     <Suspense>
-      <SearchPage words={await getWords()} />
+      <DictionaryLoader />
     </Suspense>
   );
 });

@@ -43,7 +43,11 @@ export function SyncPlayerStateToLocalStorage() {
   const updater = useStore(store, (s) => s.update);
   // after first load, sync the state
   if (!server && isLoaded) {
-    window.localStorage.setItem("playerState", JSON.stringify(playerState));
+    try {
+      window.localStorage.setItem("playerState", JSON.stringify(playerState));
+    } catch {
+      // Fails in Safari private browsing, quota exceeded, or storage disabled
+    }
   }
   useEffect(() => {
     // on first load, setup the state

@@ -1,5 +1,5 @@
 "use client";
-import { type Ref, useEffect, useState } from "react";
+import { type Ref, useEffect, useEffectEvent, useState } from "react";
 import { shuffle } from "@/utils/structureUtils";
 import { twCn } from "@/utils/styleResolvers";
 import { Button } from "../Button";
@@ -23,14 +23,14 @@ export function SentenceBuildingChallenge({
   onComplete,
   ref,
 }: SentenceBuildingChallengeProps) {
-  const [shuffledWords, setShuffledWords] = useState<SentenceWord[]>([]);
+  const [prevWords, setPrevWords] = useState(words);
+  const [shuffledWords, setShuffledWords] = useState(() => shuffle([...words]));
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-  // Shuffle words on mount or when challenge changes
-  useEffect(() => {
+  if (prevWords !== words) {
+    setPrevWords(words);
     setShuffledWords(shuffle([...words]));
     setSelectedIds([]);
-  }, [words]);
+  }
 
   // Derive isCorrect from selectedIds
   const isCorrect =
@@ -54,28 +54,25 @@ export function SentenceBuildingChallenge({
   }, [isCorrect, onComplete]);
 
   // Keyboard handler for number keys
+  const handleKeyPress = useEffectEvent((e: KeyboardEvent) => {
+    if (isCorrect === true) return;
+
+    const keyNum = Number.parseInt(e.key, 10);
+    if (Number.isNaN(keyNum) || keyNum < 1 || keyNum > 9) return;
+
+    const targetWord = shuffledWords[keyNum - 1];
+    if (!targetWord) return;
+
+    if (selectedIds.includes(targetWord.id)) {
+      setSelectedIds((prev) => prev.filter((id) => id !== targetWord.id));
+    } else {
+      setSelectedIds((prev) => [...prev, targetWord.id]);
+    }
+  });
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (isCorrect === true) return;
-
-      const keyNum = Number.parseInt(e.key, 10);
-      if (Number.isNaN(keyNum) || keyNum < 1 || keyNum > 9) return;
-
-      const targetWord = shuffledWords[keyNum - 1];
-      if (!targetWord) return;
-
-      if (selectedIds.includes(targetWord.id)) {
-        // Remove word if already selected
-        setSelectedIds((prev) => prev.filter((id) => id !== targetWord.id));
-      } else {
-        // Add word if not selected
-        setSelectedIds((prev) => [...prev, targetWord.id]);
-      }
-    };
-
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [shuffledWords, selectedIds, isCorrect]);
+  }, []);
 
   return (
     <ChallengeWrapper className="self-stretch" ref={ref}>
