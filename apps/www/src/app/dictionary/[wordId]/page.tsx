@@ -63,17 +63,20 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
   const { wordId } = paramsTemplate.parse(await params);
   const word = await getWord(wordId);
   if (word === null) notFound();
+  console.log(word.PhraseWords);
   const phrases = deDupe(
-    word.PhraseWords.map(({ phrase }) => ({
-      id: phrase.id,
-      meaning: phrase.meaning,
-      characters: phrase.PhraseWords.map(({ word }) => word.characters)
-        .join(" ")
-        .replace(spacePunctuation, ""),
-      pinyin: phrase.PhraseWords.map(({ word }) => word.pinyin).join(" "),
-      audioSrc: phraseToAudioSource(phrase.id),
-      imageSrc: phraseToImageSource(phrase.id),
-    })),
+    word.PhraseWords.map(({ phrase }) => {
+      return {
+        id: phrase.id,
+        meaning: phrase.meaning,
+        characters: phrase.PhraseWords.map(({ word }) => word.characters)
+          .join(" ")
+          .replace(spacePunctuation, ""),
+        pinyin: phrase.PhraseWords.map(({ word }) => word.pinyin).join(" "),
+        audioSrc: phraseToAudioSource(phrase.id),
+        imageSrc: phraseToImageSource(phrase.id),
+      };
+    }),
     (phrase) => phrase.id,
   );
 

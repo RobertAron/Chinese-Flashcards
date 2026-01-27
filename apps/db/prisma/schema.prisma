@@ -56,7 +56,7 @@ model PhraseWords {
   phrasesId Int
   wordsId   Int
   word      Words   @relation(fields: [wordsId], references: [id])
-  phrase    Phrases @relation(fields: [phrasesId], references: [id])
+  phrase    Phrases @relation(fields: [phrasesId], references: [id], onDelete: Cascade)
 
   @@unique([phrasesId, order])
 }
