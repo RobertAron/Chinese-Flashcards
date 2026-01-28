@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { AllChallengeTypes } from "@/components/challenges/ChallengeTypes";
 import { useTypingChallenge } from "@/components/challenges/TypingChallengeProvider";
 import { practiceCountColors } from "@/utils/colorMapping";
@@ -13,15 +13,13 @@ export function useChallengeStream(practiceCount?: number) {
   const [problemIndex, setProblemIndex] = useState(0);
   const [problems, setProblemList] = useState<null | AllChallengeTypes[]>(null);
   const isEarlyLearning = practiceCount !== undefined && practiceCount < practiceCountColors[0].max;
-  // Capture initial state for first shuffle - don't reshuffle mid-session when crossing threshold
-  const initialEarlyLearning = useRef(isEarlyLearning);
 
   useEffect(() => {
     const allChallenges = [...typingChallenges, ...multipleChoiceChallenges, ...sentenceBuildingChallenges];
     setProblemList(
-      initialEarlyLearning.current ? groupedShuffle(allChallenges, getChallengeKey) : shuffle(allChallenges),
+      isEarlyLearning ? groupedShuffle(allChallenges, getChallengeKey) : shuffle(allChallenges),
     );
-  }, [typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges]);
+  }, [typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges, isEarlyLearning]);
 
   if (problems === null) {
     return { initializing: true } as const;
@@ -31,17 +29,19 @@ export function useChallengeStream(practiceCount?: number) {
     const crossingThreshold = practiceCount === practiceCountColors[0].max - 1;
     // Transitioning from early learning to normal - full shuffle and reset
     if (crossingThreshold) {
-      setProblemList(shuffle(problems));
+      setProblemList(semiShuffle(problems));
       setProblemIndex(0);
       return;
     }
     const onLastItem = problemIndex === problems.length - 1;
-    if (onLastItem) {
-      if (isEarlyLearning) {
-        setProblemList(semiGroupedShuffle(problems, getChallengeKey));
-      } else setProblemList(semiShuffle(problems));
+    // normal case move to next item
+    if (!onLastItem) setProblemIndex(problemIndex + 1);
+    else {
+      // shuffle items around
       setProblemIndex(0);
-    } else setProblemIndex(problemIndex + 1);
+      if (isEarlyLearning) setProblemList(semiGroupedShuffle(problems, getChallengeKey));
+      else setProblemList(semiShuffle(problems));
+    }
   }
   const problem = problems[problemIndex];
   if (problem === undefined) {
