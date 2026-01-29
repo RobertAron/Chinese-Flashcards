@@ -16,5 +16,8 @@
     "format:fix": "biome format --fix",
     "check": "biome check",
     "check:fix": "biome check --fix"
+  },
+  "patchedDependencies": {
+    "zod@4.3.6": "patches/zod@4.3.6.patch"
   }
 }

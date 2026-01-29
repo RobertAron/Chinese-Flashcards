@@ -57,8 +57,6 @@ const app = new Hono()
     ),
     async (c) => {
       const query = c.req.valid("json");
-      console.log(query.practiceState);
-      console.log("starting phrase suggestion query");
       const { output_parsed } = await openaiClient.responses.parse({
         model: "gpt-5",
         text: { format: zodTextFormat(phraseResponse, "PracticePhraseSuggestion") },

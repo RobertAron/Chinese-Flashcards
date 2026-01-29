@@ -1,7 +1,7 @@
 import { getPrismaClient } from "@/utils/getPrismaClient";
-import type { ParamsShape } from "./paramsTemplate";
+import type { InputParamsShape } from "./paramsTemplate";
 
-export async function generateStaticParams(): Promise<ParamsShape[]> {
+export async function generateStaticParams(): Promise<InputParamsShape[]> {
   const words = await getPrismaClient().words.findMany({
     select: {
       id: true,
