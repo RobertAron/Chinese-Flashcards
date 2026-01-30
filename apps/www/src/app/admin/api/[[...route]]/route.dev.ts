@@ -158,7 +158,7 @@ Rules:
 - Every word in the phrase must be visually implied through the scene
 - Clearly show relationships, actions, location, and time when they are part of the phrase
 - If the phrase refers to the past, show the action as completed
-- The picture should cover the entire frame in most circumstances
+- The picture should cover the ENTIRE FRAME in all circumstances.
 - Do not include content which is not relevant to the phrase
 
 Phrase: ${phrase}
