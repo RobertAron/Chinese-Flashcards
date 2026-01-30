@@ -58,7 +58,11 @@ async function getWord(wordId: number) {
     },
   });
 }
-
+// in seconds
+// 1 day
+export const revalidate = 86400;
+// 2 days
+export const expire = 172800;
 export default AppServerPageEntrypoint(async function WordDetailPage({ params }) {
   const { wordId } = paramsTemplate.parse(await params);
   const word = await getWord(wordId);
