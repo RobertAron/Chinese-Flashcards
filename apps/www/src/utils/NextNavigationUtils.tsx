@@ -81,7 +81,7 @@ export function Link({ href, children, replace, scroll, prefetch = false, ...res
       {...props}
       data-pressed={isPressed || undefined}
       data-hovered={isHovered || undefined}
-      prefetch={isPressed || isHovered || prefetch}
+      prefetch={prefetch}
     >
       {children}
     </NextLink>

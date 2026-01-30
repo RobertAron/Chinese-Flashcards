@@ -1,7 +1,7 @@
 "use client";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PracticeCountIcon } from "@/utils/colorMapping";
+import { Link } from "@/utils/NextNavigationUtils";
 import { usePracticeCount } from "@/utils/playerState";
 
 type LessonLinkProps = {
@@ -21,7 +21,7 @@ type CourseTitleLinkProps = {
 export const CourseTitleLink = ({ courseSlug, children }: CourseTitleLinkProps) => {
   const href = `/courses/${courseSlug}`;
   return (
-    <Link href={href} className="truncate border-black border-b-1 px-1 py-2 font-bold text-2xl text-black">
+    <Link href={href} className="truncate border-black border-b px-1 py-2 font-bold text-2xl text-black">
       {children}
     </Link>
   );

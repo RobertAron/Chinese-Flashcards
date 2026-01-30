@@ -16,10 +16,10 @@ export function shuffle<T>(array: T[]): T[] {
  * Shuffle the given array.
  * Don't let the last element of the array be the first in the resulting array.
  * */
-export function semiShuffle<T>(array: T[]): T[] {
+export function semiShuffle<T>(array: T[], nonAllowedItem?: T): T[] {
   // not shuffle-able
   if (array.length <= 1) return array;
-  const lastItem = array.at(-1)!;
+  const lastItem = nonAllowedItem ?? array.at(-1)!;
   const shuffled = shuffle(array);
   if (shuffled[0] === lastItem) {
     // move it somewhere else...
@@ -55,10 +55,10 @@ export function groupedShuffle<T>(items: T[], getKey: (item: T) => string): T[] 
  * Like semiShuffle but for grouped items. Shuffles within each group, then shuffles
  * groups ensuring the last item's group doesn't end up first.
  */
-export function semiGroupedShuffle<T>(items: T[], getKey: (item: T) => string): T[] {
+export function semiGroupedShuffle<T>(items: T[], getKey: (item: T) => string, nonAllowedItem?: T): T[] {
   const lastItem = items.at(-1);
   if (lastItem === undefined) return [];
-  const lastKey = getKey(lastItem);
+  const lastKey = getKey(nonAllowedItem ?? lastItem);
   const grouped = Object.groupBy(items, getKey);
   const entries = Object.entries(grouped)
     .filter((ele): ele is [string, T[]] => ele[1] !== undefined)

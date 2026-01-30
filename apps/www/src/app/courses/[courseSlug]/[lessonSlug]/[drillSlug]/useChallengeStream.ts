@@ -16,16 +16,20 @@ export function useChallengeStream(practiceCount?: number) {
 
   useEffect(() => {
     const allChallenges = [...typingChallenges, ...multipleChoiceChallenges, ...sentenceBuildingChallenges];
-    setProblemList(
-      isEarlyLearning ? groupedShuffle(allChallenges, getChallengeKey) : shuffle(allChallenges),
-    );
+    setProblemList(isEarlyLearning ? groupedShuffle(allChallenges, getChallengeKey) : shuffle(allChallenges));
   }, [typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges, isEarlyLearning]);
 
   if (problems === null) {
     return { initializing: true } as const;
   }
+  const problem = problems[problemIndex];
+  if (problem === undefined) {
+    return { noProblems: true } as const;
+  }
+
   function nextProblem() {
     if (problems === null) throw new Error("shouldn't be able to call next problem prior to problems setup.");
+    // Special case when crossing early practice threshold
     const crossingThreshold = practiceCount === practiceCountColors[0].max - 1;
     // Transitioning from early learning to normal - full shuffle and reset
     if (crossingThreshold) {
@@ -40,12 +44,8 @@ export function useChallengeStream(practiceCount?: number) {
       // shuffle items around
       setProblemIndex(0);
       if (isEarlyLearning) setProblemList(semiGroupedShuffle(problems, getChallengeKey));
-      else setProblemList(semiShuffle(problems));
+      else setProblemList(semiShuffle(problems, problem));
     }
-  }
-  const problem = problems[problemIndex];
-  if (problem === undefined) {
-    return { noProblems: true } as const;
   }
   return { problem, nextProblem, initializing: false } as const;
 }
