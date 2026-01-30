@@ -7,6 +7,7 @@ import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
 
 export { generateStaticParams };
+export const revalidate = 86400;
 export default AppServerPageEntrypoint(async ({ params }) => {
   const parsedParams = paramsTemplate.parse(await params);
   const { courseSlug, lessonSlug } = parsedParams;
