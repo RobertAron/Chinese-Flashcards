@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import type { AllChallengeTypes } from "@/components/challenges/ChallengeTypes";
 import { useTypingChallenge } from "@/components/challenges/TypingChallengeProvider";
 import { groupedShuffle, semiGroupedShuffle, semiShuffle, shuffle } from "@/utils/structureUtils";
@@ -12,7 +12,10 @@ export function useChallengeStream(beginnerMode = false) {
   const [problemIndex, setProblemIndex] = useState(0);
   const [problems, setProblemList] = useState<null | AllChallengeTypes[]>(null);
 
-  useEffect(() => {
+  /**
+   * Layout effect to prevent the double render when the component switches from beginner mode to real mode.
+   */
+  useLayoutEffect(() => {
     const allChallenges = [...typingChallenges, ...multipleChoiceChallenges, ...sentenceBuildingChallenges];
     setProblemList(beginnerMode ? groupedShuffle(allChallenges, getChallengeKey) : shuffle(allChallenges));
   }, [typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges, beginnerMode]);
