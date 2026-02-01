@@ -12,7 +12,7 @@ import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.sh
 import { formatUrl } from "next/dist/shared/lib/router/utils/format-url";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
-import { startTransition, useCallback, useEffect, useOptimistic, useRef, useState } from "react";
+import { startTransition, useCallback, useEffect, useMemo, useOptimistic, useRef, useState } from "react";
 import { mergeProps, useHover, usePress } from "react-aria";
 import { ezCreateContext } from "./createContext";
 
@@ -47,12 +47,22 @@ function isModifiedEvent(event: React.MouseEvent): boolean {
 }
 
 export type LoadableLinkProps = Omit<React.ComponentProps<typeof NextLink>, "onClick">;
-export function Link({ href, children, replace, scroll, prefetch = false, ...rest }: LoadableLinkProps) {
+export function Link({
+  href,
+  children,
+  replace,
+  scroll,
+  prefetch = false,
+  ref: incomingRef,
+  ...rest
+}: LoadableLinkProps) {
   const router = useLoadingRouter();
   const { triggerLoading } = useLoadingProvider();
   const ref = useRef<HTMLAnchorElement>(null);
+  const mergedRef = useMemo(() => mergeRefs(incomingRef, ref), [incomingRef]);
   const { hoverProps, isHovered } = useHover({});
   const { pressProps, isPressed } = usePress({ ref });
+  if (isHovered || isPressed) router.prefetch(href.toString());
   const onClick = (e: React.MouseEvent) => {
     if (isModifiedEvent(e)) return;
     const url = typeof href === "string" ? href : formatUrl(href);
@@ -68,7 +78,6 @@ export function Link({ href, children, replace, scroll, prefetch = false, ...res
   };
   const props = mergeProps(
     {
-      ref,
       href,
       onClick,
     },
@@ -82,6 +91,7 @@ export function Link({ href, children, replace, scroll, prefetch = false, ...res
       data-pressed={isPressed || undefined}
       data-hovered={isHovered || undefined}
       prefetch={prefetch}
+      ref={mergedRef}
     >
       {children}
     </NextLink>
@@ -131,6 +141,15 @@ export function LoadingRender() {
   }, [isLoading]);
   // return null;
   return <AnimatePresence>{loadingId !== null && <LoadingBar key={loadingId} />}</AnimatePresence>;
+}
+
+function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]): React.RefCallback<T> {
+  return (value) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") ref(value);
+      else if (ref != null) ref.current = value;
+    }
+  };
 }
 
 export function LoadingBar() {
