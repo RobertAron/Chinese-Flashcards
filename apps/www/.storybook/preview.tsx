@@ -1,7 +1,7 @@
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import React from "react";
 import localFont from "next/font/local";
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs";
 import '../src/app/globals.css'
 
 const GeistSans = localFont({

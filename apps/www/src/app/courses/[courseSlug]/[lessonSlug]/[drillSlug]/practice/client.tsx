@@ -34,7 +34,12 @@ export default function Practice() {
   const { challengeId } = useDrillContext();
   const [practiceCount, setPracticeCount] = usePracticeCount(challengeId);
   const beginnerMode = practiceCount < practiceCountColors[1].min;
-  const { problem, nextProblem, initializing, noProblems } = useChallengeStream(beginnerMode);
+  // Crazy hacks to prevent double renders on mode transition.
+  const challengeStreamA = useChallengeStream(true);
+  const challengeStreamB = useChallengeStream(false);
+  const { problem, nextProblem, initializing, noProblems } = beginnerMode
+    ? challengeStreamA
+    : challengeStreamB;
   const wordIncrementor = useWordIncrementor();
   const [started, setStarted] = useState(false);
   if (initializing) return null;
