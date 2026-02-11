@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import { Link } from "@/utils/NextNavigationUtils";
 
-export const MotionLink = motion.create(Link);
+export const MotionLink = m.create(Link);

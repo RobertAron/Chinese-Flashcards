@@ -1,5 +1,6 @@
 "use client";
-import { AnimatePresence, animate, motion, useMotionValue, usePresence, useTransform } from "motion/react";
+import { AnimatePresence, animate, useMotionValue, usePresence, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { type Ref, useEffect, useState } from "react";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
@@ -141,8 +142,8 @@ function PercentageComplete({ percent, ref }: { percent: number; ref?: Ref<HTMLD
     }, 1.5 * 1000);
   }, [currentlyShownPercent, percent, isPresent, safeToRemove]);
   return (
-    <motion.span ref={ref} className="text-gray-600 text-sm/6">
+    <m.span ref={ref} className="text-gray-600 text-sm/6">
       {formattedPercent}
-    </motion.span>
+    </m.span>
   );
 }

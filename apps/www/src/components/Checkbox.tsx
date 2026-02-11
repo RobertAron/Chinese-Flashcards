@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import { Checkbox as AriaCheckbox, type CheckboxProps as AriaCheckboxProps } from "react-aria-components";
 
 type CheckboxProps = Omit<AriaCheckboxProps, "children"> & {
@@ -10,7 +10,7 @@ export function Checkbox({ children, ...restProps }: CheckboxProps) {
       {({ isSelected }) => (
         <>
           <div className="rounded-md border-2 border-black group-hocus:bg-slate-100 group-pressed:bg-slate-200 group-hocus:ring">
-            <motion.svg
+            <m.svg
               role="img"
               aria-label="checkbox"
               width="24"
@@ -19,7 +19,7 @@ export function Checkbox({ children, ...restProps }: CheckboxProps) {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <motion.path
+              <m.path
                 d="M3 12L9 18L21 4"
                 stroke="#000"
                 strokeWidth="3"
@@ -27,7 +27,7 @@ export function Checkbox({ children, ...restProps }: CheckboxProps) {
                 animate={{ pathLength: isSelected ? 1 : 0 }}
                 transition={{ duration: 0.075 }}
               />
-            </motion.svg>
+            </m.svg>
           </div>
           {children}
         </>

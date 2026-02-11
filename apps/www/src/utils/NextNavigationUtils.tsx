@@ -2,12 +2,12 @@
 // https://github.com/vercel/react-transition-progress/blob/main/src/next.tsx
 import {
   AnimatePresence,
-  motion,
   useAnimationFrame,
   useIsPresent,
   useMotionValue,
   useTransform,
 } from "motion/react";
+import * as m from "motion/react-m";
 import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { formatUrl } from "next/dist/shared/lib/router/utils/format-url";
 import NextLink from "next/link";
@@ -164,7 +164,7 @@ export function LoadingBar() {
   });
   const value = useTransform(currentlyShownPercent, (val) => `${val * 100}%`);
   return (
-    <motion.div
+    <m.div
       className="fixed top-0 left-0 z-50 h-1 bg-blue-500"
       style={{ width: isPresent ? value : undefined }}
       exit={{

@@ -2,11 +2,11 @@ import { cubicBezier } from "motion";
 import {
   animate,
   type MotionValue,
-  motion,
   useMotionValue,
   useMotionValueEvent,
   useTransform,
 } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { practiceCountColors } from "@/utils/colorMapping";
 
@@ -20,7 +20,7 @@ export function Experience({ percent }: { percent: number }) {
     });
   }, [experience, percent]);
   return (
-    <motion.div className="flex [&>*+*]:border-l-0">
+    <m.div className="flex [&>*+*]:border-l-0">
       {Object.entries(practiceCountColors).map(([key, val]) => (
         <ExperienceArea
           key={key}
@@ -31,7 +31,7 @@ export function Experience({ percent }: { percent: number }) {
           filledClassName={val.primary}
         />
       ))}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -61,12 +61,12 @@ function ExperienceArea({
     if (inRangeOfThisSection !== isCurrentSection) setInRange(inRangeOfThisSection);
   });
   return (
-    <motion.div
+    <m.div
       className={`flex h-4 min-w-2 basis-1 border-2 border-black ${bgColor}`}
       animate={{ flexGrow: isCurrentSection ? 1 : 0 }}
       transition={{ duration: 0.1, delay: 0.1 }}
     >
-      <motion.div className={`h-full ${filledColor}`} style={{ width: bar1 }} />
-    </motion.div>
+      <m.div className={`h-full ${filledColor}`} style={{ width: bar1 }} />
+    </m.div>
   );
 }

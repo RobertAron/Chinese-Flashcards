@@ -2,6 +2,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { BookMarkedIcon, CircleUserRoundIcon, LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { MotionProvider } from "@/components/MotionProvider";
 import { Link, LoadingProvider, LoadingRender } from "@/utils/NextNavigationUtils";
 import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
 import "./globals.css";
@@ -26,43 +27,45 @@ export default function RootLayout({
           <body
             className={`${GeistSans.variable} ${GeistMono.variable} relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased`}
           >
-            <nav className="relative z-10 flex border-black border-b bg-white">
-              <div className="container mx-auto flex items-center justify-between gap-2 text-black">
-                <Link
-                  href="/"
-                  className={cn(buttonBehaviorClasses, "flex h-full items-center gap-2 border-none")}
-                >
-                  <LanguagesIcon className="shrink-0" />
-                  <span className="font-bold text-xl">Chinese Challenges</span>
-                </Link>
-                <div className="flex gap-2">
+            <MotionProvider>
+              <nav className="relative z-10 flex border-black border-b bg-white">
+                <div className="container mx-auto flex items-center justify-between gap-2 text-black">
                   <Link
-                    prefetch={false}
-                    href="/dictionary"
-                    aria-label="Dictionary"
-                    className={cn(
-                      buttonBehaviorClasses,
-                      "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
-                    )}
+                    href="/"
+                    className={cn(buttonBehaviorClasses, "flex h-full items-center gap-2 border-none")}
                   >
-                    <BookMarkedIcon className="h-full w-full shrink-0" />
+                    <LanguagesIcon className="shrink-0" />
+                    <span className="font-bold text-xl">Chinese Challenges</span>
                   </Link>
-                  <Link
-                    href="/user"
-                    aria-label="User profile"
-                    className={cn(
-                      buttonBehaviorClasses,
-                      "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
-                    )}
-                  >
-                    <CircleUserRoundIcon className="h-full w-full shrink-0" />
-                  </Link>
+                  <div className="flex gap-2">
+                    <Link
+                      prefetch={false}
+                      href="/dictionary"
+                      aria-label="Dictionary"
+                      className={cn(
+                        buttonBehaviorClasses,
+                        "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
+                      )}
+                    >
+                      <BookMarkedIcon className="h-full w-full shrink-0" />
+                    </Link>
+                    <Link
+                      href="/user"
+                      aria-label="User profile"
+                      className={cn(
+                        buttonBehaviorClasses,
+                        "flex h-10 w-10 items-center gap-2 rounded-full border-none py-2",
+                      )}
+                    >
+                      <CircleUserRoundIcon className="h-full w-full shrink-0" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </nav>
-            <div className="container relative z-10 mx-auto flex h-full w-full grow">{children}</div>
-            <LoadingRender />
-            <div className="texture" />
+              </nav>
+              <div className="container relative z-10 mx-auto flex h-full w-full grow">{children}</div>
+              <LoadingRender />
+              <div className="texture" />
+            </MotionProvider>
           </body>
         </html>
       </LoadingProvider>

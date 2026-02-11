@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { cubicBezier } from "motion";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import type { Ref } from "react";
 
 export type ChallengeWrapperProps = {
@@ -13,7 +13,7 @@ const ease = cubicBezier(0.85, 0, 0.15, 1);
 const fullDuration = 0.2;
 export function ChallengeWrapper({ ref, children, className }: ChallengeWrapperProps) {
   return (
-    <motion.div
+    <m.div
       className={clsx(
         "flex min-h-60 w-full flex-col items-center gap-4 rounded-md border-2 border-black bg-white px-3 py-2 sm:w-md lg:w-lg",
         className,
@@ -32,6 +32,6 @@ export function ChallengeWrapper({ ref, children, className }: ChallengeWrapperP
       ref={ref}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

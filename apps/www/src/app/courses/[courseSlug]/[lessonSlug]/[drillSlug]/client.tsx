@@ -1,6 +1,6 @@
 "use client";
 import { BrainIcon, ListChecks, Timer } from "lucide-react";
-import * as motion from "motion/react-client";
+import * as m from "motion/react-m";
 import { useMemo } from "react";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { WordOutline } from "@/components/challenges/WordOutline";
@@ -79,7 +79,7 @@ export function DrillHome() {
         </div>
       </section>
       {description !== null && (
-        <motion.section
+        <m.section
           className="w-full rounded-md border-2 border-black bg-blue-50"
           initial={{ opacity: 0, scale: 1.02 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -93,9 +93,9 @@ export function DrillHome() {
             </h6>
             <p className="text-xl">{description}</p>
           </div>
-        </motion.section>
+        </m.section>
       )}
-      <motion.section
+      <m.section
         className="w-full rounded-md border-2 border-black bg-blue-50"
         initial={{ opacity: 0, scale: 1.02 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -112,13 +112,13 @@ export function DrillHome() {
             Go through every item and speak with the audio until you're comfortable speaking the content.
           </p>
         </div>
-      </motion.section>
+      </m.section>
       {wordDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
           <h2 className="font-semibold text-2xl">Practice Words</h2>
           <ul className="grid w-full gap-4">
             {wordDefinitions.map((word, index) => (
-              <motion.li
+              <m.li
                 key={word.id}
                 initial={{
                   y: 50,
@@ -134,7 +134,7 @@ export function DrillHome() {
                 className="flex"
               >
                 <WordOutline word={word} />
-              </motion.li>
+              </m.li>
             ))}
           </ul>
         </section>
@@ -144,7 +144,7 @@ export function DrillHome() {
           <h2 className="font-semibold text-2xl">Phrases</h2>
           <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {phraseDefinitions.map((phrase, index) => (
-              <motion.li
+              <m.li
                 key={phrase.id}
                 initial={{
                   y: 50,
@@ -160,7 +160,7 @@ export function DrillHome() {
                 className="flex"
               >
                 <WordOutline word={phrase} />
-              </motion.li>
+              </m.li>
             ))}
           </ul>
         </section>

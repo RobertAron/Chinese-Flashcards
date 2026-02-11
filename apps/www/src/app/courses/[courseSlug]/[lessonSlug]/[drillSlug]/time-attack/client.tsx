@@ -1,6 +1,7 @@
 "use client";
 import { ChevronsUpIcon } from "lucide-react";
-import { AnimatePresence, motion, useMotionValueEvent, useTime } from "motion/react";
+import { AnimatePresence, useMotionValueEvent, useTime } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, useState } from "react";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
@@ -114,7 +115,7 @@ function TimeAttackRunning({
 
 const strokeWidth = 10;
 const radius = 50 - strokeWidth / 2;
-const circleCoreProps: Partial<React.ComponentProps<typeof motion.circle>> = {
+const circleCoreProps: Partial<React.ComponentProps<typeof m.circle>> = {
   cx: "50",
   cy: "50",
   pathLength: "1",
@@ -142,9 +143,9 @@ function ProgressRing({ current, total }: { current: number; total: number }) {
           {total}
         </text>
 
-        <motion.circle {...circleCoreProps} initial={{ pathLength: 1 }} className="text-blue-950" />
+        <m.circle {...circleCoreProps} initial={{ pathLength: 1 }} className="text-blue-950" />
         <path d="M70 30 30 70" stroke="currentColor" className="text-blue-950" strokeWidth="4" />
-        <motion.circle
+        <m.circle
           {...circleCoreProps}
           initial={{
             pathLength: 0,

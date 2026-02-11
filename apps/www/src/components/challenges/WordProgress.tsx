@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { type Ref, useEffect, useEffectEvent, useState } from "react";
 import { useUserSettings } from "@/utils/playerState";
 import { noTypingRequired, punctuation } from "@/utils/specialCharacters";
@@ -106,7 +107,7 @@ function UntypedCharacter({
   index?: number;
 }) {
   return (
-    <motion.span
+    <m.span
       className={clsx("whitespace-pre text-slate-400 decoration-black decoration-skip-ink-none", {
         underline: isTypingRequired,
         "bg-slate-300/50": isCurrentCharacter,
@@ -123,7 +124,7 @@ function UntypedCharacter({
       }}
     >
       {showLetter ? characters : " "}
-    </motion.span>
+    </m.span>
   );
 }
 
@@ -234,8 +235,8 @@ function ToneHints({
 }) {
   if (!possibleToneChars.has(character.stripped)) return null;
   return (
-    <motion.div className="absolute top-full left-1/2 flex -translate-x-1/2" ref={ref}>
-      <motion.div
+    <m.div className="absolute top-full left-1/2 flex -translate-x-1/2" ref={ref}>
+      <m.div
         className="relative flex gap-2 rounded-md border-2 border-black bg-white p-2"
         initial={{ top: 30, opacity: 0 }}
         animate={{ top: 0, opacity: 1 }}
@@ -248,7 +249,7 @@ function ToneHints({
             <div className="text-lg">{ele}</div>
           </div>
         ))}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
