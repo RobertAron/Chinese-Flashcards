@@ -1,3 +1,42 @@
+diff --git a/node_modules/zod/.bun-tag-829a30d5a667b699 b/.bun-tag-829a30d5a667b699
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/locales/package.json b/locales/package.json
+index 6cc7aaea81f17d0e93f03dbb4174e4ff3050ffa7..ee63fd2d3d7c005cd3e176b3ad3dd440fd3062b1 100644
+--- a/locales/package.json
++++ b/locales/package.json
+@@ -2,5 +2,6 @@
+   "type": "module",
+   "main": "./index.cjs",
+   "module": "./index.js",
+-  "types": "./index.d.cts" 
++  "types": "./index.d.cts" ,
++  "sideEffects": false
+ }
+diff --git a/mini/package.json b/mini/package.json
+index 6cc7aaea81f17d0e93f03dbb4174e4ff3050ffa7..ee63fd2d3d7c005cd3e176b3ad3dd440fd3062b1 100644
+--- a/mini/package.json
++++ b/mini/package.json
+@@ -2,5 +2,6 @@
+   "type": "module",
+   "main": "./index.cjs",
+   "module": "./index.js",
+-  "types": "./index.d.cts" 
++  "types": "./index.d.cts" ,
++  "sideEffects": false
+ }
+diff --git a/v3/package.json b/v3/package.json
+index 6cc7aaea81f17d0e93f03dbb4174e4ff3050ffa7..ee63fd2d3d7c005cd3e176b3ad3dd440fd3062b1 100644
+--- a/v3/package.json
++++ b/v3/package.json
+@@ -2,5 +2,6 @@
+   "type": "module",
+   "main": "./index.cjs",
+   "module": "./index.js",
+-  "types": "./index.d.cts" 
++  "types": "./index.d.cts" ,
++  "sideEffects": false
+ }
 diff --git a/v4/locales/index.cjs b/v4/locales/index.cjs
 index 1c8f367ae74715eeb0b8cc78b7cf7a5f2fe24cb5..4809fe2fb69b42dab6a972b0a6c5c456b356a6a7 100644
 --- a/v4/locales/index.cjs
@@ -163,3 +202,27 @@ index b48028e8b9d9b19fbc81e2196c16f2860255127f..556f917a87caf24fb9f263ca53631501
 -export { default as zhTW } from "./zh-TW.js";
 -export { default as yo } from "./yo.js";
 +// Locales removed via bun patch to reduce bundle size
+diff --git a/v4/package.json b/v4/package.json
+index 6cc7aaea81f17d0e93f03dbb4174e4ff3050ffa7..ee63fd2d3d7c005cd3e176b3ad3dd440fd3062b1 100644
+--- a/v4/package.json
++++ b/v4/package.json
+@@ -2,5 +2,6 @@
+   "type": "module",
+   "main": "./index.cjs",
+   "module": "./index.js",
+-  "types": "./index.d.cts" 
++  "types": "./index.d.cts" ,
++  "sideEffects": false
+ }
+diff --git a/v4-mini/package.json b/v4-mini/package.json
+index 6cc7aaea81f17d0e93f03dbb4174e4ff3050ffa7..ee63fd2d3d7c005cd3e176b3ad3dd440fd3062b1 100644
+--- a/v4-mini/package.json
++++ b/v4-mini/package.json
+@@ -2,5 +2,6 @@
+   "type": "module",
+   "main": "./index.cjs",
+   "module": "./index.js",
+-  "types": "./index.d.cts" 
++  "types": "./index.d.cts" ,
++  "sideEffects": false
+ }
