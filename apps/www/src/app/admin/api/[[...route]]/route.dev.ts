@@ -84,7 +84,7 @@ Constraints:
 Structured output as an object, with a key suggestions. Suggestions should be an array of 5-10 of the following object with these properties:
 - phrase: Chinese only, include punctuation. Put spaces between each word. E.G 我 等 你 半天 。
 - meaning: English only translation of the phrase.
-- imageDescription: one sentence describing the exact scene to illustrate
+- imageDescription: Describe a scene to illustrate. If the content is difficult to express in a single photo, suggest a 4 panel comic, with the key phrase panel highlighted in green.
 
 Guideline examples for abstract words:
 
