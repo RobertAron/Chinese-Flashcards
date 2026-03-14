@@ -1,0 +1,64 @@
+=== RSC Payload from http://localhost:3000/admin ===
+=== Total HTML length: 3634027 ===
+=== Total <script> tags: 34 ===
+=== RSC chunks (12 total) ===
+
+--- chunk 0 ---
+  type: 1
+  content: ["5:I[\"[project]/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_be32b49c._.js\",\"/_next/static/chunks/apps_www_src_app_favicon_ico_mjs_0ee0b25d._.js\"],\"SegmentViewNode\"]\n7:\"$Sreact.fragment
+
+--- chunk 1 ---
+  type: 1
+  content: ["\"/_next/static/chunks/apps_www_src_app_globals_4d2b735f.css\",\"style\"]\n:N1773520932079.9626\n3:\"$EObject.defineProperty(() => {\\n            ctx.componentMod.preloadStyle(fullHref, ctx.renderOpts.crossOrigin, ctx.nonce);\\n          },\\\"name\\\",{value:\\\"\\\"})\"\n2:{\"name\":\"Preloads\
+
+--- chunk 2 ---
+  type: 1
+  content: ["e]]\n2a:[[\"map\",\"\",0,0,0,0,false]]\n2b:[[\"map\",\"\",0,0,0,0,false]]\n2c:[[\"map\",\"\",0,0,0,0,false]]\n2d:[[\"map\",\"\",0,0,0,0,false]]\n2e:[[\"undefined.RootLayout\",\"/Users/robertaron/Desktop/dev/Chinese-Flashcards/apps/www/.next/dev/server/chunks/ssr/apps_www_src_dd55edb2._.js\",351,29
+
+--- chunk 3 ---
+  type: 1
+  content: ["rocessTicksAndRejections\",\"\",0,0,0,0,false]]\n"]
+
+--- chunk 4 ---
+  raw: [1,"6a:\"$EObject.defineProperty(function(type, config, children) {\\n          for (var propName, i = 2;i \u003c arguments.length; i++)\\n            validateChildKeys(arguments[i]
+
+--- chunk 5 ---
+  type: 1
+  content: ["69:{\"name\":\"NonIndex\",\"key\":null,\"env\":\"Server\",\"stack\":[[\"processTicksAndRejections\",\"\",0,0,0,0,false]],\"props\":{\"createElement\":\"$6a\",\"pagePath\":\"/admin\",\"statusCode\":200,\"isPossibleServerAction\":false}}\n6c:{\"name\":\"ViewportWrapper\",\"key\":null,\"env\":\"Serve
+
+--- chunk 6 ---
+  type: 1
+  content: ["12\",\"cy\":\"12\",\"r\":\"10\"},\"$3a\",\"$3e\",0],\"$undefined\"]},\"$3a\",\"$3b\",1]\n45:D{\"time\":2.2749999999068677}\n45:D\"$46\"\n45:D{\"time\":2.364249999867752}\n45:D\"$47\"\n45:D{\"time\":2.414583999896422}\n45:[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"},
+
+--- chunk 7 ---
+  type: 1
+  content: ["c:[\"$\",\"$L17\",null,{\"children\":[\"$\",\"$L19\",null,{\"children\":[\"$\",\"$L1b\",null,{\"children\":[\"$\",\"html\",null,{\"lang\":\"en\",\"className\":\"h-full\",\"children\":[\"$\",\"body\",null,{\"className\":\"relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased\",\
+
+--- chunk 8 ---
+  type: 1
+  content: ["59:D{\"time\":2.712667000014335}\n59:D\"$5a\"\n60:D{\"time\":2.9205000000074506}\n60:D\"$61\"\n60:D{\"time\":3.1357089998200536}\n60:[\"$\",\"$L63\",null,{\"children\":[\"$\",\"$65\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@66\"},\"$61\",\"$64\",1]},\"$61\",\"$62\",1]\n68:D{\"time\"
+
+--- chunk 9 ---
+  type: 1
+  content: ["0:{\"P\":\"$1\",\"b\":\"development\",\"c\":[\"\",\"admin\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"admin\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],[[\"$\",\"$L5\",\"layout\",{\"type\":\"layout\",\"pagePath\":\"/apps/www/src/app/layout.tsx\",\"children
+
+--- chunk 10 ---
+  type: 1
+  content: ["6f:D{\"time\":43.667167000006884}\n6f:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"},\"$61\",\"$7c\",0],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"},\"$61\",\"$7d\",0]]\n66:D{\"time\":44.724208999890834}\n66:null\n77:D{\"time\":44.72633400000632
+
+--- chunk 11 ---
+  raw: [1,"59:[\"$\",\"div\",null,{\"className\":\"grid w-full grid-flow-row gap-3 py-4\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col gap-2\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"font-bold text-5xl underline\",\"children\":\"Admin\"},\"$5a\",\"$85\",1],[\"$\",\"$L87\",null,
+
+=== Raw RSC flight text (inline script content) ===
+[type=1] "5:I[\"[project]/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_be32b49c._.js\",\"/_next/static/chunks/apps_www_src_app_favicon_ico_mjs_0ee0b25d._.js\"],\"SegmentViewNode\"]\n7:\"$Sreact.fragment\"\n17:I[\"[project]/apps/www/src/utils/playerState.tsx [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_e0e4b603._.js\",\"/_next/static/chunks/apps_www_src_48a65095._.js\",\"/_next/sta
+[type=1] "\"/_next/static/chunks/apps_www_src_app_globals_4d2b735f.css\",\"style\"]\n:N1773520932079.9626\n3:\"$EObject.defineProperty(() =\u003e {\\n            ctx.componentMod.preloadStyle(fullHref, ctx.renderOpts.crossOrigin, ctx.nonce);\\n          },\\\"name\\\",{value:\\\"\\\"})\"\n2:{\"name\":\"Preloads\",\"key\":null,\"env\":\"Server\",\"stack\":[[\"processTicksAndRejections\",\"\",0,0,0,0,false]],\"props\":{\"preloadCallbacks\":[\"$3\"]}}\n4:[[\"processTicksAndRejections\",\"\",0,0,0,0,false]]\
+[type=1] "e]]\n2a:[[\"map\",\"\",0,0,0,0,false]]\n2b:[[\"map\",\"\",0,0,0,0,false]]\n2c:[[\"map\",\"\",0,0,0,0,false]]\n2d:[[\"map\",\"\",0,0,0,0,false]]\n2e:[[\"undefined.RootLayout\",\"/Users/robertaron/Desktop/dev/Chinese-Flashcards/apps/www/.next/dev/server/chunks/ssr/apps_www_src_dd55edb2._.js\",351,293,0,0,false]]\n2f:[[\"undefined.RootLayout\",\"/Users/robertaron/Desktop/dev/Chinese-Flashcards/apps/www/.next/dev/server/chunks/ssr/apps_www_src_dd55edb2._.js\",365,285,0,0,false]]\n30:[[\"undefined.R
+[type=1] "rocessTicksAndRejections\",\"\",0,0,0,0,false]]\n"
+[type=1] "6a:\"$EObject.defineProperty(function(type, config, children) {\\n          for (var propName, i = 2;i \u003c arguments.length; i++)\\n            validateChildKeys(arguments[i
+[type=1] "69:{\"name\":\"NonIndex\",\"key\":null,\"env\":\"Server\",\"stack\":[[\"processTicksAndRejections\",\"\",0,0,0,0,false]],\"props\":{\"createElement\":\"$6a\",\"pagePath\":\"/admin\",\"statusCode\":200,\"isPossibleServerAction\":false}}\n6c:{\"name\":\"ViewportWrapper\",\"key\":null,\"env\":\"Server\",\"stack\":[[\"processTicksAndRejections\",\"\",0,0,0,0,false]],\"props\":{}}\n6d:[]\n70:{\"name\":\"Next.Viewport\",\"key\":null,\"env\":\"Server\",\"owner\":\"$6c\",\"stack\":[],\"props\":{}}\n72:
+[type=1] "12\",\"cy\":\"12\",\"r\":\"10\"},\"$3a\",\"$3e\",0],\"$undefined\"]},\"$3a\",\"$3b\",1]\n45:D{\"time\":2.2749999999068677}\n45:D\"$46\"\n45:D{\"time\":2.364249999867752}\n45:D\"$47\"\n45:D{\"time\":2.414583999896422}\n45:[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"},\"$47\",\"$48\",1],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",
+[type=1] "c:[\"$\",\"$L17\",null,{\"children\":[\"$\",\"$L19\",null,{\"children\":[\"$\",\"$L1b\",null,{\"children\":[\"$\",\"html\",null,{\"lang\":\"en\",\"className\":\"h-full\",\"children\":[\"$\",\"body\",null,{\"className\":\"relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased\",\"children\":[\"$\",\"$L1f\",null,{\"children\":[[\"$\",\"nav\",null,{\"className\":\"relative z-10 flex border-black border-b bg-white\",\"children\":[\"$\",\"div\",null,{\"className\":\"container mx-a
+[type=1] "59:D{\"time\":2.712667000014335}\n59:D\"$5a\"\n60:D{\"time\":2.9205000000074506}\n60:D\"$61\"\n60:D{\"time\":3.1357089998200536}\n60:[\"$\",\"$L63\",null,{\"children\":[\"$\",\"$65\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@66\"},\"$61\",\"$64\",1]},\"$61\",\"$62\",1]\n68:D{\"time\":3.2026670000050217}\n68:D\"$69\"\n68:D{\"time\":3.208666999824345}\n68:null\n6b:D{\"time\":3.2157919998280704}\n6b:D\"$6c\"\n6b:D{\"time\":3.242916999850422}\n6f:D{\"time\":3.2598339999094605}\n6f:D\"
+[type=1] "0:{\"P\":\"$1\",\"b\":\"development\",\"c\":[\"\",\"admin\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"admin\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],[[\"$\",\"$L5\",\"layout\",{\"type\":\"layout\",\"pagePath\":\"/apps/www/src/app/layout.tsx\",\"children\":[\"$\",\"$7\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/apps_www_src_app_globals_4d2b735f.css\",\"precedence\":\"next_static/chunks/apps_www
+[type=1] "6f:D{\"time\":43.667167000006884}\n6f:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"},\"$61\",\"$7c\",0],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"},\"$61\",\"$7d\",0]]\n66:D{\"time\":44.724208999890834}\n66:null\n77:D{\"time\":44.72633400000632}\n77:[[\"$\",\"title\",\"0\",{\"children\":\"中文 Flashcards\"},\"$61\",\"$7e\",0],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"中文 Flashcards\"},\"$61\",\"$7f\",0],[\"$\",\"link\",\"2\"
+[type=1] "59:[\"$\",\"div\",null,{\"className\":\"grid w-full grid-flow-row gap-3 py-4\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col gap-2\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"font-bold text-5xl underline\",\"children\":\"Admin\"},\"$5a\",\"$85\",1],[\"$\",\"$L87\",null,{\"words\":[{\"id\":16939,\"characters\":\"办不到\",\"pinyin\":\"bànbudào\",\"meaning\":\"impossible; can't be done; no can do; unable to accomplish\",\"frequencyRank\":1000000,\"emojiChallenge\":null,\"bui

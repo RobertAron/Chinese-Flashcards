@@ -1,3 +1,5 @@
+import "server-only";
+
 import path from "node:path";
 import { PrismaLibSQL } from "@prisma/adapter-libsql";
 import { PrismaClient } from "vocab-db/prisma";

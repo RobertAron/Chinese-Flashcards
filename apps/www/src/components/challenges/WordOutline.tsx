@@ -29,7 +29,7 @@ export function WordOutline({ word }: WordOutlineProps) {
         <hr className="w-full border-gray-400" />
         <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
         <hr className="w-full border-gray-400" />
-        <div className="text-pretty text-xl md:text-2xl">{definition}</div>
+        <div className="text-xl md:text-2xl">{definition}</div>
         {word.type === "word" && (
           <>
             <hr className="w-full border-gray-400" />

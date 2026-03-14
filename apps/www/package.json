@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "bun --bun next dev",
+    "dev:node": "NEXT_PRIVATE_OUTPUT_EXPORT_DIR=.next-node node ../../node_modules/.bin/next dev --port 3002",
     "build": "bun --bun next build",
     "start": "bun --bun next start",
     "build-storybook": "storybook build",
@@ -36,7 +37,7 @@
     "sharp": "^0.34.5",
     "swr": "^2.3.8",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.1",
     "ts-pattern": "^5.9.0",
     "vocab-db": "*",
     "zod": "^4.3.6",

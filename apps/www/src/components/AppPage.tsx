@@ -1,3 +1,4 @@
+
 type AppServerPageCallback = (param: {
   params: Promise<Record<string, unknown>>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

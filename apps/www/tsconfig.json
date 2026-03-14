@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,7 +26,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -31,7 +37,12 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "../common-data/src/top1000.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    ".next-node/types/**/*.ts",
+    ".next-node/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".storybook"]
+  "exclude": [
+    "node_modules",
+    ".storybook"
+  ]
 }

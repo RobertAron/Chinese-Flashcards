@@ -1,0 +1,420 @@
+diff --git a/node_modules/next/.bun-tag-20530a231e9c53bd b/.bun-tag-20530a231e9c53bd
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-34f4b9ed8499d8b7 b/.bun-tag-34f4b9ed8499d8b7
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-4de70f3be1485c38 b/.bun-tag-4de70f3be1485c38
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-5aeec1555e08377d b/.bun-tag-5aeec1555e08377d
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-8b2cca8ad21d3f70 b/.bun-tag-8b2cca8ad21d3f70
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-a2dfd08a71913c9 b/.bun-tag-a2dfd08a71913c9
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-a37d915c8147c29f b/.bun-tag-a37d915c8147c29f
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-dd14f563d5b17da3 b/.bun-tag-dd14f563d5b17da3
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-e0b29b8eb52fb81d b/.bun-tag-e0b29b8eb52fb81d
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-ef36a9798e09f598 b/.bun-tag-ef36a9798e09f598
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/next/.bun-tag-f8fb4f389b459e0b b/.bun-tag-f8fb4f389b459e0b
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/dist/compiled/react-dom/cjs/react-dom-client.development.js b/dist/compiled/react-dom/cjs/react-dom-client.development.js
+index cafcb37d6e2a957ca9e6204df33a2e30cab1f617..b8c745568073a9a5ea9e3c042cd88d3a1cc928eb 100644
+--- a/dist/compiled/react-dom/cjs/react-dom-client.development.js
++++ b/dist/compiled/react-dom/cjs/react-dom-client.development.js
+@@ -12,6 +12,7 @@
+  Modernizr 3.0.0pre (Custom Build) | MIT
+ */
+ "use strict";
++console.log("[PATCH-LOADED] react-dom-client.development.js patched version is active (FIX-updateSuspense present)");
+ "production" !== process.env.NODE_ENV &&
+   (function () {
+     function findHook(fiber, id) {
+@@ -5391,6 +5392,8 @@
+       forkStack[forkStackIndex++] = treeForkProvider;
+       treeForkProvider = workInProgress;
+       treeForkCount = totalChildren;
++      var fiberName = getUseIdComponentName(workInProgress);
++      (window.__treeCtxLog = window.__treeCtxLog || []).push("[treeCtx] pushTreeFork | component=" + fiberName + " | totalChildren=" + totalChildren + " | treeContextId=" + treeContextId);
+     }
+     function pushTreeId(workInProgress, totalChildren, index) {
+       warnIfNotHydrating();
+@@ -5398,6 +5401,7 @@
+       idStack[idStackIndex++] = treeContextOverflow;
+       idStack[idStackIndex++] = treeContextProvider;
+       treeContextProvider = workInProgress;
++      var prevId = treeContextId;
+       var baseIdWithLeadingBit = treeContextId;
+       workInProgress = treeContextOverflow;
+       var baseLength = 32 - clz32(baseIdWithLeadingBit) - 1;
+@@ -5421,6 +5425,8 @@
+         (treeContextId =
+           (1 << length) | (index << baseLength) | baseIdWithLeadingBit),
+           (treeContextOverflow = workInProgress);
++      var fiberName = getUseIdComponentName(treeContextProvider);
++      (window.__treeCtxLog = window.__treeCtxLog || []).push("[treeCtx] pushTreeId | component=" + fiberName + " | totalChildren=" + totalChildren + " | index=" + (index-1) + " | treeContextId=" + prevId + " -> " + treeContextId);
+     }
+     function pushMaterializedTreeId(workInProgress) {
+       warnIfNotHydrating();
+@@ -5428,6 +5434,8 @@
+         (pushTreeFork(workInProgress, 1), pushTreeId(workInProgress, 1, 0));
+     }
+     function popTreeContext(workInProgress) {
++      var didPopId = false;
++      var prevId = treeContextId;
+       for (; workInProgress === treeForkProvider; )
+         (treeForkProvider = forkStack[--forkStackIndex]),
+           (forkStack[forkStackIndex] = null),
+@@ -5439,7 +5447,12 @@
+           (treeContextOverflow = idStack[--idStackIndex]),
+           (idStack[idStackIndex] = null),
+           (treeContextId = idStack[--idStackIndex]),
+-          (idStack[idStackIndex] = null);
++          (idStack[idStackIndex] = null),
++          (didPopId = true);
++      if (didPopId) {
++        var fiberName = getUseIdComponentName(workInProgress);
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[treeCtx] popTreeContext | component=" + fiberName + " | treeContextId=" + prevId + " -> " + treeContextId);
++      }
+     }
+     function getSuspendedTreeContext() {
+       warnIfNotHydrating();
+@@ -5455,6 +5468,9 @@
+       treeContextId = suspendedContext.id;
+       treeContextOverflow = suspendedContext.overflow;
+       treeContextProvider = workInProgress;
++      (window.__treeCtxLog = window.__treeCtxLog || []).push("[dehydrated-path] restoreSuspendedTreeContext: id=" + suspendedContext.id + " overflow=" + suspendedContext.overflow);
++      clearTimeout(window.__treeCtxFlushTimer);
++      window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; window.__treeCtxLog = []; if (l.length) console.log("[treeCtx] FLUSH (" + l.length + " entries)\n" + l.join("\n")); }, 500);
+     }
+     function warnIfNotHydrating() {
+       isHydrating ||
+@@ -9368,10 +9384,36 @@
+     function useHostTransitionStatus() {
+       return readContext(HostTransitionContext);
+     }
++    function getUseIdComponentName(fiber) {
++      if (!fiber) return "unknown";
++      var type = fiber.type;
++      if (typeof type === "string") return type;
++      if (typeof type === "function") return type.displayName || type.name || "Anonymous";
++      if (type && typeof type === "object") {
++        var inner = type.render || type.type;
++        if (typeof inner === "function") return (inner.displayName || inner.name || "") + "(" + (type.render ? "forwardRef" : "memo") + ")";
++        if (type.displayName) return type.displayName;
++      }
++      var owner = fiber._debugOwner;
++      if (owner) {
++        var ownerType = owner.type;
++        var ownerName = typeof ownerType === "function" ? (ownerType.displayName || ownerType.name) : null;
++        if (ownerName) return "?[owner=" + ownerName + "]";
++      }
++      return "unknown-object";
++    }
+     function mountId() {
+       var hook = mountWorkInProgressHook(),
+         identifierPrefix = workInProgressRoot.identifierPrefix;
++      var componentName = getUseIdComponentName(currentlyRenderingFiber);
+       if (isHydrating) {
++        var __snapshot = (window.__treeCtxLog || []).slice();
++        var __snapCtx = treeContextId;
++        var __snapComp = componentName;
++        window.__treeCtxLog = [];
++        window.__dehydratedBoundaryCount = 0;
++        clearTimeout(window.__treeCtxFlushTimer);
++        console.log("[PRE-ADMIN SNAPSHOT] " + __snapshot.length + " entries before " + __snapComp + " (treeContextId=" + __snapCtx + ")\n" + __snapshot.join("\n"));
+         var treeId = treeContextOverflow;
+         var idWithLeadingBit = treeContextId;
+         treeId =
+@@ -9382,10 +9424,14 @@
+         treeId = localIdCounter++;
+         0 < treeId && (identifierPrefix += "H" + treeId.toString(32));
+         identifierPrefix += "_";
+-      } else
+-        (treeId = globalClientIdCounter++),
+-          (identifierPrefix =
+-            "_" + identifierPrefix + "r_" + treeId.toString(32) + "_");
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[useId] mountId HYDRATING | component=" + componentName + " | id=" + identifierPrefix + " | treeContextId=" + treeContextId + " | localIdCounter=" + treeId);
++      } else {
++        var clientCounter = globalClientIdCounter++;
++        identifierPrefix = "_" + identifierPrefix + "r_" + clientCounter.toString(32) + "_";
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[useId] mountId CLIENT | component=" + componentName + " | id=" + identifierPrefix + " | globalClientIdCounter=" + clientCounter);
++        clearTimeout(window.__treeCtxFlushTimer);
++        window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
++      }
+       return (hook.memoizedState = identifierPrefix);
+     }
+     function mountRefresh() {
+@@ -9858,6 +9904,31 @@
+             rootRenderLanes,
+             !0
+           );
++        var suspendedName = getUseIdComponentName(sourceFiber);
++        var handlerName = getUseIdComponentName(suspenseHandlerStackCursor.current);
++        window.__promiseIds = window.__promiseIds || new WeakMap();
++        window.__promiseCounter = window.__promiseCounter || 0;
++        if (!window.__promiseIds.has(value)) {
++          var pid = ++window.__promiseCounter;
++          window.__promiseIds.set(value, pid);
++          var capturedPid = pid;
++          value.then(function(v) {
++            (window.__treeCtxLog = window.__treeCtxLog || []).push("[suspend] promise#" + capturedPid + " RESOLVED | value=" + String(v) + " | status=" + value.status);
++            clearTimeout(window.__treeCtxFlushTimer);
++            window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
++          }, function(e) {
++            (window.__treeCtxLog = window.__treeCtxLog || []).push("[suspend] promise#" + capturedPid + " REJECTED | error=" + String(e));
++            clearTimeout(window.__treeCtxFlushTimer);
++            window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
++          });
++        }
++        var promiseId = window.__promiseIds.get(value);
++        var promiseStatus = value.status || "unknown";
++        var fiberTag = sourceFiber.tag;
++        var fiberKey = sourceFiber.key;
++        var stateNodeType = sourceFiber.stateNode ? (sourceFiber.stateNode.constructor ? sourceFiber.stateNode.constructor.name : typeof sourceFiber.stateNode) : "null";
++        var memoizedStateType = sourceFiber.memoizedState ? (typeof sourceFiber.memoizedState === "object" ? Object.keys(sourceFiber.memoizedState).join(",") : typeof sourceFiber.memoizedState) : "null";
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[suspend] throwException | promise=#" + promiseId + " status=" + promiseStatus + " | fiberTag=" + fiberTag + " key=" + fiberKey + " stateNode=" + stateNodeType + " memoizedState={" + memoizedStateType + "} | handler=" + handlerName + " | isHydrating=" + isHydrating + " | treeContextId=" + treeContextId);
+         isHydrating && (didSuspendOrErrorDEV = !0);
+         sourceFiber = suspenseHandlerStackCursor.current;
+         if (null !== sourceFiber) {
+@@ -10347,6 +10418,7 @@
+                   retryLane: 536870912,
+                   hydrationErrors: null
+                 }),
++                (window.__treeCtxLog = window.__treeCtxLog || []).push("[mount-dehydrated A] treeContextId=" + treeContextId + " savedCtx=" + (nextProps.treeContext ? JSON.stringify({id:nextProps.treeContext.id,overflow:nextProps.treeContext.overflow}) : "null")),
+                 (workInProgress.memoizedState = nextProps),
+                 (nextProps = createFiberFromDehydratedFragment(renderLanes)),
+                 (nextProps.return = workInProgress),
+@@ -11177,10 +11249,11 @@
+               null !== renderLanes &&
+                 ((JSCompiler_object_inline_digest_2939 = {
+                   dehydrated: renderLanes,
+-                  treeContext: getSuspendedTreeContext(),
++                  treeContext: parseSuspenseBoundaryTreeContext(renderLanes.data) || getSuspendedTreeContext(),
+                   retryLane: 536870912,
+                   hydrationErrors: null
+                 }),
++                (window.__treeCtxLog = window.__treeCtxLog || []).push("[mount-dehydrated B] treeContextId=" + treeContextId + " savedCtx=" + (JSCompiler_object_inline_digest_2939.treeContext ? JSON.stringify({id:JSCompiler_object_inline_digest_2939.treeContext.id,overflow:JSCompiler_object_inline_digest_2939.treeContext.overflow}) : "null") + " source=" + (parseSuspenseBoundaryTreeContext(renderLanes.data) ? "SERVER" : "CLIENT")),
+                 (workInProgress.memoizedState =
+                   JSCompiler_object_inline_digest_2939),
+                 (JSCompiler_object_inline_digest_2939 =
+@@ -11245,6 +11318,8 @@
+       if (null !== prevState) {
+         var JSCompiler_object_inline_componentStack_2941 = prevState.dehydrated;
+         if (null !== JSCompiler_object_inline_componentStack_2941) {
++          var __dehydratedBoundaryCount = (window.__dehydratedBoundaryCount = (window.__dehydratedBoundaryCount || 0) + 1);
++          (window.__treeCtxLog = window.__treeCtxLog || []).push("[dehydrated-boundary #" + __dehydratedBoundaryCount + "] treeContextId=" + treeContextId + " didSuspend=" + didSuspend + " pending=" + isSuspenseInstancePending(JSCompiler_object_inline_componentStack_2941) + " treeContext=" + (prevState.treeContext ? JSON.stringify({id: prevState.treeContext.id}) : "null"));
+           if (didSuspend)
+             workInProgress.flags & 256
+               ? (pushPrimaryTreeSuspenseHandler(workInProgress),
+@@ -11391,6 +11466,10 @@
+             isSuspenseInstancePending(
+               JSCompiler_object_inline_componentStack_2941
+             ) || renderDidSuspendDelayIfPossible();
++            if (isHydrating && prevState.treeContext !== null && prevState.treeContext !== undefined) {
++              restoreSuspendedTreeContext(workInProgress, prevState.treeContext);
++              (window.__treeCtxLog = window.__treeCtxLog || []).push("[FIX-updateSuspense] restored treeContext id=" + prevState.treeContext.id + " treeContextId now=" + treeContextId);
++            }
+             workInProgress = retrySuspenseComponentWithoutHydrating(
+               current,
+               workInProgress,
+@@ -11400,10 +11479,12 @@
+             isSuspenseInstancePending(
+               JSCompiler_object_inline_componentStack_2941
+             )
+-              ? ((workInProgress.flags |= 192),
++              ? ((window.__treeCtxLog = window.__treeCtxLog || []).push("[dehydrated-path] isSuspenseInstancePending=true → waiting (flags|=192), treeContextId=" + treeContextId),
++                (workInProgress.flags |= 192),
+                 (workInProgress.child = current.child),
+                 (workInProgress = null))
+               : ((current = prevState.treeContext),
++                (window.__treeCtxLog = window.__treeCtxLog || []).push("[dehydrated-path] isSuspenseInstancePending=false → hydrating, prevState.treeContext=" + (current ? JSON.stringify({id: current.id, overflow: current.overflow}) : "null") + " currentContextId=" + treeContextId),
+                 (nextHydratableInstance = getNextHydratable(
+                   JSCompiler_object_inline_componentStack_2941.nextSibling
+                 )),
+@@ -11528,6 +11609,15 @@
+       workInProgress,
+       renderLanes
+     ) {
++      var __caller = (new Error()).stack.split("\n")[2] || "?";
++      var __savedCtx = current.memoizedState && current.memoizedState.treeContext;
++      (window.__treeCtxLog = window.__treeCtxLog || []).push("[fast-path] retrySuspenseComponentWithoutHydrating: treeContextId=" + treeContextId + " savedCtx=" + (__savedCtx ? JSON.stringify({id:__savedCtx.id,overflow:__savedCtx.overflow}) : "null") + " caller=" + __caller.trim());
++      clearTimeout(window.__treeCtxFlushTimer);
++      window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; window.__treeCtxLog = []; if (l.length) console.log("[treeCtx] FLUSH (" + l.length + " entries)\n" + l.join("\n")); }, 500);
++      if (isHydrating && __savedCtx) {
++        restoreSuspendedTreeContext(workInProgress, __savedCtx);
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[FIX-retry] restored treeContext id=" + __savedCtx.id + " treeContextId now=" + treeContextId);
++      }
+       reconcileChildFibers(workInProgress, current.child, null, renderLanes);
+       current = mountSuspensePrimaryChildren(
+         workInProgress,
+@@ -20052,6 +20142,9 @@
+       var suspenseState = boundaryFiber.memoizedState,
+         retryLane = 0;
+       null !== suspenseState && (retryLane = suspenseState.retryLane);
++      (window.__treeCtxLog = window.__treeCtxLog || []).push("[suspend] retryDehydratedSuspenseBoundary | component=" + getUseIdComponentName(boundaryFiber) + " | retryLane=" + retryLane);
++      clearTimeout(window.__treeCtxFlushTimer);
++      window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
+       retryTimedOutBoundary(boundaryFiber, retryLane);
+     }
+     function resolveRetryWakeable(boundaryFiber, wakeable) {
+@@ -20075,6 +20168,9 @@
+           );
+       }
+       null !== retryCache && retryCache.delete(wakeable);
++      (window.__treeCtxLog = window.__treeCtxLog || []).push("[suspend] resolveRetryWakeable | component=" + getUseIdComponentName(boundaryFiber) + " | retryLane=" + retryLane);
++      clearTimeout(window.__treeCtxFlushTimer);
++      window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
+       retryTimedOutBoundary(boundaryFiber, retryLane);
+     }
+     function recursivelyTraverseAndDoubleInvokeEffectsInDEV(
+@@ -23690,7 +23786,7 @@
+             }
+             depth--;
+           } else if (
+-            node === SUSPENSE_START_DATA ||
++            isSuspenseStart(node) ||
+             node === SUSPENSE_PENDING_START_DATA ||
+             node === SUSPENSE_QUEUED_START_DATA ||
+             node === SUSPENSE_FALLBACK_START_DATA ||
+@@ -23743,7 +23839,7 @@
+             if (0 === suspenseInstance) break;
+             else suspenseInstance--;
+           else
+-            (node !== SUSPENSE_START_DATA &&
++            (!isSuspenseStart(node) &&
+               node !== SUSPENSE_PENDING_START_DATA &&
+               node !== SUSPENSE_QUEUED_START_DATA &&
+               node !== SUSPENSE_FALLBACK_START_DATA) ||
+@@ -24486,6 +24582,17 @@
+       }
+       return instance;
+     }
++    // Returns true for "$" (plain) or "$|..." (extended with treeContext from server).
++    function isSuspenseStart(data) {
++      return data === SUSPENSE_START_DATA || (data.length > 2 && data.charCodeAt(0) === 36 && data.charCodeAt(1) === 124);
++    }
++    // Parses treeContext from "$|{id}|{overflow}" comment data. Returns null for plain "$".
++    function parseSuspenseBoundaryTreeContext(data) {
++      if (data.length < 3 || data.charCodeAt(0) !== 36 || data.charCodeAt(1) !== 124) return null;
++      var secondPipe = data.indexOf("|", 2);
++      if (-1 === secondPipe) return null;
++      return { id: parseInt(data.slice(2, secondPipe), 10), overflow: data.slice(secondPipe + 1) };
++    }
+     function canHydrateHydrationBoundary(instance, inRootOrSingleton) {
+       for (; 8 !== instance.nodeType; ) {
+         if (
+@@ -24538,7 +24645,7 @@
+         if (8 === nodeType) {
+           nodeType = node.data;
+           if (
+-            nodeType === SUSPENSE_START_DATA ||
++            isSuspenseStart(nodeType) ||
+             nodeType === SUSPENSE_FALLBACK_START_DATA ||
+             nodeType === SUSPENSE_PENDING_START_DATA ||
+             nodeType === SUSPENSE_QUEUED_START_DATA ||
+@@ -24603,7 +24710,7 @@
+               return getNextHydratable(hydrationInstance.nextSibling);
+             depth--;
+           } else
+-            (data !== SUSPENSE_START_DATA &&
++            (!isSuspenseStart(data) &&
+               data !== SUSPENSE_FALLBACK_START_DATA &&
+               data !== SUSPENSE_PENDING_START_DATA &&
+               data !== SUSPENSE_QUEUED_START_DATA &&
+@@ -24620,7 +24727,7 @@
+         if (8 === targetInstance.nodeType) {
+           var data = targetInstance.data;
+           if (
+-            data === SUSPENSE_START_DATA ||
++            isSuspenseStart(data) ||
+             data === SUSPENSE_FALLBACK_START_DATA ||
+             data === SUSPENSE_PENDING_START_DATA ||
+             data === SUSPENSE_QUEUED_START_DATA ||
+@@ -28543,7 +28650,9 @@
+       useId: function () {
+         currentHookNameInDev = "useId";
+         updateHookTypesDev();
+-        return mountId();
++        var result = mountId();
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[useId] dispatcher=MountWithHookTypes | id=" + result); clearTimeout(window.__treeCtxFlushTimer); window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
++        return result;
+       },
+       useActionState: function (action, initialState) {
+         currentHookNameInDev = "useActionState";
+@@ -28677,7 +28786,10 @@
+       useId: function () {
+         currentHookNameInDev = "useId";
+         updateHookTypesDev();
+-        return updateWorkInProgressHook().memoizedState;
++        var id = updateWorkInProgressHook().memoizedState;
++        var componentName = getUseIdComponentName(currentlyRenderingFiber);
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[useId] dispatcher=Update/Rerender | component=" + componentName + " | id=" + id + " | isHydrating=" + isHydrating); clearTimeout(window.__treeCtxFlushTimer); window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
++        return id;
+       },
+       useFormState: function (action) {
+         currentHookNameInDev = "useFormState";
+@@ -28811,7 +28923,10 @@
+       useId: function () {
+         currentHookNameInDev = "useId";
+         updateHookTypesDev();
+-        return updateWorkInProgressHook().memoizedState;
++        var id = updateWorkInProgressHook().memoizedState;
++        var componentName = getUseIdComponentName(currentlyRenderingFiber);
++        (window.__treeCtxLog = window.__treeCtxLog || []).push("[useId] dispatcher=Update/Rerender | component=" + componentName + " | id=" + id + " | isHydrating=" + isHydrating); clearTimeout(window.__treeCtxFlushTimer); window.__treeCtxFlushTimer = setTimeout(function() { var l = window.__treeCtxLog || []; if (l.length) { console.log(l.join("\n")); window.__treeCtxLog = []; } }, 500);
++        return id;
+       },
+       useFormState: function (action) {
+         currentHookNameInDev = "useFormState";
+diff --git a/dist/compiled/react-dom/cjs/react-dom-server.edge.development.js b/dist/compiled/react-dom/cjs/react-dom-server.edge.development.js
+index da4de0166ae61ff170b7d87d9737e40942553851..bf6e7e2f83ebafc8b26166dfa7ac09115e2d3e85 100644
+--- a/dist/compiled/react-dom/cjs/react-dom-server.edge.development.js
++++ b/dist/compiled/react-dom/cjs/react-dom-server.edge.development.js
+@@ -4950,7 +4950,8 @@
+         tracked: null,
+         errorMessage: null,
+         errorStack: null,
+-        errorComponentStack: null
++        errorComponentStack: null,
++        treeContext: null
+       };
+       null !== row &&
+         (row.pendingTasks++,
+@@ -6297,8 +6298,9 @@
+                       }
+                     : null,
+                   !1
+-                ),
+-                boundarySegment = createPendingSegment(
++                );
++              newBoundary.treeContext = task.treeContext;
++              var boundarySegment = createPendingSegment(
+                   request,
+                   parentSegment.chunks.length,
+                   newBoundary,
+@@ -8341,7 +8343,11 @@
+           isEligibleForOutlining(request, boundary) &&
+           0 === --segment.pendingTasks &&
+           finishSuspenseListRow(request, segment);
+-        writeChunkAndReturn(destination, startCompletedSuspenseBoundary);
++        if (null !== boundary.treeContext) {
++          writeChunk(destination, stringToChunk("\x3c!--$|" + boundary.treeContext.id + "|" + boundary.treeContext.overflow + "--\x3e"));
++        } else {
++          writeChunk(destination, startCompletedSuspenseBoundary);
++        }
+         segment = boundary.completedSegments;
+         if (1 !== segment.length)
+           throw Error(
