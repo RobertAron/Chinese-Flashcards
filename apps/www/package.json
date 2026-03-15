@@ -28,7 +28,7 @@
     "hono": "^4.11.5",
     "lucide-react": "^0.563.0",
     "motion": "^12.29.2",
-    "next": "^16.1.6",
+    "next": "v16.2.0-canary.98",
     "postcss": "^8.5.6",
     "react": "^19.2.4",
     "react-aria-components": "^1.14.0",
