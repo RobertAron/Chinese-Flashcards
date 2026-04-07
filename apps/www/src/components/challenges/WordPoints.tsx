@@ -57,7 +57,7 @@ export function WordExperience({
         <div className="flex flex-wrap gap-2">
           <Link
             href={`/dictionary/${id}`}
-            className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0`}
+            className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md leading-1`}
           >
             <BookMarkedIcon className="h-4 w-4" />
             <span>View details</span>
@@ -65,7 +65,7 @@ export function WordExperience({
           {canonicalWord && (
             <Link
               href={`/dictionary/${canonicalWord.id}`}
-              className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md`}
+              className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md leading-1`}
             >
               <BookMarkedIcon className="h-4 w-4" />
               <span>See: {canonicalWord.characters}</span>

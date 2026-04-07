@@ -22,6 +22,17 @@ async function getWord(wordId: number) {
           id: true,
           characters: true,
           meaning: true,
+          pinyin: true,
+          hskLevel: true,
+          variants: {
+            select: {
+              id: true,
+              characters: true,
+              pinyin: true,
+              meaning: true,
+              hskLevel: true,
+            },
+          },
         },
       },
       variants: {
@@ -80,6 +91,14 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
     }),
     (phrase) => phrase.id,
   );
+  const siblingWords = deDupe(
+    [
+      ...(word.canonicalWord === null ? [] : [word.canonicalWord]),
+      ...word.variants,
+      ...(word.canonicalWord?.variants ?? []),
+    ],
+    (ele) => ele.id,
+  ).filter((ele) => ele.id !== word.id);
 
   return (
     <div className="flex flex-col gap-6 py-4">
@@ -89,6 +108,7 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
       </BreadcrumbContainer>
 
       <WordOutline
+        hideLinks
         word={{
           type: "word",
           id: word.id,
@@ -102,12 +122,12 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
         }}
       />
 
-      {word.variants.length > 0 && (
+      {siblingWords.length > 0 && (
         <section className="flex flex-col gap-3">
           <h2 className="font-semibold text-2xl">Variants</h2>
           <p className="text-gray-600">Other forms of this word:</p>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {word.variants.map((variant) => (
+            {siblingWords.map((variant) => (
               <li key={variant.id}>
                 <Link
                   href={`/dictionary/${variant.id}`}

@@ -11,11 +11,12 @@ import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
 
 type WordOutlineProps = {
   word: PhraseDefinition | WordDefinition;
+  hideLinks?: boolean;
 };
-export function WordOutline({ word }: WordOutlineProps) {
+export function WordOutline({ word, hideLinks = false }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, audioSrc } = word;
   return (
-    <div className="relative flex h-full max-w-full grow flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white">
+    <div className="relative flex max-w-full flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white">
       {word.type === "phrase" && (
         <div className="aspect-square w-full">
           <img src={word.imageSrc} width={500} height={500} aria-label={word.meaning} />
@@ -30,23 +31,23 @@ export function WordOutline({ word }: WordOutlineProps) {
         <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
         <hr className="w-full border-gray-400" />
         <div className="text-pretty text-xl md:text-2xl">{definition}</div>
-        {word.type === "word" && (
+        {word.type === "word" && !hideLinks && (
           <>
             <hr className="w-full border-gray-400" />
             <div className="flex flex-wrap gap-2">
               <Link
                 href={`/dictionary/${word.id}`}
-                className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0`}
+                className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0 leading-1`}
               >
-                <BookMarkedIcon className="h-4 w-4" />
+                <BookMarkedIcon className="size-4" />
                 <span>View details</span>
               </Link>
               {word.canonicalWord !== null && (
                 <Link
                   href={`/dictionary/${word.canonicalWord.id}`}
-                  className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md`}
+                  className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0 leading-1`}
                 >
-                  <BookMarkedIcon className="h-4 w-4" />
+                  <BookMarkedIcon className="size-4" />
                   <span>See: {word.canonicalWord.characters}</span>
                 </Link>
               )}
