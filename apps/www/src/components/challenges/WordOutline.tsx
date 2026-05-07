@@ -40,7 +40,7 @@ export function WordOutline({ word, hideLinks = false }: WordOutlineProps) {
                 className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0 leading-1`}
               >
                 <BookMarkedIcon className="size-4" />
-                <span>View details</span>
+                <span className="py-3">View details</span>
               </Link>
               {word.canonicalWord !== null && (
                 <Link
@@ -48,7 +48,7 @@ export function WordOutline({ word, hideLinks = false }: WordOutlineProps) {
                   className={`${buttonBehaviorClasses} flex items-center gap-1 rounded-md py-0 leading-1`}
                 >
                   <BookMarkedIcon className="size-4" />
-                  <span>See: {word.canonicalWord.characters}</span>
+                  <span className="py-3">See: {word.canonicalWord.characters}</span>
                 </Link>
               )}
             </div>

@@ -116,7 +116,7 @@ export function DrillHome() {
       {wordDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
           <h2 className="font-semibold text-2xl">Practice Words</h2>
-          <ul className="grid w-full gap-4">
+          <ul className="grid w-full grid-cols-3 gap-4">
             {wordDefinitions.map((word, index) => (
               <m.li
                 key={word.id}
@@ -131,7 +131,7 @@ export function DrillHome() {
                     delay: 0.02 * index,
                   },
                 }}
-                className="flex"
+                className="flex *:w-full"
               >
                 <WordOutline word={word} />
               </m.li>
