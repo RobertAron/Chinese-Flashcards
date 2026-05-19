@@ -118,7 +118,7 @@ export function Admin({ words }: { words: WordsPromise }) {
       <div className="grid grid-cols-2 gap-2 rounded-sm border border-black bg-white p-2 shadow-xl">
         <h2 className="text-3xl">Submit Phrase</h2>
         <TextField className="col-span-2" label="Phrase" value={phrase} onChange={(e) => setPhrase(e)} />
-        <div className="col-span-2 grid grid-cols-6 gap-2">
+        <div className="col-span-2 grid gap-2 md:grid-cols-4 lg:grid-cols-6">
           {phraseWords.map((words, wordPosition) => {
             if (words === undefined) return <div key={`${wordPosition}-UNKNOWN`}>UNKNOWN</div>;
             const word = getSelectedWord(wordPosition, variantLookup, words);
@@ -143,7 +143,7 @@ export function Admin({ words }: { words: WordsPromise }) {
                     })}
                   </div>
                 )}
-                <WordExperience className="col-span-1" {...word} />
+                <WordExperience className="col-span-1 h-full" {...word} />
               </div>
             );
           })}

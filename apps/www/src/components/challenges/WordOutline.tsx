@@ -8,15 +8,22 @@ import { Button } from "../Button";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { HskBadge } from "../HskBadge";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
+import { cn } from "@/utils/cn";
 
 type WordOutlineProps = {
   word: PhraseDefinition | WordDefinition;
   hideLinks?: boolean;
+  className?: string;
 };
-export function WordOutline({ word, hideLinks = false }: WordOutlineProps) {
+export function WordOutline({ word, hideLinks = false, className }: WordOutlineProps) {
   const { characters: character, meaning: definition, pinyin, audioSrc } = word;
   return (
-    <div className="relative flex max-w-full flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white">
+    <div
+      className={cn(
+        "relative flex max-w-full grow flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white",
+        className,
+      )}
+    >
       {word.type === "phrase" && (
         <div className="aspect-square w-full">
           <img src={word.imageSrc} width={500} height={500} aria-label={word.meaning} />

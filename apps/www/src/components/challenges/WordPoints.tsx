@@ -36,7 +36,7 @@ export function WordExperience({
         className,
       )}
     >
-      <div className="flex w-full flex-col gap-1">
+      <div className="flex h-full w-full flex-col gap-1">
         <div className="flex justify-between text-4xl">
           <span className="font-bold">{characters}</span>
           <div className="flex flex-col items-end gap-1">
@@ -53,7 +53,7 @@ export function WordExperience({
           </div>
         </div>
         <div>{pinyin}</div>
-        <div className="min-h-8">{canonicalWord?.meaning ?? meaning}</div>
+        <div className="min-h-8 grow">{canonicalWord?.meaning ?? meaning}</div>
         <div className="flex flex-wrap gap-2">
           <Link
             href={`/dictionary/${id}`}

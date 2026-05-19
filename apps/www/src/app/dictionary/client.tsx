@@ -52,7 +52,7 @@ export function SearchPage({ words }: { words: Words }) {
           })
           .map((ele) => ele.item);
   return (
-    <div className="grid w-full grid-flow-row gap-3 py-4">
+    <div className="flex w-full flex-col gap-3 py-4">
       <div className="flex flex-col gap-2">
         <h1 className="font-bold text-5xl underline">Dictionary</h1>
         <TextField aria-label="Search" placeholder="Search..." value={input} onChange={(e) => setInput(e)} />
@@ -61,6 +61,7 @@ export function SearchPage({ words }: { words: Words }) {
       {matchingWords.slice(0, 30).map((word) => {
         return (
           <WordOutline
+            className="grow-0"
             word={{
               type: "word",
               audioSrc: wordToAudioSource(word.id),

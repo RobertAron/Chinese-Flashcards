@@ -101,7 +101,7 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
   ).filter((ele) => ele.id !== word.id);
 
   return (
-    <div className="flex flex-col gap-6 py-4">
+    <div className="flex w-full flex-col gap-6 py-4">
       <BreadcrumbContainer alwaysShow>
         <BreadcrumbEscape href="/dictionary">Dictionary</BreadcrumbEscape>
         <Breadcrumb href={`/dictionary/${word.id}`}>{word.characters}</Breadcrumb>
@@ -148,7 +148,7 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
       {phrases.length > 0 && (
         <section className="flex flex-col gap-3">
           <h2 className="font-semibold text-2xl">Example Phrases</h2>
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {phrases.map((phrase) => (
               <li key={phrase.id}>
                 <WordOutline
