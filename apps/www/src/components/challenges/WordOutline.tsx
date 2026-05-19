@@ -20,7 +20,7 @@ export function WordOutline({ word, hideLinks = false, className }: WordOutlineP
   return (
     <div
       className={cn(
-        "relative flex max-w-full grow flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white",
+        "relative flex max-w-full flex-col items-stretch justify-stretch overflow-hidden rounded-md border-2 border-black bg-white",
         className,
       )}
     >
