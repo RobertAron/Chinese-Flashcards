@@ -164,18 +164,20 @@ Rules:
 Phrase: ${phrase}
 ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
 `;
+      const imageStartTime = Date.now();
       const img = await openaiClient.images
         .generate({
-          model: "gpt-image-1.5",
+          model: "gpt-image-2",
           prompt,
           n: 1,
           size: "1024x1024",
-          quality: "high",
+          quality: "medium",
         })
         .catch((err) => {
           console.log(JSON.stringify(err, null, 2));
           throw err;
         });
+        console.log(`Made image in ${((Date.now()-imageStartTime)/1000).toFixed(2)} seconds`)
       // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: its there 4 sure
       const b64 = img.data?.[0]!.b64_json;
       return c.json({ b64 });
