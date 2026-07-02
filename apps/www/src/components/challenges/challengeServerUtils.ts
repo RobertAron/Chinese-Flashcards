@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import React from "react";
 import type { HskLevel } from "vocab-db/prisma";
@@ -194,6 +195,8 @@ export interface PhraseDefinition extends DefinitionCore {
 }
 
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
+  "use cache";
+  cacheLife("days");
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)
     : getAllWordsInDrill(params.drillSlug));

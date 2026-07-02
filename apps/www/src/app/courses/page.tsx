@@ -1,9 +1,12 @@
+import { cacheLife } from "next/cache";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 
 export default AppServerPageEntrypoint(async function Home() {
+  "use cache";
+  cacheLife("max");
   const courses = await getPrismaClient().course.findMany({
     orderBy: {
       ordering: "asc",

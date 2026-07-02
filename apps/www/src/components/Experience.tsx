@@ -1,11 +1,5 @@
 import { cubicBezier } from "motion";
-import {
-  animate,
-  type MotionValue,
-  useMotionValue,
-  useMotionValueEvent,
-  useTransform,
-} from "motion/react";
+import { animate, type MotionValue, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
 import { practiceCountColors } from "@/utils/colorMapping";

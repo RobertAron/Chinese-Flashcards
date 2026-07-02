@@ -1,21 +1,25 @@
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
+import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { PracticeCountCell, TimeAttackCell } from "../../client";
 import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
 
 export { generateStaticParams };
-export default AppServerPageEntrypoint(async function TopicCollection({ params }) {
-  const { lessonSlug, courseSlug } = paramsTemplate.parse(await params);
-  const lesson = await getPrismaClient().lesson.findFirst({
+
+async function getLesson(lessonSlug: string) {
+  "use cache";
+  cacheLife("max");
+  return getPrismaClient().lesson.findFirst({
     where: {
       slug: lessonSlug,
     },
-    // where: (t, { eq }) => eq(t.slug, lessonSlug),
     select: {
       title: true,
       Drill: {
@@ -30,6 +34,19 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
       },
     },
   });
+}
+
+export default AppServerPageEntrypoint(({ params }) => {
+  return (
+    <Suspense fallback={<LessonSkeleton />}>
+      <LessonDrills params={params} />
+    </Suspense>
+  );
+});
+
+async function LessonDrills({ params }: { params: Promise<Record<string, unknown>> }) {
+  const { lessonSlug, courseSlug } = paramsTemplate.parse(await params);
+  const lesson = await getLesson(lessonSlug);
   if (lesson == null) notFound();
   return (
     <>
@@ -76,4 +93,23 @@ export default AppServerPageEntrypoint(async function TopicCollection({ params }
       </main>
     </>
   );
-});
+}
+
+function LessonSkeleton() {
+  return (
+    <>
+      <div className="py-2">
+        <Skeleton className="h-6 w-48" />
+      </div>
+      <main className="flex flex-col gap-4">
+        <Skeleton className="h-12 w-1/2" />
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-11 w-full" />
+          <Skeleton className="h-11 w-full" />
+          <Skeleton className="h-11 w-full" />
+          <Skeleton className="h-11 w-full" />
+        </div>
+      </main>
+    </>
+  );
+}

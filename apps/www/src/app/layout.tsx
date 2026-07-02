@@ -39,7 +39,6 @@ export default function RootLayout({
                   </Link>
                   <div className="flex gap-2">
                     <Link
-                      prefetch={false}
                       href="/dictionary"
                       aria-label="Dictionary"
                       className={cn(

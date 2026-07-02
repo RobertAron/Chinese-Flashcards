@@ -23,7 +23,8 @@ const getWords = () =>
 
 export type WordsPromise = Awaited<ReturnType<typeof getWords>>;
 
-export const dynamic = "force-static";
+// Dev-only admin tool: reads the DB at request time so edits show up on reload.
+export const instant = false;
 export default AppServerPageEntrypoint(async () => {
   const words = await getWords();
   return (

@@ -1,14 +1,23 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { getDrillInfo } from "@/components/challenges/challengeServerUtils";
+import { Skeleton } from "@/components/Skeleton";
 import { DrillHome } from "./client";
 import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
 
 export { generateStaticParams };
-export const revalidate = 86400;
-export default AppServerPageEntrypoint(async ({ params }) => {
+export default AppServerPageEntrypoint(({ params }) => {
+  return (
+    <Suspense fallback={<DrillHomeSkeleton />}>
+      <DrillHomeContent params={params} />
+    </Suspense>
+  );
+});
+
+async function DrillHomeContent({ params }: { params: Promise<Record<string, unknown>> }) {
   const parsedParams = paramsTemplate.parse(await params);
   const { courseSlug, lessonSlug } = parsedParams;
   const drillInfo = await getDrillInfo(parsedParams);
@@ -28,4 +37,21 @@ export default AppServerPageEntrypoint(async ({ params }) => {
       </main>
     </>
   );
-});
+}
+
+function DrillHomeSkeleton() {
+  return (
+    <>
+      <div className="py-2">
+        <Skeleton className="h-6 w-64" />
+      </div>
+      <main className="flex flex-col items-start gap-4">
+        <Skeleton className="h-12 w-1/2" />
+        <div className="flex gap-2">
+          <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      </main>
+    </>
+  );
+}

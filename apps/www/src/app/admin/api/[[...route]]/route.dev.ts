@@ -177,7 +177,7 @@ ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
           console.log(JSON.stringify(err, null, 2));
           throw err;
         });
-        console.log(`Made image in ${((Date.now()-imageStartTime)/1000).toFixed(2)} seconds`)
+      console.log(`Made image in ${((Date.now() - imageStartTime) / 1000).toFixed(2)} seconds`);
       // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: its there 4 sure
       const b64 = img.data?.[0]!.b64_json;
       return c.json({ b64 });

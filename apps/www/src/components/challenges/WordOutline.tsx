@@ -1,6 +1,7 @@
 "use client";
 import { BookMarkedIcon, PlayIcon } from "lucide-react";
 import { useRef } from "react";
+import { cn } from "@/utils/cn";
 import { useAudioSourceNode } from "@/utils/hooks";
 import { Link } from "@/utils/NextNavigationUtils";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
@@ -8,7 +9,6 @@ import { Button } from "../Button";
 import { buttonBehaviorClasses } from "../coreClasses";
 import { HskBadge } from "../HskBadge";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
-import { cn } from "@/utils/cn";
 
 type WordOutlineProps = {
   word: PhraseDefinition | WordDefinition;

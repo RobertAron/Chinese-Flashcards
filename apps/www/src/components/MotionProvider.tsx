@@ -1,5 +1,5 @@
 "use client";
-import { LazyMotion, domAnimation } from "motion/react";
+import { domAnimation, LazyMotion } from "motion/react";
 
 export function MotionProvider({ children }: { children: React.ReactNode }) {
   return (

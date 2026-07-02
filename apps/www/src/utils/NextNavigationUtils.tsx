@@ -1,12 +1,6 @@
 "use client";
 // https://github.com/vercel/react-transition-progress/blob/main/src/next.tsx
-import {
-  AnimatePresence,
-  useAnimationFrame,
-  useIsPresent,
-  useMotionValue,
-  useTransform,
-} from "motion/react";
+import { AnimatePresence, useAnimationFrame, useIsPresent, useMotionValue, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { formatUrl } from "next/dist/shared/lib/router/utils/format-url";
@@ -52,7 +46,9 @@ export function Link({
   children,
   replace,
   scroll,
-  prefetch = false,
+  // Let Next.js prefetch by default: with partialPrefetching it fetches one reusable
+  // shell per route (not one request per link), which is what makes navigations instant.
+  prefetch,
   ref: incomingRef,
   ...rest
 }: LoadableLinkProps) {

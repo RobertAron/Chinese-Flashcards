@@ -1,8 +1,11 @@
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { WordOutline } from "@/components/challenges/WordOutline";
 import { HskBadge } from "@/components/HskBadge";
+import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { phraseToAudioSource, phraseToImageSource, wordToAudioSource } from "@/utils/idToAudioSource";
 import { Link } from "@/utils/NextNavigationUtils";
@@ -14,6 +17,8 @@ import { paramsTemplate } from "./paramsTemplate";
 export { generateStaticParams };
 
 async function getWord(wordId: number) {
+  "use cache";
+  cacheLife("days");
   return getPrismaClient().words.findUnique({
     where: { id: wordId },
     include: {
@@ -69,10 +74,36 @@ async function getWord(wordId: number) {
     },
   });
 }
-// in seconds
-// 1 day
-export const revalidate = 86400;
-export default AppServerPageEntrypoint(async function WordDetailPage({ params }) {
+export default AppServerPageEntrypoint(({ params }) => {
+  return (
+    <div className="flex w-full flex-col gap-6 py-4">
+      <Suspense fallback={<WordSkeleton />}>
+        <WordDetail params={params} />
+      </Suspense>
+    </div>
+  );
+});
+
+function WordSkeleton() {
+  return (
+    <>
+      <div className="py-2">
+        <Skeleton className="h-6 w-48" />
+      </div>
+      <Skeleton className="h-28 w-full" />
+      <div className="flex flex-col gap-3">
+        <Skeleton className="h-8 w-56" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Skeleton className="h-28" />
+          <Skeleton className="h-28" />
+          <Skeleton className="h-28" />
+        </div>
+      </div>
+    </>
+  );
+}
+
+async function WordDetail({ params }: { params: Promise<Record<string, unknown>> }) {
   const { wordId } = paramsTemplate.parse(await params);
   const word = await getWord(wordId);
   if (word === null) notFound();
@@ -101,7 +132,7 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
   ).filter((ele) => ele.id !== word.id);
 
   return (
-    <div className="flex w-full flex-col gap-6 py-4">
+    <>
       <BreadcrumbContainer alwaysShow>
         <BreadcrumbEscape href="/dictionary">Dictionary</BreadcrumbEscape>
         <Breadcrumb href={`/dictionary/${word.id}`}>{word.characters}</Breadcrumb>
@@ -173,6 +204,6 @@ export default AppServerPageEntrypoint(async function WordDetailPage({ params })
       {phrases.length === 0 && word.variants.length === 0 && !word.canonicalWord && (
         <p className="text-gray-500">No example phrases available for this word yet.</p>
       )}
-    </div>
+    </>
   );
-});
+}

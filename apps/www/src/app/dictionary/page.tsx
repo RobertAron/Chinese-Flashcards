@@ -1,11 +1,13 @@
-import { Suspense } from "react";
+import { cacheLife } from "next/cache";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { SearchPage } from "./client";
 
 export type Words = Awaited<ReturnType<typeof getWords>>;
-const getWords = () =>
-  getPrismaClient().words.findMany({
+async function getWords() {
+  "use cache";
+  cacheLife("days");
+  return getPrismaClient().words.findMany({
     orderBy: {
       frequencyRank: "asc",
     },
@@ -19,16 +21,8 @@ const getWords = () =>
       },
     },
   });
-
-async function DictionaryLoader() {
-  const words = await getWords();
-  return <SearchPage words={words} />;
 }
 
 export default AppServerPageEntrypoint(() => {
-  return (
-    <Suspense>
-      <DictionaryLoader />
-    </Suspense>
-  );
+  return <SearchPage words={getWords()} />;
 });
