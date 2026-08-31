@@ -1,5 +1,4 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
   "tailwindCSS.classAttributes": [".*ClassName", ".*Classes"],
   "tailwindCSS.experimental.classRegex": [
     ["[cC]lasses\\s*(?::[^=]+)?=([^;]*);", "'([^']*)'"],
@@ -14,5 +13,6 @@
     "**/node_modules/**": true,
     "**/.vscode/**": true
   },
-  "prisma.pinToPrisma6": true
+  "prisma.pinToPrisma6": true,
+  "js/ts.tsdk.path": "./node_modules/typescript/lib"
 }

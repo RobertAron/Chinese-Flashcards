@@ -3,6 +3,12 @@
 @config "../../tailwind.config.mjs";
 
 @layer base {
+  html {
+    color-scheme: only light;
+    background-color: white;
+    color: black;
+  }
+
   /* 1. Use a more-intuitive box-sizing model */
   *,
   *::before,
@@ -16,6 +22,8 @@
   }
 
   body {
+    background-color: white;
+    color: black;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     flex-direction: column;

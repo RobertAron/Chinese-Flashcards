@@ -32,7 +32,7 @@
           }
         }
       },
-      "recommended": true,
+      "preset": "recommended",
       "performance": {
         "noImgElement": "off"
       },

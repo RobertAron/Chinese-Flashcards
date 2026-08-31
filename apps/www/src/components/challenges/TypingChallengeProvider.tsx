@@ -211,4 +211,5 @@ const { Provider: TypingChallengeProvider, useContext: useTypingChallenge } = ez
     );
   },
 );
+
 export { TypingChallengeProvider, useTypingChallenge };

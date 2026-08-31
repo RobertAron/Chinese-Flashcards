@@ -25,6 +25,7 @@ const { Provider: LoadingProvider, useContext: useLoadingProvider } = ezCreateCo
     return <P value={{ isLoading, triggerLoading }}>{children}</P>;
   },
 );
+
 export { LoadingProvider, useLoadingProvider };
 
 function isModifiedEvent(event: React.MouseEvent): boolean {
