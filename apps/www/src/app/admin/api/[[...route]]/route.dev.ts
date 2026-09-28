@@ -1,11 +1,10 @@
 import tts from "@google-cloud/text-to-speech";
 import { zValidator } from "@hono/zod-validator";
-import { S3Client } from "bun";
+import { Image, S3Client } from "bun";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
-import sharp from "sharp";
 import z from "zod";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 
@@ -58,7 +57,7 @@ const app = new Hono()
     async (c) => {
       const query = c.req.valid("json");
       const { output_parsed } = await openaiClient.responses.parse({
-        model: "gpt-5",
+        model: "gpt-6-sol",
         text: { format: zodTextFormat(phraseResponse, "PracticePhraseSuggestion") },
         input: [
           {
@@ -167,7 +166,7 @@ ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
       const imageStartTime = Date.now();
       const img = await openaiClient.images
         .generate({
-          model: "gpt-image-2",
+          model: "gpt-image-2.5-sunburst",
           prompt,
           n: 1,
           size: "1024x1024",
@@ -202,14 +201,7 @@ ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
     ),
     async (c) => {
       const { audio, meaning, picture, words } = c.req.valid("form");
-      const imageWebp = await sharp(Buffer.from(await picture.arrayBuffer()))
-        .webp({
-          quality: 80,
-          effort: 5,
-          lossless: false,
-          alphaQuality: 90,
-        })
-        .toBuffer();
+      const imageWebp = await new Image(picture).webp({ quality: 80 }).bytes();
       const { id } = await getPrismaClient().phrases.create({
         data: {
           meaning,

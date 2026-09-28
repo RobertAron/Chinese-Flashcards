@@ -1,7 +1,6 @@
 import path from "node:path";
-import { S3Client } from "bun";
+import { Image, S3Client } from "bun";
 import OpenAI from "openai";
-import sharp from "sharp";
 import { PrismaClient } from "vocab-db/prisma";
 
 const auth = process.env.GOOGLE_APPLICATION_CREDENTIALS;
@@ -51,7 +50,7 @@ Example
 **Phrase:** ${phrase}
 `;
   const img = await openaiClient.images.generate({
-    model: "gpt-image-1.5",
+    model: "gpt-image-2.5-sunburst",
     prompt,
     n: 1,
     size: "1024x1024",
@@ -59,17 +58,7 @@ Example
   });
   // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it's there
   const b64 = img.data?.[0].b64_json!;
-  const buffer = Buffer.from(b64, "base64");
-  const blob = new Blob([buffer], { type: "image/png" });
-  const file = new File([blob], "example.png", { type: "image/png" });
-  const imageWebp = await sharp(Buffer.from(await file.arrayBuffer()))
-    .webp({
-      quality: 80,
-      effort: 5,
-      lossless: false,
-      alphaQuality: 90,
-    })
-    .toBuffer();
+  const imageWebp = await new Image(Buffer.from(b64, "base64")).webp({ quality: 80 }).bytes();
   await r2.write(`phrases/${id}.webp`, imageWebp);
 }
 

@@ -13,9 +13,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@google-cloud/text-to-speech": "^5.7.0",
-    "dotenv": "^16.4.7",
-    "sharp": "^0.34.4",
+    "@google-cloud/text-to-speech": "^7.1.0",
+    "dotenv": "^18.0.4",
     "vocab-db": "*"
   },
   "devDependencies": {
