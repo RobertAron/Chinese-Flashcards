@@ -2,6 +2,8 @@
 import { useCallback, useEffect, useState } from "react";
 import * as z from "zod/mini";
 import { useStore } from "zustand";
+import { shiftDateKey } from "@/dailyChallenge/date";
+import type { DailyPart } from "@/dailyChallenge/parts";
 import { practiceCountColors as pcc } from "./colorMapping";
 import { createZustandContext } from "./createZustandContext";
 
@@ -9,6 +11,10 @@ const playerStateTemplate = z.object({
   wordPracticeCounts: z.record(z.string(), z.optional(z.number())),
   challengePracticeCounts: z.record(z.string(), z.optional(z.number())),
   challengeTimeAttackPB: z.record(z.string(), z.optional(z.number())),
+  dailyChallenges: z._default(
+    z.record(z.string(), z.object({ words: z.optional(z.boolean()), phrases: z.optional(z.boolean()) })),
+    {},
+  ),
   settings: z.object({
     requireToneInput: z.boolean(),
     enableCharacterChallenges: z.boolean(),
@@ -22,6 +28,7 @@ type PlayerState = z.infer<typeof playerStateTemplate>;
 const { Provider: PlayerProvider, useContext: usePlayerContextStore } = createZustandContext<PlayerState>({
   challengePracticeCounts: {},
   challengeTimeAttackPB: {},
+  dailyChallenges: {},
   wordPracticeCounts: {},
   settings: {
     requireToneInput: false,
@@ -110,6 +117,47 @@ export function useTimeAttackPB(challengeId: string) {
     [challengeId, updater],
   );
   return [pb, trySetPB] as const;
+}
+
+export type DailyChallengeProgress = Partial<Record<DailyPart, boolean>>;
+
+export function isDailyChallengeComplete(progress: DailyChallengeProgress | undefined) {
+  return progress?.words === true && progress.phrases === true;
+}
+
+export function useDailyChallengeProgress(dateKey: string) {
+  const store = usePlayerContextStore();
+  const progress = useStore(store, (s) => s.dailyChallenges[dateKey]);
+  const updater = useStore(store, (s) => s.update);
+  const completePart = useCallback(
+    (part: DailyPart) => {
+      updater((s) => ({
+        ...s,
+        dailyChallenges: {
+          ...s.dailyChallenges,
+          [dateKey]: { ...s.dailyChallenges[dateKey], [part]: true },
+        },
+      }));
+    },
+    [dateKey, updater],
+  );
+  return [progress ?? {}, completePart] as const;
+}
+
+export function useAllDailyChallengeProgress(): Record<string, DailyChallengeProgress | undefined> {
+  const store = usePlayerContextStore();
+  return useStore(store, (s) => s.dailyChallenges);
+}
+
+/** Consecutive completed days ending today, or ending yesterday while today is still open. */
+export function dailyStreak(progress: Record<string, DailyChallengeProgress | undefined>, todayKey: string) {
+  let day = isDailyChallengeComplete(progress[todayKey]) ? todayKey : shiftDateKey(todayKey, -1);
+  let streak = 0;
+  while (isDailyChallengeComplete(progress[day])) {
+    streak += 1;
+    day = shiftDateKey(day, -1);
+  }
+  return streak;
 }
 
 export function useUserSettings() {

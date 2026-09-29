@@ -36,9 +36,7 @@ async function CourseLessons({ params }: { params: Promise<Record<string, unknow
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.02 }}
             animate={{ opacity: 1, scaleY: 1 }}
-            whileHover={{ scale: 1.02 }}
-            whileFocus={{ scale: 1.02 }}
-            className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
+            className={`col-span-3 grid hocus:scale-[102%] pressed:scale-[102%] grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
             href={`/courses/${courseSlug}/${ele.slug}`}
             key={ele.slug}
           >

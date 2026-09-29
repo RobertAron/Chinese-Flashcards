@@ -40,5 +40,5 @@ export function useChallengeStream(beginnerMode = false) {
       else setProblemList(semiShuffle(problems, problem));
     }
   }
-  return { problem, nextProblem, initializing: false } as const;
+  return { problem, nextProblem, initializing: false, total: problems.length } as const;
 }

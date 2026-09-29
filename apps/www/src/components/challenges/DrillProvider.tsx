@@ -8,6 +8,7 @@ interface ProviderProps extends DrillInfo {
   courseSlug: string;
   lessonSlug: string;
   drillSlug: string;
+  homeHref: string;
 }
 
 type ProvidedValue = {
@@ -18,23 +19,28 @@ type ProvidedValue = {
   phraseDefinitions: PhraseDefinition[];
   lessonSlug: string;
   courseSlug: string;
+  homeHref: string;
 };
 
 export const { Provider: DrillProvider, useContext: useDrillContext } = ezCreateContext<
   ProvidedValue,
   ProviderProps
->((P) => ({ courseSlug, description, drillSlug, drillTitle, lessonSlug, phrases, words, children }) => (
-  <P
-    value={{
-      challengeId: drillSlug,
-      challengeLabel: drillTitle,
-      wordDefinitions: words,
-      phraseDefinitions: phrases,
-      description,
-      courseSlug,
-      lessonSlug,
-    }}
-  >
-    {children}
-  </P>
-));
+>(
+  (P) =>
+    ({ courseSlug, description, drillSlug, drillTitle, lessonSlug, phrases, words, children, homeHref }) => (
+      <P
+        value={{
+          challengeId: drillSlug,
+          challengeLabel: drillTitle,
+          wordDefinitions: words,
+          phraseDefinitions: phrases,
+          description,
+          courseSlug,
+          lessonSlug,
+          homeHref,
+        }}
+      >
+        {children}
+      </P>
+    ),
+);

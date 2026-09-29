@@ -5,6 +5,8 @@ import { type Ref, useEffect, useState } from "react";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
+import { ExitButton } from "@/components/challenges/ExitButton";
+import { useChallengeStream } from "@/components/challenges/useChallengeStream";
 import { Experience } from "@/components/Experience";
 import { PracticeCountIcon, practiceCountColors } from "@/utils/colorMapping";
 import {
@@ -13,8 +15,6 @@ import {
   usePracticeCount,
   useWordIncrementor,
 } from "@/utils/playerState";
-import { ExitButton } from "../ExitButton";
-import { useChallengeStream } from "../useChallengeStream";
 
 function PracticeCountItem({ id, showRange }: { id: keyof typeof practiceCountColors; showRange?: boolean }) {
   const data = practiceCountColors[id];

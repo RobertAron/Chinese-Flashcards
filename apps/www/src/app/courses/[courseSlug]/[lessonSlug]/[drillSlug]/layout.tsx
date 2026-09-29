@@ -23,7 +23,11 @@ async function DrillData({
   const parsedParams = paramsTemplate.parse(await params);
   const challengeData = await getDrillInfo(parsedParams);
   return (
-    <DrillProvider {...parsedParams} {...challengeData}>
+    <DrillProvider
+      {...parsedParams}
+      {...challengeData}
+      homeHref={`/courses/${parsedParams.courseSlug}/${parsedParams.lessonSlug}/${parsedParams.drillSlug}`}
+    >
       {children}
     </DrillProvider>
   );

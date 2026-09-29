@@ -79,18 +79,16 @@ const buildQuestion = ({
     getOptions: () => {
       const copy = allWords.slice();
       copy.splice(unusableIndex, 1);
-      const otherWords = [
-        ...copy.splice(Math.floor(Math.random() * (copy.length - 1)), 1),
-        ...copy.splice(Math.floor(Math.random() * (copy.length - 1)), 1),
-        ...copy.splice(Math.floor(Math.random() * (copy.length - 1)), 1),
-      ].map((ele) => {
-        const answerId = `${questionId}-${ele.id}`;
-        return {
-          correct: false,
-          id: answerId,
-          text: getAnswer(ele),
-        };
-      });
+      const otherWords = shuffle(copy)
+        .slice(0, 3)
+        .map((ele) => {
+          const answerId = `${questionId}-${ele.id}`;
+          return {
+            correct: false,
+            id: answerId,
+            text: getAnswer(ele),
+          };
+        });
       return shuffle([{ correct: true, text: getAnswer(word), id: `${questionId}-correct` }, ...otherWords]);
     },
     wordIds: word.wordIds,

@@ -6,10 +6,10 @@ import { useRef, useState } from "react";
 import { Challenge } from "@/components/challenges/Challenge";
 import { ChallengeTitle } from "@/components/challenges/ChallengeTitle";
 import { useDrillContext } from "@/components/challenges/DrillProvider";
+import { ExitButton } from "@/components/challenges/ExitButton";
+import { useChallengeStream } from "@/components/challenges/useChallengeStream";
 import { timeAttackColors, timeAttackCountToColor } from "@/utils/colorMapping";
 import { formatTimeAttackMs, useTimeAttackPB, useWordIncrementor } from "@/utils/playerState";
-import { ExitButton } from "../ExitButton";
-import { useChallengeStream } from "../useChallengeStream";
 
 export function TimeAttack() {
   const [timeAttackRunning, setTimeAttackRunning] = useState(false);

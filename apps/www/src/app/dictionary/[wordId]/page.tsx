@@ -133,7 +133,7 @@ async function WordDetail({ params }: { params: Promise<Record<string, unknown>>
 
   return (
     <>
-      <BreadcrumbContainer alwaysShow>
+      <BreadcrumbContainer>
         <BreadcrumbEscape href="/dictionary">Dictionary</BreadcrumbEscape>
         <Breadcrumb href={`/dictionary/${word.id}`}>{word.characters}</Breadcrumb>
       </BreadcrumbContainer>

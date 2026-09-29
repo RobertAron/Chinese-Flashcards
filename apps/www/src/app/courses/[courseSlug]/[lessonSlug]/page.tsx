@@ -7,7 +7,7 @@ import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
 import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
-import { PracticeCountCell, TimeAttackCell } from "../../client";
+import { PracticeCountCell, TimeAttackCell } from "./client";
 import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
 
@@ -66,9 +66,7 @@ async function LessonDrills({ params }: { params: Promise<Record<string, unknown
             <MotionLink
               initial={{ opacity: 0, scaleY: 1.02 }}
               animate={{ opacity: 1, scaleY: 1 }}
-              whileHover={{ scale: 1.02 }}
-              whileFocus={{ scale: 1.02 }}
-              className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
+              className={`col-span-3 grid hocus:scale-[102%] pressed:scale-[102%] grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
               href={`/courses/${courseSlug}/${lessonSlug}/${ele.slug}`}
               key={ele.slug}
             >
@@ -80,9 +78,7 @@ async function LessonDrills({ params }: { params: Promise<Record<string, unknown
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.02 }}
             animate={{ opacity: 1, scaleY: 1 }}
-            whileHover={{ scale: 1.02 }}
-            whileFocus={{ scale: 1.02 }}
-            className={`col-span-3 grid grid-cols-subgrid ${buttonBehaviorClasses}`}
+            className={`col-span-3 grid hocus:scale-[102%] pressed:scale-[102%] grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
             href={`/courses/${courseSlug}/${lessonSlug}/final-mastery-${lessonSlug}`}
           >
             <div>Final Mastery 💯</div>
