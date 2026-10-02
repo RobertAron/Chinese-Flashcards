@@ -101,7 +101,9 @@ export function DailyWeek({ dateKey }: { dateKey: string }) {
 
 function DayStatus({ day, progress }: { day: string; progress: DailyChallengeProgress | undefined }) {
   const complete = isDailyChallengeComplete(progress);
-  const started = !complete && dailyParts.some((part) => progress?.[part] === true);
+  const started =
+    !complete &&
+    dailyParts.some((part) => progress?.[part] === true || (progress?.answered?.[part] ?? 0) > 0);
   return (
     <div
       className={cn(

@@ -30,7 +30,7 @@ type Stage = "title" | "running" | "complete";
 
 export function DailyPractice() {
   const { date, part } = useParams<{ date: string; part: DailyPart }>();
-  const [progress, completePart] = useDailyChallengeProgress(date);
+  const [progress, completePart, setAnswered] = useDailyChallengeProgress(date);
   const { typingChallenges, multipleChoiceChallenges, sentenceBuildingChallenges } = useTypingChallenge();
   const hasQuestions =
     typingChallenges.length + multipleChoiceChallenges.length + sentenceBuildingChallenges.length > 0;
@@ -39,12 +39,15 @@ export function DailyPractice() {
   const info = dailyPartInfo[part];
   const itemCount = part === "words" ? wordDefinitions.length : phraseDefinitions.length;
   const passLength = itemCount * info.questionsPerItem;
+  const savedAnswered = progress.answered?.[part] ?? 0;
 
   if (stage === "running")
     return (
       <DailySession
         passLength={passLength}
         passes={info.passes}
+        initialAnswered={savedAnswered}
+        onAnswered={(answered) => setAnswered(part, answered)}
         onExit={() => setStage("title")}
         onComplete={() => {
           completePart(part);
@@ -73,6 +76,12 @@ export function DailyPractice() {
             the words are mixed together.
           </p>
         )}
+        {savedAnswered > 0 && (
+          <p>
+            You've answered <span className="font-bold">{savedAnswered}</span> so far. Pick up where you left
+            off.
+          </p>
+        )}
       </div>
     </ChallengeTitle>
   );
@@ -81,18 +90,22 @@ export function DailyPractice() {
 function DailySession({
   passLength,
   passes,
+  initialAnswered,
+  onAnswered,
   onExit,
   onComplete,
 }: {
   passLength: number;
   passes: number;
+  initialAnswered: number;
+  onAnswered: (answered: number) => void;
   onExit: () => void;
   onComplete: () => void;
 }) {
   const groupedStream = useChallengeStream(true);
   const mixedStream = useChallengeStream(false);
   const wordIncrementor = useWordIncrementor();
-  const [answered, setAnswered] = useState(0);
+  const [answered, setAnswered] = useState(initialAnswered);
   if (groupedStream.initializing || groupedStream.noProblems) return null;
   if (mixedStream.initializing || mixedStream.noProblems) return null;
   const total = passLength * passes;
@@ -103,6 +116,7 @@ function DailySession({
     const nextAnswered = answered + 1;
     if (nextAnswered >= total) return onComplete();
     setAnswered(nextAnswered);
+    onAnswered(nextAnswered);
     if (!learning) nextProblem();
     else if (nextAnswered < passLength) nextProblem();
     else if (mixedStream.problem.id === problem.id) mixedStream.nextProblem();
@@ -119,17 +133,27 @@ function DailySession({
                 {
                   label: "Learn",
                   length: passLength,
-                  fillClassName: "bg-amber-400",
+                  bgClassName: "bg-amber-200",
+                  fillClassName: "bg-amber-500",
                   textClassName: "text-amber-600",
                 },
                 {
                   label: "Mix",
                   length: total - passLength,
-                  fillClassName: "bg-green-500",
+                  bgClassName: "bg-green-300",
+                  fillClassName: "bg-green-600",
                   textClassName: "text-green-600",
                 },
               ]
-            : [{ label: null, length: total, fillClassName: "bg-amber-400", textClassName: "text-amber-600" }]
+            : [
+                {
+                  label: null,
+                  length: total,
+                  bgClassName: "bg-amber-200",
+                  fillClassName: "bg-amber-500",
+                  textClassName: "text-amber-600",
+                },
+              ]
         }
         answered={answered}
       />
@@ -145,6 +169,7 @@ function DailySession({
 type ProgressSection = {
   label: string | null;
   length: number;
+  bgClassName: string;
   fillClassName: string;
   textClassName: string;
 };
@@ -172,7 +197,7 @@ function SessionProgress({ sections, answered }: { sections: ProgressSection[]; 
           return (
             <m.div
               key={section.start}
-              className="flex h-4 min-w-8 basis-8 border-2 border-black bg-white"
+              className={cn("flex h-4 min-w-8 basis-8 border-2 border-black", section.bgClassName)}
               animate={{ flexGrow: isCurrent ? 1 : 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >

@@ -3,6 +3,7 @@ import { CheckIcon, ListChecks } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { DrillContent } from "@/components/challenges/DrillContent";
+import { useDrillContext } from "@/components/challenges/DrillProvider";
 import { ModeOption } from "@/components/ModeOption";
 import { formatDateKey } from "@/dailyChallenge/date";
 import { type DailyPart, dailyPartInfo, dailyParts } from "@/dailyChallenge/parts";
@@ -13,6 +14,10 @@ export default function DailyPartHome() {
   const [progress] = useDailyChallengeProgress(date);
   const info = dailyPartInfo[part];
   const done = progress[part] === true;
+  const answered = progress.answered?.[part] ?? 0;
+  const { wordDefinitions, phraseDefinitions } = useDrillContext();
+  const itemCount = part === "words" ? wordDefinitions.length : phraseDefinitions.length;
+  const total = itemCount * info.questionsPerItem * info.passes;
   return (
     <>
       <BreadcrumbContainer>
@@ -31,8 +36,8 @@ export default function DailyPartHome() {
           <ModeOption
             href={`/daily/${date}/${part}/practice`}
             icon={done ? <CheckIcon className="h-full w-full" /> : <ListChecks className="h-full w-full" />}
-            title={done ? "Practice again" : "Start"}
-            subtitle={done ? "COMPLETED" : "NOT STARTED"}
+            title={done ? "Practice again" : answered > 0 ? "Continue" : "Start"}
+            subtitle={done ? "COMPLETED" : answered > 0 ? `${answered}/${total} ANSWERED` : "NOT STARTED"}
           />
         </section>
         <DrillContent />

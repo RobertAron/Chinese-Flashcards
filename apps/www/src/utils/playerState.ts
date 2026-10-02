@@ -12,7 +12,14 @@ const playerStateTemplate = z.object({
   challengePracticeCounts: z.record(z.string(), z.optional(z.number())),
   challengeTimeAttackPB: z.record(z.string(), z.optional(z.number())),
   dailyChallenges: z._default(
-    z.record(z.string(), z.object({ words: z.optional(z.boolean()), phrases: z.optional(z.boolean()) })),
+    z.record(
+      z.string(),
+      z.object({
+        words: z.optional(z.boolean()),
+        phrases: z.optional(z.boolean()),
+        answered: z.optional(z.object({ words: z.optional(z.number()), phrases: z.optional(z.number()) })),
+      }),
+    ),
     {},
   ),
   settings: z.object({
@@ -119,7 +126,9 @@ export function useTimeAttackPB(challengeId: string) {
   return [pb, trySetPB] as const;
 }
 
-export type DailyChallengeProgress = Partial<Record<DailyPart, boolean>>;
+export type DailyChallengeProgress = Partial<Record<DailyPart, boolean>> & {
+  answered?: Partial<Record<DailyPart, number>>;
+};
 
 export function isDailyChallengeComplete(progress: DailyChallengeProgress | undefined) {
   return progress?.words === true && progress.phrases === true;
@@ -135,13 +144,32 @@ export function useDailyChallengeProgress(dateKey: string) {
         ...s,
         dailyChallenges: {
           ...s.dailyChallenges,
-          [dateKey]: { ...s.dailyChallenges[dateKey], [part]: true },
+          [dateKey]: {
+            ...s.dailyChallenges[dateKey],
+            [part]: true,
+            answered: { ...s.dailyChallenges[dateKey]?.answered, [part]: 0 },
+          },
         },
       }));
     },
     [dateKey, updater],
   );
-  return [progress ?? {}, completePart] as const;
+  const setAnswered = useCallback(
+    (part: DailyPart, answered: number) => {
+      updater((s) => ({
+        ...s,
+        dailyChallenges: {
+          ...s.dailyChallenges,
+          [dateKey]: {
+            ...s.dailyChallenges[dateKey],
+            answered: { ...s.dailyChallenges[dateKey]?.answered, [part]: answered },
+          },
+        },
+      }));
+    },
+    [dateKey, updater],
+  );
+  return [progress ?? {}, completePart, setAnswered] as const;
 }
 
 export function useAllDailyChallengeProgress(): Record<string, DailyChallengeProgress | undefined> {
