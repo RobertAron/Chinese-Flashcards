@@ -116,7 +116,6 @@
 }
 
 @custom-variant pressed {
-  &:active,
   &[data-pressed="true"] {
     @slot;
   }
