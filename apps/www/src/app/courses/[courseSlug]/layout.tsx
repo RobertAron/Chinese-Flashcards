@@ -5,6 +5,9 @@ import { getCourseOutline } from "./getCourseOutline";
 import { paramsTemplate } from "./paramsTemplate";
 import { CourseTitleLink, DrillLink, LessonLink } from "./SideNavLink";
 
+// Every course, lesson, and drill is prerendered via generateStaticParams.
+export const ensureStatic = "navigation";
+
 export default AppServerLayoutEntrypoint(({ children, params }) => {
   return (
     <div className="flex grow items-stretch">

@@ -3,6 +3,8 @@ import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { SearchPage } from "./client";
 
+export const ensureStatic = "navigation";
+
 export type Words = Awaited<ReturnType<typeof getWords>>;
 async function getWords() {
   "use cache";

@@ -6,6 +6,8 @@ import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { ExperienceBox } from "./client";
 
+export const ensureStatic = "navigation";
+
 async function getWords() {
   "use cache";
   cacheLife("max");

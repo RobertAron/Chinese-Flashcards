@@ -5,6 +5,8 @@ import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 
+export const ensureStatic = "navigation";
+
 export default AppServerPageEntrypoint(async function Courses() {
   "use cache";
   cacheLife("max");

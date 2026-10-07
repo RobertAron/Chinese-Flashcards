@@ -15,6 +15,8 @@ import { generateStaticParams } from "./generateStaticParams";
 import { paramsTemplate } from "./paramsTemplate";
 
 export { generateStaticParams };
+// Not "navigation": most words generate on demand, and this keeps the skeleton fallback for them.
+export const ensureStatic = "prefetch";
 
 async function getWord(wordId: number) {
   "use cache";
