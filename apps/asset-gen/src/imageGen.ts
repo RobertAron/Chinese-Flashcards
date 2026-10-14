@@ -13,42 +13,39 @@ const r2 = new S3Client({
 });
 const openaiClient = new OpenAI();
 
-async function makeConvertUpload(phrase: string, id: string) {
+function buildPhraseImagePrompt({
+  phrase,
+  meaning,
+  extraInstructions = "",
+}: {
+  phrase: string;
+  meaning: string;
+  extraInstructions?: string;
+}) {
+  return `
+Create one illustration for a Chinese learning flashcard. A learner looks at the picture and tries to say the phrase below, so the scene should make the meaning of the whole phrase guessable without any words.
+
+Style:
+- Clean, minimal cartoon illustration with a light anime influence and fairly saturated colors.
+- Full-bleed scene that fills the frame, with a soft, light, uncluttered background.
+- Simple composition: only the characters, objects, and setting the phrase needs.
+
+Content:
+- Show the meaning of the phrase as a whole, in a natural setting where it would happen.
+- Make who is involved, what they are doing, where, and when clear whenever the phrase states them.
+- Show past or completed actions as already finished. Show future or intended actions as about to happen.
+- Grammatical particles (like 的, 了, 在, 吗) don't need their own visual.
+- Don't include any text that would give away the answer.
+
+Phrase: ${phrase.replaceAll(" ", "")}
+Meaning: ${meaning}
+${extraInstructions.trim() === "" ? "" : `Scene notes (follow these when they don't conflict with the rules above): ${extraInstructions.trim()}`}
+`.trim();
+}
+
+async function makeConvertUpload(phrase: string, meaning: string, id: string) {
   console.log("starting:", id);
-  const prompt = `
-### Chinese Phrase Image Generation Prompt
-You will receive a **Chinese phrase**. Create a single image that conveys the **complete meaning** of the phrase through **visual storytelling**.  
-The image will be used as a flashcard where the viewer guesses or writes the phrase based on the scene.
----
-Style & Visual Guidelines
-- Do **not** include any text, Chinese characters, or emojis.  
-- Style: **minimal**, **anime/cartoon**.  
-- Background: **white** or **light grey**.  
-- Use **fairly saturated colors**, avoid sepia tones.  
-- Keep the composition **simple and clear**.
----
-Semantic Requirements
-- Depict a **scene** where the phrase would naturally occur — not just isolated objects.  
-- Every **word** in the phrase must be visually represented.  
-- Clearly show **relationships** (e.g., who is whose sister, what action happened, where it took place).  
-- Express **time or tense** if relevant — use visual cues like:
-  - faded backgrounds or sepia tones for “past”
-  - younger/older versions of a character for age differences
-  - contextual objects or clothing to indicate time period  
-- The image should make sense **only when all words** are understood together (not from one word alone).
----
-Process
-Before creating the image:
-1. **Describe** in one sentence the full scene that represents the meaning of the phrase — including *who*, *when*, *where*, and *what’s happening*.  
-2. Then, **draw that scene**.
----
-Example
-**Phrase:** 我 妹妹 小 时候 住 在 北京。  
-**Interpretation:** “My little sister lived in Beijing when she was young.”  
-**Good depiction:** An adult reminiscing while looking at a childhood photo of his little sister playing near a Beijing hutong, showing both past and relationship context.
----
-**Phrase:** ${phrase}
-`;
+  const prompt = buildPhraseImagePrompt({ phrase, meaning });
   const img = await openaiClient.images.generate({
     model: "gpt-image-2.5-sunburst",
     prompt,
@@ -76,6 +73,7 @@ async function main() {
     },
     select: {
       id: true,
+      meaning: true,
       PhraseWords: {
         orderBy: {
           order: "asc",
@@ -92,12 +90,13 @@ async function main() {
   });
   const phrases = phrasesRaw.map((ele) => ({
     id: ele.id,
+    meaning: ele.meaning,
     characters: ele.PhraseWords.map((ele) => ele.word.characters).join(""),
   }));
   const batchSize = 10;
   for (let i = 0; i < phrases.length; i += batchSize) {
     const batch = phrases.slice(i, i + batchSize);
-    await Promise.all(batch.map((item) => makeConvertUpload(item.characters, `${item.id}`)));
+    await Promise.all(batch.map((item) => makeConvertUpload(item.characters, item.meaning, `${item.id}`)));
   }
 }
 

@@ -67,6 +67,15 @@ export function Admin({ words }: { words: WordsPromise }) {
     .filter((ele) => ele !== undefined)
     .map((words, wordPosition) => getSelectedWord(wordPosition, variantLookup, words));
 
+  // Only polyphones (same characters, different readings in the dictionary) get a pinyin override for TTS.
+  const audioWords = phraseWords.flatMap((candidates, wordPosition) => {
+    if (candidates === undefined) return [];
+    const word = getSelectedWord(wordPosition, variantLookup, candidates);
+    if (word === null) return [];
+    const hasMultipleReadings = new Set(candidates.map((ele) => ele.pinyin.toLowerCase())).size > 1;
+    return [{ characters: word.characters, pinyin: hasMultipleReadings ? word.pinyin : null }];
+  });
+
   const picture = imageBinary?.b64;
   return (
     <div className="flex flex-col gap-2">
@@ -150,12 +159,7 @@ export function Admin({ words }: { words: WordsPromise }) {
         </div>
         <TextField className="col-span-2" label="Meaning" value={meaning} onChange={(e) => setMeaning(e)} />
         <div className="col-span-1 flex flex-col gap-2 rounded-md border-2 bg-white p-3">
-          <Button
-            onClick={() =>
-              triggerMakeAudio({ phrase: chosenWords.map((ele) => ele?.characters ?? "").join("") })
-            }
-            isDisabled={isMakeAudioMutating}
-          >
+          <Button onClick={() => triggerMakeAudio({ words: audioWords })} isDisabled={isMakeAudioMutating}>
             {isMakeAudioMutating ? "Generating..." : "Generate Audio"}
           </Button>
           {audioUrl && <audio controls src={audioUrl} className="mt-4" />}
@@ -167,7 +171,7 @@ export function Admin({ words }: { words: WordsPromise }) {
             onChange={(v) => setExtraPictureInstructions(v)}
           />
           <Button
-            onClick={() => makeImage({ phrase, extraInstructions: extraPictureInstructions })}
+            onClick={() => makeImage({ phrase, meaning, extraInstructions: extraPictureInstructions })}
             isDisabled={isMakeImageMutating}
           >
             {isMakeImageMutating ? "Loading" : "Make Image"}

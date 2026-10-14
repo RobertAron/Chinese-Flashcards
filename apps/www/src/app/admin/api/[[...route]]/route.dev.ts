@@ -18,16 +18,77 @@ const r2 = new S3Client({
 });
 const openaiClient = new OpenAI();
 
+function buildPhraseImagePrompt({
+  phrase,
+  meaning,
+  extraInstructions = "",
+}: {
+  phrase: string;
+  meaning: string;
+  extraInstructions?: string;
+}) {
+  return `
+Create one illustration for a Chinese learning flashcard. A learner looks at the picture and tries to say the phrase below, so the scene should make the meaning of the whole phrase guessable without any words.
+
+Style:
+- Clean, minimal cartoon illustration with a light anime influence and fairly saturated colors.
+- Full-bleed scene that fills the frame, with a soft, light, uncluttered background.
+- Simple composition: only the characters, objects, and setting the phrase needs.
+
+Content:
+- Show the meaning of the phrase as a whole, in a natural setting where it would happen.
+- Make who is involved, what they are doing, where, and when clear whenever the phrase states them.
+- Show past or completed actions as already finished. Show future or intended actions as about to happen.
+- Grammatical particles (like 的, 了, 在, 吗) don't need their own visual.
+- Don't include any text, letters, Chinese characters, numbers, speech bubbles with words, or signs. Written text would give away the answer.
+
+Phrase: ${phrase.replaceAll(" ", "")}
+Meaning: ${meaning}
+${extraInstructions.trim() === "" ? "" : `Scene notes (follow these when they don't conflict with the rules above): ${extraInstructions.trim()}`}
+`.trim();
+}
+
 const { client_email, private_key } = JSON.parse(auth);
 const client = new tts.TextToSpeechClient({
   credentials: { client_email, private_key },
 });
+// Combining diacritics (after NFD normalization) for tones 1–4; no mark means neutral tone 5.
+const toneByMark: Record<string, number> = { "̄": 1, "́": 2, "̌": 3, "̀": 4 };
+// Google TTS wants numbered pinyin ("hai2"); the dictionary stores tone marks ("hái"). Returns null for
+// anything that isn't one plain syllable (e.g. ü, or irregular entries) so the caller falls back to plain text.
+function toNumberedPinyin(pinyin: string) {
+  const letters = [...pinyin.trim().toLowerCase().normalize("NFD")];
+  const markedTone = letters.map((letter) => toneByMark[letter]).find((tone) => tone !== undefined);
+  const match = letters
+    .filter((letter) => toneByMark[letter] === undefined)
+    .join("")
+    .match(/^([a-z]+)([1-5])?$/);
+  if (match === null) return null;
+  return `${match[1]}${markedTone ?? match[2] ?? 5}`;
+}
+const escapeXml = (text: string) => text.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+function toSsml(words: { characters: string; pinyin: string | null }[]) {
+  const body = words
+    .map(({ characters, pinyin }) => {
+      const phoneme = pinyin === null || [...characters].length !== 1 ? null : toNumberedPinyin(pinyin);
+      if (phoneme === null) return escapeXml(characters);
+      return `<phoneme alphabet="pinyin" ph="${phoneme}">${escapeXml(characters)}</phoneme>`;
+    })
+    .join("");
+  return `<speak>${body}</speak>`;
+}
 const phraseResponse = z.object({
   suggestions: z
     .object({
-      phrase: z.string(),
-      meaning: z.string(),
-      imageDescription: z.string(),
+      phrase: z
+        .string()
+        .describe("Chinese only, with punctuation. A single space between every word and punctuation mark."),
+      meaning: z.string().describe("Natural English translation of the phrase."),
+      imageDescription: z
+        .string()
+        .describe(
+          "One or two sentences describing a single illustrated scene that shows the phrase's meaning.",
+        ),
     })
     .array()
     .min(5)
@@ -63,42 +124,37 @@ const app = new Hono()
           {
             role: "system",
             content: `
-You are an expert in chinese language teaching, as well as a creative writer. Your job is to help the student become HSK1 proficient. Your job is to create several phrases to help the student learn HSK1 skills.
+You are an expert Chinese teacher and a playful children's-book writer. You write short practice phrases for a student working toward HSK1.
 
-- You will be given a chinese word which must be included in the phrases.
-- You will also be given a list of all HSK1 words, in order by how common they are, starting with the most common to the least. Each word has a practice count; words with a count of 0 are unpracticed and should be preferred when reasonable.
-- You may also be given some 'extraWordInstructions' in the user input which outlines some content to write about.
+How the phrases are used: each phrase becomes a flashcard with the Chinese text, text-to-speech audio, and an illustration. The student looks at the picture and tries to say the phrase, a bit like reading a children's picture book. So phrases should be simple, concrete, and easy to picture, in the style of a children's book.
 
-When reasonable, sprinkle in words that the user has not practiced yet, especially if they are more common. They will be included in the input under the 'practiceState' property, in order for most common word to least. For example 不是 is near the top. If you see {characters: "不是"，practiceCount: 0} you should try to include 不是.
-The images will be used to create a flashcard like experience, which will include the text, TTS of the phrase, and a picture. Practicing the phrases will be similar to reading a children's book. Therefore, it would be beneficial for the phrases to match that style of writing. You will also be asked to create a short description of a scene which could be used to help prompt the user to speak the phrase.
+Input (JSON):
+- word: the target word. Every phrase must include it.
+- practiceState: every HSK1 word the student can use, ordered from most to least common. practiceCount is how often the student has practiced it; 0 means not yet practiced.
+- extraWordInstructions: optional topic or content to write about. Follow it when it's present.
 
-Constraints:
-- Phrase length: 6–12 Chinese characters
-- 1-2 clauses
-- Avoid extremely common structure "我 + 动词 + 你 + 时间"
-- The described scenes and phrases can be silly. Think of interesting cartoon scenes. A person is shocked they slept through class, or eats an apple and becomes very small.
-- Put spaces between each word and punctuation. For example: "学 中文 半年 ， 会 说 了 。"
-- The suggested picture should not suggest including text, unless absolutely necessary.
+Vocabulary:
+- Build phrases from practiceState words plus the target word. Use other words only when extraWordInstructions calls for them.
+- Where it stays natural, include one or two unpracticed words (practiceCount 0), preferring the more common ones. For example, if 不是 has practiceCount 0, it's a good candidate. Never make a phrase awkward just to fit a word in.
 
-Structured output as an object, with a key suggestions. Suggestions should be an array of 5-10 of the following object with these properties:
-- phrase: Chinese only, include punctuation. Put spaces between each word. E.G 我 等 你 半天 。
-- meaning: English only translation of the phrase.
-- imageDescription: Describe a scene to illustrate. If the content is difficult to express in a single photo, suggest a 4 panel comic, with the key phrase panel highlighted in green.
+Word separation: the phrase is split on spaces and each piece is looked up in the dictionary, so every space-separated piece must exactly match the characters of one practiceState entry or the target word. Don't merge entries into a longer word, and don't split an entry into smaller pieces. Punctuation (， 。 ？ ！) is its own piece. Example: "学 中文 半年 ， 会 说 了 。"
 
-Guideline examples for abstract words:
+Phrases:
+- 6–12 Chinese characters, one or two clauses.
+- Natural, correct Mandarin that a native speaker would actually say.
+- Vary sentence structure, subjects, and settings across the suggestions. Avoid leaning on the very common "我 + verb + 你 + time" pattern.
+- Fun and a little silly is good: everyday cartoon situations with a surprising or absurd twist. Come up with a fresh idea for each suggestion.
 
-- 最 / 最好 / 最多 (best / most):
-  Show clear comparison (e.g. 3 items), with the target item visibly superior
-  (bigger, brighter, centered, or being chosen)
+Image descriptions:
+- Describe one illustrated scene (not a comic or multiple panels) that makes the full meaning guessable: who, what, where, and when if the phrase says it.
+- No written text in the scene. The picture must not give away the words.
+- For abstract words, use a concrete visual:
+  - 最 / 最好 / 最多: a clear comparison between a few items, with the target one visibly bigger, brighter, or being chosen.
+  - Time words (今天, 明天, 以后): sunrise, a calendar page turning, morning light, or a before/after contrast within the scene.
+  - 想: a character reaching toward or looking longingly at something.
+  - 有 / 没有: holding the object vs. empty hands.
 
-- Timing (tomorrow, today, later):
-  sunrise, calendar page turning, morning light through a window, split image showing comparison between now/later
-
-- 想 (want):
-  Character reaching toward or looking longingly at an object
-
-- 有 / 没有 (have / not have):
-  Object in hand vs empty hands
+Return 5–10 suggestions.
 `.trim(),
           },
           {
@@ -116,11 +172,11 @@ Guideline examples for abstract words:
     zValidator(
       "json",
       z.object({
-        phrase: z.string(),
+        words: z.object({ characters: z.string(), pinyin: z.string().nullable() }).array(),
       }),
     ),
     async (c) => {
-      const { phrase } = c.req.valid("json");
+      const { words } = c.req.valid("json");
       const [response] = await client.synthesizeSpeech({
         audioConfig: {
           audioEncoding: "MP3",
@@ -128,7 +184,7 @@ Guideline examples for abstract words:
           speakingRate: 0.75,
           sampleRateHertz: 48000,
         },
-        input: { text: phrase },
+        input: { ssml: toSsml(words) },
         voice: {
           languageCode: "cmn-CN",
           name: "cmn-CN-Wavenet-B",
@@ -141,28 +197,10 @@ Guideline examples for abstract words:
   )
   .post(
     "/generate-image",
-    zValidator("json", z.object({ phrase: z.string(), extraInstructions: z.string() })),
+    zValidator("json", z.object({ phrase: z.string(), meaning: z.string(), extraInstructions: z.string() })),
     async (c) => {
-      const { phrase, extraInstructions } = c.req.valid("json");
-      const prompt = `
-Create a single minimalist anime-style illustration that visually represents the full meaning of this Chinese phrase.
-
-The image is used as a flashcard: the viewer should be able to guess the entire phrase from the scene alone.
-
-Rules:
-- No text, symbols, or characters of any kind
-- Simple composition, white or light gray background
-- Clean cartoon (slightly anime) style with fairly saturated colors
-- Depict a coherent scene with an environment (indoor or outdoor)
-- Every word in the phrase must be visually implied through the scene
-- Clearly show relationships, actions, location, and time when they are part of the phrase
-- If the phrase refers to the past, show the action as completed
-- The picture should cover the ENTIRE FRAME in all circumstances.
-- Do not include content which is not relevant to the phrase
-
-Phrase: ${phrase}
-${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
-`;
+      const { phrase, meaning, extraInstructions } = c.req.valid("json");
+      const prompt = buildPhraseImagePrompt({ phrase, meaning, extraInstructions });
       const imageStartTime = Date.now();
       const img = await openaiClient.images
         .generate({

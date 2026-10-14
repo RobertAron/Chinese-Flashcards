@@ -4,22 +4,28 @@ import type { Api } from "./route.dev";
 
 const client = hc<Api>("");
 
+type AudioWord = { characters: string; pinyin: string | null };
 export function useMakeAudio() {
-  return useSWRMutation("makeAudio", async (_: string, { arg: { phrase } }: { arg: { phrase: string } }) => {
-    const response = await client.admin.api["generate-audio"].$post({ json: { phrase } });
-    if (!response.ok) throw new Error();
-    return await response.blob();
-  });
+  return useSWRMutation(
+    "makeAudio",
+    async (_: string, { arg: { words } }: { arg: { words: AudioWord[] } }) => {
+      const response = await client.admin.api["generate-audio"].$post({ json: { words } });
+      if (!response.ok) throw new Error();
+      return await response.blob();
+    },
+  );
 }
 export function useMakeImage() {
   return useSWRMutation(
     "makeImage",
     async (
       _: string,
-      { arg: { phrase, extraInstructions } }: { arg: { phrase: string; extraInstructions: string } },
+      {
+        arg: { phrase, meaning, extraInstructions },
+      }: { arg: { phrase: string; meaning: string; extraInstructions: string } },
     ) => {
       const response = await client.admin.api["generate-image"].$post({
-        json: { phrase, extraInstructions },
+        json: { phrase, meaning, extraInstructions },
       });
       if (!response.ok) throw new Error();
       return await response.json();
