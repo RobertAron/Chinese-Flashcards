@@ -16,6 +16,7 @@
     "format:fix": "biome format --fix",
     "check": "biome check",
     "check:fix": "biome check --fix",
-    "db:diff": "bun apps/db/scripts/diff.ts"
+    "db:diff": "bun apps/db/scripts/diff.ts",
+    "postinstall": "git config diff.sqlite3.textconv \"echo .dump | sqlite3\" && git config diff.sqlite3.cachetextconv true"
   }
 }
