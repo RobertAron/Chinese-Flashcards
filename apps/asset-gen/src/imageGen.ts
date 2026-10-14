@@ -58,7 +58,10 @@ Example
   });
   // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it's there
   const b64 = img.data?.[0].b64_json!;
-  const imageWebp = await new Image(Buffer.from(b64, "base64")).webp({ quality: 80 }).bytes();
+  const imageWebp = await new Image(Buffer.from(b64, "base64"))
+    .resize(768, 768, { filter: "mitchell" })
+    .webp({ quality: 75 })
+    .bytes();
   await r2.write(`phrases/${id}.webp`, imageWebp);
 }
 

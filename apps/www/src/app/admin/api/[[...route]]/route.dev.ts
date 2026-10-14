@@ -201,7 +201,10 @@ ${extraInstructions === "" ? "" : `Extra Instructions: ${extraInstructions}`}
     ),
     async (c) => {
       const { audio, meaning, picture, words } = c.req.valid("form");
-      const imageWebp = await new Image(picture).webp({ quality: 80 }).bytes();
+      const imageWebp = await new Image(picture)
+        .resize(768, 768, { filter: "mitchell" })
+        .webp({ quality: 75 })
+        .bytes();
       const { id } = await getPrismaClient().phrases.create({
         data: {
           meaning,
