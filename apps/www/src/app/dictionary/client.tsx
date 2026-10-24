@@ -107,19 +107,12 @@ function SearchResults({ words: wordsPromise, input }: { words: Promise<Words>; 
           .map((result) => ({
             item: result.item,
             tier: matchTier(result.item, q, qToneless),
-            // The 0.1 threshold means every result already matched well, so raw scores only
-            // differ by noise. Quantize into coarse bands so HSK level and frequency decide
-            // the order between near-equal matches instead of the score's least significant digits.
-            scoreBand: Math.round((result.score ?? 0) * 25),
-            hsk: hskRank(result.item.hskLevel),
+            // The 0.1 threshold means every result already matched well, so blend the normalized
+            // score (0-1) with HSK level: each HSK level costs a quarter of the full score range,
+            // so common words float to the top unless a rarer word is a clearly better match.
+            cost: (result.score ?? 0) / 0.1 + hskRank(result.item.hskLevel) * 0.25,
           }))
-          .sort(
-            (a, b) =>
-              a.tier - b.tier ||
-              a.scoreBand - b.scoreBand ||
-              a.hsk - b.hsk ||
-              a.item.frequencyRank - b.item.frequencyRank,
-          )
+          .sort((a, b) => a.tier - b.tier || a.cost - b.cost || a.item.frequencyRank - b.item.frequencyRank)
           .map((ele) => ele.item);
   return (
     <>
