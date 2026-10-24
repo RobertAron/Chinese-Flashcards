@@ -26,17 +26,17 @@ export default AppServerPageEntrypoint(async function Courses() {
         <BreadcrumbEscape href="/">Home</BreadcrumbEscape>
       </BreadcrumbContainer>
       <main className="flex w-full flex-col gap-4">
-        <h1 className="font-bold text-5xl underline">Courses</h1>
+        <h1 className="text-5xl font-bold underline">Courses</h1>
         <div className="grid w-full grid-cols-3 gap-1">
           {courses.map((topic) => (
             <MotionLink
               initial={{ opacity: 0, scaleY: 1.02 }}
               animate={{ opacity: 1, scaleY: 1 }}
-              className={`col-span-3 grid hocus:scale-[102%] pressed:scale-[102%] transition-[scale] duration-100 ${buttonBehaviorClasses}`}
+              className={`hocus:scale-[102%] pressed:scale-[102%] col-span-3 grid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
               href={`/courses/${topic.slug}`}
               key={topic.slug}
             >
-              <div className="font-bold text-4xl">{topic.title}</div>
+              <div className="text-4xl font-bold">{topic.title}</div>
             </MotionLink>
           ))}
         </div>

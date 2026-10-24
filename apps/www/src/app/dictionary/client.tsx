@@ -41,7 +41,7 @@ export function SearchPage({ words }: { words: Promise<Words> }) {
   return (
     <div className="flex w-full flex-col gap-3 py-4">
       <div className="flex flex-col gap-2">
-        <h1 className="font-bold text-5xl underline">Dictionary</h1>
+        <h1 className="text-5xl font-bold underline">Dictionary</h1>
         <TextField aria-label="Search" placeholder="Search..." value={input} onChange={(e) => setInput(e)} />
       </div>
       <hr className="my-1 border border-gray-400" />

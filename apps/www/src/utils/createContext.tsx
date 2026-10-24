@@ -9,6 +9,7 @@ export function ezCreateContext<ProvidedValue, ProviderProps = DefaultProps>(
   ) => (props: ProviderProps) => React.ReactNode,
 ) {
   const Context = createContext<ProvidedValue | null>(null);
+  // biome-ignore lint/correctness/noComponentHookFactories: factory runs once at module level
   const useContext = () => {
     const context = use(Context);
     if (context === null) throw new Error("Context used without provider.");

@@ -21,7 +21,7 @@ export function TimeAttack() {
   return !timeAttackRunning ? (
     <ChallengeTitle onStart={() => setTimeAttackRunning(true)} improve={previousBest !== null}>
       <div className="flex gap-2">
-        <div className="flex grow basis-0 flex-col font-bold text-3xl">
+        <div className="flex grow basis-0 flex-col text-3xl font-bold">
           {Object.values(timeAttackColors)
             .map((ele) => (
               <div className="flex items-center gap-1" key={ele.key}>
@@ -101,7 +101,7 @@ function TimeAttackRunning({
         <ExitButton onExit={() => onTimeAttackComplete(null)} />
       </div>
       <div className="flex flex-col items-center gap-2 self-center justify-self-center">
-        <div ref={timerRef} className="font-bold font-mono text-lg">
+        <div ref={timerRef} className="font-mono text-lg font-bold">
           0.00
         </div>
         <ProgressRing current={completedItems} total={itemsToComplete} />

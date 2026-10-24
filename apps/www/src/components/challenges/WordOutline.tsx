@@ -35,9 +35,9 @@ export function WordOutline({ word, hideLinks = false, className }: WordOutlineP
       <div className="flex grow basis-0 flex-col items-start gap-2 p-2">
         <div className="text-3xl md:text-4xl">{character}</div>
         <hr className="w-full border-gray-400" />
-        <div className="font-semibold text-xl md:text-2xl">{pinyin}</div>
+        <div className="text-xl font-semibold md:text-2xl">{pinyin}</div>
         <hr className="w-full border-gray-400" />
-        <div className="text-pretty text-xl md:text-2xl">{definition}</div>
+        <div className="text-xl text-pretty md:text-2xl">{definition}</div>
         {word.type === "word" && !hideLinks && (
           <>
             <hr className="w-full border-gray-400" />

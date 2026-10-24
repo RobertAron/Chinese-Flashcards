@@ -63,7 +63,7 @@ export function DailyPractice() {
       disableStart={!hasQuestions}
     >
       <div className="flex flex-col gap-1 text-lg">
-        <p className="font-mono text-sm uppercase tracking-widest">
+        <p className="font-mono text-sm tracking-widest uppercase">
           Part {info.number} of {dailyParts.length}
         </p>
         <p>
@@ -185,7 +185,7 @@ function SessionProgress({ sections, answered }: { sections: ProgressSection[]; 
   return (
     <div className="flex w-full flex-col gap-1">
       <div className="flex items-end justify-between font-mono">
-        <span className={cn("font-bold text-lg uppercase", current.textClassName)}>{current.label}</span>
+        <span className={cn("text-lg font-bold uppercase", current.textClassName)}>{current.label}</span>
         <span className="text-2xl">
           {answered - current.start}/{current.length}
         </span>
@@ -230,7 +230,7 @@ function PartComplete({ date, part, onAgain }: { date: string; part: DailyPart; 
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.15 }}
     >
-      <h1 className="flex items-center gap-3 rounded-t-md bg-black p-3 font-extrabold text-4xl text-white">
+      <h1 className="flex items-center gap-3 rounded-t-md bg-black p-3 text-4xl font-extrabold text-white">
         <PartyPopperIcon className="h-9 w-9 shrink-0" />
         {allDone ? "Daily Challenge complete!" : `${dailyPartInfo[part].title} complete!`}
       </h1>
@@ -238,7 +238,7 @@ function PartComplete({ date, part, onAgain }: { date: string; part: DailyPart; 
         {allDone ? (
           <>
             {date === today && streak > 0 && (
-              <p className="flex items-center gap-2 font-bold text-2xl">
+              <p className="flex items-center gap-2 text-2xl font-bold">
                 <FlameIcon className="h-7 w-7 text-orange-600" />
                 {streak}-day streak
               </p>
@@ -265,7 +265,7 @@ function PartComplete({ date, part, onAgain }: { date: string; part: DailyPart; 
           href={nextHref}
           className={cn(
             buttonBehaviorClasses,
-            "flex grow basis-0 items-center justify-center gap-2 rounded-br-md px-4 py-2 font-bold text-xl",
+            "flex grow basis-0 items-center justify-center gap-2 rounded-br-md px-4 py-2 text-xl font-bold",
           )}
         >
           <Kbd>↵</Kbd>

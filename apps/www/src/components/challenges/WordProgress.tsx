@@ -80,7 +80,7 @@ function TypedCharacter({
   return (
     <span
       className={clsx("whitespace-pre text-black", {
-        "decoration-black decoration-skip-ink-none": practice,
+        "decoration-skip-ink-none decoration-black": practice,
         underline: isTypingRequired,
       })}
     >
@@ -108,7 +108,7 @@ function UntypedCharacter({
 }) {
   return (
     <m.span
-      className={clsx("whitespace-pre text-slate-400 decoration-black decoration-skip-ink-none", {
+      className={clsx("decoration-skip-ink-none whitespace-pre text-slate-400 decoration-black", {
         underline: isTypingRequired,
         "bg-slate-300/50": isCurrentCharacter,
       })}

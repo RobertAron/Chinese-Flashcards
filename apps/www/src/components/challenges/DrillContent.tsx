@@ -32,7 +32,7 @@ export function DrillContent() {
             duration: 0.1,
           }}
         >
-          <div className="flex flex-col gap-1 rounded-sm border-blue-500 border-l-8 p-2">
+          <div className="flex flex-col gap-1 rounded-sm border-l-8 border-blue-500 p-2">
             <h6 className="flex items-center gap-2 text-2xl">
               <span>Description</span>
             </h6>
@@ -48,7 +48,7 @@ export function DrillContent() {
           duration: 0.1,
         }}
       >
-        <div className="flex flex-col gap-1 rounded-sm border-blue-500 border-l-8 p-2">
+        <div className="flex flex-col gap-1 rounded-sm border-l-8 border-blue-500 p-2">
           <h6 className="flex items-center gap-2 text-2xl">
             <BrainIcon className="inline-block" />
             <span>Reminder!</span>
@@ -60,7 +60,7 @@ export function DrillContent() {
       </m.section>
       {wordDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
-          <h2 className="font-semibold text-2xl">Practice Words</h2>
+          <h2 className="text-2xl font-semibold">Practice Words</h2>
           <ul className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3">
             {wordDefinitions.map((word, index) => (
               <m.li
@@ -86,7 +86,7 @@ export function DrillContent() {
       )}
       {phraseDefinitions.length > 0 && (
         <section className="flex w-full flex-col gap-2">
-          <h2 className="font-semibold text-2xl">Phrases</h2>
+          <h2 className="text-2xl font-semibold">Phrases</h2>
           <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {phraseDefinitions.map((phrase, index) => (
               <m.li
@@ -111,7 +111,7 @@ export function DrillContent() {
         </section>
       )}
       <section className="flex w-full flex-col gap-2">
-        <h2 className="font-semibold text-2xl">All Words</h2>
+        <h2 className="text-2xl font-semibold">All Words</h2>
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {allWords.map((ele) => (
             <li key={ele.id}>

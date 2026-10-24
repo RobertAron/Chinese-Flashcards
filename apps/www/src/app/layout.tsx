@@ -28,14 +28,14 @@ export default function RootLayout({
             className={`${GeistSans.variable} ${GeistMono.variable} relative flex min-h-full flex-col overflow-y-scroll font-sans antialiased`}
           >
             <MotionProvider>
-              <nav className="relative z-10 flex border-black border-b bg-white">
+              <nav className="relative z-10 flex border-b border-black bg-white">
                 <div className="container mx-auto flex items-center justify-between gap-2 text-black">
                   <Link
                     href="/"
                     className={cn(buttonBehaviorClasses, "flex h-full items-center gap-2 border-none")}
                   >
                     <LanguagesIcon className="shrink-0" />
-                    <span className="font-bold text-xl">Chinese Challenges</span>
+                    <span className="text-xl font-bold">Chinese Challenges</span>
                   </Link>
                   <div className="flex gap-2">
                     <Link
@@ -61,7 +61,7 @@ export default function RootLayout({
                   </div>
                 </div>
               </nav>
-              <div className="container relative z-10 mx-auto flex h-full w-full grow">{children}</div>
+              <div className="relative z-10 container mx-auto flex h-full w-full grow">{children}</div>
               <LoadingRender />
               <div className="texture" />
             </MotionProvider>

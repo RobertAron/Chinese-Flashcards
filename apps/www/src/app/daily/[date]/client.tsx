@@ -34,15 +34,15 @@ export function DailyPartLink({
       href={`/daily/${dateKey}/${part}`}
       className={cn(
         buttonBehaviorClasses,
-        "grid hocus:scale-[101%] pressed:scale-[101%] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-md p-4 transition-[scale] duration-100",
+        "hocus:scale-[101%] pressed:scale-[101%] grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-md p-4 transition-[scale] duration-100",
       )}
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-current font-black text-2xl">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-current text-2xl font-black">
         {done ? <CheckIcon strokeWidth={3} /> : info.number}
       </div>
       <div className="flex min-w-0 flex-col gap-1">
         <div className="flex items-center gap-2">
-          <h2 className="font-black text-3xl">{info.title}</h2>
+          <h2 className="text-3xl font-black">{info.title}</h2>
           {done && <StatusPill className="bg-green-300">Done</StatusPill>}
           {upNext && <StatusPill className="bg-amber-200">Up next</StatusPill>}
         </div>
@@ -60,7 +60,7 @@ function StatusPill({ className, children }: { className: string; children: Reac
   return (
     <span
       className={cn(
-        "rounded-full border-2 border-black px-2 font-bold font-mono text-black text-xs uppercase",
+        "rounded-full border-2 border-black px-2 font-mono text-xs font-bold text-black uppercase",
         className,
       )}
     >
@@ -77,7 +77,7 @@ export function DailyWeek({ dateKey }: { dateKey: string }) {
   return (
     <section className="flex flex-col gap-2 rounded-md border-2 border-black bg-white p-3">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="font-bold text-lg">This week</h2>
+        <h2 className="text-lg font-bold">This week</h2>
         <p className="flex items-center gap-1 font-mono">
           <FlameIcon className={cn("h-5 w-5", streak > 0 ? "text-orange-600" : "text-gray-400")} />
           {streak > 0 ? `${streak}-day streak` : "No streak yet"}
@@ -91,7 +91,7 @@ export function DailyWeek({ dateKey }: { dateKey: string }) {
         ))}
       </ol>
       {today !== null && dateKey < today && (
-        <Link href={`/daily/${today}`} className="self-start hocus:text-gray-600 underline">
+        <Link href={`/daily/${today}`} className="hocus:text-gray-600 self-start underline">
           This is a past challenge. Go to today's challenge.
         </Link>
       )}
@@ -112,7 +112,7 @@ function DayStatus({ day, progress }: { day: string; progress: DailyChallengePro
       )}
     >
       <span className="text-xs uppercase">{formatDateKey(day, { weekday: "short" })}</span>
-      <span className="font-bold text-lg">{formatDateKey(day, { day: "numeric" })}</span>
+      <span className="text-lg font-bold">{formatDateKey(day, { day: "numeric" })}</span>
       {complete ? <CheckIcon className="h-4 w-4" strokeWidth={3} /> : <span className="h-4" />}
       <span className="sr-only">{complete ? "Complete" : started ? "Started" : "Not done"}</span>
     </div>

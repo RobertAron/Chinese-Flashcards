@@ -55,7 +55,7 @@ async function LessonDrills({ params }: { params: Promise<Record<string, unknown
         <BreadcrumbEscape href={`/courses/${courseSlug}`}>{lesson.Course.title}</BreadcrumbEscape>
       </BreadcrumbContainer>
       <main className="flex flex-col gap-4">
-        <h1 className="font-bold text-5xl underline">{lesson.title}</h1>
+        <h1 className="text-5xl font-bold underline">{lesson.title}</h1>
         <div className="grid grid-cols-3 gap-1">
           <div className="col-span-3 grid grid-cols-subgrid">
             <div>Drill</div>
@@ -66,7 +66,7 @@ async function LessonDrills({ params }: { params: Promise<Record<string, unknown
             <MotionLink
               initial={{ opacity: 0, scaleY: 1.02 }}
               animate={{ opacity: 1, scaleY: 1 }}
-              className={`col-span-3 grid hocus:scale-[102%] pressed:scale-[102%] grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
+              className={`hocus:scale-[102%] pressed:scale-[102%] col-span-3 grid grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
               href={`/courses/${courseSlug}/${lessonSlug}/${ele.slug}`}
               key={ele.slug}
             >
@@ -78,7 +78,7 @@ async function LessonDrills({ params }: { params: Promise<Record<string, unknown
           <MotionLink
             initial={{ opacity: 0, scaleY: 1.02 }}
             animate={{ opacity: 1, scaleY: 1 }}
-            className={`col-span-3 grid hocus:scale-[102%] pressed:scale-[102%] grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
+            className={`hocus:scale-[102%] pressed:scale-[102%] col-span-3 grid grid-cols-subgrid transition-[scale] duration-100 ${buttonBehaviorClasses}`}
             href={`/courses/${courseSlug}/${lessonSlug}/final-mastery-${lessonSlug}`}
           >
             <div>Final Mastery 💯</div>

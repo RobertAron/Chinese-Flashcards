@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/.storybook", "!**/cms-data", "!**/hsk"]
+    "includes": ["**", "!**/.storybook", "!**/cms-data", "!**/hsk", "!**/*.md"]
   },
   "formatter": {
     "enabled": true,
@@ -23,13 +23,9 @@
     },
     "rules": {
       "nursery": {
-        "useSortedClasses": {
+        "useTailwindSortedClasses": {
           "level": "error",
-          "fix": "safe",
-          "options": {
-            "attributes": ["className"],
-            "functions": ["cn", "clsx"]
-          }
+          "fix": "safe"
         }
       },
       "preset": "recommended",
@@ -79,5 +75,9 @@
     "parser": {
       "tailwindDirectives": true
     }
+  },
+  "tailwind": {
+    "attributes": ["class", "className"],
+    "mergeFunctions": ["cn", "clsx"]
   }
 }

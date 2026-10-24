@@ -30,7 +30,7 @@ export function TextField({
       <AriaLabel className="text-slate-800">{label}</AriaLabel>
       <AriaInput className="rounded-sm border-2 border-black bg-white p-1" placeholder={placeholder} />
       {description !== undefined && <AriaText slot="description">{description}</AriaText>}
-      <AriaFieldError className="text-red-700 text-sm">{errorMessage}</AriaFieldError>
+      <AriaFieldError className="text-sm text-red-700">{errorMessage}</AriaFieldError>
     </AriaTextField>
   );
 }

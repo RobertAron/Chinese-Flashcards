@@ -11,7 +11,7 @@ export const ensureStatic = "navigation";
 export default AppServerLayoutEntrypoint(({ children, params }) => {
   return (
     <div className="flex grow items-stretch">
-      <div className="hidden w-64 shrink-0 flex-col gap-2 border-black border-r lg:flex">
+      <div className="hidden w-64 shrink-0 flex-col gap-2 border-r border-black lg:flex">
         <Suspense fallback={<SideNavSkeleton />}>
           <SideNav params={params} />
         </Suspense>

@@ -32,7 +32,7 @@ async function DrillHomeContent({ params }: { params: Promise<Record<string, unk
         </BreadcrumbEscape>
       </BreadcrumbContainer>
       <main className="flex flex-col items-start gap-4">
-        <h1 className="font-bold text-5xl underline">{drillInfo.drillTitle}</h1>
+        <h1 className="text-5xl font-bold underline">{drillInfo.drillTitle}</h1>
         <DrillHome />
       </main>
     </>

@@ -24,7 +24,7 @@ export function ChallengeTitle({
   useKeyTrigger("Enter", onStart);
   return (
     <div className="mx-auto flex flex-col gap-1 lg:max-w-2xl">
-      <h1 className="rounded-t-md bg-black p-3 font-extrabold text-4xl text-white">{challengeLabel}</h1>
+      <h1 className="rounded-t-md bg-black p-3 text-4xl font-extrabold text-white">{challengeLabel}</h1>
       <div className="border-2 border-black bg-white p-2">{children}</div>
       <div className="flex flex-col items-start gap-2 border-2 border-black bg-white p-2">
         <Checkbox
@@ -91,7 +91,7 @@ export function ChallengeTitle({
           Exit
         </ExitLink>
         <Button
-          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2 font-bold text-xl"
+          className="flex grow basis-0 items-center justify-center gap-1 rounded-br-md bg-white px-4 py-2 text-xl font-bold"
           onClick={onStart}
           isDisabled={disableStart}
         >

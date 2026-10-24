@@ -21,14 +21,14 @@ export function ModeOption({
         duration: 0.1,
       }}
       href={href}
-      className={`group flex shrink grow hocus:rotate-1 pressed:rotate-1 hocus:scale-[102%] pressed:scale-[102%] items-center gap-4 p-3 transition-[scale,rotate] duration-100 hover:z-10 ${buttonBehaviorClasses}`}
+      className={`group hocus:rotate-1 pressed:rotate-1 hocus:scale-[102%] pressed:scale-[102%] flex shrink grow items-center gap-4 p-3 transition-[scale,rotate] duration-100 hover:z-10 ${buttonBehaviorClasses}`}
     >
-      <div className="h-20 w-20 shrink-0 rounded-full bg-black p-2 text-white group-hocus:bg-white group-pressed:bg-white group-hocus:text-black group-pressed:text-black sm:h-28 sm:w-28 md:p-4">
+      <div className="group-hocus:bg-white group-pressed:bg-white group-hocus:text-black group-pressed:text-black h-20 w-20 shrink-0 rounded-full bg-black p-2 text-white sm:h-28 sm:w-28 md:p-4">
         {icon}
       </div>
       <div className="w-0 grow">
-        <div className="truncate whitespace-nowrap text-5xl sm:text-6xl">{title}</div>
-        <div className="truncate whitespace-nowrap text-2xl sm:text-4xl">{subtitle}</div>
+        <div className="truncate text-5xl whitespace-nowrap sm:text-6xl">{title}</div>
+        <div className="truncate text-2xl whitespace-nowrap sm:text-4xl">{subtitle}</div>
       </div>
     </MotionLink>
   );

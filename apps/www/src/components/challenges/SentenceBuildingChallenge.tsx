@@ -127,7 +127,7 @@ export function SentenceBuildingChallenge({
       </div>
 
       {isCorrect === false && (
-        <div className="text-center text-red-600 text-sm">
+        <div className="text-center text-sm text-red-600">
           Incorrect order. Click words to remove and try again.
         </div>
       )}

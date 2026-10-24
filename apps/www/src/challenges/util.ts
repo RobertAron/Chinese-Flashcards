@@ -7,4 +7,5 @@ export function groupByFive<T>(arr: T[]): T[][] {
 }
 
 export const clamp = (value: number, min: number, max: number) =>
+  // biome-ignore lint/complexity/useMathMinMax: ternary avoids Math.min/max call overhead in hot paths
   value < min ? min : value > max ? max : value;

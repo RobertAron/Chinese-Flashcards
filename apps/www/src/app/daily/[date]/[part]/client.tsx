@@ -26,11 +26,11 @@ export default function DailyPartHome() {
       </BreadcrumbContainer>
       <main className="flex w-full flex-col items-start gap-4 py-2">
         <div>
-          <p className="font-mono text-sm uppercase tracking-widest">
+          <p className="font-mono text-sm tracking-widest uppercase">
             Part {info.number} of {dailyParts.length} ·{" "}
             {formatDateKey(date, { month: "long", day: "numeric" })}
           </p>
-          <h1 className="font-bold text-5xl underline">{info.title}</h1>
+          <h1 className="text-5xl font-bold underline">{info.title}</h1>
         </div>
         <section className="flex w-full">
           <ModeOption

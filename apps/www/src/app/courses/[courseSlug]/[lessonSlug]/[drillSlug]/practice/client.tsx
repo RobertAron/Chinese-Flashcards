@@ -51,13 +51,13 @@ export default function Practice() {
         disableStart={noProblems}
       >
         <div className="flex gap-2">
-          <div className="flex grow basis-0 flex-col font-bold text-3xl">
+          <div className="flex grow basis-0 flex-col text-3xl font-bold">
             <PracticeCountItem id={3} showRange />
             <PracticeCountItem id={2} showRange />
             <PracticeCountItem id={1} showRange />
             <PracticeCountItem id={0} showRange />
           </div>
-          <div className="grow basis-0 font-extrabold text-3xl">
+          <div className="grow basis-0 text-3xl font-extrabold">
             <div className="flex items-center font-mono">
               <PracticeCountIcon count={practiceCount} large />
               <span>{formatPracticeCount(practiceCount)}</span>
@@ -147,7 +147,7 @@ function PercentageComplete({ percent, ref }: { percent: number; ref?: Ref<HTMLD
     }, 1.5 * 1000);
   }, [currentlyShownPercent, percent, isPresent, safeToRemove]);
   return (
-    <m.span ref={ref} className="text-gray-600 text-sm/6">
+    <m.span ref={ref} className="text-sm/6 text-gray-600">
       {formattedPercent}
     </m.span>
   );

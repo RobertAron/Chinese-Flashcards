@@ -157,7 +157,7 @@ async function WordDetail({ params }: { params: Promise<Record<string, unknown>>
 
       {siblingWords.length > 0 && (
         <section className="flex flex-col gap-3">
-          <h2 className="font-semibold text-2xl">Variants</h2>
+          <h2 className="text-2xl font-semibold">Variants</h2>
           <p className="text-gray-600">Other forms of this word:</p>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {siblingWords.map((variant) => (
@@ -167,7 +167,7 @@ async function WordDetail({ params }: { params: Promise<Record<string, unknown>>
                   className="flex items-center justify-between gap-2 rounded-md border-2 border-black bg-white p-3 hover:bg-gray-50"
                 >
                   <div className="flex flex-col gap-1">
-                    <span className="font-bold text-2xl">{variant.characters}</span>
+                    <span className="text-2xl font-bold">{variant.characters}</span>
                     <span className="text-gray-600">{variant.pinyin}</span>
                   </div>
                   {variant.hskLevel && <HskBadge hskLevel={variant.hskLevel} />}
@@ -180,7 +180,7 @@ async function WordDetail({ params }: { params: Promise<Record<string, unknown>>
 
       {phrases.length > 0 && (
         <section className="flex flex-col gap-3">
-          <h2 className="font-semibold text-2xl">Example Phrases</h2>
+          <h2 className="text-2xl font-semibold">Example Phrases</h2>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {phrases.map((phrase) => (
               <li key={phrase.id}>

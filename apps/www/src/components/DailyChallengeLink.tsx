@@ -32,7 +32,7 @@ export function DailyChallengeLink() {
       <div className="flex items-start justify-between">
         <CalendarCheckIcon className="h-9 w-9" />
         {streak > 0 && (
-          <span className="flex items-center gap-1 rounded-full border-2 border-current px-2 py-1 font-bold font-mono text-sm">
+          <span className="flex items-center gap-1 rounded-full border-2 border-current px-2 py-1 font-mono text-sm font-bold">
             <FlameIcon className="h-4 w-4" />
             {streak}-day streak
           </span>
@@ -44,7 +44,7 @@ export function DailyChallengeLink() {
         </p>
         <div className="flex items-end justify-between gap-2">
           <div>
-            <h2 className="font-black text-3xl">Daily Challenge</h2>
+            <h2 className="text-3xl font-black">Daily Challenge</h2>
             <p>{status}</p>
           </div>
           <ArrowRightIcon className="h-8 w-8 shrink-0" />

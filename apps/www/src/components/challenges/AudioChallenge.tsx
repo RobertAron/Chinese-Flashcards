@@ -49,7 +49,7 @@ export function ChallengeAudioPlayer({ src, slow }: { src: string; slow?: boolea
         <div className="grid-stack-item z-10 m-1 self-start justify-self-end md:justify-self-start">
           <Button
             type="button"
-            className="flex items-center gap-4 rounded-lg hocus:border-slate-300 bg-white/30 p-2 text-sm backdrop-blur-sm"
+            className="hocus:border-slate-300 flex items-center gap-4 rounded-lg bg-white/30 p-2 text-sm backdrop-blur-sm"
             onClick={playAudio}
           >
             <RotateCcw className="h-4 w-4" />

@@ -12,10 +12,10 @@
   "dependencies": {
     "@prisma/adapter-libsql": "6.19.1",
     "@prisma/client": "6.19.1",
-    "dotenv": "^18.0.4"
+    "dotenv": "^18.0.9"
   },
   "devDependencies": {
-    "@types/bun": "^1.4.2",
+    "@types/bun": "^1.4.4",
     "prisma": "6.19.1"
   }
 }

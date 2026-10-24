@@ -28,10 +28,10 @@ async function DailyChallengeData({ params }: { params: Promise<{ date: string }
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
       <header className="rounded-md border-2 border-black bg-amber-200 p-4">
-        <p className="font-mono text-sm uppercase tracking-widest">
+        <p className="font-mono text-sm tracking-widest uppercase">
           {formatDateKey(date, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
         </p>
-        <h1 className="font-black text-4xl">Daily Challenge</h1>
+        <h1 className="text-4xl font-black">Daily Challenge</h1>
         <p className="text-lg">Learn today's words, then use them in phrases.</p>
       </header>
       <DailyWeek dateKey={date} />

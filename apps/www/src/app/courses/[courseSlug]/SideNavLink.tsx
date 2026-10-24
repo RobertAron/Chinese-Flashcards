@@ -21,7 +21,7 @@ type CourseTitleLinkProps = {
 export const CourseTitleLink = ({ courseSlug, children }: CourseTitleLinkProps) => {
   const href = `/courses/${courseSlug}`;
   return (
-    <Link href={href} className="truncate border-black border-b px-1 py-2 font-bold text-2xl text-black">
+    <Link href={href} className="truncate border-b border-black px-1 py-2 text-2xl font-bold text-black">
       {children}
     </Link>
   );
@@ -56,7 +56,7 @@ export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLin
       data-selected={matchingPath}
       href={`/courses/${courseSlug}/${lessonSlug}/${drillSlug}`}
       key={drillSlug}
-      className={`${coreLinkClasses} flex border-[currentColor] border-l pl-1`}
+      className={`${coreLinkClasses} flex border-l border-[currentColor] pl-1`}
     >
       <div className="flex items-center gap-1 pl-2">
         <PracticeCountIcon count={practiceCount} />
