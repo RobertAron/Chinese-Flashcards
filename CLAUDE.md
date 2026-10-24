@@ -13,7 +13,7 @@ Chinese Flashcards (Vocab Sprint) is a full-stack Chinese language learning appl
 ## Development Commands
 
 ### Package Manager
-This project uses **Bun 1.2.4** exclusively. Do not use npm or yarn.
+This project uses **Bun 1.4.4** exclusively. Do not use npm or yarn.
 
 ### Root Commands
 ```bash
