@@ -1,16 +1,16 @@
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import React from "react";
 import localFont from "next/font/local";
-import type { Preview } from "@storybook/nextjs";
+import type { Preview } from "@storybook/nextjs-vite";
 import '../src/app/globals.css'
 
 const GeistSans = localFont({
-  src: "../fonts/geist-sans/Geist-Variable.woff2",
+  src: "../../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
   variable: "--font-geist-sans",
 });
 
 const GeistMono = localFont({
-  src: "../fonts/geist-mono/GeistMono-Variable.woff2",
+  src: "../../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
   variable: "--font-geist-mono",
 });
 

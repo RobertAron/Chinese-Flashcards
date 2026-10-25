@@ -1,6 +1,6 @@
 import type { HskLevel } from "vocab-db/prisma";
 
-const hskClasses: Record<HskLevel, string> = {
+export const hskClasses: Record<HskLevel, string> = {
   hsk1: "bg-teal-300 text-black",
   hsk2: "bg-green-300 text-black",
   hsk3: "bg-lime-300 text-black",

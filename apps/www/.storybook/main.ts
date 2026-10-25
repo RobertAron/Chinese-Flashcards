@@ -1,22 +1,12 @@
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
-import type { StorybookConfig } from "@storybook/nextjs";
+import type { StorybookConfig } from "@storybook/nextjs-vite";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [],
-  framework: getAbsolutePath("@storybook/nextjs"),
-  staticDirs: [
-    "../public",
-    {
-      from: "../../../node_modules/geist/dist/fonts/geist-sans",
-      to: "/fonts/geist-sans",
-    },
-    {
-      from: "../../../node_modules/geist/dist/fonts/geist-mono",
-      to: "/fonts/geist-mono",
-    },
-  ],
+  framework: getAbsolutePath("@storybook/nextjs-vite"),
+  staticDirs: ["../public"],
 };
 export default config;
 

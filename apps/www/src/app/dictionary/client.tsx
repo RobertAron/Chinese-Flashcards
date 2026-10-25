@@ -3,6 +3,7 @@ import Fuse from "fuse.js";
 import { useSearchParams } from "next/navigation";
 import { Suspense, use, useEffect, useMemo, useState } from "react";
 import { WordOutline } from "@/components/challenges/WordOutline";
+import { HskFilter, type HskFilterLevel, hskFilterLevels } from "@/components/HskFilter";
 import { Skeleton } from "@/components/Skeleton";
 import { TextField } from "@/components/TextField";
 import { wordToAudioSource } from "@/utils/idToAudioSource";
@@ -38,16 +39,18 @@ function matchTier(
 
 export function SearchPage({ words }: { words: Promise<Words> }) {
   const [input, setInput] = useState("");
+  const [hskLevels, setHskLevels] = useState<ReadonlySet<HskFilterLevel>>(() => new Set(hskFilterLevels));
   return (
     <div className="flex w-full flex-col gap-3 py-4">
       <div className="flex flex-col gap-2">
         <h1 className="text-5xl font-bold underline">Dictionary</h1>
         <TextField aria-label="Search" placeholder="Search..." value={input} onChange={(e) => setInput(e)} />
+        <HskFilter selected={hskLevels} onChange={setHskLevels} />
       </div>
       <hr className="my-1 border border-gray-400" />
       <Suspense fallback={<ResultsSkeleton />}>
         <SyncSearchFromUrl setInput={setInput} />
-        <SearchResults words={words} input={input} />
+        <SearchResults words={words} input={input} hskLevels={hskLevels} />
       </Suspense>
     </div>
   );
@@ -76,7 +79,15 @@ function ResultsSkeleton() {
   );
 }
 
-function SearchResults({ words: wordsPromise, input }: { words: Promise<Words>; input: string }) {
+function SearchResults({
+  words: wordsPromise,
+  input,
+  hskLevels,
+}: {
+  words: Promise<Words>;
+  input: string;
+  hskLevels: ReadonlySet<HskFilterLevel>;
+}) {
   const words = use(wordsPromise);
   const fuseWords = useMemo(() => {
     const withToneless = words.map((ele) => ({
@@ -114,9 +125,16 @@ function SearchResults({ words: wordsPromise, input }: { words: Promise<Words>; 
           }))
           .sort((a, b) => a.tier - b.tier || a.cost - b.cost || a.item.frequencyRank - b.item.frequencyRank)
           .map((ele) => ele.item);
+  const visibleWords = matchingWords.filter((word) => hskLevels.has(word.hskLevel ?? "none"));
+  const hiddenCount = matchingWords.length - visibleWords.length;
   return (
     <>
-      {matchingWords.slice(0, 30).map((word) => {
+      {hiddenCount > 0 && (
+        <p className="text-sm text-gray-600">
+          {hiddenCount.toLocaleString()} {hiddenCount === 1 ? "word" : "words"} hidden by HSK filter
+        </p>
+      )}
+      {visibleWords.slice(0, 30).map((word) => {
         return (
           <WordOutline
             className="grow-0"
