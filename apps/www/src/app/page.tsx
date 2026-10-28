@@ -4,6 +4,8 @@ import { DailyChallengeLink } from "@/components/DailyChallengeLink";
 import { cn } from "@/utils/cn";
 import { Link } from "@/utils/NextNavigationUtils";
 
+export const ensureStatic = "navigation";
+
 export default function Home() {
   return (
     <main className="flex w-full flex-col gap-6 px-3 py-6">

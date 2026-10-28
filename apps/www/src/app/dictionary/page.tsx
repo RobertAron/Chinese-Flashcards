@@ -8,7 +8,7 @@ export const ensureStatic = "navigation";
 export type Words = Awaited<ReturnType<typeof getWords>>;
 async function getWords() {
   "use cache";
-  cacheLife("days");
+  cacheLife("max");
   return getPrismaClient().words.findMany({
     orderBy: {
       frequencyRank: "asc",

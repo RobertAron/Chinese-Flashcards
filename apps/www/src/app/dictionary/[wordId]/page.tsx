@@ -20,7 +20,7 @@ export const ensureStatic = "prefetch";
 
 async function getWord(wordId: number) {
   "use cache";
-  cacheLife("days");
+  cacheLife("max");
   return getPrismaClient().words.findUnique({
     where: { id: wordId },
     include: {

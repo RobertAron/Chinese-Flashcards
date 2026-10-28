@@ -196,7 +196,7 @@ export interface PhraseDefinition extends DefinitionCore {
 
 export const getDrillInfo = React.cache(async function c(params: DrillIdentifier) {
   "use cache";
-  cacheLife("days");
+  cacheLife("max");
   const data = await (params.drillSlug.startsWith("final-mastery")
     ? getAllWordsInLesson(params.lessonSlug)
     : getAllWordsInDrill(params.drillSlug));

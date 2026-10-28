@@ -23,7 +23,7 @@ export function DailyChallengeLink() {
         : "Three phrases and the words inside them.";
   return (
     <Link
-      href="/daily"
+      href={today === null ? "/daily" : `/daily/${today}`}
       className={cn(
         buttonBehaviorClasses,
         "flex min-h-48 flex-col justify-between rounded-lg bg-amber-200 p-5",
