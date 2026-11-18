@@ -1,1 +1,0 @@
-[source](https://github.com/drkameleon/complete-hsk-vocabulary)

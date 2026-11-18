@@ -34,6 +34,12 @@
         "prisma": "6.19.1",
       },
     },
+    "apps/reference": {
+      "name": "vocab-reference",
+      "devDependencies": {
+        "@types/bun": "^1.4.4",
+      },
+    },
     "apps/www": {
       "name": "vocab-sprint",
       "version": "0.1.0",
@@ -1092,6 +1098,8 @@
     "vite-tsconfig-paths": ["vite-tsconfig-paths@5.1.4", "", { "dependencies": { "debug": "^4.1.1", "globrex": "^0.1.2", "tsconfck": "^3.0.3" }, "peerDependencies": { "vite": "*" }, "optionalPeers": ["vite"] }, "sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w=="],
 
     "vocab-db": ["vocab-db@workspace:apps/db"],
+
+    "vocab-reference": ["vocab-reference@workspace:apps/reference"],
 
     "vocab-sprint": ["vocab-sprint@workspace:apps/www"],
 

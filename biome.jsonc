@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/.storybook", "!**/cms-data", "!**/hsk", "!**/*.md"]
+    "includes": ["**", "!**/.storybook", "!**/cms-data", "!apps/reference/sources", "!**/*.md"]
   },
   "formatter": {
     "enabled": true,
