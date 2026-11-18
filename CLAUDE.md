@@ -54,6 +54,8 @@ SQLite database at `apps/db/local.db` with these core models:
 
 Drills contain both Words and Phrases for practice sessions.
 
+`Words.pinyin` is written the way it's typed on a pinyin keyboard, not as dictionary pinyin. Syllables are joined with no spaces, even in names (小黑 → `Xiǎohēi`). Erhua words spell out the 儿 syllable (哪儿 → `nǎér`, 那儿 → `nàēr`). These are intentional, so don't "correct" them.
+
 ### www App Structure
 - **App Router** at `src/app/` with routes: `/courses`, `/dictionary`, `/user`, `/admin`
 - **Challenge components** at `src/components/challenges/` - multiple interactive challenge types (audio, image, typing, pinyin, sentence building, etc.)
