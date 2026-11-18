@@ -4,13 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Chinese Flashcards (Vocab Sprint) is a full-stack Chinese language learning application built as a Bun monorepo with four apps:
+Chinese Flashcards (Vocab Sprint) is a full-stack Chinese language learning application built as a Bun monorepo with three apps:
 
 - **apps/www** - Next.js 16 web application with interactive learning challenges
 - **apps/db** - Prisma database layer with SQLite (shared across apps)
 - **apps/reference** - Package `vocab-reference`: reference data (definitions, frequency, HSK level) consolidated from multiple sources. Look words up with `bun run lookup <simplified>`. See its README for adding sources.
-- **apps/asset-gen** - Legacy CLI scripts for generating audio/images using Google TTS and OpenAI (mostly unused)
-
 ## Development Commands
 
 ### Package Manager
