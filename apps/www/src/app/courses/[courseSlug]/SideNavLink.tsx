@@ -11,6 +11,9 @@ type LessonLinkProps = {
   children?: React.ReactNode;
 };
 
+// Whole path segments only, so ".../part-1" isn't selected on ".../part-10" or ".../part-1-words".
+const isWithinPath = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
 const coreLinkClasses =
   "text-gray-600 truncate hocus:text-black data-[selected=true]:text-gray-800 data-[selected=true]:font-bold";
 
@@ -30,7 +33,7 @@ export const CourseTitleLink = ({ courseSlug, children }: CourseTitleLinkProps) 
 export const LessonLink = ({ courseSlug, lessonSlug, title }: LessonLinkProps) => {
   const pathname = usePathname();
   const href = `/courses/${courseSlug}/${lessonSlug}`;
-  const matchingPath = pathname.startsWith(href);
+  const matchingPath = isWithinPath(pathname, href);
   return (
     <Link data-selected={matchingPath} href={href} className={`${coreLinkClasses} font-semibold`}>
       {title}
@@ -49,7 +52,7 @@ type DrillLinkProps = {
 export const DrillLink = ({ courseSlug, lessonSlug, drillSlug, title }: DrillLinkProps) => {
   const pathname = usePathname();
   const href = `/courses/${courseSlug}/${lessonSlug}/${drillSlug}`;
-  const matchingPath = pathname.startsWith(href);
+  const matchingPath = isWithinPath(pathname, href);
   const [practiceCount] = usePracticeCount(drillSlug);
   return (
     <Link
