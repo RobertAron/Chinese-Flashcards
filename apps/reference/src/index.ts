@@ -1,44 +1,49 @@
 import { loadCompleteHsk } from "./sources/completeHsk";
-import { hskLevels, type ReferenceEntry } from "./types";
+import { loadHskOfficial } from "./sources/hskOfficial";
+import { type HskLevel, hskLevels, type ReferenceEntry, type SourceName, type SourceRecords } from "./types";
 
 export * from "./types";
 
-/** Every source's loader. Add new sources here; earlier sources win when values conflict. */
-const sourceLoaders = [loadCompleteHsk];
+type SourceLoader<Source extends SourceName> = () => Promise<
+  Map<string, { simplified: string; record: SourceRecords[Source] }[]>
+>;
 
-const unique = <T>(values: T[]) => [...new Set(values)];
+/** Every source's loader, keyed by source name. Add new sources here. */
+const sourceLoaders: { [Source in SourceName]: SourceLoader<Source> } = {
+  "complete-hsk": loadCompleteHsk,
+  "hsk-official": loadHskOfficial,
+};
 
-const lowerHskLevel = (a: ReferenceEntry["hskLevel"], b: ReferenceEntry["hskLevel"]) =>
-  a && b ? hskLevels[Math.min(hskLevels.indexOf(a), hskLevels.indexOf(b))] : (a ?? b);
+const sourceNames = Object.keys(sourceLoaders) as SourceName[];
 
-const mergeEntries = (a: ReferenceEntry, b: ReferenceEntry): ReferenceEntry => ({
-  simplified: a.simplified,
-  readings: [
-    ...a.readings,
-    ...b.readings.filter(
-      (reading) =>
-        !a.readings.some(
-          (existing) => existing.pinyin === reading.pinyin && existing.source === reading.source,
-        ),
-    ),
-  ],
-  hskLevel: lowerHskLevel(a.hskLevel, b.hskLevel),
-  frequencyRank: a.frequencyRank ?? b.frequencyRank,
-  radical: a.radical ?? b.radical,
-  partsOfSpeech: unique([...a.partsOfSpeech, ...b.partsOfSpeech]),
-  sources: unique([...a.sources, ...b.sources]),
-});
+const lowestHskLevel = (records: { hskLevel: HskLevel }[]) =>
+  records.map((record) => record.hskLevel).sort((a, b) => hskLevels.indexOf(a) - hskLevels.indexOf(b))[0];
+
+/** The official syllabus outranks complete-hsk, which is based on an earlier draft. */
+const consolidatedHskLevel = (sources: ReferenceEntry["sources"]) =>
+  lowestHskLevel(sources["hsk-official"]) ?? lowestHskLevel(sources["complete-hsk"]);
+
+const buildReference = async () => {
+  const loaded = await Promise.all(sourceNames.map((source) => sourceLoaders[source]()));
+  const words = new Set(loaded.flatMap((bySimplified) => [...bySimplified.keys()]));
+  return new Map(
+    [...words].map((simplified): [string, ReferenceEntry] => {
+      const sources = Object.fromEntries(
+        sourceNames.map((source, index) => [
+          source,
+          (loaded[index]!.get(simplified) ?? []).map((entry) => entry.record),
+        ]),
+      ) as ReferenceEntry["sources"];
+      return [simplified, { simplified, hskLevel: consolidatedHskLevel(sources), sources }];
+    }),
+  );
+};
 
 let referencePromise: Promise<Map<string, ReferenceEntry>> | undefined;
 
 /** All reference entries keyed by simplified characters. Loaded once and cached. */
 export const loadReference = () => {
-  referencePromise ??= Promise.all(sourceLoaders.map((load) => load())).then((sources) =>
-    sources.flat().reduce((reference, entry) => {
-      const existing = reference.get(entry.simplified);
-      return reference.set(entry.simplified, existing ? mergeEntries(existing, entry) : entry);
-    }, new Map<string, ReferenceEntry>()),
-  );
+  referencePromise ??= buildReference();
   return referencePromise;
 };
 

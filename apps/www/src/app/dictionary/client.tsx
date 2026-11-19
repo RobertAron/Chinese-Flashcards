@@ -72,6 +72,7 @@ function SyncSearchFromUrl({ setInput }: { setInput: (value: string) => void }) 
 function ResultsSkeleton() {
   return (
     <>
+      <Skeleton className="h-5 w-64" />
       {[0, 1, 2, 3, 4, 5].map((row) => (
         <Skeleton className="h-20 w-full" key={row} />
       ))}
@@ -126,14 +127,13 @@ function SearchResults({
           .sort((a, b) => a.tier - b.tier || a.cost - b.cost || a.item.frequencyRank - b.item.frequencyRank)
           .map((ele) => ele.item);
   const visibleWords = matchingWords.filter((word) => hskLevels.has(word.hskLevel ?? "none"));
-  const hiddenCount = matchingWords.length - visibleWords.length;
   return (
     <>
-      {hiddenCount > 0 && (
-        <p className="text-sm text-gray-600">
-          {hiddenCount.toLocaleString()} {hiddenCount === 1 ? "word" : "words"} hidden by HSK filter
-        </p>
-      )}
+      {/* Always rendered (and mirrored in ResultsSkeleton) so results never jump when the count changes. */}
+      <p className="h-5 text-sm text-gray-600 tabular-nums">
+        {visibleWords.length.toLocaleString()} / {matchingWords.length.toLocaleString()}{" "}
+        {matchingWords.length === 1 ? "word matches" : "words match"} the current filter
+      </p>
       {visibleWords.slice(0, 30).map((word) => {
         return (
           <WordOutline

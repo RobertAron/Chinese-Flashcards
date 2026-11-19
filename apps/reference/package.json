@@ -7,9 +7,11 @@
   },
   "scripts": {
     "lookup": "bun src/lookup.ts",
+    "parse:hsk-official": "bun scripts/parseHskOfficial.ts",
     "tscheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/bun": "^1.4.4"
+    "@types/bun": "^1.4.4",
+    "pdfjs-dist": "^6.5.438"
   }
 }

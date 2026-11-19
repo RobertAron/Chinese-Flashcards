@@ -1,30 +1,30 @@
+import type { CompleteHskRecord } from "./sources/completeHsk";
+import type { HskOfficialRecord } from "./sources/hskOfficial";
+
 /** Same values as the `HskLevel` enum in vocab-db, so the two can be compared directly. */
 export type HskLevel = "hsk1" | "hsk2" | "hsk3" | "hsk4" | "hsk5" | "hsk6" | "hsk7";
 
 export const hskLevels: readonly HskLevel[] = ["hsk1", "hsk2", "hsk3", "hsk4", "hsk5", "hsk6", "hsk7"];
 
-/** Name of a data source. Add a member here when adding a new source under src/sources. */
-export type SourceName = "complete-hsk";
-
-/** One pronunciation of a word, with the meanings that go with it. */
-export type Reading = {
-  traditional: string;
-  /** Dictionary pinyin with tone marks, syllables separated by spaces (e.g. "Ā lā bó yǔ"). */
-  pinyin: string;
-  meanings: string[];
-  classifiers: string[];
-  source: SourceName;
+/** What each source knows about one word. Add a member here when adding a new source under src/sources. */
+export type SourceRecords = {
+  "complete-hsk": CompleteHskRecord;
+  "hsk-official": HskOfficialRecord;
 };
 
-/** Everything known about one simplified word, consolidated across sources. */
+export type SourceName = keyof SourceRecords;
+
+export type { CompleteHskRecord, HskOfficialRecord };
+
+/** Everything known about one simplified word, kept separate per source. */
 export type ReferenceEntry = {
   simplified: string;
-  readings: Reading[];
-  /** Lowest HSK level any source assigns the word. */
+  /** The official syllabus's level when it lists the word, otherwise complete-hsk's lowest level. */
   hskLevel?: HskLevel;
-  /** Corpus frequency rank: lower means more common. */
-  frequencyRank?: number;
-  radical?: string;
-  partsOfSpeech: string[];
-  sources: SourceName[];
+  /**
+   * Every source's records for the word, in the source's own vocabulary (complete-hsk's parts of speech
+   * are "v", "n"; hsk-official's are "动", "名"). An empty list means the source doesn't have the word;
+   * more than one means it lists the word more than once (homographs like 本1 and 本2).
+   */
+  sources: { [Source in SourceName]: SourceRecords[Source][] };
 };
