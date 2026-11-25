@@ -1,5 +1,5 @@
 import path from "node:path";
-import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { PrismaClient } from "vocab-db/prisma";
 
 const globalForPrisma = global as unknown as {
@@ -10,7 +10,7 @@ function getPrismaClient() {
   const prisma =
     globalForPrisma.prisma ??
     new PrismaClient({
-      adapter: new PrismaLibSQL({
+      adapter: new PrismaLibSql({
         url: `file:${path.join(process.cwd(), "../db/local.db")}`,
       }),
     });
