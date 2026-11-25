@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* The hocus/pressed variants and grid-stack, shared with the other apps. */
+@import "vocab-ui/theme.css";
 /* biome-ignore: tw-thing */
 @config "../../tailwind.config.mjs";
 
@@ -96,27 +98,5 @@
     background-size: 25px 25px;
     background-repeat: repeat;
     opacity: 0.35;
-  }
-}
-
-/* This stays outside because it's not really a style rule */
-@custom-variant hocus {
-  @media (hover: hover) {
-    &:not([data-pressed="true"]):hover {
-      @slot;
-    }
-  }
-  &:not([data-pressed="true"]):focus-visible {
-    @slot;
-  }
-
-  &:not([data-pressed="true"])[data-focus-visible="true"] {
-    @slot;
-  }
-}
-
-@custom-variant pressed {
-  &[data-pressed="true"] {
-    @slot;
   }
 }

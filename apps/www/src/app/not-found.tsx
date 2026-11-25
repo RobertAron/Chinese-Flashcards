@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { cn } from "@/utils/cn";
+import { cn } from "vocab-ui/cn";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
 import { Link } from "@/utils/NextNavigationUtils";
 
 export const metadata: Metadata = {

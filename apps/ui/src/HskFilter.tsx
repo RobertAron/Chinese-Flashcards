@@ -1,25 +1,15 @@
 "use client";
 import { Button } from "react-aria-components";
-import type { HskLevel } from "vocab-db/prisma";
-import { cn } from "@/utils/cn";
 import { Checkbox } from "./Checkbox";
-import { hskClasses } from "./HskBadge";
+import { cn } from "./cn";
+import { type HskLevel, hskClasses, hskLevels, noHskClasses } from "./hsk";
 
 /** "none" covers words that aren't on any HSK list. */
 export type HskFilterLevel = HskLevel | "none";
 
-export const hskFilterLevels: readonly HskFilterLevel[] = [
-  "hsk1",
-  "hsk2",
-  "hsk3",
-  "hsk4",
-  "hsk5",
-  "hsk6",
-  "hsk7",
-  "none",
-];
+export const hskFilterLevels: readonly HskFilterLevel[] = [...hskLevels, "none"];
 
-const levelClasses: Record<HskFilterLevel, string> = { ...hskClasses, none: "bg-gray-200 text-black" };
+const levelClasses: Record<HskFilterLevel, string> = { ...hskClasses, none: noHskClasses };
 const levelLabels: Record<HskFilterLevel, string> = {
   hsk1: "HSK 1",
   hsk2: "HSK 2",

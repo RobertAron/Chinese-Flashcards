@@ -33,5 +33,5 @@
     "../common-data/src/top1000.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".storybook"]
+  "exclude": ["node_modules"]
 }

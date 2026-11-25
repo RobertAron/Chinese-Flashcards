@@ -1,9 +1,9 @@
 import { type Ref, useCallback, useState } from "react";
+import { Button } from "vocab-ui/Button";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { Kbd } from "vocab-ui/Kbd";
 import { useKeyTrigger } from "@/utils/hooks";
 import { twCn } from "@/utils/styleResolvers";
-import { Button } from "../Button";
-import { buttonBehaviorClasses } from "../coreClasses";
-import { Kbd } from "../Kbd";
 import { ChallengeAudioPlayer } from "./AudioChallenge";
 import type { AllMultipleChoiceChallenges, McqAnswer } from "./ChallengeTypes";
 import { ChallengeWrapper } from "./ChallengeWrapper";

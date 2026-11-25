@@ -6,14 +6,12 @@
     "dev": "bun --bun next dev",
     "build": "bun --bun next build",
     "start": "bun --bun next start",
-    "build-storybook": "storybook build",
     "lint": "biome lint",
     "lint:fix": "biome lint --fix",
     "format": "biome format",
     "format:fix": "biome format --fix",
     "check": "biome check",
     "check:fix": "biome check --fix",
-    "storybook": "storybook dev -p 6006",
     "typegen": "next typegen",
     "tscheck": "tsc --noEmit",
     "bundleAnalyze": "next experimental-analyze"
@@ -38,18 +36,16 @@
     "tailwindcss": "^4.3.3",
     "ts-pattern": "^5.9.2",
     "vocab-db": "*",
+    "vocab-ui": "*",
     "zod": "^4.6.7",
     "zustand": "^5.0.16"
   },
   "devDependencies": {
     "@google-cloud/text-to-speech": "^7.2.0",
-    "@storybook/nextjs-vite": "^10.6.3",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "openai": "^7.43.0",
-    "storybook": "^10.6.3",
-    "vite": "^7.3.7"
+    "openai": "^7.43.0"
   },
   "overrides": {
     "@types/react": "19.2.0",

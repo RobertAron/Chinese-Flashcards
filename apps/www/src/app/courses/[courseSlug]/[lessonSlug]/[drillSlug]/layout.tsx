@@ -1,8 +1,8 @@
 import { Suspense } from "react";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { AppServerLayoutEntrypoint } from "@/components/AppPage";
 import { getDrillInfo } from "@/components/challenges/challengeServerUtils";
 import { DrillProvider } from "@/components/challenges/DrillProvider";
-import { Skeleton } from "@/components/Skeleton";
 import { paramsTemplate } from "./paramsTemplate";
 
 export default AppServerLayoutEntrypoint(({ children, params }) => {

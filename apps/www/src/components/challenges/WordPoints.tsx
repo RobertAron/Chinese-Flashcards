@@ -1,11 +1,11 @@
 "use client";
 import { BookMarkedIcon, CuboidIcon } from "lucide-react";
 import type { HskLevel } from "vocab-db/prisma";
-import { cn } from "@/utils/cn";
+import { cn } from "vocab-ui/cn";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { HskBadge } from "vocab-ui/HskBadge";
 import { Link } from "@/utils/NextNavigationUtils";
 import { useWordPracticeCount } from "@/utils/playerState";
-import { buttonBehaviorClasses } from "../coreClasses";
-import { HskBadge } from "../HskBadge";
 import type { CanonicalWordInfo } from "./challengeServerUtils";
 
 export type WordExperienceProps = {

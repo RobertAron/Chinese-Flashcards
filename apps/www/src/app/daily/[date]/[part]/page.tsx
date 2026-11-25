@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Skeleton } from "@/components/Skeleton";
+import { Skeleton } from "vocab-ui/Skeleton";
 import DailyPartHome from "./client";
 
 export default function Page() {

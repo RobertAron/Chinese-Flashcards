@@ -1,10 +1,10 @@
 "use client";
 import { RotateCcw } from "lucide-react";
 import { type Ref, useEffect, useRef } from "react";
+import { Button } from "vocab-ui/Button";
+import { Kbd } from "vocab-ui/Kbd";
 import { useAudioSourceNode, useKeyTrigger } from "@/utils/hooks";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
-import { Button } from "../Button";
-import { Kbd } from "../Kbd";
 import { ChallengeWrapper } from "./ChallengeWrapper";
 import { WordProgress } from "./WordProgress";
 

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { AppServerLayoutEntrypoint } from "@/components/AppPage";
-import { Skeleton } from "@/components/Skeleton";
 import { getCourseOutline } from "./getCourseOutline";
 import { paramsTemplate } from "./paramsTemplate";
 import { CourseTitleLink, DrillLink, LessonLink } from "./SideNavLink";

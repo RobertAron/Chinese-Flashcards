@@ -1,10 +1,10 @@
 "use client";
 import { type Ref, useEffect, useEffectEvent, useState } from "react";
+import { Button } from "vocab-ui/Button";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { Kbd } from "vocab-ui/Kbd";
 import { shuffle } from "@/utils/structureUtils";
 import { twCn } from "@/utils/styleResolvers";
-import { Button } from "../Button";
-import { buttonBehaviorClasses } from "../coreClasses";
-import { Kbd } from "../Kbd";
 import type { SentenceWord } from "./ChallengeTypes";
 import { ChallengeWrapper } from "./ChallengeWrapper";
 

@@ -1,11 +1,11 @@
 import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
-import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { PracticeCountCell, TimeAttackCell } from "./client";
 import { generateStaticParams } from "./generateStaticParams";

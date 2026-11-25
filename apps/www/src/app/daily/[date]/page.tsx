@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
-import { Skeleton } from "@/components/Skeleton";
 import { formatDateKey, isDateKey } from "@/dailyChallenge/date";
 import { getDailyChallenge } from "@/dailyChallenge/getDailyChallenge";
 import { DailyPartLink, DailyWeek } from "./client";

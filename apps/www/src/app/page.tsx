@@ -1,7 +1,7 @@
 import { BookOpenIcon } from "lucide-react";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { cn } from "vocab-ui/cn";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
 import { DailyChallengeLink } from "@/components/DailyChallengeLink";
-import { cn } from "@/utils/cn";
 import { Link } from "@/utils/NextNavigationUtils";
 
 export const ensureStatic = "navigation";

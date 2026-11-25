@@ -1,6 +1,6 @@
 import { Suspense } from "react";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { TypingChallengeProvider } from "@/components/challenges/TypingChallengeProvider";
-import { Skeleton } from "@/components/Skeleton";
 import { DailyPractice } from "./client";
 
 export default function Page() {

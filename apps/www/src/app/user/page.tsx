@@ -1,8 +1,8 @@
 import { cacheLife } from "next/cache";
 import { Suspense } from "react";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { WordExperience } from "@/components/challenges/WordPoints";
-import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { ExperienceBox } from "./client";
 

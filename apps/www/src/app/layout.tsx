@@ -2,12 +2,12 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { BookMarkedIcon, CircleUserRoundIcon, LanguagesIcon } from "lucide-react";
 import type { Metadata } from "next";
-import { MotionProvider } from "@/components/MotionProvider";
+import { MotionProvider } from "vocab-ui/MotionProvider";
 import { Link, LoadingProvider, LoadingRender } from "@/utils/NextNavigationUtils";
 import { PlayerProvider, SyncPlayerStateToLocalStorage } from "@/utils/playerState";
 import "./globals.css";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
-import { cn } from "@/utils/cn";
+import { cn } from "vocab-ui/cn";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
 
 export const metadata: Metadata = {
   title: "中文 Flashcards",

@@ -2,10 +2,10 @@
 import Fuse from "fuse.js";
 import { useSearchParams } from "next/navigation";
 import { Suspense, use, useEffect, useMemo, useState } from "react";
+import { HskFilter, type HskFilterLevel, hskFilterLevels } from "vocab-ui/HskFilter";
+import { Skeleton } from "vocab-ui/Skeleton";
+import { TextField } from "vocab-ui/TextField";
 import { WordOutline } from "@/components/challenges/WordOutline";
-import { HskFilter, type HskFilterLevel, hskFilterLevels } from "@/components/HskFilter";
-import { Skeleton } from "@/components/Skeleton";
-import { TextField } from "@/components/TextField";
 import { wordToAudioSource } from "@/utils/idToAudioSource";
 import type { Words } from "./page";
 

@@ -1,8 +1,8 @@
 "use client";
 import { Undo2 } from "lucide-react";
 import { useCallback } from "react";
-import { Button } from "@/components/Button";
-import { Kbd } from "@/components/Kbd";
+import { Button } from "vocab-ui/Button";
+import { Kbd } from "vocab-ui/Kbd";
 import { useKeyTrigger } from "@/utils/hooks";
 import { Link, useLoadingRouter } from "@/utils/NextNavigationUtils";
 import { twCn } from "@/utils/styleResolvers";

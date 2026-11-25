@@ -1,13 +1,13 @@
 "use client";
 import { BookMarkedIcon, PlayIcon } from "lucide-react";
 import { useRef } from "react";
-import { cn } from "@/utils/cn";
+import { Button } from "vocab-ui/Button";
+import { cn } from "vocab-ui/cn";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { HskBadge } from "vocab-ui/HskBadge";
 import { useAudioSourceNode } from "@/utils/hooks";
 import { Link } from "@/utils/NextNavigationUtils";
 import { LiveAudioVisualizer } from "../AudioVisualizer";
-import { Button } from "../Button";
-import { buttonBehaviorClasses } from "../coreClasses";
-import { HskBadge } from "../HskBadge";
 import type { PhraseDefinition, WordDefinition } from "./challengeServerUtils";
 
 type WordOutlineProps = {

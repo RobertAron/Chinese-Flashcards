@@ -32,6 +32,9 @@
       "performance": {
         "noImgElement": "off"
       },
+      "complexity": {
+        "noVoid": "error"
+      },
       "style": {
         "noNonNullAssertion": "off",
         "noParameterAssign": "error",

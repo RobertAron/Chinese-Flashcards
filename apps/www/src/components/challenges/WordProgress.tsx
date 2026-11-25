@@ -2,9 +2,9 @@ import clsx from "clsx";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { type Ref, useEffect, useEffectEvent, useState } from "react";
+import { Kbd } from "vocab-ui/Kbd";
 import { useUserSettings } from "@/utils/playerState";
 import { noTypingRequired, punctuation } from "@/utils/specialCharacters";
-import { Kbd } from "../Kbd";
 
 type WordProgressProps = {
   pinyin: string;

@@ -1,16 +1,8 @@
 import plugin from "tailwindcss/plugin";
 
-const gridStackPlugin = plugin(({ addUtilities }) => {
+// grid-stack lives in vocab-ui/theme.css.
+const utilitiesPlugin = plugin(({ addUtilities }) => {
   addUtilities({
-    ".grid-stack": {
-      display: "grid",
-      gridTemplateColumns: "1fr",
-      gridTemplateRows: "1fr",
-    },
-    ".grid-stack-item": {
-      gridColumn: "1 / 2",
-      gridRow: "1 / 2",
-    },
     ".decoration-skip-ink-none": {
       textDecorationSkipInk: "none",
     },
@@ -64,7 +56,7 @@ const config = {
       },
     },
   },
-  plugins: [gridStackPlugin],
+  plugins: [utilitiesPlugin],
 };
 
 export default config;

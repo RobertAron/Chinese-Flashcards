@@ -1,8 +1,8 @@
 "use client";
 import { PauseIcon, PlayIcon, RotateCcwIcon, ScissorsIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "vocab-ui/Button";
 import z from "zod";
-import { Button } from "@/components/Button";
 import { phraseToAudioSource, phraseToImageSource } from "@/utils/idToAudioSource";
 import { useDeletePhrase, useResetPhraseAudio, useTrimPhraseAudio } from "./api/[[...route]]/client";
 import type { ReviewLessons } from "./page.dev";
@@ -121,7 +121,7 @@ function PhraseCard({ phrase, onDeleted }: { phrase: ReviewPhrase; onDeleted: ()
     if (audio === null) return;
     audio.currentTime = from;
     setStopAt(to);
-    void audio.play();
+    audio.play();
   };
   // Returns the parsed range, or shows why it's invalid.
   const parseRange = () => {
@@ -225,7 +225,7 @@ function PhraseCard({ phrase, onDeleted }: { phrase: ReviewPhrase; onDeleted: ()
             const range = parseRange();
             if (range === null) return;
             if (range.start < 0.01 && range.end > duration - 0.01) return setError("Nothing to trim");
-            void run(async () => {
+            run(async () => {
               await trimAudio({ id: phrase.id, ...range });
               reloadAudio();
             });
@@ -253,7 +253,7 @@ function PhraseCard({ phrase, onDeleted }: { phrase: ReviewPhrase; onDeleted: ()
           onBlur={() => setConfirmingDelete(false)}
           onClick={() => {
             if (!confirmingDelete) return setConfirmingDelete(true);
-            void run(async () => {
+            run(async () => {
               await deletePhrase(phrase.id);
               onDeleted();
             });

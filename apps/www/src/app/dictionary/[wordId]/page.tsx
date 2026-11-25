@@ -1,11 +1,11 @@
 import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { HskBadge } from "vocab-ui/HskBadge";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { Breadcrumb, BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
 import { WordOutline } from "@/components/challenges/WordOutline";
-import { HskBadge } from "@/components/HskBadge";
-import { Skeleton } from "@/components/Skeleton";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { phraseToAudioSource, phraseToImageSource, wordToAudioSource } from "@/utils/idToAudioSource";
 import { Link } from "@/utils/NextNavigationUtils";

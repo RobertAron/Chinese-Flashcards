@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { DrillProvider } from "@/components/challenges/DrillProvider";
-import { Skeleton } from "@/components/Skeleton";
 import { isDateKey } from "@/dailyChallenge/date";
 import { getDailyChallenge } from "@/dailyChallenge/getDailyChallenge";
 import { isDailyPart } from "@/dailyChallenge/parts";

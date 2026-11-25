@@ -1,7 +1,7 @@
 import { cacheLife } from "next/cache";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 

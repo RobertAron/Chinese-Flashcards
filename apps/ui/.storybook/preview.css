@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "../src/theme.css";
+
+/* The study app loads Geist through next/font (see its tailwind.config.mjs); Storybook loads it from the geist package. */
+@font-face {
+  font-family: "Geist";
+  src: url("../../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("../../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+}
+
+@theme {
+  --font-sans: "Geist", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  --font-mono: "Geist Mono", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", monospace;
+}

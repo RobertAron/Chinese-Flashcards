@@ -4,11 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Chinese Flashcards (Vocab Sprint) is a full-stack Chinese language learning application built as a Bun monorepo with three apps:
+Chinese Flashcards (Vocab Sprint) is a full-stack Chinese language learning application built as a Bun monorepo with these apps:
 
 - **apps/www** - Next.js 16 web application with interactive learning challenges
+- **apps/ui** - Package `vocab-ui`: the shared component system (Button, Checkbox, Kbd, TextField, Skeleton, HskBadge, HskFilter, HSK colours, `cn`) and its Storybook. Components there must not depend on Next.js; Next-specific ones (Breadcrumb, MotionLink) stay in `apps/www/src/components`. Apps import `vocab-ui/theme.css` after Tailwind to get the `hocus`/`pressed` variants, `grid-stack`, and the classes the components use. See its README.
 - **apps/db** - Prisma database layer with SQLite (shared across apps)
 - **apps/reference** - Package `vocab-reference`: reference data (definitions, frequency, HSK level) consolidated from multiple sources. Look words up with `bun run lookup <simplified>`. See its README for adding sources.
+- **apps/video-mining** - Package `vocab-video-mining`: tools that turn a subtitled video into reviewable phrases (cues, OCR of burned-in Chinese, audio clips, card frames) plus a local review app (`bun run review <folder>`). Each video's data lives in that video's own folder (`project.json`, `review.db`), never in the repo. Its README documents the pipeline and the `review.db` format.
 ## Development Commands
 
 ### Package Manager
@@ -25,6 +27,11 @@ bun check:fix        # Lint and fix all issues
 ```bash
 bun run dev          # Start Next.js dev server
 bun run build        # Production build
+bun run tscheck      # TypeScript check without emit
+```
+
+### ui Package (from apps/ui)
+```bash
 bun run storybook    # Start Storybook on port 6006
 bun run tscheck      # TypeScript check without emit
 ```
@@ -70,10 +77,16 @@ Import the Prisma client from the db package:
 import { prisma } from "vocab-db/prisma";
 ```
 
+Import shared components from the ui package, one entry point per component:
+```typescript
+import { Button } from "vocab-ui/Button";
+import { Kbd } from "vocab-ui/Kbd";
+```
+
 ## Code Style
 
 - **Biome** for formatting (2 spaces, 110 line width) and linting
-- Use `cn()` from `@/utils/cn` for Tailwind class merging
+- Use `cn()` from `vocab-ui/cn` for Tailwind class merging
 - React Server Components by default; use `"use client"` directive only when needed
 - Zod for validation in API routes with `@hono/zod-validator`
 - Use `Link` from `@/utils/NextNavigationUtils` instead of `next/link` directly - it integrates with the app's loading state to show a progress bar during navigation

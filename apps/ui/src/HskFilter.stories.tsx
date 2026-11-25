@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { HskFilter, type HskFilterLevel, hskFilterLevels } from "./HskFilter";
-import { MotionProvider } from "./MotionProvider";
 
 function StatefulHskFilter({ initialSelected }: { initialSelected: HskFilterLevel[] }) {
   const [selected, setSelected] = useState<ReadonlySet<HskFilterLevel>>(new Set(initialSelected));
@@ -18,13 +17,6 @@ function StatefulHskFilter({ initialSelected }: { initialSelected: HskFilterLeve
 const meta = {
   title: "Components/HskFilter",
   component: StatefulHskFilter,
-  decorators: [
-    (Story) => (
-      <MotionProvider>
-        <Story />
-      </MotionProvider>
-    ),
-  ],
 } satisfies Meta<typeof StatefulHskFilter>;
 
 export default meta;

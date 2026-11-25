@@ -1,0 +1,25 @@
+{
+  "name": "vocab-video-mining",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "mine": "bun src/cli.ts",
+    "review": "bun src/review/server.ts",
+    "build:vision": "swiftc -O swift/vision.swift -o bin/vision",
+    "tscheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vocab-reference": "workspace:*",
+    "vocab-ui": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.5",
+    "@types/react": "^19.3.1",
+    "@types/react-dom": "^19.3.0",
+    "bun-plugin-tailwind": "^0.1.2",
+    "tailwindcss": "^4.3.5"
+  }
+}

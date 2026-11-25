@@ -1,10 +1,10 @@
 import { ChevronRight } from "lucide-react";
+import { Button } from "vocab-ui/Button";
+import { Checkbox } from "vocab-ui/Checkbox";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { Kbd } from "vocab-ui/Kbd";
 import { useKeyTrigger } from "@/utils/hooks";
 import { useUserSettings } from "@/utils/playerState";
-import { Button } from "../Button";
-import { Checkbox } from "../Checkbox";
-import { buttonBehaviorClasses } from "../coreClasses";
-import { Kbd } from "../Kbd";
 import { useDrillContext } from "./DrillProvider";
 import { ExitLink } from "./ExitButton";
 

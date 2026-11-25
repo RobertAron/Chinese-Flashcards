@@ -1,10 +1,10 @@
 "use client";
 import { ArrowRightIcon, CheckIcon, FlameIcon } from "lucide-react";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { cn } from "vocab-ui/cn";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
 import { formatDateKey, shiftDateKey } from "@/dailyChallenge/date";
 import { type DailyPart, dailyPartInfo, dailyParts } from "@/dailyChallenge/parts";
 import { useToday } from "@/dailyChallenge/useToday";
-import { cn } from "@/utils/cn";
 import { Link } from "@/utils/NextNavigationUtils";
 import {
   type DailyChallengeProgress,

@@ -1,0 +1,43 @@
+/*
+ * Shared Tailwind setup for apps that use vocab-ui. Import it right after Tailwind:
+ *
+ *   @import "tailwindcss";
+ *   @import "vocab-ui/theme.css";
+ */
+
+/* Tailwind doesn't scan workspace packages on its own; this makes it generate the components' classes. */
+@source ".";
+
+/* Hover (on devices that can hover) or keyboard focus, but not while pressed. Works with react-aria's data attributes. */
+@custom-variant hocus {
+  @media (hover: hover) {
+    &:not([data-pressed="true"]):hover {
+      @slot;
+    }
+  }
+  &:not([data-pressed="true"]):focus-visible {
+    @slot;
+  }
+
+  &:not([data-pressed="true"])[data-focus-visible="true"] {
+    @slot;
+  }
+}
+
+@custom-variant pressed {
+  &[data-pressed="true"] {
+    @slot;
+  }
+}
+
+/* Stacks every child in one grid cell, so the container is as big as its biggest child. */
+@utility grid-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+@utility grid-stack-item {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}

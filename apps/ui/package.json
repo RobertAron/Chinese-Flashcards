@@ -1,0 +1,46 @@
+{
+  "name": "vocab-ui",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./Button": "./src/Button.tsx",
+    "./Checkbox": "./src/Checkbox.tsx",
+    "./HskBadge": "./src/HskBadge.tsx",
+    "./HskFilter": "./src/HskFilter.tsx",
+    "./Kbd": "./src/Kbd.tsx",
+    "./MotionProvider": "./src/MotionProvider.tsx",
+    "./Skeleton": "./src/Skeleton.tsx",
+    "./TextField": "./src/TextField.tsx",
+    "./cn": "./src/cn.ts",
+    "./coreClasses": "./src/coreClasses.ts",
+    "./hsk": "./src/hsk.ts",
+    "./theme.css": "./src/theme.css"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "tscheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "motion": "^13.5.1",
+    "react-aria-components": "^1.22.1",
+    "tailwind-merge": "^3.7.0"
+  },
+  "peerDependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "^10.6.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "storybook": "^10.6.3",
+    "tailwindcss": "^4.3.3",
+    "vite": "^7.3.7"
+  }
+}

@@ -1,9 +1,9 @@
 "use client";
 import React, { useCallback } from "react";
+import { Kbd } from "vocab-ui/Kbd";
 import { useKeyTrigger } from "@/utils/hooks";
 import { Link, useLoadingRouter } from "@/utils/NextNavigationUtils";
 import { twCn } from "@/utils/styleResolvers";
-import { Kbd } from "./Kbd";
 
 const baseClasses = "underline hocus:text-gray-600 whitespace-nowrap";
 export function Breadcrumb({ className, ...props }: React.ComponentProps<typeof Link>) {

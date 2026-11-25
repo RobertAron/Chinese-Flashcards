@@ -1,9 +1,9 @@
 "use client";
 import { SparklesIcon } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Button } from "@/components/Button";
+import { Button } from "vocab-ui/Button";
+import { TextField } from "vocab-ui/TextField";
 import { WordExperience } from "@/components/challenges/WordPoints";
-import { TextField } from "@/components/TextField";
 import { useFullPlayerState } from "@/utils/playerState";
 import {
   useMakeAudio,

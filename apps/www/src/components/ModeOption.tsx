@@ -1,5 +1,5 @@
 "use client";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
 
 export function ModeOption({

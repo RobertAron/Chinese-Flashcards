@@ -1,9 +1,9 @@
 import { Suspense } from "react";
+import { buttonBehaviorClasses } from "vocab-ui/coreClasses";
+import { Skeleton } from "vocab-ui/Skeleton";
 import { AppServerPageEntrypoint } from "@/components/AppPage";
 import { BreadcrumbContainer, BreadcrumbEscape } from "@/components/Breadcrumb";
-import { buttonBehaviorClasses } from "@/components/coreClasses";
 import { MotionLink } from "@/components/MotionLink";
-import { Skeleton } from "@/components/Skeleton";
 import { LessonProgress } from "./client";
 import { generateStaticParams } from "./generateStaticParams";
 import { getCourseOutline } from "./getCourseOutline";
