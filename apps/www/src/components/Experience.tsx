@@ -15,9 +15,10 @@ export function Experience({ percent }: { percent: number }) {
   }, [experience, percent]);
   return (
     <m.div className="flex [&>*+*]:border-l-0">
-      {Object.entries(practiceCountColors).map(([key, val]) => (
+      {Object.entries(practiceCountColors).map(([key, val], index, all) => (
         <ExperienceArea
           key={key}
+          final={index === all.length - 1}
           experience={experience}
           min={val.min === 1 ? 0 : val.min}
           max={val.max}
@@ -49,9 +50,11 @@ function ExperienceArea({
   final?: boolean;
 }) {
   const bar1 = useTransform(experience, [min, max], ["0", "100%"]);
-  const [isCurrentSection, setInRange] = useState(inRange(min, max, experience.get()));
+  // The final section stays current (and full) once the count passes its max.
+  const isCurrent = (exp: number) => (final ? min <= exp : inRange(min, max, exp));
+  const [isCurrentSection, setInRange] = useState(isCurrent(experience.get()));
   useMotionValueEvent(experience, "change", (exp) => {
-    const inRangeOfThisSection = final ? exp > min : inRange(min, max, exp);
+    const inRangeOfThisSection = isCurrent(exp);
     if (inRangeOfThisSection !== isCurrentSection) setInRange(inRangeOfThisSection);
   });
   return (

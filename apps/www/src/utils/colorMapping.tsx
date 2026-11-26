@@ -4,31 +4,31 @@ export const practiceCountColors = {
   0: {
     key: 0,
     min: 1,
-    max: 100,
+    max: 50,
     background: "bg-blue-300",
     primary: "bg-blue-600",
     font: "text-blue-600",
   },
   1: {
     key: 1,
-    min: 100,
-    max: 250,
+    min: 50,
+    max: 150,
     background: "bg-green-300",
     primary: "bg-green-600",
     font: "text-green-600",
   },
   2: {
     key: 2,
-    min: 250,
-    max: 500,
+    min: 150,
+    max: 300,
     background: "bg-yellow-300",
     primary: "bg-yellow-600",
     font: "text-yellow-600",
   },
   3: {
     key: 3,
-    min: 500,
-    max: Number.POSITIVE_INFINITY,
+    min: 300,
+    max: 600,
     background: "bg-red-300",
     primary: "bg-red-600",
     font: "text-red-600",
@@ -37,9 +37,9 @@ export const practiceCountColors = {
 
 export function practiceCountToColor(count: number | null) {
   if (count === 0 || count === null) return null;
-  if (count < 100) return practiceCountColors[0];
-  if (count < 250) return practiceCountColors[1];
-  if (count < 500) return practiceCountColors[2];
+  if (count < practiceCountColors[0].max) return practiceCountColors[0];
+  if (count < practiceCountColors[1].max) return practiceCountColors[1];
+  if (count < practiceCountColors[2].max) return practiceCountColors[2];
   return practiceCountColors[3];
 }
 
