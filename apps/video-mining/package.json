@@ -3,12 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "mine": "bun src/cli.ts",
-    "review": "bun src/review/server.ts",
+    "mine": "bun --env-file=../www/.env.local src/cli.ts",
+    "review": "bun --env-file=../www/.env.local src/review/server.ts",
     "build:vision": "swiftc -O swift/vision.swift -o bin/vision",
     "tscheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@google-cloud/text-to-speech": "^7.2.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "vocab-reference": "workspace:*",

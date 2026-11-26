@@ -49,6 +49,18 @@ CREATE TABLE IF NOT EXISTS gap_hits (
   time REAL PRIMARY KEY,
   ocr_text TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS word_readings (
+  phrase_id INTEGER NOT NULL REFERENCES phrases(id) ON DELETE CASCADE,
+  position INTEGER NOT NULL,
+  study_word_id INTEGER NOT NULL,
+  PRIMARY KEY (phrase_id, position)
+);
+CREATE TABLE IF NOT EXISTS study_phrases (
+  phrase_id INTEGER PRIMARY KEY REFERENCES phrases(id),
+  study_id INTEGER NOT NULL UNIQUE,
+  media TEXT NOT NULL DEFAULT '',
+  imported_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 `;
 
 export type CueRow = {
@@ -89,6 +101,15 @@ export type PhraseRow = {
 };
 
 export type FrameRow = { phrase_id: number; idx: number; time: number; saliency_x: number | null };
+
+/**
+ * A reading picked in review for the word at `position` (0-based, into `phrases.words`) when the study app has
+ * several Words rows for it. Cleared whenever the phrase's words change.
+ */
+export type WordReadingRow = { phrase_id: number; position: number; study_word_id: number };
+
+/** A phrase `import` copied into the study app. `media` describes the audio and image last uploaded for it. */
+export type StudyPhraseRow = { phrase_id: number; study_id: number; media: string; imported_at: string };
 
 export function openDatabase(project: Pick<Project, "database">) {
   const database = new Database(project.database, { create: true, strict: true });

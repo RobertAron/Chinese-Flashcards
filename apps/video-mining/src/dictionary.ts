@@ -5,7 +5,7 @@ import { tokenize } from "./media";
 import type { ProjectConfig } from "./project";
 
 /** The study app's database, opened read-only. Its levels include hand fixes (e.g. 玩 is HSK 1), so it wins over vocab-reference. */
-const studyDatabasePath = fileURLToPath(new URL("../../db/local.db", import.meta.url));
+export const studyDatabasePath = fileURLToPath(new URL("../../db/local.db", import.meta.url));
 
 /**
  * Unranked interjections that don't make a phrase harder: they count as level 0.
@@ -32,9 +32,20 @@ export type WordInfo = {
   meaning: string | null;
   /** Whether the study app already has a Words row with these characters. */
   inStudyApp: boolean;
+  /** The study app's Words rows for these characters, most frequent first. Several for 还 (hái, huán). */
+  readings: StudyReading[];
 };
 
-type Entry = { level: number | null; pinyin: string[]; meaning: string | null; inStudyApp: boolean };
+/** One study-app Words row. A phrase uses the first unless its review picked another. */
+export type StudyReading = { id: number; pinyin: string; meaning: string };
+
+type Entry = {
+  level: number | null;
+  pinyin: string[];
+  meaning: string | null;
+  inStudyApp: boolean;
+  readings: StudyReading[];
+};
 
 /** Best split of a phrase's first N characters, and where its last piece starts. */
 type Split = { unranked: number; pieces: number; hardest: number; start: number };
@@ -50,8 +61,8 @@ const lowest = (levels: (number | null)[]) =>
 async function loadEntries() {
   const study = new Database(studyDatabasePath, { readonly: true });
   const rows = study
-    .query<{ characters: string; pinyin: string; meaning: string; hskLevel: string | null }, []>(
-      "SELECT characters, pinyin, meaning, hskLevel FROM Words ORDER BY frequencyRank",
+    .query<{ id: number; characters: string; pinyin: string; meaning: string; hskLevel: string | null }, []>(
+      "SELECT id, characters, pinyin, meaning, hskLevel FROM Words ORDER BY frequencyRank, id",
     )
     .all();
   study.close();
@@ -65,6 +76,7 @@ async function loadEntries() {
       pinyin: [...new Set(readings.map((row) => row.pinyin))],
       meaning: readings[0]?.meaning ?? null,
       inStudyApp: true,
+      readings: readings.map(({ id, pinyin, meaning }) => ({ id, pinyin, meaning })),
     });
   }
   for (const [characters, entry] of reference) {
@@ -79,12 +91,18 @@ async function loadEntries() {
       pinyin: [...new Set(pinyin)],
       meaning: forms[0]?.meanings.join("; ") ?? null,
       inStudyApp: false,
+      readings: [],
     });
   }
   return entries;
 }
 
 let entriesPromise: Promise<Map<string, Entry>> | undefined;
+
+/** Makes the next loadDictionary re-read the study app's Words, e.g. after words were added to it. */
+export const forgetStudyWords = () => {
+  entriesPromise = undefined;
+};
 
 /**
  * Splits Chinese text into words and levels them, using the project's `names` and `countAsHsk1` lists.
@@ -106,6 +124,7 @@ export async function loadDictionary({ names, countAsHsk1 }: Pick<ProjectConfig,
       pinyin: entry?.pinyin ?? [],
       meaning: entry?.meaning ?? null,
       inStudyApp: entry?.inStudyApp ?? false,
+      readings: entry?.readings ?? [],
       countedAsHsk1: false,
       dictionaryLevel: entry?.level ?? null,
     };

@@ -36,6 +36,15 @@ export const projectConfigSchema = z.object({
   clipPadding: z.object({ before: z.number(), after: z.number() }).default({ before: 0.4, after: 0.6 }),
   /** How many candidate frames to save per phrase. */
   framesPerPhrase: z.number().int().default(4),
+  /** Where `import` puts this video's approved phrases in the study app. Required for `import`. */
+  course: z
+    .object({
+      /** The HSK 1 course's slug. The HSK 2+ course is `<slug>-advanced`; lessons and drills start with `<slug>-`. */
+      slug: z.string().regex(/^[a-z0-9-]+$/),
+      title: z.string(),
+      advancedTitle: z.string(),
+    })
+    .optional(),
 });
 export type ProjectConfig = z.output<typeof projectConfigSchema>;
 

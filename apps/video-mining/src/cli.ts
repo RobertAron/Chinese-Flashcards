@@ -2,6 +2,7 @@ import { parseArgs } from "node:util";
 import { applyAnnotations, exportForAnnotation } from "./steps/annotate";
 import { extractCues } from "./steps/cues";
 import { checkGaps } from "./steps/gaps";
+import { importPhrases } from "./steps/import";
 import { init } from "./steps/init";
 import { extractMedia } from "./steps/media";
 import { ocrCues } from "./steps/ocr";
@@ -17,12 +18,18 @@ Steps, in order (see README.md):
   annotate-export <folder> [from] [to] print cues for annotation
   annotate-apply <folder> <file.json>  create phrases from an annotation file
   media <folder> [--force]             cut audio clips and candidate frames
-  segment <folder> [--resplit]         re-level phrases against the current dictionary`;
+  segment <folder> [--resplit]         re-level phrases against the current dictionary
+  import <folder> [--dry-run]          copy approved phrases into the study app and upload their media`;
 
 const { positionals, values } = parseArgs({
   args: Bun.argv.slice(2),
   allowPositionals: true,
-  options: { video: { type: "string" }, force: { type: "boolean" }, resplit: { type: "boolean" } },
+  options: {
+    video: { type: "string" },
+    force: { type: "boolean" },
+    resplit: { type: "boolean" },
+    "dry-run": { type: "boolean" },
+  },
 });
 const [step, folder, ...rest] = positionals;
 if (step === undefined || folder === undefined) {
@@ -46,6 +53,7 @@ const steps: Record<string, () => Promise<void>> = {
   },
   media: () => extractMedia(folder, { force: values.force }),
   segment: () => segmentPhrases(folder, { resplit: values.resplit }),
+  import: () => importPhrases(folder, { dryRun: values["dry-run"] }),
 };
 
 const action = steps[step];

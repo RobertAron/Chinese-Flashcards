@@ -5,6 +5,8 @@
 //   vision saliency   same input; prints {"path": "...", "boxes": [{"box": [x, y, w, h], "confidence": 1}]}
 //   vision tokenize   reads Chinese text (one per line); prints {"text": "...", "tokens": ["收拾", "一下", ...]}
 //                     using Apple's word tokenizer (NaturalLanguage)
+//   vision pinyin     reads Chinese text (one per line); prints {"text": "...", "syllables": ["zhǐ", "qīng"]}
+//                     using the system's Mandarin-to-Latin transliteration (good with names: 池长老 → zhǎng)
 //
 // Boxes are normalised to 0–1 with the origin at the top left (Vision's own origin is bottom left).
 // Build with: swiftc -O swift/vision.swift -o bin/vision
@@ -57,12 +59,17 @@ func tokenize(_ text: String) -> [String: Any] {
   return ["text": text, "tokens": tokens]
 }
 
+func transliterate(_ text: String) -> [String: Any] {
+  let latin = text.applyingTransform(.mandarinToLatin, reverse: false) ?? ""
+  return ["text": text, "syllables": latin.split(separator: " ").map(String.init)]
+}
+
 let modes: [String: (String) -> [String: Any]] = [
-  "ocr": recognizeText, "saliency": detectSaliency, "tokenize": tokenize,
+  "ocr": recognizeText, "saliency": detectSaliency, "tokenize": tokenize, "pinyin": transliterate,
 ]
 let mode = CommandLine.arguments.dropFirst().first ?? ""
 guard let handle = modes[mode] else {
-  FileHandle.standardError.write("usage: vision ocr|saliency|tokenize < lines\n".data(using: .utf8)!)
+  FileHandle.standardError.write("usage: vision ocr|saliency|tokenize|pinyin < lines\n".data(using: .utf8)!)
   exit(2)
 }
 while let line = readLine() {

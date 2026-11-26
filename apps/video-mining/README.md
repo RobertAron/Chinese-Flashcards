@@ -2,11 +2,12 @@
 
 Turns a film or episode into study-app phrases. Each phrase is a line of dialogue with its Chinese text, an English meaning, an audio clip and a square card image. The tools in this package do the extraction, and a local review app lets you approve or reject each phrase and fix it before anything is copied into the study app.
 
-Everything produced for one video lives in that video's folder (the **project folder**), not in this repo. The tools never write to the study app. They only read its `apps/db/local.db`, read-only, to split and level words.
+Everything produced for one video lives in that video's folder (the **project folder**), not in this repo. Only two things write to the study app: the `import` step (approved phrases) and the review app's **Missing from study app** panel (new words, such as names). Everything else only reads its `apps/db/local.db`, to split and level words.
 
 ## Requirements
 
-- macOS. `swift/vision.swift` wraps Apple Vision (OCR, saliency) and NaturalLanguage (word tokenizing). `swiftc` from the Xcode command line tools builds it into `bin/vision` on first use, and rebuilds it whenever the source changes.
+- macOS. `swift/vision.swift` wraps Apple Vision (OCR, saliency), NaturalLanguage (word tokenizing) and the system's Mandarin-to-Latin transliteration (pinyin for names). `swiftc` from the Xcode command line tools builds it into `bin/vision` on first use, and rebuilds it whenever the source changes.
+- For writing to the study app: the R2 keys (`ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `CF_R2_ENDPOINT`) and `GOOGLE_APPLICATION_CREDENTIALS` in `apps/www/.env.local`. The `mine` and `review` scripts load that file.
 - ffmpeg 8 or newer. Its scaler tone-maps HDR (PQ/HLG) sources to SDR.
 - A video with:
   - a **timed text subtitle stream** (ASS, SRT and so on), whose cue timings drive everything, and
@@ -28,6 +29,7 @@ Run each step from `apps/video-mining` with `bun run mine <step> <project folder
 | `annotate-apply <folder> <file.json>` | Creates phrases from an annotation file (format below), then splits and levels their words. |
 | `media <folder>` | For every phrase: cuts the audio clip to `audio/<id>.mp3`, saves candidate frames to `frames/<id>-<n>.jpg`, and runs Vision saliency to place the square crop. |
 | `segment <folder> [--resplit]` | Re-levels every phrase against the current dictionary, for example after you change a word's level in the study app. `--resplit` also re-splits from the Chinese text, discarding hand-edited splits. |
+| `import <folder> [--dry-run]` | Copies the approved phrases into the study app and uploads their media (see "Copying into the study app"). |
 
 Then review with `bun run review <project folder>` (default port 4300, `--port` to change).
 
@@ -49,6 +51,7 @@ Other settings:
 - `names`: character and place names. They count as level 0 and are never split. Add them during annotation.
 - `countAsHsk1`: words this video treats as HSK 1 whatever their real level, so phrases built around them reach the beginner levels (师父 in Legend of Hei, used almost as a name). Usually set from the review app. Only phrase levels change; the study app's `Words` keep their real level.
 - `clipPadding`: seconds kept around each phrase, clamped so a clip never reaches into the neighbouring cue's speech.
+- `course`: the study-app courses `import` writes (slug and titles). Needed only for `import`.
 - `framesPerPhrase`: number of candidate frames saved per phrase.
 
 ## Annotation
@@ -143,6 +146,19 @@ Times are seconds on the video's timeline unless noted otherwise.
 
 `time` and `ocr_text` for each sample where burned-in Chinese appeared with no cue.
 
+### `word_readings`: readings picked in review
+
+When the study app has several `Words` rows for a word, `import` uses the most frequent one unless a row here says otherwise. `phrase_id` and `position` (0-based, into `phrases.words`) identify the word; `study_word_id` is the `Words.id` to use. A phrase's rows are deleted whenever its words change.
+
+### `study_phrases`: phrases `import` copied into the study app
+
+| Column | Meaning |
+| --- | --- |
+| `phrase_id` | The phrase in this database. |
+| `study_id` | Its `Phrases.id` in the study app, which also names its media on R2 (`phrases/<study_id>.mp3`, `.webp`). |
+| `media` | The trim, frame and crop of the media last uploaded (JSON). Empty until the upload succeeds. |
+| `imported_at` | When the phrase was first copied. |
+
 ### Producing a card image
 
 Take `frames/<id>-<frame>.jpg` (height `H`, width `W`). The square is `H × H`, its left edge at `(W − H) × (crop_x ?? saliency_x)`. Crop, then resize to 768 × 768 WebP.
@@ -169,19 +185,38 @@ The rules match the first Legend of Hei course:
   - space plays the clip,
   - `a` approves it, `x` rejects it, `p` sends it back to review.
 - Click the Chinese or English to edit it. Editing the Chinese re-splits the words automatically.
-- Click a word to see its pinyin, level and meaning. **Count as HSK 1 in this film** adds it to `countAsHsk1` in `project.json` and re-levels every phrase; counted words have a dashed outline. The header lists them, and clicking one there removes it.
+- Click a word to see its pinyin, level and meaning.
+  - **Count as HSK 1 in this film** adds it to `countAsHsk1` in `project.json` and re-levels every phrase; counted words have a dashed outline. The header lists them, and clicking one there removes it.
+  - **Mark as name** / **Not a name** adds it to or removes it from `names` and re-levels every phrase.
+  - **Reading in this phrase** appears when the study app has several `Words` rows for it (还 hái "still" or huán "give back"). The most frequent is the default; picking another is saved for this phrase (`word_readings`) and used by `import`. The chip's pinyin shows the reading in use.
+- **Missing from study app** (header, shown while there are any) lists the words in approved or pending phrases that the study app doesn't have, approved ones first, since they block `import`. Each comes with suggested pinyin, meaning and level: names get macOS's transliteration (which knows name readings: 池长老 → Chízhǎnglǎo), written as one capitalised word, and a "Ruomu (name)" meaning; other words use `vocab-reference` where it has them. Check and edit them, then **Add to study app** creates the `Words` row (frequency rank 999999) and its `words/<id>.mp3` audio with Google TTS (voice `cmn-CN-Wavenet-B`, rate 0.75, the same as the study app's other words). Every word but punctuation needs a meaning.
 - **Edit words** changes the split by hand. Separate words with spaces; they must spell out the Chinese exactly. **Auto-split** reverts to the automatic split.
 - Trim the audio with start and end times in the clip (type them, or set them from the playhead). A valid trim saves itself half a second after you stop typing. **Play** and space play the trimmed range; the player's own controls play the whole clip.
 - Click the card image to choose between candidate frames, and drag on the wide frame to move the square crop.
 
-## Not built yet: copying into the study app
+## Copying into the study app
 
-When a project is reviewed, an import step will:
+`bun run mine import <project folder> [--dry-run]` copies every approved phrase into the study app. `--dry-run` checks everything and prints the planned courses, lessons and drills without writing or uploading anything. The `mine` script loads the R2 keys (`ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `CF_R2_ENDPOINT`) from `apps/www/.env.local`.
 
-- create `Words` rows for words the study app doesn't have yet (pinyin and meaning from `vocab-reference`),
-- create `Phrases` and `PhraseWords` from each approved phrase's `words`,
-- render the trimmed clip and the cropped 768×768 WebP,
-- upload `phrases/<id>.mp3` and `.webp` to R2,
-- lay out the course, lessons and drills.
+Set `course` in `project.json` first:
 
-Everything that step needs is already in `review.db`.
+```json
+"course": { "slug": "xiaohei2", "title": "🐈‍⬛ The Legend of Luo Xiaohei 2", "advancedTitle": "🐈‍⬛ Luo Xiaohei 2: HSK 2 and Up" }
+```
+
+### Before anything is written
+
+- **Every word must already be in the study app.** The import never creates `Words`. If an approved phrase uses a word the study app doesn't have, it lists those words (with pinyin, level and an example phrase) and stops without changing anything. Add them first with the review app's **Missing from study app** panel.
+- **Several readings.** When the study app has more than one `Words` row for the same characters (还 hái/huán, 好, 到), each phrase uses the reading picked in the review app, or the most frequent one. A note says how many phrases use each reading, so a wrong default stands out.
+- **Media.** Every approved phrase needs its clip and chosen frame from the `media` step.
+
+### What it writes
+
+- **`Phrases` and `PhraseWords`** in `apps/db/local.db`: one row per approved phrase, with its `meaning` and `words` (punctuation included, as in the study app). `review.db`'s `study_phrases` table remembers each phrase's study-app id, so re-running updates the same rows.
+- **Media on R2:** `phrases/<study id>.mp3` (the clip, cut to the trim with short fades, like the study app's admin trim) and `phrases/<study id>.webp` (the square crop, 768×768, WebP quality 75). Rendered files go to `work/import/`. Media is uploaded again only when a phrase's trim, frame or crop changed since the last upload.
+- **Two courses, laid out like the first film's:**
+  - `<slug>` holds the HSK 1 phrases (levels 0–1) in film order: lessons ("Part N · start–end") of 5 scenes of 4 phrases. Each "Scenes K" drill comes after a "Words for Scenes K" drill with its HSK 1 words the course hasn't taught yet (counted-as-HSK-1 words included; names, interjections and punctuation never).
+  - `<slug>-advanced` holds everything else, level by level ("HSK 2 · Part N" … "HSK 7–9", "Off the HSK list" as `<slug>-extra-N`): lessons of 5 scenes of 5 phrases, each starting with "Learn the Words" for the words at its own level the course hasn't taught yet.
+  - Both courses' lessons and drills are rebuilt on every run, so approving more phrases later can shift which drill a phrase is in. Study progress is kept per word and phrase, so nothing is lost. Other courses are never touched.
+
+A phrase that was imported and later un-approved stays in the study app's `Phrases` (with its media) but drops out of every drill; the import lists them.

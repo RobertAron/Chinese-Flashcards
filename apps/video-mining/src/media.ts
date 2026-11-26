@@ -126,7 +126,7 @@ async function ensureHelper() {
  * input order (each process takes a contiguous chunk).
  */
 async function runHelper<Result>(
-  mode: "ocr" | "saliency" | "tokenize",
+  mode: "ocr" | "saliency" | "tokenize" | "pinyin",
   inputs: readonly string[],
   concurrency = 4,
 ): Promise<Result[]> {
@@ -169,6 +169,13 @@ export async function tokenize(texts: readonly string[]): Promise<string[][]> {
     lines.length > 200 ? 4 : 1,
   );
   return results.map((result) => result.tokens);
+}
+
+/** Pinyin syllables (tone marks, lower case) for each text, from macOS's Mandarin-to-Latin transliteration. */
+export async function transliterate(texts: readonly string[]): Promise<string[][]> {
+  if (texts.length === 0) return [];
+  const results = await runHelper<{ text: string; syllables: string[] }>("pinyin", texts, 1);
+  return results.map((result) => result.syllables);
 }
 
 export type OcrResult = { path: string; lines: { text: string; confidence: number; box: number[] }[] };

@@ -7,15 +7,30 @@ import { Kbd } from "vocab-ui/Kbd";
 import z from "zod";
 import type { PhraseStatus } from "../db";
 import type { WordInfo } from "../dictionary";
-import type { PhraseView, ProjectView } from "./types";
+import type { NewStudyWord } from "../study";
+import type { MissingWord, PhraseView, ProjectView } from "./types";
 
 const pageSize = 20;
 type Patch = Partial<
   Pick<
     PhraseView,
     "status" | "chinese" | "meaning" | "words" | "trim_start" | "trim_end" | "frame" | "crop_x"
-  >
+  > & { reading: { position: number; studyWordId: number } }
 >;
+type WordList = "names" | "countAsHsk1";
+type SetWordList = (list: WordList, word: string, included: boolean) => Promise<void>;
+
+async function sendJson<Result>(url: string, method: string, body: unknown): Promise<Result> {
+  const response = await fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(result.error ?? `Request failed (${response.status})`);
+  return result;
+}
+const getJson = <Result,>(url: string): Promise<Result> => fetch(url).then((response) => response.json());
 type Filters = {
   status: PhraseStatus | "all";
   level: string;
@@ -89,10 +104,14 @@ function App() {
   const [phrases, setPhrases] = useState<PhraseView[] | null>(null);
   const [filters, setFiltersState] = useState<Filters>(() => readStored("review-filters", defaultFilters));
   const [focusedId, setFocusedId] = useState<number | null>(null);
+  const [missing, setMissing] = useState<MissingWord[] | null>(null);
+  const [showMissing, setShowMissing] = useState(false);
+  const blockingCount = missing?.filter((word) => word.approvedPhrases > 0).length ?? 0;
 
   useEffect(() => {
-    fetch("/api/project").then(async (response) => setProject(await response.json()));
-    fetch("/api/phrases").then(async (response) => setPhrases(await response.json()));
+    getJson<ProjectView>("/api/project").then(setProject);
+    getJson<PhraseView[]>("/api/phrases").then(setPhrases);
+    getJson<MissingWord[]>("/api/missing-words").then(setMissing);
   }, []);
 
   const setFilters = (change: Partial<Filters>) =>
@@ -133,17 +152,24 @@ function App() {
   const replacePhrase = (updated: PhraseView) =>
     setPhrases((current) => current?.map((phrase) => (phrase.id === updated.id ? updated : phrase)) ?? null);
 
-  /** Changes project.json's countAsHsk1 list. Every phrase's level can change, so they're all reloaded. */
-  const setCountAsHsk1 = async (word: string, counted: boolean) => {
-    const response = await fetch("/api/count-as-hsk1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word, counted }),
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(body.error ?? `Request failed (${response.status})`);
-    setProject((current) => current && { ...current, countAsHsk1: body.countAsHsk1 });
-    setPhrases(await fetch("/api/phrases").then((phrasesResponse) => phrasesResponse.json()));
+  const reloadWords = async () => {
+    const [nextPhrases, nextMissing] = await Promise.all([
+      getJson<PhraseView[]>("/api/phrases"),
+      getJson<MissingWord[]>("/api/missing-words"),
+    ]);
+    setPhrases(nextPhrases);
+    setMissing(nextMissing);
+  };
+
+  /** Changes one of project.json's word lists. Every phrase's level can change, so they're all reloaded. */
+  const setWordList: SetWordList = async (list, word, included) => {
+    setProject(await sendJson<ProjectView>("/api/word-lists", "PUT", { list, word, included }));
+    await reloadWords();
+  };
+
+  const addStudyWord = async (word: NewStudyWord) => {
+    await sendJson("/api/study-words", "POST", word);
+    await reloadWords();
   };
 
   // Moves focus to the next card first, because a status change can drop this card from the filtered list.
@@ -207,6 +233,22 @@ function App() {
               {statusLabels[status]} <span className="opacity-60">{counts[status] ?? 0}</span>
             </Button>
           ))}
+          {missing !== null && missing.length > 0 && (
+            <Button
+              onPress={() => setShowMissing((shown) => !shown)}
+              className={cn(
+                "ml-auto flex items-center gap-1.5 px-3 text-sm",
+                showMissing && "bg-black text-white",
+              )}
+            >
+              Missing from study app <span className="opacity-60">{missing.length}</span>
+              {blockingCount > 0 && (
+                <span className="rounded-full bg-rose-300 px-1.5 text-xs text-black">
+                  {blockingCount} block import
+                </span>
+              )}
+            </Button>
+          )}
         </div>
         <div className="flex flex-wrap items-center gap-2 text-sm">
           <select
@@ -262,7 +304,7 @@ function App() {
               <Button
                 key={word}
                 aria-label={`Stop counting ${word} as HSK 1`}
-                onPress={() => setCountAsHsk1(word, false)}
+                onPress={() => setWordList("countAsHsk1", word, false)}
                 className="flex items-center gap-1 px-2"
               >
                 {word} <span aria-hidden="true">×</span>
@@ -271,6 +313,7 @@ function App() {
           </div>
         )}
       </header>
+      {showMissing && missing !== null && <MissingWords words={missing} onAdd={addStudyWord} />}
       {pagePhrases.length === 0 && <p className="p-6 text-slate-500">Nothing here.</p>}
       {pagePhrases.map((phrase) => (
         <PhraseCard
@@ -281,7 +324,7 @@ function App() {
           onFocus={() => setFocusedId(phrase.id)}
           onChange={replacePhrase}
           onStatus={(status) => setStatus(phrase, status)}
-          onCountAsHsk1={setCountAsHsk1}
+          onWordList={setWordList}
         />
       ))}
       <div className="flex justify-center py-4">
@@ -346,7 +389,7 @@ function PhraseCard({
   onFocus,
   onChange,
   onStatus,
-  onCountAsHsk1,
+  onWordList,
 }: {
   phrase: PhraseView;
   project: ProjectView;
@@ -354,7 +397,7 @@ function PhraseCard({
   onFocus: () => void;
   onChange: (phrase: PhraseView) => void;
   onStatus: (status: PhraseStatus) => Promise<void>;
-  onCountAsHsk1: (word: string, counted: boolean) => Promise<void>;
+  onWordList: SetWordList;
 }) {
   const [error, setError] = useState<string | null>(null);
   const [showImage, setShowImage] = useState(false);
@@ -426,7 +469,8 @@ function PhraseCard({
           <Words
             phrase={phrase}
             onSave={(words) => save({ words })}
-            onCountAsHsk1={(word, counted) => attempt(() => onCountAsHsk1(word, counted))}
+            onReading={(position, studyWordId) => save({ reading: { position, studyWordId } })}
+            onWordList={(list, word, included) => attempt(() => onWordList(list, word, included))}
           />
           <EditableText
             value={phrase.meaning}
@@ -538,14 +582,22 @@ const describeLevel = (word: WordInfo) => {
   return word.inStudyApp ? level : `${level} · not in study app yet`;
 };
 
+type PhraseWord = PhraseView["wordInfo"][number];
+
+/** The pinyin of the study-app reading this phrase uses (the first reading unless review picked another). */
+const readingPinyin = (word: PhraseWord) =>
+  word.readings.find((reading) => reading.id === word.readingId)?.pinyin ?? word.pinyin[0] ?? "";
+
 function Words({
   phrase,
   onSave,
-  onCountAsHsk1,
+  onReading,
+  onWordList,
 }: {
   phrase: PhraseView;
   onSave: (words: string | null) => Promise<void>;
-  onCountAsHsk1: (word: string, counted: boolean) => Promise<void>;
+  onReading: (position: number, studyWordId: number) => Promise<void>;
+  onWordList: SetWordList;
 }) {
   const [draft, setDraft] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
@@ -589,7 +641,7 @@ function Words({
           const content = (
             <>
               <span className="text-[10px] opacity-70">
-                {word.kind === "punctuation" ? "\u00a0" : (word.pinyin[0] ?? "")}
+                {word.kind === "punctuation" ? "\u00a0" : readingPinyin(word)}
               </span>
               <span>{word.characters}</span>
             </>
@@ -626,26 +678,178 @@ function Words({
           edit words
         </button>
       </div>
-      {selectedWord && (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded bg-slate-50 px-2 py-1 text-sm">
-          <span className="text-lg">{selectedWord.characters}</span>
-          {selectedWord.pinyin.length > 0 && <span>{selectedWord.pinyin.join(" / ")}</span>}
-          <span className="text-slate-500">{describeLevel(selectedWord)}</span>
-          {selectedWord.meaning && (
-            <span className="min-w-0 flex-1 truncate text-slate-700" title={selectedWord.meaning}>
-              {selectedWord.meaning}
-            </span>
-          )}
-          {canCountAsHsk1(selectedWord) && (
+      {selectedWord && selected !== null && (
+        <WordDetails
+          word={selectedWord}
+          onReading={(studyWordId) => onReading(selected, studyWordId)}
+          onWordList={onWordList}
+        />
+      )}
+    </div>
+  );
+}
+
+function WordDetails({
+  word,
+  onReading,
+  onWordList,
+}: {
+  word: PhraseWord;
+  onReading: (studyWordId: number) => Promise<void>;
+  onWordList: SetWordList;
+}) {
+  const hasChoice = word.readings.length > 1;
+  const isName = word.kind === "name";
+  return (
+    <div className="flex flex-col gap-1.5 rounded bg-slate-50 px-2 py-1.5 text-sm">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span className="text-lg">{word.characters}</span>
+        {!hasChoice && <span>{readingPinyin(word)}</span>}
+        <span className="text-slate-500">{describeLevel(word)}</span>
+        {!hasChoice && word.meaning && (
+          <span className="min-w-0 flex-1 truncate text-slate-700" title={word.meaning}>
+            {word.meaning}
+          </span>
+        )}
+        <span className="ml-auto flex flex-wrap gap-2">
+          {canCountAsHsk1(word) && (
             <Button
               className="px-2 text-sm whitespace-nowrap"
-              onPress={() => onCountAsHsk1(selectedWord.characters, !selectedWord.countedAsHsk1)}
+              onPress={() => onWordList("countAsHsk1", word.characters, !word.countedAsHsk1)}
             >
-              {selectedWord.countedAsHsk1 ? "Stop counting as HSK 1" : "Count as HSK 1 in this film"}
+              {word.countedAsHsk1 ? "Stop counting as HSK 1" : "Count as HSK 1 in this film"}
             </Button>
           )}
+          <Button
+            className="px-2 text-sm whitespace-nowrap"
+            onPress={() => onWordList("names", word.characters, !isName)}
+          >
+            {isName ? "Not a name" : "Mark as name"}
+          </Button>
+        </span>
+      </div>
+      {hasChoice && (
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-slate-500">Reading in this phrase:</span>
+          {word.readings.map((reading) => (
+            <Button
+              key={reading.id}
+              aria-pressed={reading.id === word.readingId}
+              onPress={() => onReading(reading.id)}
+              className={cn(
+                "max-w-80 truncate px-2 text-sm",
+                reading.id === word.readingId && "bg-black text-white",
+              )}
+            >
+              {reading.pinyin} · {reading.meaning}
+            </Button>
+          ))}
         </div>
       )}
+    </div>
+  );
+}
+
+const hskLevelOptions = [1, 2, 3, 4, 5, 6, 7];
+
+/** Words the study app lacks, with suggested Words fields to check and add. */
+function MissingWords({
+  words,
+  onAdd,
+}: {
+  words: MissingWord[];
+  onAdd: (word: NewStudyWord) => Promise<void>;
+}) {
+  return (
+    <section className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+      <div className="flex flex-col gap-0.5">
+        <h2 className="font-semibold">Missing from the study app</h2>
+        <p className="text-sm text-slate-600">
+          Words in approved or pending phrases that the study app doesn't have yet. An approved phrase that
+          uses one can't be imported until it's added. Adding creates its Words row and its audio (Google
+          text-to-speech) in the study app, so check the pinyin first: names are one capitalised word
+          (Xiǎohēi).
+        </p>
+      </div>
+      {words.map((word) => (
+        <MissingWordRow key={word.characters} word={word} onAdd={onAdd} />
+      ))}
+    </section>
+  );
+}
+
+function MissingWordRow({
+  word,
+  onAdd,
+}: {
+  word: MissingWord;
+  onAdd: (word: NewStudyWord) => Promise<void>;
+}) {
+  const [pinyin, setPinyin] = useState(word.pinyin);
+  const [meaning, setMeaning] = useState(word.meaning);
+  const [hskLevel, setHskLevel] = useState(word.hskLevel);
+  const [isAdding, setIsAdding] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const add = async () => {
+    setIsAdding(true);
+    setError(null);
+    try {
+      await onAdd({ characters: word.characters, pinyin: pinyin.trim(), meaning: meaning.trim(), hskLevel });
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : String(caught));
+      setIsAdding(false);
+    }
+  };
+  return (
+    <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2 text-sm">
+      <span className="w-24 text-xl">{word.characters}</span>
+      <span className="w-56 text-xs text-slate-500">
+        {word.isName && "name · "}
+        {word.approvedPhrases > 0 && (
+          <span className="font-medium text-rose-700">{word.approvedPhrases} approved · </span>
+        )}
+        {word.pendingPhrases > 0 && `${word.pendingPhrases} to review · `}
+        e.g. {word.example}
+      </span>
+      <input
+        aria-label={`Pinyin for ${word.characters}`}
+        value={pinyin}
+        onChange={(event) => setPinyin(event.target.value)}
+        className="w-36 rounded border border-slate-300 px-1"
+      />
+      <input
+        aria-label={`Meaning of ${word.characters}`}
+        placeholder="Meaning"
+        value={meaning}
+        onChange={(event) => setMeaning(event.target.value)}
+        className="min-w-48 flex-1 rounded border border-slate-300 px-1"
+      />
+      <select
+        aria-label={`HSK level of ${word.characters}`}
+        value={hskLevel ?? ""}
+        onChange={(event) => setHskLevel(event.target.value === "" ? null : Number(event.target.value))}
+        className="rounded border border-slate-300 bg-white px-1 py-0.5"
+      >
+        <option value="">No HSK level</option>
+        {hskLevelOptions.map((level) => (
+          <option key={level} value={level}>
+            {levelLabel(level)}
+          </option>
+        ))}
+      </select>
+      <Button
+        // Punctuation has no meaning in the study app; every other word needs one.
+        isDisabled={
+          isAdding ||
+          pinyin.trim() === "" ||
+          (meaning.trim() === "" && !/^[\p{P}\p{S}]+$/u.test(word.characters))
+        }
+        onPress={add}
+        className="px-2 text-sm whitespace-nowrap"
+      >
+        {isAdding ? "Adding…" : "Add to study app"}
+      </Button>
+      {error && <span className="w-full text-rose-700">{error}</span>}
     </div>
   );
 }

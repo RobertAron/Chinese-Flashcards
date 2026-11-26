@@ -10,7 +10,7 @@ Chinese Flashcards (Vocab Sprint) is a full-stack Chinese language learning appl
 - **apps/ui** - Package `vocab-ui`: the shared component system (Button, Checkbox, Kbd, TextField, Skeleton, HskBadge, HskFilter, HSK colours, `cn`) and its Storybook. Components there must not depend on Next.js; Next-specific ones (Breadcrumb, MotionLink) stay in `apps/www/src/components`. Apps import `vocab-ui/theme.css` after Tailwind to get the `hocus`/`pressed` variants, `grid-stack`, and the classes the components use. See its README.
 - **apps/db** - Prisma database layer with SQLite (shared across apps)
 - **apps/reference** - Package `vocab-reference`: reference data (definitions, frequency, HSK level) consolidated from multiple sources. Look words up with `bun run lookup <simplified>`. See its README for adding sources.
-- **apps/video-mining** - Package `vocab-video-mining`: tools that turn a subtitled video into reviewable phrases (cues, OCR of burned-in Chinese, audio clips, card frames) plus a local review app (`bun run review <folder>`). Each video's data lives in that video's own folder (`project.json`, `review.db`), never in the repo. Its README documents the pipeline and the `review.db` format.
+- **apps/video-mining** - Package `vocab-video-mining`: tools that turn a subtitled video into reviewable phrases (cues, OCR of burned-in Chinese, audio clips, card frames) plus a local review app (`bun run review <folder>`). Each video's data lives in that video's own folder (`project.json`, `review.db`), never in the repo. `bun run mine import <folder>` copies approved phrases into `apps/db/local.db` and their media to R2; it never creates `Words` and stops if an approved phrase uses a word the study app lacks. New words (names especially) are added from the review app's "Missing from study app" panel, which creates the `Words` row and its TTS audio. Its README documents the pipeline and the `review.db` format.
 ## Development Commands
 
 ### Package Manager
@@ -32,9 +32,19 @@ bun run tscheck      # TypeScript check without emit
 
 ### ui Package (from apps/ui)
 ```bash
-bun run storybook    # Start Storybook on port 6006
-bun run tscheck      # TypeScript check without emit
+bun run storybook        # Start Storybook on port 6006
+bun run build-storybook  # Static Storybook build (storybook-static/, ignored)
+bun run tscheck          # TypeScript check without emit
 ```
+
+### video-mining Package (from apps/video-mining)
+```bash
+bun run mine <step> <folder>   # Pipeline steps (init, cues, ocr, …, import); see its README
+bun run review <folder>        # Review app on port 4300
+bun run build:vision           # Rebuild the Swift helper (also happens automatically)
+bun run tscheck                # TypeScript check without emit
+```
+`mine` and `review` load credentials from `apps/www/.env.local` (R2 keys, Google TTS).
 
 ### db App (from apps/db)
 ```bash

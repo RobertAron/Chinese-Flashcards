@@ -3,7 +3,7 @@ import React from "react";
 import type { PhraseDefinition, WordDefinition } from "@/components/challenges/challengeServerUtils";
 import { getPrismaClient } from "@/utils/getPrismaClient";
 import { phraseToAudioSource, phraseToImageSource, wordToAudioSource } from "@/utils/idToAudioSource";
-import { punctuation, spacePunctuation } from "@/utils/specialCharacters";
+import { punctuation, punctuationCharacters, spacePunctuation } from "@/utils/specialCharacters";
 import { deDupe } from "@/utils/structureUtils";
 import { hashString } from "./date";
 
@@ -29,9 +29,33 @@ function seededShuffle<T>(items: T[], seed: number): T[] {
 
 const canonicalWordSelect = { select: { id: true, characters: true, meaning: true } } as const;
 
-async function getHsk1Phrases() {
+/**
+ * Ids of phrases made only of HSK 1 words and punctuation, filtered in SQL so no word data is loaded.
+ * Written as "no word that is neither" with an explicit null check: punctuation has no HSK level, and
+ * `every` would let a null slip through SQL's three-valued logic.
+ */
+async function getHsk1PhraseIds() {
   const phrases = await getPrismaClient().phrases.findMany({
+    where: {
+      PhraseWords: {
+        some: {},
+        none: {
+          word: {
+            OR: [{ hskLevel: null }, { hskLevel: { not: "hsk1" } }],
+            NOT: punctuationCharacters.map((character) => ({ characters: { contains: character } })),
+          },
+        },
+      },
+    },
     orderBy: { id: "asc" },
+    select: { id: true },
+  });
+  return phrases.map(({ id }) => id);
+}
+
+async function getPhrases(ids: number[]) {
+  const phrases = await getPrismaClient().phrases.findMany({
+    where: { id: { in: ids } },
     select: {
       id: true,
       meaning: true,
@@ -55,18 +79,17 @@ async function getHsk1Phrases() {
       },
     },
   });
-  return phrases.filter(
-    ({ PhraseWords }) =>
-      PhraseWords.length > 0 &&
-      PhraseWords.every(({ word }) => word.hskLevel === "hsk1" || punctuation.test(word.characters)),
-  );
+  const phrasesById = new Map(phrases.map((phrase) => [phrase.id, phrase]));
+  return ids.flatMap((id) => phrasesById.get(id) ?? []);
 }
 
 export const getDailyChallenge = React.cache(async function getDailyChallenge(dateKey: string) {
   "use cache";
   cacheLife("max");
   const seed = hashString(dateKey);
-  const selectedPhrases = seededShuffle(await getHsk1Phrases(), seed).slice(0, DAILY_PHRASE_COUNT);
+  const selectedPhrases = await getPhrases(
+    seededShuffle(await getHsk1PhraseIds(), seed).slice(0, DAILY_PHRASE_COUNT),
+  );
 
   const phraseWords = deDupe(
     selectedPhrases
