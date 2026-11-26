@@ -39,6 +39,7 @@ export function DailyPractice() {
   const info = dailyPartInfo[part];
   const itemCount = part === "words" ? wordDefinitions.length : phraseDefinitions.length;
   const passLength = itemCount * info.questionsPerItem;
+  const itemName = part === "words" ? "word" : "phrase";
   const savedAnswered = progress.answered?.[part] ?? 0;
 
   if (stage === "running")
@@ -72,8 +73,8 @@ export function DailyPractice() {
         </p>
         {info.passes > 1 && (
           <p>
-            The first <span className="font-bold">{passLength}</span> go one word at a time. After that, all
-            the words are mixed together.
+            The first <span className="font-bold">{passLength}</span> go one {itemName} at a time. After that,
+            all the {itemName}s are mixed together.
           </p>
         )}
         {savedAnswered > 0 && (
