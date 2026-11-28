@@ -1,7 +1,7 @@
 "use client";
 import Fuse from "fuse.js";
 import { useSearchParams } from "next/navigation";
-import { Suspense, use, useEffect, useMemo, useState } from "react";
+import { Suspense, use, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { HskFilter, type HskFilterLevel, hskFilterLevels } from "vocab-ui/HskFilter";
 import { Skeleton } from "vocab-ui/Skeleton";
 import { TextField } from "vocab-ui/TextField";
@@ -39,6 +39,8 @@ function matchTier(
 
 export function SearchPage({ words }: { words: Promise<Words> }) {
   const [input, setInput] = useState("");
+  // Searching every word takes tens of milliseconds, so let the text field update first and the results catch up.
+  const deferredInput = useDeferredValue(input);
   const [hskLevels, setHskLevels] = useState<ReadonlySet<HskFilterLevel>>(() => new Set(hskFilterLevels));
   return (
     <div className="flex w-full flex-col gap-3 py-4">
@@ -50,7 +52,7 @@ export function SearchPage({ words }: { words: Promise<Words> }) {
       <hr className="my-1 border border-gray-400" />
       <Suspense fallback={<ResultsSkeleton />}>
         <SyncSearchFromUrl setInput={setInput} />
-        <SearchResults words={words} input={input} hskLevels={hskLevels} />
+        <SearchResults words={words} input={deferredInput} hskLevels={hskLevels} />
       </Suspense>
     </div>
   );
@@ -142,6 +144,7 @@ function SearchResults({
               type: "word",
               audioSrc: wordToAudioSource(word.id),
               ...word,
+              emojiChallenge: null,
               meaning: word.canonicalWord?.meaning ?? word.meaning,
               canonicalWord: word.canonicalWord ?? null,
             }}

@@ -77,7 +77,7 @@ function AudioSection({ src }: { src: string }) {
   const { audioSourceNode, playAudio } = useAudioSourceNode(audioRef);
   return (
     <div className="grid-stack h-16 w-full">
-      <audio ref={audioRef} src={src} crossOrigin="anonymous" className="hidden" />
+      <audio ref={audioRef} src={src} crossOrigin="anonymous" preload="none" className="hidden" />
       <div className="grid-stack-item z-10 self-center justify-self-start pl-1">
         <Button
           className={`${buttonBehaviorClasses} flex items-center gap-4 rounded-lg bg-white/30 p-2 backdrop-blur-sm`}
